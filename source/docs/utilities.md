@@ -6,10 +6,10 @@ section: content
 ---
 In the utilities section you find information on the utilities that come with OriginPHP.
 
-- [Cache](utility/cache)
-- [Collection](utility/collection)
-- [Email](utility/email)
-- [Queue](utility/Queue)
-- [XML](utility/xml)
-- [YAML](utility/yaml)
-- [Dom](utility/dom)
+- [Cache](/docs/utility/cache)
+- [Collection](/docs/utility/collection)
+- [Email](/docs/utility/email)
+- [Queue](/docs/utility/queue)
+- [XML](/docs/utility/xml)
+- [YAML](/docs/utility/yaml)
+- [Dom](/docs/utility/dom)

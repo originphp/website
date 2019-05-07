@@ -95,7 +95,7 @@ You can also do it this way, the difference is this below method does not marsha
     $product->catalog = $catalog;
 ```
 
-See the [Entities guide](model/entities) for information.
+See the [Entities guide](/docs/model/entities) for information.
 
 ## Using a different table name
 
@@ -121,7 +121,7 @@ class ArticlesController extends AppController
     }
 }
 ```
-Lets say the article model is [associated](model/associations) with comments, you can access the comment model using the Article model.
+Lets say the article model is [associated](/docs/model/associations) with comments, you can access the comment model using the Article model.
 
 ```php
 $comments = $this->Article->Comment->find('all');
@@ -134,7 +134,7 @@ $Product = $this->loadModel('Product');
 $products = $Product->find('all');
 ```
 
-To access [associated](model/associations) models from within other models.
+To access [associated](/docs/model/associations) models from within other models.
 
 ```php
 class Article extends AppModel
@@ -209,7 +209,7 @@ You can also whitelist fields (prevent mass assignment attacks) by telling new w
 
 ### Read
 
-Below are few examples of how you can retrieve your data, but for more in-depth information look at the [finding data guide](models-finding-data.
+Below are few examples of how you can retrieve your data, but for more in-depth information look at the [finding data guide](/docs/model/finding-records).
 
 When you use get it will retrieve a record by the primary key id, if the record does not exist
 it will throw an exception. This saves having to repeat code to check if record exists and if not throw
@@ -256,7 +256,7 @@ The count finder will return an integer of records.
             ]
         );
 ```
-You can learn more about [finding data](model/finding-records) in the guide.
+You can learn more about [finding data](/docs/model/finding-records) in the guide.
 
 ### Update
 
@@ -463,7 +463,7 @@ class Product extends AppModel
     }
 }
 ```
-For more information on validation see our [Validation Guide](model/validation).
+For more information on validation see our [Validation Guide](/docs/model/validation).
 
 ## Callbacks
 
@@ -486,10 +486,10 @@ Callbacks get called a certain moments during a certain lifecycle, such as creat
 - beforeDelete
 - afterDelete
 
-You can find more information about these in the [Callbacks Guide](model/callbacks).
+You can find more information about these in the [Callbacks Guide](/docs/model/callbacks).
 
 Hint: If you are using a good ide like [Visual Studio Code](https://code.visualstudio.com/), when you type in the function name, it will autocomplete the function including the arguments.
 
 ## Behaviors
 
-You can extend your models with behaviors and share these across models. Behaviors are similar to [components](controller/components) and you can find more information by seeing the [behaviors guide](model/behaviors).
+You can extend your models with behaviors and share these across models. Behaviors are similar to [components](/docs/controller/components) and you can find more information by seeing the [behaviors guide](/docs/model/behaviors).

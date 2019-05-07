@@ -15,4 +15,4 @@ $this->Session->write('forever');
 $this->Session->delete('monster');
 ```
 
-For more information see the [Session Component Guide](controller/Session-component).
+For more information see the [Session Component Guide](/docs/controller/session-component).

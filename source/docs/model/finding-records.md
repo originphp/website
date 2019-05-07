@@ -43,7 +43,7 @@ from the database and then transform it into objects which you can work with.
 
 ### Getting a single record using the primary key
 
-With `get` you can get a single record, also called an `Entity`. See the [Entities guide](model/entities) for information on these objects.
+With `get` you can get a single record, also called an `Entity`. See the [Entities guide](/docs/model/entities) for information on these objects.
 
 ```php
 $article = $this->Article->get(1000);

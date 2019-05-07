@@ -216,14 +216,14 @@ public function initialize(){
 
 The following helpers come with OriginPHP:
 
-- [Html Helper](view/html-helper)
-- [Form Helper](view/form-helper)
-- [Date Helper](view/date-helper)
-- [Number Helper](view/number-helper)
-- [Cookie Helper](view/cookie-helper)
-- [Session Helper](view/session-helper)
+- [Html Helper](/docs/view/html-helper)
+- [Form Helper](/docs/view/form-helper)
+- [Date Helper](/docs/view/date-helper)
+- [Number Helper](/docs/view/number-helper)
+- [Cookie Helper](/docs/view/cookie-helper)
+- [Session Helper](/docs/view/session-helper)
 
-For more information on this see the [helpers guide](view/helpers).
+For more information on this see the [helpers guide](/docs/view/helpers).
 
 ## Elements
 

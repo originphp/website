@@ -15,4 +15,4 @@ $this->Cookie->write('forever',rand());
 $this->Cookie->delete('monster');
 ```
 
-For more information see the [Cookie Component Guide](controller/cookie-component).
+For more information see the [Cookie Component Guide](/docs/controller/cookie-component).

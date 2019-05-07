@@ -51,7 +51,7 @@ If you want to add logic when the controller is created, you can do so in the `i
 
 By default the model for the controller (the singular name) will be lazy loaded when you call for it. However if you need to load a different model then you should call the `loadModel` method.
 
-For more information see our [Models Guide](models).
+For more information see our [Models Guide](/docs/models).
 
 ```php
 $AnotherModel = $this->loadModel('Product');
@@ -163,7 +163,7 @@ Array
 */
 ```
 
-See the [routing guide](development/routing) for more information on routing setup.
+See the [routing guide](/docs/development/routing) for more information on routing setup.
 
 ## Components
 
@@ -177,12 +177,12 @@ public function initialize(){
 
 The following Components come with OriginPHP:
 
-- [Auth Component](controller/auth-component)
-- [Session Component](controller/session-component)
-- [Cookie Component](controller/cookie-component)
-- [Flash Component](controller/flash-component)
+- [Auth Component](/docs/controller/auth-component)
+- [Session Component](/docs/controller/session-component)
+- [Cookie Component](/docs/controller/cookie-component)
+- [Flash Component](/docs/controller/flash-component)
 
-For more information on this see the [components guide](controller/components).
+For more information on this see the [components guide](/docs/controller/components).
 
 ## Rendering Views
 
@@ -203,7 +203,7 @@ class ContactsController extends AppController
 }
 ```
 
-More information on how views work can be found in the [views guide](views).
+More information on how views work can be found in the [views guide](/docs/views).
 
 ### JSON Views
 
