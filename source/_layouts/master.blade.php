@@ -73,7 +73,7 @@
         <footer class="bg-white text-center text-sm mt-12 py-4" role="contentinfo">
             <ul class="flex flex-col md:flex-row justify-center list-reset">
                 <li class="md:mr-2">
-                    &copy; <a href="https://www.originphp.com" title="OriginPHP">OriginPHP</a> 2019.
+                    &copy; Copyright 2019 Jamiel Sharief.
                 </li>
 
                 <li>

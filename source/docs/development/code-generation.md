@@ -6,7 +6,7 @@ section: content
 ---
 # Code Generation
 
-If you follow the conventions with database tables and column naming, you can quickly generate code use the `make` plugin, once you have done this you and delete the plugin from your source tree.
+If you follow the conventions with database tables and column naming, you can quickly generate code use the `generate` plugin, once you have done this you and delete the plugin from your source tree.
 
 You can also customise the templates, and then save them for future projects.
 
