@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'baseUrl' => 'https://my-jigsaw-docs.com',
+    'baseUrl' => 'https://www.originphp.com',
     'production' => true,
 
     // DocSearch credentials
