@@ -57,8 +57,9 @@ return [
             'Code Generation' => 'docs/development/code-generation',
             'Events' => 'docs/development/event-manager',
             'Logging' => 'docs/development/logging',
+            'Debugging' => 'docs/development/debugging',
             'Testing' => 'docs/development/testing',
-            'Debugging' => 'docs/development/debugging'
+            
         ],
     ],
     'Utilities' => [

@@ -51,7 +51,7 @@ If you want to add logic when the controller is created, you can do so in the `i
 
 By default the model for the controller (the singular name) will be lazy loaded when you call for it. However if you need to load a different model then you should call the `loadModel` method.
 
-For more information see our [Models Guide](models.md).
+For more information see our [Models Guide](models).
 
 ```php
 $AnotherModel = $this->loadModel('Product');
@@ -163,7 +163,7 @@ Array
 */
 ```
 
-See the [routing guide](router.md) for more information on routing setup.
+See the [routing guide](development/routing) for more information on routing setup.
 
 ## Components
 
@@ -203,7 +203,7 @@ class ContactsController extends AppController
 }
 ```
 
-More information on how views work can be found in the [views guide](views.md).
+More information on how views work can be found in the [views guide](views).
 
 ### JSON Views
 

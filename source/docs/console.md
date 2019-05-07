@@ -234,7 +234,7 @@ Do you want to continue? (yes/no) [yes]
 
 Shells also have tasks, similar to components which are used by controllers. Tasks allow you to share functionality between your shells.
 
-For more information see the [Tasks Guide](tasks.md).
+For more information see the [Tasks Guide](console/tasks).
 
 
 ## Running Shells as Cron Jobs

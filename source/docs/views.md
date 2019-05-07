@@ -223,7 +223,7 @@ The following helpers come with OriginPHP:
 - [Cookie Helper](view/cookie-helper)
 - [Session Helper](view/session-helper)
 
-For more information on this see the [helpers guide](helpers.md).
+For more information on this see the [helpers guide](view/helpers).
 
 ## Elements
 
