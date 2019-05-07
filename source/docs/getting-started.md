@@ -1,77 +1,110 @@
 ---
 title: Getting Started
-description: Getting started with Jigsaw's docs starter template is as easy as 1, 2, 3.
+description: Console Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+# Getting Started with OriginPHP
 
-# Getting Started {#getting-started}
+## What is OriginPHP?
 
-This is a starter template for creating a beautiful, customizable documentation site for your project with minimal effort. You’ll only have to change a few settings and you’re ready to go.
+OriginPHP is a web application framework written in PHP that uses a number of well known software design patterns, including convention over configuration, MVC (Model View Controller), association data mapping, and front controller.
 
-## Configuration {#getting-started-configuration}
+## Installation
 
-As with all Jigsaw sites, configuration settings can be found in `config.php`; you can update the variables in that file with settings specific to your project. You can also add new configuration variables there to use across your site; take a look at the [Jigsaw documentation](http://jigsaw.tighten.co/docs/site-variables/) to learn more.
+Download the source code from [Git Hub](https://github.com/originphp/originphp) and extract this into a new folder, call it bookmarks.
 
-```php
-// config.php
-return [
-    'baseUrl' => 'https://my-awesome-jigsaw-site.com/',
-    'production' => false,
-    'siteName' => 'My Site',
-    'siteDescription' => 'Give your documentation a boost with Jigsaw.',
-    'docsearchApiKey' => '',
-    'docsearchIndexName' => '',
-    'navigation' => require_once('navigation.php'),
-];
-```
-
-> Tip: This configuration file is also where you’ll define any "collections" (for example, a collection of the contributors to your site, or a collection of blog posts). Check out the official [Jigsaw documentation](https://jigsaw.tighten.co/docs/collections/) to learn more.
-
----
-
-### Adding Content {#getting-started-adding-content}
-
-You can write your content using a [variety of file types](http://jigsaw.tighten.co/docs/content-other-file-types/). By default, this starter template expects your content to be located in the `source/docs` folder. If you change this, be sure to update the URL references in [navigation.php](/docs/navigation.php).
-
-[Read more about navigation.](/docs/navigation)
-
-The first section of each content page contains a YAML header that specifies how it should be rendered. The `title` attribute is used to dynamically generate HTML `title` and OpenGraph tags for each page. The `extends` attribute defines which parent Blade layout this content file will render with (e.g. `_layouts.documentation` will render with `source/_layouts/documentation.blade.php`), and the `section` attribute defines the Blade "section" that expects this content to be placed into it.
-
-```yaml
----
-title: Navigation
-description: Building a navigation menu for your site
-extends: _layouts.documentation
-section: content
----
-```
-
-[Read more about Jigsaw layouts.](https://jigsaw.tighten.co/docs/content-blade/)
-
----
-
-### Adding Assets {#getting-started-adding-assets}
-
-Any assets that need to be compiled (such as JavaScript, Less, or Sass files) can be added to the `source/_assets/` directory, and Laravel Mix will process them when running `npm run local` or `npm run production`. The processed assets will be stored in `/source/assets/build/` (note there is no underscore on this second `assets` directory).
-
-Then, when Jigsaw builds your site, the entire `/source/assets/` directory containing your built files (and any other directories containing static assets, such as images or fonts, that you choose to store there) will be copied to the destination build folders (`build_local`, on your local machine).
-
-Files that don't require processing (such as images and fonts) can be added directly to `/source/assets/`.
-
-[Read more about compiling assets in Jigsaw using Laravel Mix.](http://jigsaw.tighten.co/docs/compiling-assets/)
-
----
-
-## Building Your Site {#getting-started-building-your-site}
-
-Now that you’ve edited your configuration variables and know how to customize your styles and content, let’s build the site.
+If you have GIT installed, then you can run the following command from your source code folder to download the source into a folder called bookmarks.
 
 ```bash
-# build static files with Jigsaw
-./vendor/bin/jigsaw build
-
-# compile assets with Laravel Mix
-# options: dev, staging, production
-npm run dev
+$ git clone https://github.com/originphp/originphp.git bookmarks
 ```
+
+Download and install [Docker](https://www.docker.com/products/docker-desktop) and let this rock your development world, no more ftping, or setting up a virtual machine or virtual host. Your app will be built within a docker container, which you can start and shutdown as needed. The Docker container is only intended for development, and it will act very similar to a real server.
+
+The first time that you use the docker container, you will need to build this, which might take a few minutes.
+
+```bash
+$ cd bookmarks
+$ docker-compose build
+```
+
+Once it has finished building start the development server by typing in the following:
+
+```bash
+$ docker-compose up
+```
+
+Then open your web browser and go to [http://localhost:8000](http://localhost:8000)  which will show you a status page that all is working okay.
+
+Lets create the database on the server, from the command line type in the following to access the container and then the MySQL server.
+
+```bash
+$ docker-compose run app bash
+$ mysql -h db -uroot -p
+```
+
+To access the MySQL server from within the docker the container, you need to use the host name `db`.
+
+When it asks you for the password type in **root**, then copy and paste the following sql to create the database called bookmarks and a user called origin with the password **secret**.
+
+```sql
+CREATE DATABASE bookmarks CHARACTER SET utf8mb4;
+GRANT ALL ON bookmarks.* TO 'origin' IDENTIFIED BY 'secret';
+FLUSH PRIVILEGES;
+QUIT
+```
+
+NOTE: You can also acces the MySql server using any database management application using `localhost` port `3306`. Windows users can use [Sequel Pro](https://www.sequelpro.com/) or Mac users can use [Heidi SQL](https://www.heidisql.com/).
+
+Open the `database.php.default` in your IDE, I recommend [Visual Studio Code](https://code.visualstudio.com/). Set the host, database, username and password as follows and then save a copy as `database.php`.
+
+```php
+ConnectionManager::config('default', [
+    'host' => 'db', // Docker MySQL container
+    'database' => 'bookmarks',
+    'username' => 'origin',
+    'password' => 'secret'
+]);
+```
+NOTE: To access the MySQL server from within the Docker container, we need to use its name which is `db` and not `localhost`.
+
+If all went well when you go to [http://localhost:8000](http://localhost:8000)  it should now say that it is connected to the database.
+
+Finally, we need to import the tables, this information is in a file called `schema.sql` located in the `config` folder. From within the Docker container type in the following.
+
+```bash
+$ bin/console schema import
+```
+
+Now that this has been done  goto [http://localhost:8000/users/login](http://localhost:8000/users/login) use the username `demo@example.com` and password `origin` to login.
+
+The bookmarks app also has its own console application, which shows you some features of the CLI.
+
+Run the following command to show the available options, one of those is uninstall which you can use later to remove all the Bookmarks files. First you should look around the source and get a feel for everything.
+
+```bash
+$ bin/console bookmarks
+```
+
+To uninstall the bookmarks files
+
+```bash
+$ bin/console bookmarks uninstall
+```
+
+Once you have uninstalled, you can give the code generation a go. This will generate code using the database. You can easily customise the templates, the templates can be found in `plugins/generate/src/Template`. 
+
+To see the command line options:
+```bash
+$ bin/console generate
+```
+To generate code using the database
+
+```bash
+$ bin/console generate all
+```
+
+Now go to [http://localhost:8000/bookmarks](http://localhost:8000/bookmarks) to see the code in action.
+
+See the other guides for more information.

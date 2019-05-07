@@ -3,8 +3,8 @@
 return [
     'baseUrl' => '',
     'production' => false,
-    'siteName' => 'Docs Starter Template',
-    'siteDescription' => 'Beautiful docs powered by Jigsaw',
+    'siteName' => 'OriginPHP',
+    'siteDescription' => 'OriginPHP is an open-source MVC framework that enables PHP developers to quickly build high performance and scalable web applications.',
 
     // Algolia DocSearch credentials
     'docsearchApiKey' => '',
