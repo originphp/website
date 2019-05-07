@@ -65,7 +65,7 @@ class WidgetBehavior extends Behavior
 }
 ```
 
-Behaviors have the same [callbacks](models-callbacks.md) functions as models. So just add the callbacks that you need.
+Behaviors have the same [callbacks](models/callbacks) functions as models. So just add the callbacks that you need.
 
 Sometimes you will need to disable or unload behaviors, to do this you will need access the behavior registry
 
