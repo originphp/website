@@ -327,7 +327,7 @@ Or if you want to change them across the whole app or a particular controller, t
 
 ### Templates
 
-Depending upon the front end framework you are using you might need to adjust the default templates, for example wrapping a control in another div or changing how the template for an error message.
+Depending upon the front end framework you are using, you might need to adjust the default templates, for example wrapping a control in another div or changing how the template formats an error message.
 
 You can create a file in your `config`  which should return an array.
 

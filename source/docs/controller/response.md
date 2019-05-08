@@ -5,6 +5,7 @@ extends: _layouts.documentation
 section: content
 ---
 # Response Object
+The response object contains information on the response that will be sent back to the client.
 
 | Property                      | Definition                                                                            |
 | ------------------------------|-------------------------------------------------------------------------------------- |

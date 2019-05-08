@@ -5,8 +5,7 @@ extends: _layouts.documentation
 section: content
 ---
 # Request Object
-
-In every controller you will find a `request` and `response` object. The request object contains information on the request made and the response object represents what will be sent back to the client.
+The request object contains information on the current request that has been made, such as the URL, headers, cookies etc.
 
 ## Request Methods
 

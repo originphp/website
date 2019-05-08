@@ -7,8 +7,8 @@ return [
     'Controllers' => [
         'url' => 'docs/controllers',
         'children' => [
-            'Request' => 'docs/controller/request',
-            'Response' => 'docs/controller/response',
+            'Request Object' => 'docs/controller/request',
+            'Response Object' => 'docs/controller/response',
             'Components' => 'docs/controller/components',
             'Session Component' => 'docs/controller/session-component',
             'Cookie Component' => 'docs/controller/cookie-component',
