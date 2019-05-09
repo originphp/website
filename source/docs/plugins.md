@@ -85,9 +85,22 @@ From within the controller you use the loadModel method with plugin syntax. The 
 and sets it up as property.
 
 ```php
+$this->loadModel('ContactManger.Contact');
+$results = $this->Contact->find('all');
+```
 
-    $this->loadModel('ContactManger.Contact');
+## Installing Plugins
 
-    $results = $this->Contact->find('all');
+You can install plugins from remote GIT repositories using the plugin shell.
 
+```linux
+$ bin/console plugin install https://github.com/originphp/generate-plugin.git
+```
+
+For a plugin to be valid there should be package.json in the following format:
+
+```json
+{
+  "name": "SuperMigration"
+}
 ```
