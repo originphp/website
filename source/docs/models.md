@@ -44,7 +44,8 @@ foreach($users as $user){
 If you add datetime fields called `created` and `modified`, then when you create a record the created field is set and each time you modify this the modified field will be updated.
 
 ## Creating a Model
-To create a model is easy, simply create a file in `src/Model` folder which is a subclass of the AppModel.
+
+To create a model is easy, simply create a file in `src/Model` folder which is a subclass of the `AppModel`.
 
 ```php
 <?php
@@ -58,7 +59,16 @@ class Product extends AppModel
 
 ```
 
-Then create the `product` table, which should be lower case, underscored and plural.
+Remember, you can use the code generation tool to do this for you, providing that the table exists in the database. The code generation shell will also generate the test and fixture for the model.
+
+```linux
+$ bin/console generate model Product
+```
+
+For more information see [code generation]((/docs/development/code-generation))
+
+Then create the table for the model, which should be lower case, underscored and plural, in this example it would
+be called `products`.
 
 ```sql
 CREATE TABLE `products` (

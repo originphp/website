@@ -12,15 +12,7 @@ OriginPHP uses PHPUnit for unit testing.
 
 The first thing to do is to create a test database, and setup the test database configuration.
 
-To create the database and user you can use the following MySQL.
-
-```sql
-    CREATE DATABASE app_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-    GRANT ALL ON app_test.* TO 'somebody' IDENTIFIED BY 'secret';
-    FLUSH PRIVILEGES;
-```
-
-In your `config/database.php` add database config.
+In your `config/database.php` add database configuration.
 
 ```php
     ConnectionManager::config('test', array(
@@ -29,6 +21,13 @@ In your `config/database.php` add database config.
     'username' => 'somebody',
     'password' => 'secret',
     ));
+```
+
+Lets create the database, the db shell will take the settings from the connection manager and use that
+to connect to db server and create the database. 
+
+```linux
+$ bin/console db create --datasource=test
 ```
 
 ### Conventions

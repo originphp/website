@@ -45,7 +45,15 @@ class ContactsController extends AppController {
 
 Any methods which are not supposed to be actions, should be set to `private` or `protected`.
 
-If you want to add logic when the controller is created, you can do so in the `intialize` method.
+If you want to add logic when the controller is created, you can do so in the `initialize` method.
+
+Remember, you can use the code generation tool to create the Controller and ControllerTest for you, providing that the table exists in the database. 
+
+```linux
+$ bin/console generate controller Products
+```
+
+For more information see [code generation]((/docs/development/code-generation))
 
 ## Models
 
