@@ -59,6 +59,7 @@ return [
             'Logging' => 'docs/development/logging',
             'Debugging' => 'docs/development/debugging',
             'Testing' => 'docs/development/testing',
+            'Migrations' => 'docs/development/migrations',
             
         ],
     ],

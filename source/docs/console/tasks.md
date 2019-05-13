@@ -6,7 +6,7 @@ section: content
 ---
 # Tasks
 
-In your console apps you can use tasks to break up or share code with or console apps.
+In your console shells most often you will be running tasks, you can seperate this logic into Task objects and share these with your other console apps.
 
 ## Creating a Task
 
