@@ -232,6 +232,38 @@ $this->removeForeignKey('articles',['column'=>'owner_id']);
 $this->removeForeignKey('accounts',['name'=>'fk_origin_1234567891'];
 ```
 
+### Custom SQL Queries
+
+If you need to run custom SQL queries you can, but we can't magically reverse them. You can use the `execute` method in the `up` and `down` methods. if you use other methods of migration in the up and down, they wont be reversed automatically.  
+
+```php
+class CreateProductsTableMigration extends Migration
+{
+    public function up()
+    {
+        $this->execute($sqlThatDoesSomething);
+    }
+     public function down()
+    {
+        $this->execute($sqlThatUndoesWhatUpDid);
+    }
+
+```
+
+### Irreversible Migrations
+
+Sometimes you might delete data or do something else that is not reversible, in that case you should throw a custom exception.
+
+```php
+class CreateProductsTableMigration extends Migration
+{
+     public function down()
+    {
+        $this->throwIrreversibleMigrationException();
+    }
+
+```
+
 ## Running Migrations
 
 Before you run migrations for the very first time you need to create the migrations table in your database, simply run the following command to do this for you.
