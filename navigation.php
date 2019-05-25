@@ -39,15 +39,14 @@ return [
             'Session Helper' => 'docs/view/session-helper',
         ],
     ],
-    'Console' => [
-        'url' => 'docs/console',
+    'Console Commands' => [
+        'url' => 'docs/console-commands',
         'children' => [
-            'Tasks' => 'docs/console/tasks'
-           
+           // 'Tasks' => 'docs/console/tasks'
         ],
     ],
     'Plugins' => [
-        'url' => 'docs/plugins'
+        'url' => 'docs/plugins',
     ],
     'Development' => [
         'url' => 'docs/development',
@@ -60,7 +59,6 @@ return [
             'Debugging' => 'docs/development/debugging',
             'Testing' => 'docs/development/testing',
             'Migrations' => 'docs/development/migrations',
-            
         ],
     ],
     'Utilities' => [
@@ -72,7 +70,7 @@ return [
             'Collection' => 'docs/utility/collection',
             'XML' => 'docs/utility/xml',
             'Yaml' => 'docs/utility/yaml',
-            'Dom' => 'docs/utility/dom'
+            'Dom' => 'docs/utility/dom',
         ],
     ],
 ];

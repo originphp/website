@@ -85,7 +85,7 @@ class ContactsController extends AppController {
 
 ## Reading values from cookies in the request
 
-You can get the cookie object or read a value for a cookie from the request object.
+You can get read a value for a cookie using the request object, the contents will be decrypted.
 
 ```php
 public function doSomething()

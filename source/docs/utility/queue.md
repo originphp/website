@@ -6,14 +6,14 @@ section: content
 ---
 # Queue for Background Jobs
 
-The queue system is for handling background jobs, such as sending emails, carrying out database maintenance and so on. The back-end for queue system is MySQL, and you can use your current database or separate server. 
+The queue system is for handling background jobs, such as sending emails, carrying out database maintenance and so on. The back-end for queue system is MySQL, and you can use your current database or separate server.
 
-First you need to import the SQL schema which is in the `config/schema/queue.sql`
+First you need to import the SQL schema which is in the `db/queue.sql`
 
 Run the following command:
 
 ```linux
-$ bin/console schema import queue
+$ bin/console db:schema:load queue
 ```
 
 ## Creating the Queue Object

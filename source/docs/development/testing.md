@@ -8,7 +8,12 @@ section: content
 
 ## Setting up the database for testing
 
-OriginPHP uses PHPUnit for unit testing.
+OriginPHP uses PHPUnit 7.x for unit testing and this is already installed in the Docker container, just type in `phpunit` anywhere. If you are not using the Docker container you can install the composer package, which will install PHPUnit into the `vendor/bin` folder. 
+
+```linux
+$ composer require phpunit/phpunit ^7
+```
+> A benefit of installing this using composer is that when you are developing your IDE will show you code hinting for the PHPUnit classes.
 
 The first thing to do is to create a test database, and setup the test database configuration.
 
@@ -24,10 +29,10 @@ In your `config/database.php` add database configuration.
 ```
 
 Lets create the database, the db shell will take the settings from the connection manager and use that
-to connect to db server and create the database. 
+to connect to db server and create the database.
 
 ```linux
-$ bin/console db create --datasource=test
+$ bin/console db:create --datasource=test
 ```
 
 ### Conventions
@@ -158,7 +163,7 @@ use Origin\TestSuite\Fixture;
 class ArticleFixture extends Fixture
 {
     public $schema = [
-         'id' => ['type' => 'integer', 'key' => 'primary','autoIncrement'=>true],
+         'id' => ['type' => 'primaryKey'],
          'title' => [
            'type' => 'string',
            'length' => 255,
@@ -177,14 +182,13 @@ class ArticleFixture extends Fixture
 
 ```
 
-You can generate the schema from your existing database using the `SchemaShell` using the following command:
+You can generate the schema from your existing database using the following command:
 
 ```linux
-$ bin/console schema generate
+$ bin/console db:schema:dump --type:php
 ```
 
-This will create a folder in your config folder, called schema with a PHP file for each table. You can run this anytime 
-you make changes, but you will need to update the fixture file separately. 
+This will create a folder in your config folder, called schema with a PHP file for each table. You can run this anytime you make changes, but you will need to update the fixture file separately. 
 When you are first developing your app, using the import method makes the most sense, since it will just your current database at all times. As you start to get into beta and production, you can code the field data into the fixtures - but it is up to you.
 
 ### Mocking Models
@@ -423,7 +427,7 @@ Set headers for the next request
     $this->header('PHP_AUTH_PW','secret');
 ```
 
-### ENV
+### env
 
 Sets server enviroment $_SERVER
 
@@ -443,9 +447,9 @@ Returns the request object from the last request
 
 Returns the response object from the last request
 
-## Testing Console Shell Scripts
+## Testing Console Commands
 
-Like controllers there is a console integration test trait which makes testing a breeze.
+Like with `Controllers` there is a console integration test trait which makes testing `Commands` a breeze.
 
 ```php
 use Origin\TestSuite\OriginTestCase;
@@ -466,26 +470,49 @@ class CronShellTest extends OriginTestCase
 
 ```
 
-### Custom Assertations
+To see what output was generated you can add `debug($this->output())` after calling the exec to see the standard output or `debug($this->errorOutput())` to see output in the stderr (ie. the errors).
 
-Lets look at the assertations.
+When testing interactive commands (or where the user is asked for confirmation etc) through `$io->ask()` or `$io->askChoice()` then you will need to send the data when calling the `exec` method.
+
+For example, if the console commands asks for a username and then asks to confirm.
 
 ```php
+$this->exec('create-user',['james','y']);
+```
 
+This will send the name and then after that y to confirm
+
+### Custom Assertations
+
+Lets look at the assertations and how they can be used.
+
+If everything went well then
+
+```php
 $this->assertExitSuccess(); // Asserts that the script was run without any problems
-$this->assertExitError(); //Asserts that an error was encounterd. Shell::error() was called
-
 $this->assertOutputContains('needle'); // checks that the output contains a string
 $this->assertOutputEmpty(); // asserts there was no output
+```
 
+If you want to test there was an error and that the error or warning sent to the screen contains certain text.
+
+```php
+$this->assertExitError(); //Asserts that an error was encounterd. 
 $this->assertErrorContains('needle'); // Checks the error message contains a string
 
 ```
 
-### Accessing the shell
+### Getting the output
+
+```php
+$stdout = $this->output(); // standard output
+$stderr = $this->errorOutput(); // Errors
+```
+
+### Accessing the command
 
 If you need to access the shell
 
 ```php
-$shell = $this->shell();
+$command = $this->command();
 ```

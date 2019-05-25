@@ -59,7 +59,7 @@ class Product extends AppModel
 
 ```
 
-Remember, you can use the code generation tool to do this for you, providing that the table exists in the database. The code generation shell will also generate the test and fixture for the model.
+Remember, you can use the code generation tool to do this for you. The code generation shell will also generate the test and fixture for the model.
 
 ```linux
 $ bin/console generate model Product
@@ -105,7 +105,7 @@ You can also do it this way, the difference is this below method does not marsha
     $product->catalog = $catalog;
 ```
 
-See the [Entities guide](/docs/model/entities) for information.
+See the [Entities guide](/docs/model/entities) for more information.
 
 ## Using a different table name
 

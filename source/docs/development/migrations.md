@@ -26,7 +26,7 @@ class CreateProductsTableMigration extends Migration
 
 ## Creating Migrations
 
-Creating a migration is easy peasy, just run the migration command with a short camelcased description.
+Creating a migration is easy peasy, just run the migration command with a name of the class (a short description) in studly caps.
 
 ```linux
 $ bin/console generate migration CreateProductTable
@@ -234,7 +234,7 @@ $this->removeForeignKey('accounts',['name'=>'fk_origin_1234567891'];
 
 ### Custom SQL Queries
 
-If you need to run custom SQL queries you can, but we can't magically reverse them. You can use the `execute` method in the `up` and `down` methods. if you use other methods of migration in the up and down, they wont be reversed automatically.  
+If you need to run custom SQL queries you can, but we can't magically reverse them. You can only use the `execute` method in the `up` and `down` methods. If you use other methods of migration in the `up` and `down` methods, they wont be reversed automatically.
 
 ```php
 class CreateProductsTableMigration extends Migration
@@ -269,17 +269,17 @@ class CreateProductsTableMigration extends Migration
 Before you run migrations for the very first time you need to create the migrations table in your database, simply run the following command to do this for you.
 
 ```linux
-$ bin/console db schema load migrations
+$ bin/console db:schema:load migrations
 ```
 
 When you run the db migrate command it will check for migrations which have not be applied.
 
 ```linux
-$ bin/console db migrate
+$ bin/console db:migrate
 ```
 
 If you want to migrate to a specific version or rollback, add the version number to the command, its really that simple.
 
 ```linux
-$ bin/console db migrate 20190511111934
+$ bin/console db:migrate 20190511111934
 ```

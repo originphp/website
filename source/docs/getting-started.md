@@ -49,13 +49,13 @@ ConnectionManager::config('default', [
     'host' => 'db', // Docker MySQL container
     'database' => 'origin',
     'username' => 'root',
-    'password' => 'root'
+    'password' => 'root',
+    'engine' => 'mysql'
 ]);
 ```
 > To access the MySQL server from within the Docker container, we need to use its name which is `db` and not `localhost`.
 
 Even though the container is running, you will want to access the command line.
-
 
 ```linux
 $ docker-compose run app bash
@@ -64,7 +64,7 @@ $ docker-compose run app bash
 Then run the db console to set everything up for you.
 
 ```linux
-$ bin/console db setup
+$ bin/console db:setup
 ```
 
 The db setup command will :
@@ -87,3 +87,42 @@ $ mysql -h db -uroot -p
 When it asks you for the password type in **root**, then copy and paste the following sql to create the database and grant permissions to a user.
 
 > You can also acces the MySql server using any database management application using `localhost` port `3306`. Windows users can use [Sequel Pro](https://www.sequelpro.com/) or Mac users can use [Heidi SQL](https://www.heidisql.com/).
+
+
+### Configuring PostgreSQL in Docker
+
+If you prefer to use PostgreSQL as your database then change the engine to `pgsql` in the database configuration file. You will also need to adjust the docker settings.
+
+In the the root folder edit the `Dockerfile`, and add the following lines after `php-dev \` 
+```
+    postgresql-client \
+    php-pgsql \
+```
+
+In the `docker-compose.yml` change the db section (or add underneath)
+
+```yaml
+db:
+    image: postgres
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+        - "5432:5432"
+```
+
+and change the volume name
+
+```yaml
+volumes:
+  pg-data:
+```
+
+Then rebuild the image
+
+```linux
+$ docker-compose build
+```

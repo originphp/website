@@ -6,6 +6,8 @@ section: content
 ---
 # Console & Shell
 
+>> This is for reference only. Shells have been deprecitated in favour of commands.
+
 It is easy to build console applications, use can be for cron jobs, running complex calculations or anything data intensive.  Console apps are run though PHP cli.
 
 ## Building a Shell

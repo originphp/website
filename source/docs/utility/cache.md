@@ -242,7 +242,7 @@ The command line instructions have been tested with Ubuntu 18.x.
 
 ### Apcu
 
-Apcu is already install in the docker container, to manually install.
+Apcu is already install in the docker container, however if you need to install this manually.
 
 ```php
 sudo apt-get update

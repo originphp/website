@@ -321,10 +321,10 @@ Sometimes you might want to do your own joins, this can easily be done by using 
 ```php
   $conditions['joins'][] = [
     'table' => 'authors',
-    'alias' => 'Author',
+    'alias' => 'authors',
     'type' => 'LEFT' , // this is defualt,
     'conditions' => [
-      'Author.id = Article.author_id'
+      'authors.id = articles.author_id'
     ]
    ];
 ```

@@ -24,7 +24,7 @@ Lets say you want to create a contact manager plugin, you create the folder stru
 |   |   -- tests
 ```
 
-You can use the generate plugin to create the folder structure, routes and app controller and model.
+You can use the generate plugin to create the folder structure, routes and the plugin controller and model.
 
 ```linux
 $ bin/console generate plugin ContactManager
@@ -34,7 +34,7 @@ Then in your `config/bootstrap.php` add:
 
 `Plugin::load('ContactManager');` 
 
-The plugin name in load should be `CamelCase`, but the folder should be `underscored`.
+The plugin name in load should be camel case with the first letter capitalized e.g. ContactManager, but the folder should be `underscored`.
 
 If you did not use the generate plugin then follow these steps.
 
@@ -94,7 +94,7 @@ $results = $this->Contact->find('all');
 You can install plugins from remote GIT repositories using the plugin shell.
 
 ```linux
-$ bin/console plugin install https://github.com/originphp/generate-plugin.git
+$ bin/console plugin:install https://github.com/originphp/generate-plugin.git
 ```
 
 For a plugin to be valid there should be package.json in the following format:

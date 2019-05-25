@@ -47,7 +47,7 @@ Any methods which are not supposed to be actions, should be set to `private` or 
 
 If you want to add logic when the controller is created, you can do so in the `initialize` method.
 
-Remember, you can use the code generation tool to create the Controller and ControllerTest for you, providing that the table exists in the database. 
+Remember, you can use the code generation tool to create the Controller and ControllerTest for you.
 
 ```linux
 $ bin/console generate controller Products
@@ -469,9 +469,9 @@ You can pass an array with the following keys, which are the same as used in Mod
          'joins' =  [
             [
                 'table' => 'authors',
-                'alias' => 'Author',
+                'alias' => 'authors',
                 'type' => 'LEFT', 
-                'conditions' => [ 'Author.id = Article.author_id']
+                'conditions' => ['authors.id = articles.author_id']
             ]
     ];
 ```

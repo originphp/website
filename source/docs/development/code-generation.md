@@ -6,60 +6,131 @@ section: content
 ---
 # Code Generation
 
-If you follow the conventions with database tables and column naming, you can quickly generate code use the `generate` plugin, once you have done this you and delete the plugin from your source tree.
+OriginPHP comes with the generate command to save time using boilerplate templates for creating your class files.
 
-You can also customise the templates, and then save them for future projects.
-
-The first thing to do is setup your database and config.
-
-Run the console command (this is a shell script in the bin folder) and this will show the options that are available to you.
+To use generate in an interactive way
 
 ```linux 
 $ bin/console generate
 ```
 
-So lets you are creating a contact app, and you have a `contacts` table setup
+When using generate it expects the name of the class to be studly caps LemonPie and it also accepts plugin syntax. MyPlugin.LemonPie, which would then generate the files in a plugin's folder.
 
-We will need to create the Model, View and Controller (MVC);
+For example to generate a Posts controller in the src folder
 
-```linux
-$ bin/console generate controller Contacts
+```linux 
+$ bin/console generate controller Posts
+```
+To generate the Posts controller in the Cms plugin
+
+```linux 
+$ bin/console generate controller Cms.Posts
 ```
 
-```linux
-$ bin/console generate model Contact
+
+## Behavior
+
+To generate a `Behavior` for a `Model`.
+
+```linux 
+$ bin/console generate behavior SoftDelete
 ```
 
-```linux
-$ bin/console generate view Contacts
+## Command
+
+To generate a console `Command`:
+
+```linux 
+$ bin/console generate command CacheReset
 ```
 
-This will generate the following views
-- `/contacts/add` 
-- `/contacts/edit`
-- `/contacts/index`
-- `/contacts/view`
+## Component
+To generate a `Component` to be used by your `Controllers`.
 
-You can also generate the Model,View,Controller (MVC) in one go
-
-```linux
-$ bin/console generate all Contact
+```linux 
+$ bin/console generate component FormSecurity
 ```
 
-If all went ok then you should be able to access your contacts app by `http://localhost:8000/contacts`
+## Controller
 
-Whats is really great, is if you look in the `plugin/make` folder you will find easy to edit templates, simply
-modify your html there, wrap up stuff in divs, add classes and then make the code. It requires no learning at all.
+When you create a `Controller`, it will also create the integration test file.
 
-There are number of vars which are used, and in most cases you wont even need to use these as you will modifying the html structure in the templates.
+```linux 
+$ bin/console generate controller Posts
+```
 
-- `%model%` e.g. BookmarksTag
-- `%controller%` e.g. BookmarksTags
-- `%singularName%` e.g. bookmarksTag
-- `%pluralName%` e.g. bookmarksTags
-- `%singularHuman%` e.g. Bookmarks Tag
-- `%pluralHuman%` e.g. Bookmarks Tags
-- `%singularHumanLower%` e.g. bookmarks tag
-- `%pluralHumanLower%` e.g. bookmarks tags
-- `%controllerUnderscored%` e.g. bookmarks_tags
-- `%primaryKey%` e.g. id
+You also add a list of methods separated by spaces afterwards, then the methods will be added to the controller and test file, and views for those methods will also be created.
+
+```linux 
+$ bin/console generate controller Posts index add edit
+```
+
+## Helper
+
+To generate a `Helper` to be used in your views.
+
+```linux 
+$ bin/console generate helper FunkyForm
+```
+
+## Model
+
+To generate a `Model`, its test and fixture file.
+
+```linux 
+$ bin/console generate model User
+```
+
+If you do not have the database then you also add the create table schema like this
+
+```linux 
+$ bin/console generate model User name:string description:text age:integer active:boolean credits:decimal created:datetime
+```
+
+This will also create a migration file to create the table for you. Once you have done this run the `db:migrate` command to create the table.
+
+```linux 
+$ bin/console db:migrate
+```
+
+## Middleware
+
+To create a middleware class
+
+```linux 
+$ bin/console generate middleware FormSecurity
+```
+
+
+## Migration
+
+To quickly create a migration
+
+
+```linux 
+$ bin/console generate migration AddProductTableIndex
+```
+
+## Plugin
+
+If you are going to make a new `Plugin`, then the generate tool will create all the directories and base files for you.
+
+```linux 
+$ bin/console generate plugin ContactManager
+```
+Then after this run the other generators to create the code in the plugin folder.
+
+```linux 
+$ bin/console generate controller ContactManager.Contacts
+$ bin/console generate model ContactManager.Contact
+```
+
+## Scaffold
+
+If you have your database setup with tables, and need to build a base for crud application, scaffold is what you want. It will generate a working prototype based upon your database.
+
+```linux 
+$ bin/console generate scaffold User
+```
+
+Just type in the name of the model, so User will look for the users table.

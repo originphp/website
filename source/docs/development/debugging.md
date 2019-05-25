@@ -10,6 +10,10 @@ You can use `debug` function to debug variables and objects. You can also run a 
 
 When errors are thrown in a web application, in debug mode, a full debug screen is shown where you can go through the whole stack trace.
 
+![Pretty Exception Handling](/assets/images/http-exception.png)
+
 In CLI, a pretty back trace is shown.
+
+![Pretty CLI Exception](/assets/images/console-exception.png)
 
 The `logs/application.log` file will show MySQL errors and any exceptions triggered in non-debug mode.
