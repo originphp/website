@@ -33,7 +33,7 @@ Extracts a single column from a collection to create a list. You can use dot not
 
 ```php
     $collection = collection($books);
-    $authors = $collection->extract('author.name');
+    $authors = $collection->extract('authors.name');
     $list = $authors->toList();
 ```
 
@@ -156,7 +156,7 @@ Sorts a collection by a field or callback.
 To sort by a field, and you can use dot notation.
 ```php
     $collection = new Collection($books);
-    $sortedCollection = $collection->sortBy('author.name');
+    $sortedCollection = $collection->sortBy('authors.name');
 ``` 
 To sort by a callback.
 
@@ -202,7 +202,7 @@ Gets the first item with the smallest value.
 
 ```php
     $collection = new Collection($books);
-    $author = $collection->max('author.rating');
+    $author = $collection->max('authors.rating');
 ``` 
 
 To sort by a callback.
@@ -240,7 +240,7 @@ Gets the average value from a field or callback.
 
 ```php
     $collection = new Collection($books);
-    $avgRating = $collection->avg('author.rating');
+    $avgRating = $collection->avg('authors.rating');
 ``` 
 
 To get the average value using a callback
@@ -258,7 +258,7 @@ Gets the median value from a field or callback.
 
 ```php
     $collection = new Collection($books);
-    $median = $collection->median('author.rating');
+    $median = $collection->median('authors.rating');
 ``` 
 
 To get the median value using a callback
@@ -283,7 +283,7 @@ Counts by a field and value, and results are grouped.
 
 ```php
     $collection = new Collection($books);
-    $counts = $collection->countBy('author.type'); // ['famous'=>10,'new'=>20]
+    $counts = $collection->countBy('authors.type'); // ['famous'=>10,'new'=>20]
 ``` 
 You can also use a callback.
 
@@ -303,7 +303,7 @@ Groups results by a field or callback.
 
 ```php
     $collection = new Collection($books);
-    $grouped = $collection->groupBy('author.type');
+    $grouped = $collection->groupBy('authors.type');
     $array = $grouped->toArray();
 ``` 
 You can also use a callback.
@@ -324,7 +324,7 @@ Inserts a value into a path for each item in the collection.
 
 ```php
     $collection = new Collection($books);
-    $newCollection = $collection->insert('author.registered',true);
+    $newCollection = $collection->insert('authors.registered',true);
     $books = $newCollection->toArray();
 ```
 
@@ -332,7 +332,7 @@ Taking the same example, I will chain it using the helper function. This can be 
 that returns a new collection.
 
 ```php
-    $books = collection($books)->insert('author.registered',true)->toArray();
+    $books = collection($books)->insert('authors.registered',true)->toArray();
 ``` 
 
 ## Other

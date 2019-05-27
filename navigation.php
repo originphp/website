@@ -37,6 +37,7 @@ return [
             'Date Helper' => 'docs/view/date-helper',
             'Cookie Helper' => 'docs/view/cookie-helper',
             'Session Helper' => 'docs/view/session-helper',
+            'Intl Helper' => '/docs/view/intl-helper'
         ],
     ],
     'Console Commands' => [
@@ -59,6 +60,7 @@ return [
             'Debugging' => 'docs/development/debugging',
             'Testing' => 'docs/development/testing',
             'Migrations' => 'docs/development/migrations',
+            'Internationalization (I18n)' => 'docs/development/internationalization-i18n',
         ],
     ],
     'Utilities' => [

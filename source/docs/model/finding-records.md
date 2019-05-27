@@ -120,7 +120,7 @@ You can use either a string or an array if you want to search multiple.
 
 ```php
   $conditions = ['title' => 'How to write an article'] // title = "How to write an article"
-  $conditions = ['Author.name' => 'James']; // Author.name = "James"
+  $conditions = ['authors.name' => 'James']; // authors.name = "James"
   $conditions = ['author_id' => [1000,1001,1002];  // author_id IN (1000,1001,1002)
 ```
 
@@ -130,7 +130,7 @@ You can use either a string or an array if you want to search multiple.
 
 ```php
   $conditions = ['title !=' => 'How to write an article'] // title != "How to write an article"
-  $conditions = ['Author.name !=' => 'James']; // Author.name = "James"
+  $conditions = ['authors.name !=' => 'James']; // authors.name = "James"
   $conditions = ['author_id !=' => [1000,1001,1002];  // author_id NOT IN (1000,1001,1002)
 ```
 
@@ -140,7 +140,7 @@ You can use either a string or an array if you want to search multiple.
 To compare two fields
 
 ```php
- $conditions = ['Article.created  = Article.modified'];
+ $conditions = ['articles.created  = articles.modified'];
 ```
 
 ### Arithmetic
@@ -166,8 +166,8 @@ To use between
 ### Like
 
 ```php
- $conditions = ['Author.name LIKE' =>'Tony%'];
- $conditions = ['Author.name NOT LIKE' =>'%Tom%'];
+ $conditions = ['authors.name LIKE' =>'Tony%'];
+ $conditions = ['authors.name NOT LIKE' =>'%Tom%'];
 ```
 
 ### And,OR and NOT
@@ -176,27 +176,27 @@ To create more complex queries you can use and or and not.
 
 ```php
 $conditions = [
-    'Author.name' => 'James',
+    'authors.name' => 'James',
     'OR' => [
-      'Aritcle.title LIKE' => 'how to%',
-      'Article.status' => 'Published'
+      'articles.title LIKE' => 'how to%',
+      'articles.status' => 'Published'
     ]
 ]
 ```
 This would generate something like this this:
 
 ```sql
-Author.name = 'James' AND (Aritcle.title LIKE 'how to%' OR Aritcle.status = 'Published')
+authors.name = 'James' AND (articles.title LIKE 'how to%' OR articles.status = 'Published')
 ```
 
 If you wanted to search using the same fields you can put each condition in its own array.
 
 ```php
 $conditions = [
-    'Author.name' => 'James',
+    'authors.name' => 'James',
     'OR' => [
-      ['Aritcle.title LIKE' => 'how to%'],
-      ['Aritcle.title LIKE' => '100 Ways to%'],
+      ['articles.title LIKE' => 'how to%'],
+      ['articles.title LIKE' => '100 Ways to%'],
     ]
 ]
 ```
@@ -212,8 +212,8 @@ Lets say you want to search by article title or author:
       ['title LIKE' => '%100 ways to%'],
       ]],
     ['OR' => [
-        ['Author.name LIKE' => '%tony%'],
-        ['Author.name LIKE' => '%claire%'],
+        ['authors.name LIKE' => '%tony%'],
+        ['authors.name LIKE' => '%claire%'],
     ]],
     ];
 ```
@@ -225,7 +225,7 @@ Lets say you want to search by article title or author:
 The conditions key is what is used to generate the sql queries. You should always try to add the alias to the field.
 
 ```php
-$conditions = ['Article.id'=>1234];
+$conditions = ['articles.id'=>1234];
 $result = $this->Article->find('first',['conditions'=>$conditions]);
 ```
 
@@ -242,21 +242,21 @@ To use also pass DISTINCT, MIN and MAX etc. When using those database functions 
 field name.
 
 ```php
-$conditions = ['fields'=>['DISTINCT (Author.name) AS author_name','title']];
+$conditions = ['fields'=>['DISTINCT (authors.name) AS author_name','title']];
 ```
 
 ### Order
 
-Use this option to order the results by fields. Make sure you add the alias prefix e.g. `Article.` to the field if you are working with associated data. The order option can be a string or an array.
+Use this option to order the results by fields. Make sure you add the alias prefix e.g. `articles.` to the field if you are working with associated data. The order option can be a string or an array.
 
 ```php
 $result = $this->Article->find('all',[
-  'order'=>'Article.created DESC'
+  'order'=>'articles.created DESC'
   ]);
 
 $result = $this->Article->find('all',[
-  'order'=>['Article.title','Article.created ASC'
-  ]]); // ORDER BY Article.title,Article.created ASC
+  'order'=>['articles.title','articles.created ASC'
+  ]]); // ORDER BY articles.title,articles.created ASC
 ```
 You can set the default sort order for a model in the model property `order`, any calls to find without order will use this as the natural order.
 

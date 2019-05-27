@@ -68,8 +68,8 @@ You can also pass an options array with any of the following keys.
       $this->hasOne('Profile', [
           'className' => 'UserProfile',
           'foreignKey' => 'user_profile_id',
-          'conditions' => ['UserProfile.active'=>true],
-          'fields' => ['User.id','User.name','UserProfile.id','UserProfile.status'],
+          'conditions' => ['user_profiles.active'=>true],
+          'fields' => ['users.id','users.name','user_profiles.id','user_profiles.status'],
           'dependent' => true]
           );
     }
@@ -110,8 +110,8 @@ You can also pass an options array with any of the following keys.
       $this->belongsTo('SuperUser',[
           'className' => 'User',
           'foreignKey' => 'user_id',
-          'conditions' => ['SuperUser.email !='=> null],
-          'fields' => ['SuperUser.id','SuperUser.name','Profile.id','Profile.name'],
+          'conditions' => ['super_users.email !='=> null],
+          'fields' => ['super_users.id','super_users.name','Profile.id','Profile.name'],
           'dependent' => true,
           'type' => 'INNER'
       ]);
@@ -218,8 +218,8 @@ You can also pass an options array with any of the following keys. If you are fo
       'with' => 'UsersTags'
       'foreignKey' => 'user_id',
       'associationForeignKey' => 'tag_id',
-      'fields' => ['User.name','User.email','Tag.title','Tag.created'],
-      'order' => ['Tag.created ASC'],
+      'fields' => ['users.name','users.email','tags.title','tags.created'],
+      'order' => ['tags.created ASC'],
       'mode' => 'append'
       'limit' => 50
       ]);

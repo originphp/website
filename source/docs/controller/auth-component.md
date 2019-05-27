@@ -54,7 +54,7 @@ The default config for the `AuthComponent`.
             ],
             'model' => 'User',
             'fields' => ['username' => 'email', 'password' => 'password'],
-            'scope' => [], // Extra conditions for db . e.g User.active=1;
+            'scope' => [], // Extra conditions for db . e.g users.active=1;
             'unauthorizedRedirect' => true, // If false no redirect just exception e.g cli stuff
             'authError' => 'You are not authorized to access that location.',
         ]

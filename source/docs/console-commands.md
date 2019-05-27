@@ -31,7 +31,6 @@ use Origin\Command\Command;
 class HelloCommand extends Command
 {
     protected $name = 'hello';
-
     protected $description = 'A simple hello world command.';
 
     public function execute(){
@@ -271,9 +270,6 @@ This is what a warning looks like when using the IO warning
 
 ![Console Block](/assets/images/console-warning.png)
 
-```php
-$io->debug('This some warning text');
-```
 
 ### Asking Questions
 
@@ -338,7 +334,7 @@ This will output
 
 ```
 Some Heading
---------
+------------
   The quick brown fox..
 ```
 
@@ -349,7 +345,7 @@ To output a list or list item. You can also pass an array with options.
 
 ```php
 $this->io->list(['download file'])
-$this->io->list(['unpack file'],['bullet'=>'-'])
+$this->io->list('unpack file','-')
 ```
 
 This will output
@@ -461,7 +457,7 @@ use Origin\Console\ConsoleApplication;
  
 $app = new ConsoleApplication();
 $app->name('database');
-$app->Description([
+$app->description([
  'DB application for backing up and restoring the database'
 ])
 $app->addCommand('backup', 'DatabaseBackup'); // adds DatabaseBackupCommand

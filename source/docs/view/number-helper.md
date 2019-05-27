@@ -10,6 +10,7 @@ The number helper provides a number of useful functions, you can configure the d
 
 ```php
 use Origin\Utility\Number;
+
 public function initialize(){
     Number::locale([
         'currency'=>'USD', // default currency
@@ -19,6 +20,8 @@ public function initialize(){
         ]);
 }
 ```
+
+> If you are using [internationalization](docs/development/internationalization-i18n) then the Number utility will be configured automatically when you call **I18n::initialize()**.
 
 Once you have this configured whenever you use the number helper it will format based upon those defaults
 unless you tell it otherwise.
@@ -63,11 +66,11 @@ Then from your view just supply the currency code as the second argument.
 echo $this->Number->currency('1000000', 'CNY'); // ¥1,000,000.00
 ```
 
-## Formating Decimals
+## Formating Numbers to a precision
 
 ```php
-echo $this->Number->decimal('100'); // 100.00
-echo $this->Number->decimal('100.1',3); // 100.100
+echo $this->Number->precision('100'); // 100.00
+echo $this->Number->precision('100.1',3); // 100.100
 ```
 
 ## Formating Percentages

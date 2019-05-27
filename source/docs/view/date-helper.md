@@ -10,6 +10,7 @@ The date helper makes it easy to format dates, in your `AppController` setup the
 
 ```php
 use Origin\Utility\Date;
+
 public function initialize(){
      Date::locale([
          'timezone' => 'UTC',
@@ -19,6 +20,8 @@ public function initialize(){
          ]);
 }
 ```
+
+> If you are using [internationalization](docs/development/internationalization-i18n) then the Date utility will be configured automatically when you call **I18n::initialize()**.
 
 ## Formating
 

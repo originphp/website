@@ -151,7 +151,7 @@ Sometimes you will want to use dynamic data, in this case you will modify the da
 
 ```
 
-You can also manually specify the schema, the type field represents our own internal mapping, which will help in future should we decide to integrate with other databases.
+You can also manually specify the schema, the type field using our own mapping designed to be database agnostic. The types are `string`,`text`,`integer`,`bigint`,`float`,`decimal`,`datetime`,`date`,`time`,`binary` and `boolean`.
 
 Here is an example:
 
@@ -503,6 +503,8 @@ $this->assertErrorContains('needle'); // Checks the error message contains a str
 ```
 
 ### Getting the output
+
+When writing or debugging tests, you will need to see the output from the console command, as this is buffered, it is not sent to the screen however you get this with ease from within your test.
 
 ```php
 $stdout = $this->output(); // standard output
