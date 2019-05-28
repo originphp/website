@@ -222,7 +222,14 @@ Lets say you want to search by article title or author:
 
 ### Conditions
 
-The conditions key is what is used to generate the sql queries. You should always try to add the alias to the field.
+The conditions key is what is used to generate the sql queries. 
+
+```php
+$conditions = ['id'=>1234];
+$result = $this->Article->find('first',['conditions'=>$conditions]);
+```
+
+You should always try to add the model alias to the field when working with associated data or joining tables.
 
 ```php
 $conditions = ['articles.id'=>1234];

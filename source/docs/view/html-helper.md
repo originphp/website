@@ -19,8 +19,8 @@ echo $this->Html->link(['controller'=>'Articles','action'=>'view',1234]);
 
 When using array you can also pass the following additional keys.
 
-- ?: this should be array of key value pairs to generate a query string after the url
-- #: for html fragements, this a link on the page which will cause it to scroll
+- `?`: this should be array of key value pairs to generate a query string after the url
+- `#`: for html fragements, this a link on the page which will cause it to scroll
 
 All keys that are an integer will be passed as an argument. So to get `/articles/view/1234/abc`, use the following array.
 
@@ -54,7 +54,7 @@ You can also load external files
 echo $this->Html->js('https://code.jquery.com/jquery-3.3.1.min.js');
 ```
 
-You can also load a script from a plugin public folder, this will automatically load the contents inline of the view. This should only be used for development purposes for performance reasons, once in production move the file or create a symlink to it.
+You can also load a script from a plugin public folder, this will automatically load the contents inline of the view. This should only be used for development purposes for performance reasons. Once in production move the file or create a symlink to it.
 
 ```php
 echo $this->Html->js('Myplugin.custom.js');
@@ -80,11 +80,12 @@ To load a stylesheet located on the web.
 echo $this->Html->css('https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css');
 ```
 
-And to load a stylesheet from a plugin folder, you must also provide the controller name.
+You can also load a script from a plugin public folder, this will automatically load the contents inline of the view. This should only be used for development purposes for performance reasons. Once in production move the file or create a symlink to it.
 
 ```php
-echo $this->Html->css('MyPlugin.Controller/bootstrap.css');
+echo $this->Html->css('Myplugin.custom.css');
 ```
+
 
 ## Images
 
