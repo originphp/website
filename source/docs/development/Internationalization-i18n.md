@@ -31,7 +31,7 @@ class AppController extends Controller
 }
 ```
 
-The initialize method will locale definitions from the `locales` folder, configure the Date and Number utilities. You can run the `locales:generator` command and this will generate them all for you. You can keep or customize the ones that you want your application to support.
+The initialize method will locale definitions from the `config/locales` folder, configure the Date and Number utilities. You can run the `locales:generator` command and this will generate them all for you. You can keep or customize the ones that you want your application to support.
 
 ```linux
 $ bin/console locales:generator

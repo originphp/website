@@ -70,8 +70,8 @@ of the socket.
 
 ```php
 Cache::config('default', [
-         'engine' => 'Memcached',
-        'path' => '/var/sockets/memcached',
+     'engine' => 'Memcached',
+     'path' => '/var/sockets/memcached'
      ]);
 ```
 
@@ -145,7 +145,7 @@ Cache::config('default', [
 
 ```php
 namespace App\Cache;
-use Origin\Cache\CacheEngine;
+use Origin\Engine\Cache\CacheEngine;
 class CustomEngine extends CacheEngine
 {
 
@@ -159,7 +159,7 @@ class CustomEngine extends CacheEngine
 To add an item to the cache.
 
 ```php
-Use Origin\Cache\Cache;
+Use Origin\Utility\cache;
 
 $success = Cache::write('key',$value);
 ```
@@ -174,7 +174,7 @@ Cache::write('key',$value,'long-duration');
 To read an item from the cache, if it does not find an item it will return `false`
 
 ```php
-Use Origin\Cache\Cache;
+Use Origin\Utility\cache;
 
 $value = Cache::read('key');
 ```
@@ -190,7 +190,7 @@ In most cases using read is good enough, however if you are going to store a boo
 check will tell you if the key exists. This is handy if the result is false.
 
 ```php
-Use Origin\Cache\Cache;
+Use Origin\Utility\cache;
 
 if(Cache::check('key')){
     $bool = Cache::read('key);
@@ -209,7 +209,7 @@ Items are automatically deleted based upon the duration setting in the configura
 to delete an item manually then use the delete method.
 
 ```php
-Use Origin\Cache\Cache;
+Use Origin\Utility\cache;
 
 Cache::delete('key');
 ```
@@ -273,7 +273,7 @@ docker-compose build
 
 Then set the host to `memcached` in your cache config.
 
-**To install Memcached on a Uubuntu/Debain based server**
+**To install Memcached on a Ubuntu/Debain based server**
 
 ```php
 sudo apt-get update
@@ -307,7 +307,7 @@ docker-compose build
 
 Then set the host to `redis` in your cache config.
 
-**To install Redis on a Uubuntu/Debain based server**
+**To install Redis on a Ubuntu/Debain based server**
 
 ```php
 pecl install redis

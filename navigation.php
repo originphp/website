@@ -53,6 +53,7 @@ return [
         'url' => 'docs/development',
         'children' => [
             'Routing' => 'docs/development/routing',
+            'Configuration' => 'docs/development/configuration',
             'Middleware' => 'docs/development/middleware',
             'Code Generation' => 'docs/development/code-generation',
             'Events' => 'docs/development/event-manager',
@@ -67,12 +68,13 @@ return [
         'url' => 'docs/utilities',
         'children' => [
             'Cache' => 'docs/utility/cache',
-            'Queue' => 'docs/utility/queue',
-            'Email' => 'docs/utility/email',
             'Collection' => 'docs/utility/collection',
+            'Dom' => 'docs/utility/dom',
+            'Email' => 'docs/utility/email',
+            'Queue' => 'docs/utility/queue',
+            'Storage' => 'docs/utility/storage',
             'XML' => 'docs/utility/xml',
             'Yaml' => 'docs/utility/yaml',
-            'Dom' => 'docs/utility/dom',
         ],
     ],
 ];

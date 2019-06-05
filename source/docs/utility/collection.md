@@ -344,5 +344,5 @@ Take a number of items from a collection.
 ```php
     $collection = new Collection($books);
     $firstLot = $collection->take(10);
-    $secondLot = $collection->take(10);
+    $secondLot = $collection->take(10,11);
 ``` 
