@@ -38,4 +38,10 @@ class ContactsController extends AppController {
 }
 ```
 
+To check the Session has a particular key
+
+```php
+$result = $this->Session->exists('user.id');
+```
+
 You can also reset the whole session using the `reset` method.

@@ -21,7 +21,10 @@ class ContactsController extends AppController
         return $this->Cookie->read('monster');
     }
     public function deleteCookie(){
-        $this->Cookie->delete('monster');
+        if($this->Cookie->exists('monster')){
+            $this->Cookie->delete('monster');
+        }
+        
     }
 }
 ```

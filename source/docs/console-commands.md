@@ -452,7 +452,7 @@ it is treated as single command application and it will automatically run the co
 
 ```php
 #!/usr/bin/env php
-require __DIR__ . '/vendor/originphp/originphp/src/bootstrap.php';
+require __DIR__ . '/vendor/originphp/framework/src/bootstrap.php';
 use Origin\Console\ConsoleApplication;
  
 $app = new ConsoleApplication();

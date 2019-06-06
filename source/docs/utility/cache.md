@@ -163,11 +163,6 @@ Use Origin\Utility\cache;
 
 $success = Cache::write('key',$value);
 ```
-To use a different configuration
-
-```php
-Cache::write('key',$value,'long-duration');
-```
 
 ### Read
 
@@ -178,29 +173,17 @@ Use Origin\Utility\cache;
 
 $value = Cache::read('key');
 ```
-To use a different configuration
 
-```php
-$value = Cache::read('key','long-duration');
-```
+### Exists
 
-### Check
-
-In most cases using read is good enough, however if you are going to store a boolean result in the cache, then
-check will tell you if the key exists. This is handy if the result is false.
+To check wether a key exists in the cache
 
 ```php
 Use Origin\Utility\cache;
 
-if(Cache::check('key')){
+if(Cache::exists('key')){
     $bool = Cache::read('key);
 }
-```
-
-To use a different configuration
-
-```php
-$result = Cache::check('key','long-duration');
 ```
 
 ### Delete
@@ -213,27 +196,37 @@ Use Origin\Utility\cache;
 
 Cache::delete('key');
 ```
-To use a different configuration
 
-```php
-Cache::delete('key','short-duration');
-```
 
 ### Clearing the Cache
 
 ```php
 Cache::clear();
-Cache::clear('long-duration');
 ```
 
 ### Enabling and disabling the cache
 
-Sometimes you will need to disable the cache, when you disable we switch the engine to the `NullEngine` and your program can
-work as normal.
+Sometimes you will need to disable the cache, when you disable we switch the engine to the `NullEngine` and your program can work as normal.
 
 ```php
 Cache::disable();
 Cache::enable();
+```
+
+### Working with Multiple Configurations
+
+Whether you are using multiple caching engines, or you multiple configurations for a single cache engine (e.g. short term and long term caches), the Cache utility is flexible.
+
+```php
+Cache::use('long-term');
+$value = Cache::read('My.key');
+Cache::write('My.key',$value);
+```
+
+When working with multiple configurations, make sure that even if you are going to use the default config, that you always call `use`, since the Cache utility will use configuration until you tell it to use something else.
+
+```php
+Cache::use('default');
 ```
 
 ## Installing Cache Engines
