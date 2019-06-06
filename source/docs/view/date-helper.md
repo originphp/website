@@ -21,7 +21,7 @@ public function initialize(){
 }
 ```
 
-> If you are using [internationalization](docs/development/internationalization-i18n) then the Date utility will be configured automatically when you call **I18n::initialize()**.
+> If you are using [internationalization](/docs/development/internationalization-i18n) then the Date utility will be configured automatically when you call **I18n::initialize()**.
 
 ## Formating
 

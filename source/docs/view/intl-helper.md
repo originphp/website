@@ -20,7 +20,7 @@ public function initialize(){
 }
 ```
 
-> If you are using [internationalization](docs/development/internationalization-i18n) then the Date and Number utilities will be configured automatically when you call **I18n::initialize()**.
+> If you are using [internationalization](/docs/development/internationalization-i18n) then the Date and Number utilities will be configured automatically when you call **I18n::initialize()**.
 
 ## Number
 

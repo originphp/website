@@ -452,6 +452,7 @@ it is treated as single command application and it will automatically run the co
 
 ```php
 #!/usr/bin/env php
+<?php
 require __DIR__ . '/vendor/originphp/framework/src/bootstrap.php';
 use Origin\Console\ConsoleApplication;
  
@@ -459,7 +460,7 @@ $app = new ConsoleApplication();
 $app->name('database');
 $app->description([
  'DB application for backing up and restoring the database'
-])
+]);
 $app->addCommand('backup', 'DatabaseBackup'); // adds DatabaseBackupCommand
 $app->addCommand('restore', 'DatabaseRestore'); // adds DatabaseBackupCommand
 $app->run();

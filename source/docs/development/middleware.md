@@ -8,7 +8,15 @@ section: content
 
 If you need to use middleware for your app, doing so is straightforward, just create the file in `Middleware` folder and make sure both the name and class ends with `Middleware`, for example, the foo middleware would be `FooMiddleware`.
 
-Your middleware class will need the process method and it must return the response object.
+Your Middleware class will need the process method and it must return the response object.
+
+Using the generate command you can quickly create a new Middleware class.
+
+```linux
+$ bin/console generate middleware RequestModifier
+```
+
+This is what it will look like
 
 ```php
 namespace App\Middleware;

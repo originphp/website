@@ -44,4 +44,14 @@ To check the Session has a particular key
 $result = $this->Session->exists('user.id');
 ```
 
-You can also reset the whole session using the `reset` method.
+To clear the session
+
+```php
+$this->Session->clear();
+```
+
+To destroy the session
+
+```php
+$this->Session->destroy();
+```

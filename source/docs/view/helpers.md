@@ -133,11 +133,13 @@ To set a value in the config:
  $this->config(['foo'=>'bar']);
 ```
 
-To set multiple values (not replace the array with the one passed)
+To set multiple values (merges config)
 
 ```php
  $this->config(['foo'=>'bar']);
 ```
+
+When passing an array to the config method on the ConfigTrait, it will only replace values, it will not replace all the config.
 
 If you need your helper to have a default configuration, then you can set the `$defaultConfig` array property, this will be merged with any config passed when loading a helper.
 

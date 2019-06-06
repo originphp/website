@@ -21,7 +21,7 @@ public function initialize(){
 }
 ```
 
-> If you are using [internationalization](docs/development/internationalization-i18n) then the Number utility will be configured automatically when you call **I18n::initialize()**.
+> If you are using [internationalization](/docs/development/internationalization-i18n) then the Number utility will be configured automatically when you call **I18n::initialize()**.
 
 Once you have this configured whenever you use the number helper it will format based upon those defaults
 unless you tell it otherwise.

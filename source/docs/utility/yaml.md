@@ -8,7 +8,7 @@ section: content
 
 The YAML utility is for reading (parsing) and writing YAML files. Note: The YAML utility does not cover the complete specification, it is designed to read and write configuration files, and data from the database so that it can be read and edited in user friendly way.
 
-## Create a YAML from an array
+## Create a YAML string
 
 ```php
 use Origin\Utility\Yaml;
@@ -82,7 +82,7 @@ tags:
 tag_string: Framework,PHP
 ```
 
-## Read YAML from a string
+## Read YAML
 
 To create an array from a YAML string
 
