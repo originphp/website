@@ -450,6 +450,8 @@ $result = $this->io->createFile($filename,$contents);
 Create a PHP file, making sure the path to the bootstrap.php file is correct. If you only add one command, then 
 it is treated as single command application and it will automatically run the command when you run the application. 
 
+> Note, the following example if this is called from the root directory. You will need to change the path to the bootstrap file if you want this to work somewhere else.
+
 ```php
 #!/usr/bin/env php
 <?php
@@ -466,6 +468,12 @@ $app->addCommand('restore', 'DatabaseRestore'); // adds DatabaseBackupCommand
 $app->run();
 ```
 
+You can find a sample Console Application in the bin folder, called `db` to run this
+
+```linux
+bin/db
+```
+
 ## Running Commands as Cron Jobs
 
 Many applications will need to run cron jobs, these can be to clean the database, send out emails, carry out tasks etc. You can run your `Commands` through cron by editing the cron file.
@@ -473,7 +481,7 @@ Many applications will need to run cron jobs, these can be to clean the database
 On Ubunu or other Debian based flavors of unix use the crontab command.
 
 ```linux
-    sudo crontab -u www-data -e
+sudo crontab -u www-data -e
 ```
 
 For Redhat or Redhat base distributions edit the `/etc/crontab` file, although at the time of writing Redhat does not officially support Php 7.0.

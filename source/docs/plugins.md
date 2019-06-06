@@ -94,13 +94,7 @@ $results = $this->Contact->find('all');
 You can install plugins from remote GIT repositories using the plugin shell.
 
 ```linux
-$ bin/console plugin:install https://github.com/originphp/generate-plugin.git
+$ bin/console plugin:install https://github.com/username/plugin.git MyPluginName
 ```
 
-For a plugin to be valid there should be package.json in the following format:
-
-```json
-{
-  "name": "SuperMigration"
-}
-```
+If you dont provide a plugin name then  it will use the repository name.
