@@ -8,7 +8,7 @@ section: content
 
 Inernationalization of your app includes translating messages and displaying dates and times in the correct formats and timezones as well as formating numbers properly in multiple languages.
 
-To setup internationalization you need to intialize I18n, so you would do this from your `Controller`, this will detect the locale from the user. Note. It does not detect the user timezone.
+To setup internationalization you need to initialize I18n, so you would do this from your `Controller`, this will detect the locale from the user. Note. It does not detect the user timezone.
 
 ```php
 use Origin\I18n\I18n;

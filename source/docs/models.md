@@ -140,8 +140,8 @@ $comments = $this->Article->Comment->find('all');
 To load a non related model from a controller
 
 ```php
-$Product = $this->loadModel('Product');
-$products = $Product->find('all');
+$this->loadModel('Product');
+$products = $this->Product->find('all');
 ```
 
 To access [associated](/docs/model/associations) models from within other models.

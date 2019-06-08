@@ -10,17 +10,12 @@ section: content
 
 OriginPHP is a web application framework written in PHP that uses a number of well known software design patterns, including convention over configuration, MVC (Model View Controller), association data mapping, and front controller.
 
-
-## First time users
-
-For the first time that you use OriginPHP, install the [bookmarks demo application](https://github.com/originphp/bookmarks) to get a feel for the features of OriginPHP. The instructions can be found in the Readme of the project.
-
 ## Installation
 
 Download and install [Composer](https://getcomposer.org/doc/00-intro.md), then run the following command to create a new project
 
 ```linux
-$ composer create-project originphp/app [application_name]
+$ composer create-project originphp/app <folder>
 ```
 
 OriginPHP comes with a dockerized development environment.
@@ -28,7 +23,7 @@ OriginPHP comes with a dockerized development environment.
 Install [Docker Desktop](https://www.docker.com/products/docker-desktop) then build the docker containers, this must be done from within the project folder
 
 ```linux
-$ cd [application_name]
+$ cd <folder>
 $ docker-compose build
 ```
 

@@ -429,7 +429,7 @@ Set headers for the next request
 
 ### env
 
-Sets server enviroment $_SERVER
+Sets server environment $_SERVER
 
 ```php
     $this->env('HTTP_ACCEPT_LANGUAGE','en');

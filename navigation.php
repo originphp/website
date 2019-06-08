@@ -4,6 +4,9 @@ return [
     'Getting Started' => [
         'url' => 'docs/getting-started',
     ],
+    'Tutorial' => [
+        'url' => 'docs/tutorial',
+    ],
     'Controllers' => [
         'url' => 'docs/controllers',
         'children' => [

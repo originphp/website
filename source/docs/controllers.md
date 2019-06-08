@@ -308,8 +308,7 @@ class PostsController extends AppController
 {
     public function beforeFilter(){
         if($this->Auth->isLoggedIn()){
-            $session = $this->request->session();
-            echo $session->read('user_name');
+            $this->Flash->info('Welcome back');
         }
     }
 }
@@ -461,7 +460,7 @@ You can pass an array with the following keys, which are the same as used in Mod
 - **group**: is for the database group query results.
 - **limit**: this sets how many rows are returned.
 - **callbacks**: If this is set to true, before or after then it will call the model callbacks.
-- **contain**: An array of models that you want to load associated data for. You can also pass the model as key and array of config, e.g ['Tag'=>['fields'=>$field,'conditions'=>$conditions]]
+- **associated**: An array of models that you want to load associated data for. You can also pass the model as key and array of config, e.g ['Tag'=>['fields'=>$field,'conditions'=>$conditions]]
 - **joins**:  An array of join settings to join a table.
 
 ```php

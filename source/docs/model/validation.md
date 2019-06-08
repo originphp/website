@@ -27,8 +27,11 @@ You can define a rule as a string, rule array, or array with multiple rules.
           ]);
           // multiple rules
          $this->validate('email', [
-            ['rule'=>'notBlank'],
-            ['rule'=>'email']
+            [
+              'rule' => 'email',
+              'required' => true
+              ],
+            ['rule'=>['minLength',10]
         ]);
     }
   }
@@ -36,10 +39,11 @@ You can define a rule as a string, rule array, or array with multiple rules.
 
 A validation rule array consists of the following keys:
 
-- *rule* - this is the name of the rule to run
-- *message* - error message to display if validation fails
-- *on* - default is `null`. You can also set to `create` or `update` to only check validation rule when a record is created or updated.
-- *required* - default is `false`. If this is set to true then this means the data must include the key regardless if it is empty or not. For example you might want an owner id to always be present when creating a record. If you set required, then this means 
+- *rule*: this is the name of the rule to run
+- *message*: error message to display if validation fails
+- *on*: default is `null`. You can also set to `create` or `update` to only check validation rule when a record is created or updated.
+- *required*: default is `false`. If set to true then if the value is blank, validation will fail. This is so you don't have to create two rules, one for required (not blank) and another say for example email.
+- *allowBlank* - default is `false`. If the value is empty validation automatically fails. Set to true to skip validation on empty values. Not the same as required, this just allows a validation test to pass or fail on empty values. This is a fine grain control. Lets say you have a `minLength` rule on a non required field, and the value is empty. Validation would fail, however `allowBlank` will allow validation to pass in this instance.
 
 ## Validation Rules
 
@@ -49,6 +53,35 @@ When setting the rules the name is usually as a string, however some validation 
   $this->validate('field',[
     'rule' => ['range',1,100]
   ]);
+```
+
+
+### required
+
+This will probably be the rule that you use the most. The required rule means that value must be present in entity data and that it is not blank.
+
+
+```php
+  $this->validate('name','required');
+```
+
+or
+
+```php
+  $this->validate('name',[
+    'rule' => 'required',
+    'message' => 'You must enter a name'
+    ]);
+```
+
+Or 
+
+```php
+  $this->validate('email',[
+    'rule' => 'email',
+    'message' => 'Invalid email address',
+    'required' => true
+    ]);
 ```
 
 ### alphaNumeric
@@ -247,7 +280,7 @@ You can also check multiple values
 
 ```php
  $this->validate('email',[
-      'rule' => ['isUnique',array('username','email')],
+      'rule' => ['isUnique',['username','email']],
       'message' => 'Email and username are not unique'
   ]);
 ```

@@ -61,8 +61,7 @@ The default config for the `AuthComponent`.
 
 ```
 
-In the controller add a method for the login, first we need to identify the user, if the user is authenticated then it will return a User Entity. Then if the user is returned you can modify any data then 
-use the `login` method, which converts the User into an array and stores in the Session which essentially logs the the User in.
+In the controller add a method for the login, first we need to identify the user, if the user is authenticated then it will return a User Entity. Then if the user is returned you can modify any data then use the `login` method, which converts the User into an array and stores in the Session, which means the the User in.
 
 ```php
  public function login()

@@ -6,7 +6,7 @@ section: content
 ---
 # Cookie Component
 
-You can work with cookies from controllers and views, The cookie component allows you easily work with cookies. All cookie values are stored as a json string and by default they are automatically encrypted.
+You can work with cookies from controllers and views, The cookie component allows you easily work with cookies. All cookie values are stored as a string and by default they are automatically encrypted. Arrays are converted to json strings.
 
 Here are some examples how to use it:
 
@@ -14,8 +14,8 @@ Here are some examples how to use it:
 class ContactsController extends AppController
 {
     public function createCookies(){
-      $this->Cookie->write('forever',rand());
-      $this->Cookie->write('for-one-day-only',rand(),strtotime('+1 day'));
+      $this->Cookie->write('for-a-month',rand());
+      $this->Cookie->write('for-seven-days',rand(),'+7 days');
     }
     public function readCookie(){
         return $this->Cookie->read('monster');
@@ -32,9 +32,8 @@ class ContactsController extends AppController
 If you don't want the values of the cookies to be encrypted, then you can disable this when writing the cookie value.
 
 ```php
-$forever = 0;
-$this->Cookie->write('my_app','some_value',$forever,[
-    'encrypt'=>false
+$this->Cookie->write('my_app','some_value','+6 months',[
+    'encrypt' => false
     ]);
 ```
 

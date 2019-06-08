@@ -180,7 +180,7 @@ To create a file upload you need to set the type option when creating the form a
 ```php
 echo $this->Form->create(null, ['type'=>'file']);
 echo $this->Form->file('contacts');
-echo $this->Form->button('Import Contacts');
+echo $this->Form->button('Import Contacts',['type'=>'submit']); // or use Form->submit
 echo $this->Form->end();
 ```
 
@@ -247,8 +247,8 @@ This will output this:
 Buttons created via the button method in the form helper are automatically treated as submit buttons, if you don't want this then pass the `type` option as `button`.
 
 ```php
-echo $this->Form->button('save');
-echo $this->Form->button('cancel',['type'=>'button','onclick'=>'back();']);
+echo $this->Form->button('save',['type'=>'submit']); // or use Form->submit
+echo $this->Form->button('cancel',['onclick'=>'back();']);
 ```
 
 ## Controls for Associated Data

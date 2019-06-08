@@ -16,10 +16,17 @@ The response object contains information on the response that will be sent back 
 
 ## Setting Custom Headers
 
-You can set and get headers through the response object.
+You can set through the response object.
 
 ```php
 $this->response->header('Accept-Language', 'en-us,en;q=0.5');
+```
+
+To get headers being set in the response
+
+```php
+$all = $this->response->headers();
+$acceptLanguage = $this->response->headers('Accept-Language');
 ```
 
 ## Setting and getting the Content Type
@@ -49,8 +56,8 @@ You also write cookies using the response object instead of the Cookie Component
 
 ```php
 $this->response->cookie('key','value');
-$this->response->cookie('key','value',strtotime('+7 days'));
-$this->response->cookie('keyToDelete','',strtotime('-60 minutes')); // to delete
+$this->response->cookie('key','value','+7 days');
+$this->response->cookie('keyToDelete','','-60 minutes'); // to delete
 ```
 
 > When writing cookies the values wont be available for reading until the next request, since they are only sent after everything has been rendered to the screen.

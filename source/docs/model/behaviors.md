@@ -25,7 +25,7 @@ class FooBehavior extends Behavior
 
 ```
 
-To load the behavior, call `loadBehavior` from the `intialize` method.
+To load the behavior, call `loadBehavior` from the `initialize` method.
 
 ```php
     class Article extends AppModel

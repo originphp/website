@@ -11,7 +11,7 @@ in your views.
 
 ```php
 $value =  $this->Cookie->read('monster');
-$this->Cookie->write('forever',rand());
+$this->Cookie->write('foo',rand());
 $this->Cookie->delete('monster');
 ```
 

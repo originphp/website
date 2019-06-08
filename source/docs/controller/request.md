@@ -53,9 +53,15 @@ $headers =  $this->request->headers();
 To get a header
 
 ```php
-$keepAlive = $this->request->header('Connection');
+$keepAlive = $this->request->headers('Connection');
 ```
+
 You can also modify the request headers.
+
+```php
+$this->request->headers('Accept-Encoding','gzip,deflate');
+$this->request->headers('HTTP/1.0 404 Not Found',null); // Using no value
+```
 
 ## Checking the accepts header
 
@@ -70,26 +76,26 @@ public function view($id = null)
 
 There is also a `acceptLanguage` which will return a list of languages that the request can accept.
 
-## Session
-
-The Session Component uses the session object which can be accessed from the request object at any time (unlike a Component which can  only be accessed from the controller).
-
-```php
-class ContactsController extends AppController {
-  public function setUserId($id){
-      $session = $this->request->session();
-     $session->write('user_id',$id);
-  }
-}
-```
-
 ## Reading values from cookies in the request
 
-You can get a value for a cookie using the request object, the contents will be decrypted.
+To read cookie values from the request
 
 ```php
-public function doSomething()
-{
-    $value = $this->request->cookie('key');
-}
+$all = $this->request->cookies();
+$value = $this->request->cookies('key');
+```
+
+You can also change the values for the request
+
+```php
+$this->request->cookies('key','value');
+```
+
+## Getting the Session Object
+
+If you need get the session object for the request, then you can do so. The session object is the backend for the `SessionHelper` and `SessionComponent`.
+
+```php
+$this->request->session()->write('key','value');
+$value = $this->request->session()->read('key');
 ```
