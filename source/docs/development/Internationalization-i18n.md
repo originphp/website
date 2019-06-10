@@ -31,19 +31,27 @@ class AppController extends Controller
 }
 ```
 
-The initialize method will locale definitions from the `config/locales` folder, configure the Date and Number utilities. You can run the `locales:generator` command and this will generate them all for you. You can keep or customize the ones that you want your application to support.
+The initialize method will locale definitions from the `config/locales` folder if available and then configure the Date and Number utilities accordingly. You can run the `locales:generate` command to generate locales files.
+
+To generate specific locales, separate each locale by space
 
 ```linux
-$ bin/console locales:generator
+$ bin/console locales:generate en_UK en_US
+```
+
+To generate all the possible locales, approx 720, don't pass any arguments.
+
+```linux
+$ bin/console locales:generate
 ```
 
 Whenever you use the [NumberHelper](/docs/view/number-helper) or [DateHelper](/docs/view/date-helper) data will be localized automatically. Note. The date formating utilities assume thats dates are in UTC, and it will then convert from UTC to the configured timezone.
 
-> If you prefer to use PHP Intl extension for your formating, then then you dont need to use the `locales:generator` command see the [IntlHelper](/docs/view/intl-helper) for more information.
+> If you prefer to use PHP Intl extension for your formating, then then you don't need to use the `locales:generate` command see the [IntlHelper](/docs/view/intl-helper) for more information.
 
 ## Translations
 
-Translations are stored in the `src/Locale` folder, and the filename should be the language code with the `php` extension. E.g. `es.php` for the Spanish language. When I18n is initilalized it sets the locale and language for locale, unless you specify something else. Then the translations are loaded if the translation file is found.
+Translations are stored in the `src/Locale` folder, and the filename should be the language code with the `php` extension. E.g. `es.php` for the Spanish language. When I18n is initialized it sets the locale and language for locale, unless you specify something else. Then the translations are loaded if the translation file is found.
 
 The file itself should return an array
 
@@ -112,7 +120,7 @@ $user->datetime = Date::parseDate($user->datetime); // 31/01/2019 10:50 -> 2019-
 $user->time = Date::parseTime($user->datetime); // 10:50 -> 09:50:00
 ```
 
-If you want to use the PHP Intl extension for parsing
+If you want to use the PHP Intl extension for parsing.
 
 ```php
 use Origin\I18n\Date;

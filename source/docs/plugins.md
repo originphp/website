@@ -30,7 +30,7 @@ You can use the generate plugin to create the folder structure, routes and the p
 $ bin/console generate plugin ContactManager
 ```
 
-Then in your `config/bootstrap.php` add:
+Then in your `config/application.php` add:
 
 `Plugin::load('ContactManager');` 
 

@@ -19,10 +19,10 @@ You can define a rule as a string, rule array, or array with multiple rules.
     {
         parent::initialize($config);
         // String
-        $this->validate('password','notBlank');
+        $this->validate('password','required');
         // single rule
         $this->validate('username', [
-            'rule' => 'notBlank',
+            'rule' => 'required',
             'message' => 'This is required'
           ]);
           // multiple rules
@@ -58,8 +58,7 @@ When setting the rules the name is usually as a string, however some validation 
 
 ### required
 
-This will probably be the rule that you use the most. The required rule means that value must be present in entity data and that it is not blank.
-
+This will probably be the rule that you use the most. The required rule means that value must not be blank. If the required rule fails then no other validation rules will be run on that field.
 
 ```php
   $this->validate('name','required');

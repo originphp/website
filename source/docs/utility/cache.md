@@ -215,10 +215,10 @@ Cache::enable();
 
 ### Working with Multiple Configurations
 
-Whether you are using multiple caching engines, or you multiple configurations for a single cache engine (e.g. short term and long term caches), the Cache utility is flexible.
+Whether you are using multiple caching engines, or you multiple configurations for a single cache engine (e.g. short duration and long duration caches), the Cache utility is flexible.
 
 ```php
-Cache::use('long-term');
+Cache::use('long-duration');
 $value = Cache::read('My.key');
 Cache::write('My.key',$value);
 ```

@@ -19,7 +19,7 @@ The local storage simply works with data from the drive.
 ```php
 Storage::config('default', [
     'engine' => 'Local',
-    'path' => '/var/www/storage'
+    'root' => '/var/www/storage'
      ]);
 ```
 
@@ -160,7 +160,8 @@ $files = Storage::list('my_folder');
 
 ### Working with Multiple Storages
 
-To work with multiple storages, tell it which configuration to use before you use the read, write, delete and list methods.
+To work with multiple storages, tell it which configuration to use. The configuration will be used for the rest of the 
+duration that the script is executed.
 
 ```php
 use Origin\Utility\Storage;
