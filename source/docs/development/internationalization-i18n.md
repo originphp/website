@@ -8,46 +8,33 @@ section: content
 
 Inernationalization of your app includes translating messages and displaying dates and times in the correct formats and timezones as well as formating numbers properly in multiple languages.
 
-To setup internationalization you need to initialize I18n, so you would do this from your `Controller`, this will detect the locale from the user. Note. It does not detect the user timezone.
-
-```php
-use Origin\I18n\I18n;
-class AppController extends Controller
-{
-    public function initialize(){
-        I18n::initialize();
-    }
-}
-```
-
-To manually set this
+To localize your web application, call the initialize from your
 
 ```php
 class AppController extends Controller
 {
     public function initialize(){
+        parent::initialize();
         I18n::initialize(['locale' => 'en_GB','language'=>'en','timezone'=>'Europe/London']);
     }
 }
 ```
 
-The initialize method will locale definitions from the `config/locales` folder if available and then configure the Date and Number utilities accordingly. You can run the `locales:generate` command to generate locales files.
+The initialize method will locale definitions from the `config/locales` folder if available and then configure the Date and Number utilities accordingly. You can run the `locale:generate` command to generate locales files.
 
 To generate specific locales, separate each locale by space
 
 ```linux
-$ bin/console locales:generate en_UK en_US
+$ bin/console locale:generate en_UK en_US
 ```
 
 To generate all the possible locales, approx 720, don't pass any arguments.
 
 ```linux
-$ bin/console locales:generate
+$ bin/console locale:generate
 ```
 
-Whenever you use the [NumberHelper](/docs/view/number-helper) or [DateHelper](/docs/view/date-helper) data will be localized automatically. Note. The date formating utilities assume thats dates are in UTC, and it will then convert from UTC to the configured timezone.
-
-> If you prefer to use PHP Intl extension for your formating, then then you don't need to use the `locales:generate` command see the [IntlHelper](/docs/view/intl-helper) for more information.
+Whenever you use the [NumberHelper](/docs/view/number-helper) or [DateHelper](/docs/view/date-helper) data will be localized automatically. Note. 
 
 ## Translations
 

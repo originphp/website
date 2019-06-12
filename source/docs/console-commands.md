@@ -12,6 +12,10 @@ To see the available list of commands run the console script without any argumen
 $ bin/console
 ```
 
+Which will output this
+
+![Console Block](/assets/images/console.png)
+
 ## Creating Commands
 
 To create a `Command`, use the code generator.

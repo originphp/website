@@ -40,7 +40,7 @@ $queue = new Queue([
 
 You will most likely be adding jobs to a queue from either the controller, model or shell. 
 
-To add a job to the queue you just use set a queue name and then pass array of data. The queue name can consist of letters,numbers,hyphens and underscores. Once you have added the job it will return the job id.
+To add a job to the queue you just use set a queue name and then pass array of data. The queue name can consist of letters,numbers,hyphens, dots and underscores. Once you have added the job it will return the job id.
 
 ```php
 Use Origin\Utility\Queue;
@@ -50,7 +50,7 @@ $jobId = $queue->add('welcome_emails',[
     ]);
 ```
 
-You can also delay (or schedule) the job using a `strtotime` compatible string including a `Y-m-d H:i:s` date.
+You can also delay (or schedule) the job using a `strtotime` compatible string such as `+1 hour` or `2019-07-04 10:00:00`.
 
 ```php
  $queue->add('welcome_emails',[
@@ -83,22 +83,20 @@ If there is a job in the queue then it will return a Job object. When you proces
 
 ## Processing Jobs
 
-Jobs in the queue are typically processed in the background, and this will usually be done in a shell script
+Jobs in the queue are typically processed in the background, and this will usually be done in a console Command.
 
 ```php
-<?php
+namespace App\Command;
+use Origin\Command\Command;
+Use Origin\Utility\Queue;
 
-namespace App\Console;
-
-use App\Console\AppShell;
-
-class UsersShell extends AppShell
+class SendEmailNotificationsCommand extends Command
 {
-    public function hourly(){
-        $this->sendWelcomeEmails();
-    }
-    protected function sendWelcomeEmails(){
+    protected $name = 'send:email-notifications';
+    protected $description = 'Sends the email notification';
 
+    public function execute(){
+        $queue = new Queue();
         while ($job = $queue->fetch('welcome_emails')) {
             ...
         }
@@ -106,16 +104,17 @@ class UsersShell extends AppShell
 }
 ```
 
+
+
 On Ubuntu to setup cron tab for the `www-data` user type in the following command:
 
 ```linux
 $ sudo crontab -u www-data -e
 ```
 
-Then add the following line, assuming the source code is in the folder
-`/var/www/app.mydomain.com`.
+Then add the following line, assuming the source code is in the folder `/var/www/app.mydomain.com`.
 ```
-0 * * * * cd /var/www/app.mydomain.com && bin/console users hourly
+0 * * * * cd /var/www/app.mydomain.com && bin/console send:email-notifications
 ```
 
 ## Accessing The Model

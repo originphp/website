@@ -222,9 +222,30 @@ echo $this->Form->password('secret');
 <input type="password" name="secret">
 ```
 
-### Date, Datetime Time and Number
+### Date
 
-These are just text elements and are place to give flexibility, the control method will generate html through these based the field type in the database. You can hook these as you see fit, or change the default templates for them.
+To generate a date field. Date fields will automatically convert to user locale format and timezone and automatically validated as such.
+
+```php
+echo $this->Form->date('birthday');
+```
+
+### Datetime
+
+To generate a datetime field. Datetime fields will automatically convert to user locale format and timezone and automatically validated as such.
+
+```php
+echo $this->Form->datetime('created');
+```
+
+
+### Time
+
+To generate a datetime field. Time fields will automatically convert to the user locale format, but the timezone is not converted since it is impossible to know without a date because of [daylight saving](https://www.youtube.com/watch?v=-5wpm-gesOY).
+
+```php
+echo $this->Form->time('created');
+```
 
 ## PostLinks
 

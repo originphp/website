@@ -8,6 +8,20 @@ section: content
 
 The date helper makes it easy to format dates, in your `AppController` setup the default timezone, and date formats (using PHP date function style formats), and the date helper will automatically format dates and times unless you tell it to use a different format. The date helper uses the Date utility.
 
+To localize your web application, call the initialize from your
+
+```php
+class AppController extends Controller
+{
+    public function initialize(){
+        parent::initialize();
+        I18n::initialize(['locale' => 'en_GB','language'=>'en','timezone'=>'Europe/London']);
+    }
+}
+```
+
+Or if you want to set the date settings manually.
+
 ```php
 use Origin\Utility\Date;
 
@@ -21,14 +35,16 @@ public function initialize(){
 }
 ```
 
-> If you are using [internationalization](/docs/development/internationalization-i18n) then the Date utility will be configured automatically when you call **I18n::initialize()**.
-
 ## Formating
 
-From within your view you would use like this, it will automatically format the date/time/datetime depending upon the field type. The date helper assumes that the date in the database is stored in MySQL date/time formats. If you set the timezone to anything other than UTC, then the date utility will automatically convert times etc. Setting the timezone does not change the PHP script timezone, it is only used by the date utility.
+From within your view you would use like this, it will automatically format the date/time/datetime depending upon the field type. The date helper assumes that the date in the database is stored in MySQL date/time formats.
+
+Times will be converted if you the timezone differs (set with I18n) from the the PHP script (UTC). A date must be present in the datestring for the time to be converted due to daylight savings.
 
 ```php
 echo $this->Date->format($article->created); // From 2019-01-01 13:45:00 to 01/01/2019 13:45
+echo $this->Date->format($article->created,'H:i'); // From 2019-01-01 13:45:00 to 12:45 (time converted)
+echo $this->Date->format($article->time,'H:i'); // From 13:45:00 to 13:45 (time NOT converted)
 ```
 
 If you want to format it a different way, you can do so. Time values will still be converted to local time if you set the timezone to anything other than UTC.
@@ -39,7 +55,7 @@ echo $this->Date->format($article->created,'F jS Y'); // January 1st 2019
 
 ## Parsing
 
-The date formatter assumes that the dates that you are formatting are in MySQL format, e.g. Y-m-d H:i:s. You can use the Date utility to delocalize user submitted data to convert to this format and timezone.
+If you need to manually parse dates etc, use the Date utility. The date formatter assumes that the dates that you are formatting are in MySQL format, e.g. Y-m-d H:i:s. You can use the Date utility to delocalize user submitted data to convert to this format and timezone.
 
 This can be done in middleware, the controller or model. The simplest way is to use the model callbacks such as `beforeValidate` or `beforeSave`.
 

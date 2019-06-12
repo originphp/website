@@ -20,7 +20,7 @@ The local storage simply works with data from the drive.
 Storage::config('default', [
     'engine' => 'Local',
     'root' => '/var/www/storage'
-     ]);
+ ]);
 ```
 
 ### FTP
@@ -35,7 +35,7 @@ Storage::config('default', [
     'username' => 'james',
     'password' => 'secret,
     'ssl' => false
-     ]);
+ ]);
 ```
 
 options for configuring FTP include:
@@ -50,13 +50,13 @@ options for configuring FTP include:
 
 ### SFTP
 
-To use the SFTP storage you need to install `phpseclib` library.
+To use the SFTP storage you need to install the `phpseclib` library.
 
 ```linux
 $ composer require phpseclib/phpseclib
 ```
 
-Then you need to configure this
+Then you need to configure the Storage.
 
 ```php
 Storage::config('default', [
@@ -65,7 +65,7 @@ Storage::config('default', [
     'port' => 22,
     'username' => 'james',
     'password' => 'secret
-     ]);
+ ]);
 ```
 
 If you use want to use a private key to login, you can either provide the filename with the full path or the contents of the private key itself.

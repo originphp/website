@@ -579,7 +579,7 @@ $ bin/console generate model Comment article_id:integer name:string body:text
 Run the migration to create the table
 
 ```linux
-bin/console db:migrate
+$ bin/console db:migrate
 ```
 
 ### Associate Models

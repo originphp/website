@@ -81,7 +81,7 @@ $data = Csv::toArray($csv);
 
 ```
 
-If the CSV file has a headers row, then you can skip by passing an options array with the key headers set to true.
+If the CSV file has a header row, then you can skip by passing an options array with the key header set to true.
 
 ```php
 $data = Csv::toArray($csv,['header'=>true]);

@@ -101,6 +101,6 @@ The date formatter assumes that the dates that you are formatting are in MySQL f
 This can be done in middleware, the controller or model. The simplest way is to use the model callbacks such as `beforeValidate` or `beforeSave`.
 
 ```php
-use Origin\Utility\Date;
+use Origin\I18n\Date;
 $entity->created_date = Date::parseDatetime($entity->created_date); //31/01/2019 10:00 AM -> 2019-01-31 09:00:00
 ```

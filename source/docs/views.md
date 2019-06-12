@@ -17,7 +17,9 @@ This framework favors  'convention over configuration' and views are a good exam
 class ArticlesController extends AppController
 {
     public function latest(){
-        $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
+        $articles = $this->Article->find('all',[
+            'order'=>'created DESC','limit' =>5
+            ]);
         $this->set('articles',$articles);
     }
 }

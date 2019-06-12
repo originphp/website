@@ -6,12 +6,28 @@ section: content
 ---
 # Number Helper
 
-The number helper provides a number of useful functions, you can configure the defaults in your `AppController` like this:
+The number helper provides a number of useful functions.
+
+To localize your web application, call the initialize from your
+
+```php
+class AppController extends Controller
+{
+    public function initialize(){
+        parent::initialize();
+        I18n::initialize(['locale' => 'en_GB','language'=>'en','timezone'=>'Europe/London']);
+    }
+}
+```
+
+Or if you want to set the number settings manually.
+
 
 ```php
 use Origin\Utility\Number;
 
 public function initialize(){
+    parent::initialize();
     Number::locale([
         'currency'=>'USD', // default currency
         'thousands'=>',',
@@ -20,8 +36,6 @@ public function initialize(){
         ]);
 }
 ```
-
-> If you are using [internationalization](/docs/development/internationalization-i18n) then the Number utility will be configured automatically when you call **I18n::initialize()**.
 
 Once you have this configured whenever you use the number helper it will format based upon those defaults
 unless you tell it otherwise.

@@ -10,7 +10,7 @@ section: content
 
 The examples below are based if working with a User model.
 
->  Models assume that the primary key is called `id` and that foreign keys end with `_id`. If you do not follow that convention then you will need to set the `foreignKey` for each relationship and the `associationForeignKey` for any `hasAndBelongsToMany` relationships.
+> Models assume that the primary key is called `id` and that foreign keys end with `_id`. If you do not follow that convention then you will need to set the `foreignKey` for each relationship and the `associationForeignKey` for any `hasAndBelongsToMany` relationships.
 
 Related models can be accessed from the current model.
 
@@ -111,7 +111,7 @@ You can also pass an options array with any of the following keys.
           'className' => 'User',
           'foreignKey' => 'user_id',
           'conditions' => ['super_users.email !='=> null],
-          'fields' => ['super_users.id','super_users.name','Profile.id','Profile.name'],
+          'fields' => ['super_users.id','super_users.name','profiles.id','profiles.name'],
           'dependent' => true,
           'type' => 'INNER'
       ]);
@@ -156,9 +156,9 @@ class User extends AppModel
         $this->hasMany('SentEmail',[
             'className' => 'Email',
             'foreignKey' => 'user_id',
-            'conditions' => ['SentEmail.sent'=> true],
-            'fields' => ['SentEmail.id','SentEmail.subject','SentEmail.body','SentEmail.created'],
-            'order' => ['SentEmail.created ASC'],
+            'conditions' => ['sent_emails.sent'=> true],
+            'fields' => ['sent_emails.id','sent_emails.subject','sent_emails.body','sent_emails.created'],
+            'order' => ['sent_emails.created ASC'],
             'dependent' => true
             ]);
     }

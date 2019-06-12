@@ -18,9 +18,12 @@ Download and install [Composer](https://getcomposer.org/doc/00-intro.md), then r
 $ composer create-project originphp/app <folder>
 ```
 
-OriginPHP comes with a dockerized development environment.
+OriginPHP comes with a dockerized development environment which works exactly like a real server would work and includes MySQL server. If you don't want to work with the development environment, OriginPHP also comes with its own built in webserver. Which can be run from the command line.
 
-Install [Docker Desktop](https://www.docker.com/products/docker-desktop) then build the docker containers, this must be done from within the project folder
+```linux
+$ bin/server 8080
+```
+To work with Docker, which is the preferred environment, install [Docker Desktop](https://www.docker.com/products/docker-desktop) then build the docker containers, this must be done from within the project folder
 
 ```linux
 $ cd <folder>
