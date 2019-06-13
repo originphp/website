@@ -106,7 +106,7 @@ Folder::rename('/path/somedir','new_name');
 To move a directory
 
 ```php
-File::move('/path/somedir','/another_path/somedir');
+Folder::move('/path/somedir','/another_path/somedir');
 ```
 
 ## Permissions

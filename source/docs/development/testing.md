@@ -6,7 +6,7 @@ section: content
 ---
 # Testing Your Apps
 
-## Setting up the database for testing
+## Getting Ready for Testing
 
 OriginPHP uses PHPUnit 7.x for unit testing and this is already installed in the Docker container, just type in `phpunit` anywhere. If you are not using the Docker container you can install the composer package, which will install PHPUnit into the `vendor/bin` folder. 
 
@@ -47,7 +47,7 @@ When you create the test files, the filename should end with `Test.php` and they
 - `\PHPUnit\Framework\TestCase` - To use PHPUnit directly without extra features of Origin such as fixtures
 - `Origin\TestSuite\TestCase` - For testing everything else
 
-### Testing Models
+## Testing Models
 
 You will create a test case class like this, defining the fixtures that you will use in testing (including models that are used by other models etc).
 
@@ -294,9 +294,16 @@ For example:
 $result = $this->setProperty('id',1234);
 ```
 
-# Testing Controllers
+## Testing Controllers
 
-In the past testing controllers required quite a bit of code, however we have opted to use custom assertations and a request method which requires minimal input or config, to reduce the ifs and issets etc.
+In the past testing controllers required quite a bit of code, however we have opted to use custom assertion methods and a request method which requires minimal input or config, to reduce the ifs and issets etc.
+
+The things you should test for:
+
+- was the request successful?
+- was the user redirected to the right page (if any)
+- is the response body correct
+- are cookie, session values and view vars correct,
 
 In your controller test case add the `IntegrationTestTrait`
 
@@ -314,11 +321,11 @@ class BookmarksControllerTest extends OriginTestCase
 }
 ```
 
-## Testing requests
+### Requests
 
 You can test various requests
 
-### Get
+#### Get
 
 This will GET the url (get request)
 
@@ -326,7 +333,7 @@ This will GET the url (get request)
 $this->get('/bookmarks/index');
 ```
 
-### Post
+#### Post
 
 This will send a POST request using an array of data
 
@@ -334,7 +341,7 @@ This will send a POST request using an array of data
 $this->post('/bookmarks/index',['title'=>'bookmark name']);
 ```
 
-### Delete
+#### Delete
 
 This will send a DELETE request
 
@@ -344,7 +351,7 @@ $this->delete('/bookmarks/delete/1234');
 
 You can also send PUT and PATCH requests.
 
-### Put
+#### Put
 
 To send a request as a PUT request
 
@@ -352,7 +359,7 @@ To send a request as a PUT request
 $this->put('/bookmarks/index',['title'=>'bookmark name']);
 ```
 
-### patch(string $url,array $data)
+#### patch(string $url,array $data)
 
 To send a request as a PATCH request
 
@@ -360,7 +367,9 @@ To send a request as a PATCH request
 $this->patch('/bookmarks/index',['title'=>'bookmark name']);
 ```
 
-## Custom Assertations
+### Assertion Methods
+
+The first thing to check is the response code
 
 ```php
 
@@ -379,7 +388,19 @@ $this->assertResponseFailure();
 // Checks for a specific response code
 $this->assertResponseCode(401);
 
-// Check Response Content
+// Short cuts for response codes
+$this->assertResponseNotFound(); // 404 - Not Found
+
+$this->assertResponseBadRequest(); // 400 - Bad Request (Failure - client side problem)
+
+$this->assertResponseForbidden(); // 403 - Forbidden (For application level permisions)
+
+$this->assertResponseUnauthorized(); // 401 - Unauthorized
+```
+
+To check response contents
+
+```php
 
 $this->assertResponseEquals('{ "name":"James", "email":"james@originphp.com"}');
 
@@ -394,7 +415,7 @@ $this->assertResponseEmpty();
 $this->assertResponseNotEmpty();
 
 // Check there was no redirect
-$this->assertNoRedirect(); 
+$this->assertNoRedirect();
 
 $this->assertRedirect(['controller'=>'users','action'=>'login']);
 
@@ -402,15 +423,32 @@ $this->assertRedirectContains('/users/view');
 
 $this->assertRedirectNotContains('/users/login');
 
-// Check Headers 
-$this->assertHeaderContains('Content-Type', 'application/pdf');
-$this->assertHeaderNotContains('Cache-Control', 'no-cache, must-revalidate');
+```
+
+To check headers
+
+```php
+
+// Check a header exists and its value is correct
+$this->assertHeader('Content-Type', 'application/pdf');
+
+// Check a header and its value contains a string
+$this->assertHeaderContains('Content-Type', 'html');
+
+// Check that header exists and its value does not contain a string
+$this->assertHeaderNotContains('Content-Type', 'html');
 
 ```
 
-## Other methods
+To check a cookie value
 
-### Session
+```php
+$this->assertCookie('name', 'value');
+```
+
+### Other methods
+
+#### Session
 
 Write data to session for the next request, one example is to test applications that require to be logged in.
 
@@ -418,7 +456,7 @@ Write data to session for the next request, one example is to test applications 
     $this->session(['Auth.User.id' =>1000]);
 ```
 
-### Header
+#### Header
 
 Set headers for the next request
 
@@ -427,7 +465,7 @@ Set headers for the next request
     $this->header('PHP_AUTH_PW','secret');
 ```
 
-### env
+#### env
 
 Sets server environment $_SERVER
 
@@ -435,15 +473,15 @@ Sets server environment $_SERVER
     $this->env('HTTP_ACCEPT_LANGUAGE','en');
 ```
 
-### controller()
+#### controller()
 
 Returns the controller from the last request
 
-### request()
+#### request()
 
 Returns the request object from the last request
 
-### response()
+#### response()
 
 Returns the response object from the last request
 
@@ -482,9 +520,9 @@ $this->exec('create-user',['james','y']);
 
 This will send the name and then after that y to confirm
 
-### Custom Assertations
+### Assertion Methods
 
-Lets look at the assertations and how they can be used.
+Lets look at the Assertion methods and how they can be used.
 
 If everything went well then
 

@@ -468,7 +468,7 @@ $app->description([
  'DB application for backing up and restoring the database'
 ]);
 $app->addCommand('backup', 'DatabaseBackup'); // adds DatabaseBackupCommand
-$app->addCommand('restore', 'DatabaseRestore'); // adds DatabaseBackupCommand
+$app->addCommand('restore', 'DatabaseRestore'); // adds DatabaseRestoreCommand
 $app->run();
 ```
 
@@ -488,7 +488,7 @@ On Ubunu or other Debian based flavors of unix use the crontab command.
 sudo crontab -u www-data -e
 ```
 
-For Redhat or Redhat base distributions edit the `/etc/crontab` file, although at the time of writing Redhat does not officially support Php 7.0.
+For Redhat or Redhat base distributions edit the `/etc/crontab` file, although at the time of writing Redhat does not officially support PHP 7.0.
 
 To setup a cron job to run the `app:send-emails` command once each day
 

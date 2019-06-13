@@ -16,26 +16,21 @@ $ composer create-project originphp/app blog
 
 ## Installing Requirements
 
-OriginPHP requires a webserver and a database server, either MySQL or PostgreSQL. OriginPHP comes with a Dockerized
-Development Environment, which is the best thing since sliced bread.
-
-### Setting up the Dockerized Development Environment (DDE)
-
-Install [Docker Desktop](https://www.docker.com/products/docker-desktop) then build the docker containers, this must be done from within the project folder. 
+Download and install [Composer](https://getcomposer.org/doc/00-intro.md), then run the following command to create a new project
 
 ```linux
-$ cd blog
-$ docker-compose build
+$ composer create-project originphp/app <folder>
 ```
 
-The container only needs to be built once, after this you will use the `up` and `down` commands to start and stop the docker container.
+OriginPHP comes with both a built-in development server and a [dockerized development environment (dde)](/docs/development/dockerized-development-environment) which works exactly like a real server would work and includes MySQL. 
+
+To run the built-in development server:
 
 ```linux
-$ docker-compose up
+$ bin/server 8000
 ```
 
-Then open your web browser and go to [http://localhost:8000](http://localhost:8000)  which will show you a status page that all is working okay.
-
+Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
 
 ### Configure the Database Connection
 
@@ -43,29 +38,18 @@ Open the file `config/database.php.default` in your IDE, I recommend [Visual Stu
 
 ```php
 ConnectionManager::config('default', [
-    'host' => 'db', // Docker MySQL container
-    'database' => 'blog',
-    'username' => 'root',
-    'password' => 'root',
-    'engine' => 'mysql'
+    'host' => 'localhost',
+    'database' => 'origin',
+    'username' => 'username',
+    'password' => 'password',
+    'engine' => 'mysql' // or pgsql
 ]);
 ```
-
-> To access the MySQL server from within the Docker container, we need to use its name which is `db` and not `localhost`.
-
 
 Lets create the database and test the configuration, run the following command to create the blog database.
 
 ```linux
 $ bin/console db:create
-```
-
-### Accessing the Server (Linux Prompt)
-
-Now the Docker containers are running, you will want to access the command line of the server.
-
-```linux
-$ docker-compose run app bash
 ```
 
 ## Start Coding
