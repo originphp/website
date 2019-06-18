@@ -38,20 +38,20 @@ Migrations are automatically versioned by adding a `YYYYMMDDHHMMSS` prefix to th
 
 Migration actions placed in `change` will automatically be reversed, in case something is not reversible in the `change` method you can place actions in `reversable` this will be called when the migration is rolled back.
 
-Also there are `up` and `down` methods which can used instead of `change`, this is where you can customize what to do when migrating up or down, actions called in either `up` or `down` are not reversed. 
+Also there are `up` and `down` methods which can used instead of `change`, this is where you can customize what to do when migrating up or down, actions called in either `up` or `down` are not reversed.
 
 For example
 
 ```php
-class CreateProductsTableMigration extends Migration
+class AddNameColumnToSuppliersMigration extends Migration
 {
     public function up()
     {
-        $this->execute($sqlThatDoesSomething);
+        $this->addColumn('suppliers','name','string');
     }
      public function down()
     {
-        $this->execute($sqlThatUndoesWhatUpDid);
+        $this->removeColumn('suppliers','name');
     }
 
 ```

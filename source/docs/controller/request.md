@@ -76,6 +76,19 @@ public function view($id = null)
 
 There is also a `acceptLanguage` which will return a list of languages that the request can accept.
 
+## Request Type
+
+The default request type is html, however if the accept header asks for json or xml or a extension of the same was provided, then the default format will be changed accordingly.
+
+You can get or set
+
+```php
+$value = $this->request->type();
+$this->request->type('xml');
+```
+
+> The request type does not change headers or server variables. The request type is used for rendering views and errors.
+
 ## Reading values from cookies in the request
 
 To read cookie values from the request

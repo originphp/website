@@ -10,7 +10,7 @@ The Form helper does the heavy lifting when working with forms in your app.
 
 ## Creating a Form
 
-To create a form you use the create method and once you have finished adding the elements you call the end method which simply closes the form the tag. You should the pass an entity (it can be blank) for the model that you are working with, if you don't the form helper will work with the data from the request.
+To create a form you use the create method and once you have finished adding the elements you call the end method which simply closes the form the tag. You should the pass an entity for the model that you are working with, if you don't the form helper will work with the data from the request.
 
 ```php
     echo $this->Form->create($article);
@@ -19,7 +19,16 @@ To create a form you use the create method and once you have finished adding the
 
 ```
 
-If you want to create a form without this you can, however the database wont be introspected and fields types cant be detected, when creating a form this way, the request data is used. Validation errors are stored in entities, so using a form without this method cannot be used to display validation errors automatically.
+You can also use a model name, then the form helper will create a entity with the request data for use inside the form helper and introspect the database.
+
+```php
+    echo $this->Form->create('Article');
+    ...
+    echo $this->Form->end();
+
+```
+
+Use a null value if you need to create a form without using model, this will just use the request data.
 
 ```php
 $this->Form->create();

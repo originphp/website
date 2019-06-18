@@ -6,7 +6,6 @@ section: content
 ---
 In the development section you find information on things such as routing, testing, debugging, code generation, logging and so forth.
 
-- [Routing](/docs/development/routing)
 - [Configuration](/docs/development/configuration)
 - [Code Generation](/docs/development/code-generation)
 - [Logging](/docs/development/logging)
@@ -15,4 +14,3 @@ In the development section you find information on things such as routing, testi
 - [Events](/docs/development/event-manager)
 - [Internationalization I18N](/docs/development/internationalization-i18n)
 - [Migrations](/docs/development/migrations)
-- [Middleware](/docs/development/middleware)

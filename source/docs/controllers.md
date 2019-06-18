@@ -211,6 +211,28 @@ class ContactsController extends AppController
 }
 ```
 
+If the client requests with a header or extension for json or xml then the default format will be the changed for automatic rendering if serialzable data has been set. This makes the code easy and clean when working with multiple formats from the same controller. If serialize is not set then the view file will be rendered.
+
+```php
+class ContactsController extends AppController
+{
+    public function view($id)
+    {
+        $user = $this->User->get($id);
+        $this->set('user',$user);
+        $this->serialize('user');
+    }
+}
+```
+
+Now if you go to `https://localhost:8000/contacts/view/10.json` it will display the result in json format, it works for xml as well.
+
+You can also set an array of var keys to be serialized.
+
+```php
+$this->serialize(['user','profile']);
+```
+
 More information on how views work can be found in the [views guide](/docs/views).
 
 ### JSON Views
@@ -244,6 +266,7 @@ class ContactsController extends AppController
     }
 }
 ```
+
  Remember there are quite a lot of status codes, including `418 I am a teapot`, many of the large enterprises who have professional apis only work with a small subset, these are a suggestion of the ones
  which you should remember.
 

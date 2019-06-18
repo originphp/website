@@ -52,3 +52,11 @@ When you create and use plugins you will need to setup a route for this to work,
 ```php
 Router::add('/demo/:controller/:action/*', ['plugin'=>'Demo']);
 ```
+
+## Request types
+
+You can set specific request types in the route as well.
+
+```php
+Router::add('/api/:controller/:action/*',['controller'=>'Api','type'=>'json');
+```

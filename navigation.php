@@ -10,6 +10,7 @@ return [
     'Controllers' => [
         'url' => 'docs/controllers',
         'children' => [
+            'Routing' => 'docs/controller/routing',
             'Request Object' => 'docs/controller/request',
             'Response Object' => 'docs/controller/response',
             'Components' => 'docs/controller/components',
@@ -17,6 +18,7 @@ return [
             'Cookie Component' => 'docs/controller/cookie-component',
             'Flash Component' => 'docs/controller/flash-component',
             'Auth Component' => 'docs/controller/auth-component',
+            'Middleware' => 'docs/controller/middleware',
         ],
     ],
     'Models' => [
@@ -55,7 +57,6 @@ return [
     'Development' => [
         'url' => 'docs/development',
         'children' => [
-            'Routing' => 'docs/development/routing',
             'Configuration' => 'docs/development/configuration',
             'Code Generation' => 'docs/development/code-generation',
             'Debugging' => 'docs/development/debugging',
@@ -63,7 +64,6 @@ return [
             'Testing' => 'docs/development/testing',
             'Docker (DDE)' => 'docs/development/dockerized-development-environment',
             'Migrations' => 'docs/development/migrations',
-            'Middleware' => 'docs/development/middleware',
             'Events' => 'docs/development/event-manager',
             'Internationalization (I18n)' => 'docs/development/internationalization-i18n',
         ],
@@ -78,6 +78,7 @@ return [
             'Email' => 'docs/utility/email',
             'File' => 'docs/utility/file',
             'Folder' => 'docs/utility/folder',
+            'Http' => 'docs/utility/http',
             'Queue' => 'docs/utility/queue',
             'Storage' => 'docs/utility/storage',
             'XML' => 'docs/utility/xml',

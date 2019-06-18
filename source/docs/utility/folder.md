@@ -25,13 +25,13 @@ Folder::create('/var/www/new_folder');
 To create a folder recursively
 
 ```php
-Folder::create('/var/www/level1/level2/level3/new_folder',true);
+Folder::create('/var/www/level1/level2/level3/new_folder',['recursive'=>true]);
 ```
 
 To set the permissions on the newly created folder
 
 ```php
-Folder::create('/var/www/new_folder',false,0775);
+Folder::create('/var/www/new_folder',['recursive'=>false,'mode'=>0775]);
 ```
 
 ## Delete
@@ -45,7 +45,7 @@ Folder::delete('/var/www/bye-bye')
 To delete a folder recursively, including all files and sub directories.
 
 ```php
-Folder::delete('/var/www/docs',true)
+Folder::delete('/var/www/docs',['recursive'=>true])
 ```
 
 ## Exists
@@ -81,7 +81,7 @@ This will return an array of arrays of files, like this
 To include directories in the results
 
 ```php
-$results = Folder::list('/path/somedirectory',true);
+$results = Folder::list('/path/somedirectory',['directories'=>true]);
 ```
 
 ## Copy
@@ -113,10 +113,10 @@ Folder::move('/path/somedir','/another_path/somedir');
 
 ### Get Permissions
 
-To get the permissions of a directory
+To get the permissions of a directory.
 
 ```php
-$permissions = Folder::permissions('/path/somedir'); // returns 0744
+$permissions = Folder::mode('/path/somedir'); // returns 0744
 ```
 
 ### Changing Permissions (chmod)
@@ -125,6 +125,7 @@ To change the permissions of a directory
 
 ```php
 Folder::chmod('/path/somedir','www-data');
+Folder::chmod('/path/somedir','www-data',['recursive'=>true]); // recursive
 ```
 
 ### Getting the owner of a directory
@@ -139,6 +140,7 @@ To change the ownership of a directory
 
 ```php
 Folder::chown('/path/somedir','www-data');
+Folder::chown('/path/somedir','www-data',['recursive'=>true]);
 ```
 
 ### Getting the group
@@ -155,4 +157,5 @@ To change the group that the folder belongs to.
 
 ```php
 Folder::chgrp('/path/somedir','www-data');
+older::chgrp('/path/somedir','www-data',['recursive'=>true]);
 ```
