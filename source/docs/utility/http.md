@@ -174,7 +174,7 @@ The available options when making requests are
 - auth: authtentication details. An array with username, password, and type (basic|digest|nltm)
 - proxy: proxy server details. An array with proxy, username, password.
 - curl: an array of curl options either string or constant e.g [CURLOPT_SSL_VERIFYHOST=>0, 'ssl_verifypeer'=>0]
-- headers: an array of headers to set. e.g ['header'=>'value','header: value']
+- headers: an array of headers to set. e.g ['Accept'=>'application/json']
 - cookies: an array of cookies to set. e.g. ['name'=>'value']
 - fields: This option is for post/put/patch requests. Its an array of fields to be posted  e.g. ['title'=>'Article #1','description'=>'An article']
 
@@ -318,7 +318,7 @@ $response = $http->get('https://api.example.com/posts',[
 
 ### Using a Proxy
 
-The available authentication types are `basic`, `digest`, `nltm` or `any`.
+To send a HTTP request using a proxy server.
 
 ```php
 use Origin\Utility\Http;

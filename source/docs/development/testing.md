@@ -556,3 +556,30 @@ If you need to access the shell
 ```php
 $command = $this->command();
 ```
+
+## Testing Middleware
+
+```php
+namespace App\Test\Middleware;
+
+use Origin\Middleware\FoonMiddleware;
+use Origin\Http\Request;
+use Origin\Http\Response;
+
+public function testSomething(){
+    $request = new Request();
+    $response = new Response();
+    $middleware = new FooMiddleware();
+
+    // Do something with request
+    ...
+
+    // Invoke Manually
+    $middleware->startup($request);
+    $middleware->shutdown($request, $response);
+
+    // OR
+    $middleware($request,$response);
+
+}
+```

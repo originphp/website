@@ -58,5 +58,5 @@ Router::add('/demo/:controller/:action/*', ['plugin'=>'Demo']);
 You can set specific request types in the route as well.
 
 ```php
-Router::add('/api/:controller/:action/*',['controller'=>'Api','type'=>'json');
+Router::add('/api/:controller/:action/*',['type'=>'json');
 ```

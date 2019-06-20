@@ -18,7 +18,6 @@ return [
             'Cookie Component' => 'docs/controller/cookie-component',
             'Flash Component' => 'docs/controller/flash-component',
             'Auth Component' => 'docs/controller/auth-component',
-            'Middleware' => 'docs/controller/middleware',
         ],
     ],
     'Models' => [
@@ -44,6 +43,9 @@ return [
             'Session Helper' => 'docs/view/session-helper',
             'Intl Helper' => '/docs/view/intl-helper'
         ],
+    ],
+    'Middleware' => [
+        'url' => 'docs/middleware',
     ],
     'Console Commands' => [
         'url' => 'docs/console-commands',
