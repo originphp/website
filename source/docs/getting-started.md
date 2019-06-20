@@ -23,6 +23,7 @@ OriginPHP comes with both a built-in development server and a [dockerized develo
 To run the built-in development server:
 
 ```linux
+$ cd <folder>
 $ bin/server 8000
 ```
 
