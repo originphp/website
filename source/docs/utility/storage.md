@@ -104,7 +104,7 @@ use Origin\Utility\Storage;
 Storage::write('test.txt','hello world!');
 ```
 
-You can also write to folders directly.
+You can also write to folders directly. Folders in the tree that do not exist will be created automatically.
 
 ```php
 Storage::write('my_folder/test.txt','hello world!');
@@ -119,15 +119,16 @@ $contents = Storage::read('my_folder/test.txt');
 
 ### Deleting From Storage
 
+To delete files or folders
+
 ```php
 Storage::delete('my_folder/test.txt');
-```
-
-You can also delete a folder and all its contents.
-
-```php
 Storage::delete('my_folder');
 ```
+
+Folders are deleted recursively automatically, when using delete.
+
+> If the folder name ends with `/` then delete will not be carried out.
 
 ### Listing Storage Contents
 

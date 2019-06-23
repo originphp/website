@@ -68,7 +68,7 @@ $ mysql -h db -uroot -p
 
 When it asks you for the password type in **root**, then copy and paste the following sql to create the database and grant permissions to a user.
 
-> You can also acces the MySql server using any database management application using `localhost` port `3306`. Windows users can use [Sequel Pro](https://www.sequelpro.com/) or Mac users can use [Heidi SQL](https://www.heidisql.com/).
+> You can also access the MySql server using any database management application using `localhost` port `3306`. Mac users can use [Sequel Pro](https://www.sequelpro.com/) or Windows users can use [Heidi SQL](https://www.heidisql.com/).
 
 
 ### Configuring PostgreSQL in Docker

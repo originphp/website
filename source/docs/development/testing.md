@@ -493,7 +493,7 @@ Like with `Controllers` there is a console integration test trait which makes te
 use Origin\TestSuite\OriginTestCase;
 use Origin\TestSuite\ConsoleIntegrationTestTrait;
 
-class CronShellTest extends OriginTestCase
+class CronCommandTest extends OriginTestCase
 {
     use ConsoleIntegrationTestTrait;
 
@@ -551,7 +551,7 @@ $stderr = $this->errorOutput(); // Errors
 
 ### Accessing the command
 
-If you need to access the shell
+If you need the Command object.
 
 ```php
 $command = $this->command();

@@ -31,15 +31,15 @@ Email::config(
 
 The keys for the config are as follows:
 
-- *host* this is smtp server hostname
-- *port* port number default 25
-- *username* the username to access this SMTP server
-- *password* the password to access this SMTP server
-- *ssl* default is false, set to true if you want to connect via SSL
-- *tls* default is false, set to true if you want to enable TLS
-- *timeout* how many seconds to timeout
-- *domain* When we send the HELO command to the sever we have to identify your hostname, so we will use localhost or HTTP_SERVER var if client is not set.
-- *debug* If set and is true the headers and message is rendered and returned (without sending via SMTP)
+- *host*: this is smtp server hostname
+- *port*: port number default 25
+- *username*: the username to access this SMTP server
+- *password*: the password to access this SMTP server
+- *ssl*: default is false, set to true if you want to connect via SSL
+- *tls*: default is false, set to true if you want to enable TLS
+- *timeout*: how many seconds to timeout
+- *domain*: When we send the HELO command to the sever we have to identify your hostname, so we will use localhost or HTTP_SERVER var if client is not set.
+- *debug*: If set and is true the headers and message is rendered and returned (without sending via SMTP)
 
 You can also pass keys such as `from`,`to`,`cc`,`bcc`,`sender` and `replyTo` this pass the data to its functions either as string if its just an email or an array if you want to include a name. Remember if you are going to automatically cc or bcc somewhere, then you have to next call addBcc or addCc to ensure that you don't overwrite this.
 

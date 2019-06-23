@@ -259,7 +259,7 @@ $http = new Http([
 
 ### cURL Options
 
-Occasionally, you might need to set additional cURL options, one example of this, is when there is an issue SSL certificates. You can use use with the CURLOPT constantant, or string version of it.
+Occasionally, you might need to set additional cURL options, one example of this, is when there is an issue with SSL certificates. You can set cURL options with the CURLOPT constant or string version of it.
 
 ```php
 use Origin\Utility\Http;

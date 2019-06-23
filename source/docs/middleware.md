@@ -32,8 +32,6 @@ class FooMiddleware extends Middleware
      * Handles the request. This is run on all middlewares first.
      *
      * @param \Origin\Http\Request $request
-     * @param \Origin\Http\Response $response
-     * @return \Origin\Http\Response
      */
     public function startup(Request $request) 
     {
@@ -45,7 +43,6 @@ class FooMiddleware extends Middleware
      *
      * @param \Origin\Http\Request $request
      * @param \Origin\Http\Response $response
-     * @return \Origin\Http\Response
      */
     public function shutdown(Request $request,Response $response)
     {
@@ -96,4 +93,4 @@ $.ajaxSetup({
         'X-CSRF-Token': <?= $this->request->params('csrfToken') ?>
     }
 });
-``
+```

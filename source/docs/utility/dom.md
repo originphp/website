@@ -31,7 +31,7 @@ Example usage:
 ```php
 use Origin\Utility\Dom;
 $dom = new Dom();
-$dom->loadHtml($html); // this is dom function
+$dom->loadHtml($html); // this is a dom function
 $element = $dom->querySelector('div.foo div.sub h1');
 $paragraphs = $dom->querySelectorAll('div.p');
 ```

@@ -6,7 +6,7 @@ section: content
 ---
 # Folder
 
-The folder utility helps you work with folders on your filesystem.
+The folder utility helps you work with folders on your file system.
 
 To use the Folder utility add the following to the top of your file.
 
@@ -31,7 +31,7 @@ Folder::create('/var/www/level1/level2/level3/new_folder',['recursive'=>true]);
 To set the permissions on the newly created folder
 
 ```php
-Folder::create('/var/www/new_folder',['recursive'=>false,'mode'=>0775]);
+Folder::create('/var/www/new_folder',['mode'=>0755]);
 ```
 
 ## Delete
