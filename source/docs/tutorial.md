@@ -22,12 +22,31 @@ Download and install [Composer](https://getcomposer.org/doc/00-intro.md), then r
 $ composer create-project originphp/app <folder>
 ```
 
-OriginPHP comes with both a built-in development server and a [dockerized development environment (dde)](/docs/development/dockerized-development-environment) which works exactly like a real server would work and includes MySQL. 
+OriginPHP comes with both a built-in development server and a [dockerized development environment (dde)](/docs/development/dockerized-development-environment) which works exactly like a real server would work and includes MySQL. Its very easy to setup and work with and it will give you consistent results.
+
+### Built-in Development server
 
 To run the built-in development server:
 
 ```linux
+$ cd <folder>
 $ bin/server 8000
+```
+Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
+
+### Dockerized Development Environment
+
+To work with Docker, install [Docker Desktop](https://www.docker.com/products/docker-desktop) then build the docker containers, this must be done from within the project folder. The build process takes a couple of minutes but only needs to be done once.
+
+```linux
+$ cd <folder>
+$ docker-compose build
+```
+
+Once the Docker container has been built, you will use the `up` and `down` commands to start and stop the docker container which takes seconds.
+
+```linux
+$ docker-compose up
 ```
 
 Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
@@ -36,20 +55,29 @@ Then open your web browser and go to [http://localhost:8000](http://localhost:80
 
 Open the file `config/database.php.default` in your IDE, I recommend [Visual Studio Code](https://code.visualstudio.com/). Set the host, database, username and password as follows and then save a copy as `database.php`.
 
+
 ```php
 ConnectionManager::config('default', [
-    'host' => 'localhost',
-    'database' => 'origin',
-    'username' => 'username',
-    'password' => 'password',
+    'host' => 'db',
+    'database' => 'blog',
+    'username' => 'root',
+    'password' => 'root',
     'engine' => 'mysql' // or pgsql
 ]);
 ```
 
-Lets create the database and test the configuration, run the following command to create the blog database.
+Next you need to run the `db:setup` command, if you are using the Dockerized Development Environment, you will need to access the container first, this is because the hostname for accessing the MySQL server is different from within the container.
+
+To access the Docker container:
 
 ```linux
-$ bin/console db:create
+$ docker-compose run app bash
+```
+
+Then run the `db:setup` command to create the database for you.
+
+```linux
+$ bin/console db:setup
 ```
 
 ## Start Coding
