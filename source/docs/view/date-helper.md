@@ -20,6 +20,8 @@ class AppController extends Controller
 }
 ```
 
+The locale configuration file can be found in `config/locales`, by default OriginPHP comes with two preconfigured locales. However, depending upon your needs you can either create a specific locale that you need or use the `locale::generate` command to do this for you, see [Internationalization I18N](/docs/development/internationalization-i18n) for more information on how to automatically generate locales files.
+
 Or if you want to set the date settings manually.
 
 ```php
@@ -54,6 +56,8 @@ echo $this->Date->format($article->created,'F jS Y'); // January 1st 2019
 ```
 
 ## Parsing
+
+OriginPHP comes with the Delocalize Behavior, which automatically converts dates,numbers to and from the database. You can disable this in the `AppModel` initialize method.
 
 If you need to manually parse dates etc, use the Date utility. The date formatter assumes that the dates that you are formatting are in MySQL format, e.g. Y-m-d H:i:s. You can use the Date utility to delocalize user submitted data to convert to this format and timezone.
 
