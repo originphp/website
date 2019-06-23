@@ -11,7 +11,7 @@ in your views.
 
 ```php
 $value =  $this->Session->read('monster');
-$this->Session->write('forever');
+$this->Session->write('montster','drink');
 $this->Session->delete('monster');
 ```
 
