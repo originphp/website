@@ -69,9 +69,10 @@ The options for control allow you to change the default settings.
 - div: change the name of the div that input element is wrapped in e.g. form-group
 - class: change the name of the class of the input element e.g. form-input
 - label: (default:true), boolean, a string which will be the label text, or an array with the text key and any other options
+- escape: (default:true) escape values
  e.g. class
 
- All other options will be passed to the form element, if it does not recognise the option it will treat it as an attribute.
+ All other options will be passed to the form element, if it does not recognize the option it will treat it as an attribute.
 
 ```php
 echo $this->Form->control('name',['placeholder'=>'enter your name']);
@@ -82,6 +83,7 @@ The standard options which be used in most form inputs which are used by the con
 - id: (default:true) bool or set a string with the name that you want
 - name: change the name of the options
 - value: set the default value to be used by the input
+- escape: (default:true) escape values that are displayed
 
 Any other keys passed to the form inputs will be treated as attributes for html tag e.g. class, pattern,placeholder etc.
 
@@ -111,10 +113,15 @@ echo $this->Form->textarea('some_name');
 <textarea name="some_name"></textarea>
 ```
 
+If you are using the field to edit HTML then you may need disable escaping.
+
+```php
+echo $this->Form->textarea('some_name',['escape'=>false]);
+```
+
 ### Select
 
-The select element works slightly different, since the second argument is for generating the options in the select, and the
-third argument is where the options/attributes are passed.
+The select element works slightly different, since the second argument is for generating the options in the select, and the third argument is where the options/attributes are passed.
 
 ```php
 echo $this->Form->select('categories', [1=>'First',2=>'Second']);
