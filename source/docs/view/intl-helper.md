@@ -8,6 +8,12 @@ section: content
 
 The IntlHelper uses PHP's intl extension to format dates and numbers. The date and number utilitites that it uses can also parse international dates and numbers but thats a minefield if you ask me - and if you want to use a datepicker...
 
+To install the PHP Intl Extension on your server
+
+```linux
+$ apt-get install php-intl
+```
+
 You can configure the defaults in your `AppController` like this:
 
 ```php

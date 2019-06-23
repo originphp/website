@@ -22,6 +22,12 @@ class AppController extends Controller
 
 The initialize method will locale definitions from the `config/locales` folder if available and then configure the Date and Number utilities accordingly. You can run the `locale:generate` command to generate locales files.
 
+Locale generation requires the PHP Intl extension (This is installed by default in the Dockerized Development Environment). However, if you need to install this on your server use the following command :
+
+```linux
+$ apt-get install php-intl
+```
+
 To generate specific locales, separate each locale by space
 
 ```linux
