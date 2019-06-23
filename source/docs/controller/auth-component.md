@@ -102,6 +102,7 @@ $password = hashPassword($password); // same as  password_hash($password, PASSWO
 So when a user signs up or changes their password you will need to hash the password, this will normally  be done in your user model, this will help keep your controller slim.
 
 ```php
+use Origin\Utility\Security;
 class User extends AppModel
 {
     public function beforeSave(Entity $entity, array $options = [])
@@ -111,19 +112,12 @@ class User extends AppModel
         }
 
         if(!empty($entity->password)){
-            $entity->password = hashPassword($entity->password);
+            $entity->password = Security::hashPassword($entity->password);
         }
 
         return true;
     }
 }
-```
-
-If you are going to hash the password from within the controller then you can use the auth component hashPassword method.
-
-
-```php
-$user->password = $this->Auth->hashPasword($user->password);
 ```
 
 In some controllers you might to want to allow certain actions to not require authentication, in this case you can pass and array of allowed actions
