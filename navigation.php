@@ -82,9 +82,10 @@ return [
             'Folder' => 'docs/utility/folder',
             'Http' => 'docs/utility/http',
             'Queue' => 'docs/utility/queue',
+            'Security' => 'docs/utility/security',
             'Storage' => 'docs/utility/storage',
             'XML' => 'docs/utility/xml',
-            'Yaml' => 'docs/utility/yaml',
+            'Yaml' => 'docs/utility/yaml'
         ],
     ],
 ];
