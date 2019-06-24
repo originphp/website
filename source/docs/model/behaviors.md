@@ -7,7 +7,7 @@ section: content
 # Behaviors
 
 A behavior is way to add functionality to you models and then share this with other models, similar to controller components.
-Behaviors have the word behavior added on the end of the class and file name.
+Behaviors have Behavior added on the end of the class and filename.
 
 To create a behavior you will need to create a file in `src/Model/Behavior` folder and call it `FooBehavior`.
 
@@ -83,3 +83,13 @@ Sometimes you will need to disable or unload behaviors, to do this you will need
       }
     }
 ```
+
+## Framework Behaviors
+
+### Timestamp
+
+This behavior updates created and updated fields when creating or saving records.
+
+### Delocalize Behavior
+
+This behavior delocalizes data such as dates and numbers from locale format, and converts this into MySQL format for saving.
