@@ -21,16 +21,16 @@ use Origin\Utility\Security;
 $hashed = Security::hash('foo');
 ```
 
-If you want to use this with Security.salt value in your configuration.
+If you want to add an additional string to the text that is being hashed, a pepper. The set pepper to true, this will use the value from `Security.pepper` from your configuration.
 
 ```php
-$hashed = Security::hash('foo',['salt'=>true]);
+$hashed = Security::hash('foo',['pepper'=>true]);
 ```
 
-To use a different salt
+To use a different pepper
 
 ```php
-$hashed = Security::hash('foo',['salt'=>'A random string']);
+$hashed = Security::hash('foo',['pepper'=>'A random string']);
 ```
 
 To change the hashing type
