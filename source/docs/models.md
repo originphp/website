@@ -65,7 +65,7 @@ Remember, you can use the code generation tool to do this for you. The code gene
 $ bin/console generate model Product
 ```
 
-For more information see [code generation]((/docs/development/code-generation))
+For more information see [code generation](/docs/development/code-generation)
 
 Then create the table for the model, which should be lower case, underscored and plural, in this example it would
 be called `products`.
