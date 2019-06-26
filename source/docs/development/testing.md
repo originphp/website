@@ -62,14 +62,17 @@ class BookmarkTest extends OriginTestCase
 {
     public $fixtures = ['Bookmark'];
 
-    public function setUp()
+    // alias for PHPunit setUp in the OriginTestCase
+    public function startup()
     {
+        parent::startup(); // remember parent
         $this->Bookmark = ModelRegistry::get('Bookmark');
-        parent::setUp();
     }
 
-    public function tearDown(){
-        parent::tearDown(); # Important
+    // alias for PHPunit tearDown in the OriginTestCase
+    public function shutdown()
+    {
+        parent::shutdown(); // remember parent
     }
 
 }
@@ -583,3 +586,22 @@ public function testSomething(){
 
 }
 ```
+
+## Code Coverage
+
+The Dockerized Development Environment comes with PHPUnit and XDebug pre-installed so you can run code coverage easily.
+
+Even though xdebug is installed, it is not enabled because it causes performance issues. You need to enable this after each time you start the container and want to run the coverage.
+
+```linux
+$ echo 'zend_extension="/usr/lib/php/20170718/xdebug.so"' >> /etc/php/7.2/cli/php.ini
+$ echo 'xdebug.default_enable=0' >> /etc/php/7.2/cli/php.ini
+```
+
+From the container and in the `framework` folder run the following commands
+
+```linux
+$ phpunit --coverage-html /var/www/public/coverage
+```
+
+You can then access this by visiting [http://localhost:8000/coverage/index.html](http://localhost:8000/coverage/index.html).

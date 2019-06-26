@@ -117,7 +117,7 @@ $this->dropTable('articles')
 
 #### Renaming a Table
 
-This requires MySQL 8 and above.
+To rename a table
 
 ```php
 $this->rename('old_articles','articles');
