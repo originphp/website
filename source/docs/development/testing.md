@@ -8,11 +8,12 @@ section: content
 
 ## Getting Ready for Testing
 
-OriginPHP uses PHPUnit 7.x for unit testing and this is already installed in the Docker container, just type in `phpunit` anywhere. If you are not using the Docker container you can install the composer package, which will install PHPUnit into the `vendor/bin` folder. 
+OriginPHP uses PHPUnit 7.5 for unit testing and this is already installed in the Docker container, just type in `phpunit` anywhere. If you are not using the Docker container you can install the composer package, which will install PHPUnit into the `vendor/bin` folder. 
 
 ```linux
-$ composer require phpunit/phpunit ^7
+$ composer require phpunit/phpunit 7.5
 ```
+
 > A benefit of installing this using composer is that when you are developing your IDE will show you code hinting for the PHPUnit classes.
 
 The first thing to do is to create a test database, and setup the test database configuration.
