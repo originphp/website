@@ -94,3 +94,9 @@ $.ajaxSetup({
     }
 });
 ```
+
+You can disable CSRF Protection for routes.
+
+```js
+Router::add('/api/:controller/:action/*',['type'=>'json','csrfProtection'=>false])
+```

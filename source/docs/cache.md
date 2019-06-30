@@ -6,18 +6,99 @@ section: content
 ---
 # Cache
 
-OriginPHP supports, Apcu, Memcache and Redis outof the box for caching, you can also use File caching for
+OriginPHP supports `Apcu`, `Memcached` and `Redis` out of the box, you can also use file caching for
 large objects or time consuming generating content.
 
 In your bootstrap file you will the configuration for cache. The caching library can work with multiple configurations and engines at the same time. 
 
 Once the configuration is out the way, using the cache is pretty straightforward.
 
+## Caching
+
+### Write
+
+To add an item to the cache.
+
+```php
+Use Origin\Cache\Cache;
+
+$success = Cache::write('key',$value);
+```
+
+### Read
+
+To read an item from the cache, if it does not find an item it will return `false`
+
+```php
+Use Origin\Cache\Cache;
+
+$value = Cache::read('key');
+```
+
+### Exists
+
+To check wether a key exists in the cache
+
+```php
+Use Origin\Cache\Cache;
+
+if(Cache::exists('key')){
+    $bool = Cache::read('key');
+}
+```
+
+### Delete
+
+Items are automatically deleted based upon the duration setting in the configuration, however if you want
+to delete an item manually then use the delete method.
+
+```php
+Use Origin\Cache\Cache;
+
+Cache::delete('key');
+```
+
+
+### Clearing the Cache
+
+```php
+Cache::clear();
+```
+
+### Enabling and disabling the cache
+
+Sometimes you will need to disable the cache, when you disable we switch the engine to the `NullEngine` and your program can work as normal.
+
+```php
+Cache::disable();
+Cache::enable();
+```
+
+### Working with Multiple Configurations
+
+Whether you are using multiple caching engines, or you multiple configurations for a single cache engine (e.g. short duration and long duration caches), the Cache utility is flexible.
+
+You can get the configured Cache store:
+
+```php
+$cache = Cache::store('long-duration');
+$value = $cache->read('My.key');
+```
+
+Or you can pass an options array telling the Cache object which configuration to use
+
+
+```php
+$value = Cache::read('My.key',[
+     'config'=>'long-duration'
+     ]);
+```
+
 ## Engines
 
 In all these examples,we are only configuring the default configuration, you can set different configuration names instead of default. When you use the caching functions the default configuration is used by default unless you say otherwise.
 
-### File
+### File Engine
 
 ```php
 Cache::config('default', [
@@ -27,7 +108,7 @@ Cache::config('default', [
      ]);
 ```
 
-### Apcu
+### Apcu Engine
 
 ```php
 Cache::config('default', [
@@ -37,7 +118,7 @@ Cache::config('default', [
      ]);
 ```
 
-### Memcached
+### Memcached Engine
 
 This is a simple configuration for using Memcached.
 
@@ -77,9 +158,9 @@ Cache::config('default', [
 
 You can also make connections persistent by setting the `persistent` key to true, or a string which will be the persistent id.
 
-Memcached supports server pools, if you are going to use them then set an array using the `servers` key instead of host and port. The array should be compatabile with [memcached addservers](http://php.net/manual/en/memcached.addservers.php).
+Memcached supports server pools, if you are going to use them then set an array using the `servers` key instead of host and port. The array should be compatible with [memcached addservers](http://php.net/manual/en/memcached.addservers.php).
 
-### Redis
+### Redis Engine
 
 This is a simple configuration for using Redis.
 
@@ -145,88 +226,11 @@ Cache::config('default', [
 
 ```php
 namespace App\Cache;
-use Origin\Engine\Cache\CacheEngine;
-class CustomEngine extends CacheEngine
+use Origin\Cache\Engine\BaseEngine;
+class CustomEngine extends BaseEngine
 {
 
 }
-```
-
-## Caching
-
-### Write
-
-To add an item to the cache.
-
-```php
-Use Origin\Utility\cache;
-
-$success = Cache::write('key',$value);
-```
-
-### Read
-
-To read an item from the cache, if it does not find an item it will return `false`
-
-```php
-Use Origin\Utility\cache;
-
-$value = Cache::read('key');
-```
-
-### Exists
-
-To check wether a key exists in the cache
-
-```php
-Use Origin\Utility\cache;
-
-if(Cache::exists('key')){
-    $bool = Cache::read('key);
-}
-```
-
-### Delete
-
-Items are automatically deleted based upon the duration setting in the configuration, however if you want
-to delete an item manually then use the delete method.
-
-```php
-Use Origin\Utility\cache;
-
-Cache::delete('key');
-```
-
-
-### Clearing the Cache
-
-```php
-Cache::clear();
-```
-
-### Enabling and disabling the cache
-
-Sometimes you will need to disable the cache, when you disable we switch the engine to the `NullEngine` and your program can work as normal.
-
-```php
-Cache::disable();
-Cache::enable();
-```
-
-### Working with Multiple Configurations
-
-Whether you are using multiple caching engines, or you multiple configurations for a single cache engine (e.g. short duration and long duration caches), the Cache utility is flexible.
-
-```php
-Cache::use('long-duration');
-$value = Cache::read('My.key');
-Cache::write('My.key',$value);
-```
-
-When working with multiple configurations, make sure that even if you are going to use the default config, that you always call `use`, since the Cache utility will use configuration until you tell it to use something else.
-
-```php
-Cache::use('default');
 ```
 
 ## Installing Cache Engines

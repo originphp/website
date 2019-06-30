@@ -10,6 +10,90 @@ The Storage utility provides an easy way to access different types of storages f
 
 The default configuration for Storage is the local storage engine,which stores data on the disc in the storage folder. You can configure different types of storages in the `config/storage.php` file.
 
+## Using Storage
+
+The Storage utility always uses the Local storage engine as default unless you tell it otherwise.
+
+### Writing To Storage
+
+```php
+use Origin\Storage\Storage;
+Storage::write('test.txt','hello world!');
+```
+
+You can also write to folders directly. Folders in the tree that do not exist will be created automatically.
+
+```php
+Storage::write('my_folder/test.txt','hello world!');
+```
+
+### Reading From Storage
+
+```php
+use Origin\Storage\Storage;
+$contents = Storage::read('my_folder/test.txt');
+```
+
+### Deleting From Storage
+
+To delete files or folders
+
+```php
+Storage::delete('my_folder/test.txt');
+Storage::delete('my_folder');
+```
+
+Folders are deleted recursively automatically, when using delete.
+
+### Listing Storage Contents
+
+To list the files on the storage
+
+```php
+use Origin\Storage\Storage;
+$allFiles = Storage::list();
+```
+
+Storage contents are listed recursively and it will provide you with an array of arrays. Each file has its own array.
+
+```php
+
+// Will look like this
+[
+    'name' => 'my_folder/test.txt',
+    'size' => 1024,
+    'timestamp' => 1559692998
+];
+
+```
+
+If you just want the files of particular folder, then it will list all files recursively under that folder.
+
+```php
+use Origin\Storage\Storage;
+$files = Storage::list('my_folder');
+```
+
+### Working with Multiple Storages
+
+
+Whether you are using multiple storage engines, or you multiple configurations for a single storage engine, the Storage utility is flexible.
+
+You can get the configured Storage volume
+
+```php
+$volume = Storage::volume('sftp-backup');
+$data = $volume->read('transactions.csv');
+```
+
+Or you can pass an options array telling the Storage object which configuration to use
+
+```php
+$data = Storage::read('transactions.csv',[
+     'config'=>'sftp-backup'
+     ]);
+```
+
 ## Storage Engines
 
 ### Local
@@ -92,89 +176,3 @@ options for configuring SFTP include:
 - timeout: default 10 seconds
 - root: the root folder of the storage. e.g. /home/user/sub_folder
 - privateKey: either the private key for the account or the filename where the private key can be loaded from
-
-## Using Storage
-
-The Storage utility always uses the default storage unless you tell it otherwise.
-
-### Writing To Storage
-
-```php
-use Origin\Utility\Storage;
-Storage::write('test.txt','hello world!');
-```
-
-You can also write to folders directly. Folders in the tree that do not exist will be created automatically.
-
-```php
-Storage::write('my_folder/test.txt','hello world!');
-```
-
-### Reading From Storage
-
-```php
-use Origin\Utility\Storage;
-$contents = Storage::read('my_folder/test.txt');
-```
-
-### Deleting From Storage
-
-To delete files or folders
-
-```php
-Storage::delete('my_folder/test.txt');
-Storage::delete('my_folder');
-```
-
-Folders are deleted recursively automatically, when using delete.
-
-> If the folder name ends with `/` then delete will not be carried out.
-
-### Listing Storage Contents
-
-To list the files on the storage
-
-```php
-use Origin\Utility\Storage;
-$allFiles = Storage::list();
-```
-
-Storage contents are listed recursively and it will provide you with an array of arrays. Each file has its own array.
-
-```php
-
-// Will look like this
-[
-    'name' => 'my_folder/test.txt',
-    'size' => 1024,
-    'timestamp' => 1559692998
-];
-
-```
-
-If you just want the files of particular folder, then it will list all files recursively under that folder.
-
-```php
-use Origin\Utility\Storage;
-$files = Storage::list('my_folder');
-```
-
-### Working with Multiple Storages
-
-To work with multiple storages, tell it which configuration to use. The configuration will be used for the rest of the 
-duration that the script is executed.
-
-```php
-use Origin\Utility\Storage;
-Storage::use('ftp');
-```
-
-> If you are working with multiple storages then always call `use` before you use the storage, including the default.
-
-Alternatively you can work with any storage engine directly.
-
-```php
-$sftp = Storage::engine('sftp');
-$sftp->write('keys/somefile',file_get_contents($filename));
-$data = $sftp->read('keys/somefile');
-```

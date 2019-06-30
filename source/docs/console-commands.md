@@ -175,10 +175,10 @@ $this->error('This is an error'); // stderr
 
 ```
 
-When you send messages to the debug method, these will only be displayed if the `--verbose` option is called. This used to display detailed or debug information to the user.
+When you send messages to the debug method, these will only be displayed if the `--verbose` option is used. This is used to display additional detailed or debug information to the user.
 
 ```php
-$this->debug('This some warning text');
+$this->debug('This additional text that might be helpful');
 ```
 
 ## Loading Models

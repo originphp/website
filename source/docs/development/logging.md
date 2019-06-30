@@ -6,6 +6,8 @@ section: content
 ---
 # Logging
 
+> This is for the old logger which is being deprecated. See [Log](/docs/log.md)
+
 OriginPHP uses a minimialistic file logger based upon the PSR 3 standard.
 
 ```php

@@ -56,24 +56,31 @@ return [
     'Plugins' => [
         'url' => 'docs/plugins',
     ],
+    'Libraries' => [
+        'url' => 'docs/libraries',
+        'children' => [
+            'Cache' => 'docs/cache',
+            'Events' => 'docs/event-manager',
+            'Logging' => 'docs/log',
+            'Migrations' => 'docs/migrations',
+            'Queue' => 'docs/queue',
+            'Storage' => 'docs/storage',
+        ]
+        ],
     'Development' => [
         'url' => 'docs/development',
         'children' => [
             'Configuration' => 'docs/development/configuration',
             'Code Generation' => 'docs/development/code-generation',
             'Debugging' => 'docs/development/debugging',
-            'Logging' => 'docs/development/logging',
-            'Testing' => 'docs/development/testing',
             'Docker (DDE)' => 'docs/development/dockerized-development-environment',
-            'Migrations' => 'docs/development/migrations',
-            'Events' => 'docs/development/event-manager',
             'Internationalization (I18n)' => 'docs/development/internationalization-i18n',
+            'Testing' => 'docs/development/testing'
         ],
     ],
     'Utilities' => [
         'url' => 'docs/utilities',
         'children' => [
-            'Cache' => 'docs/utility/cache',
             'Collection' => 'docs/utility/collection',
             'CSV' => 'docs/utility/csv',
             'Dom' => 'docs/utility/dom',
@@ -81,9 +88,7 @@ return [
             'File' => 'docs/utility/file',
             'Folder' => 'docs/utility/folder',
             'Http' => 'docs/utility/http',
-            'Queue' => 'docs/utility/queue',
             'Security' => 'docs/utility/security',
-            'Storage' => 'docs/utility/storage',
             'XML' => 'docs/utility/xml',
             'Yaml' => 'docs/utility/yaml'
         ],

@@ -8,9 +8,6 @@ In the development section you find information on things such as routing, testi
 
 - [Configuration](/docs/development/configuration)
 - [Code Generation](/docs/development/code-generation)
-- [Logging](/docs/development/logging)
 - [Debugging](/docs/development/debugging)
 - [Testing](/docs/development/testing)
-- [Events](/docs/development/event-manager)
 - [Internationalization I18N](/docs/development/internationalization-i18n)
-- [Migrations](/docs/development/migrations)

@@ -549,8 +549,8 @@ $this->assertErrorContains('needle'); // Checks the error message contains a str
 When writing or debugging tests, you will need to see the output from the console command, as this is buffered, it is not sent to the screen however you get this with ease from within your test.
 
 ```php
-$stdout = $this->output(); // standard output
-$stderr = $this->errorOutput(); // Errors
+$stdout = $this->output(); // stdout - standard output
+$stderr = $this->error(); // stderr - errors
 ```
 
 ### Accessing the command
@@ -566,7 +566,7 @@ $command = $this->command();
 ```php
 namespace App\Test\Middleware;
 
-use Origin\Middleware\FoonMiddleware;
+use Origin\Middleware\FooMiddleware;
 use Origin\Http\Request;
 use Origin\Http\Response;
 
@@ -579,8 +579,8 @@ public function testSomething(){
     ...
 
     // Invoke Manually
-    $middleware->startup($request);
-    $middleware->shutdown($request, $response);
+    $middleware->startup($request); // handles requests
+    $middleware->shutdown($request, $response); // processes response
 
     // OR
     $middleware($request,$response);
@@ -599,7 +599,7 @@ $ echo 'zend_extension="/usr/lib/php/20170718/xdebug.so"' >> /etc/php/7.2/cli/ph
 $ echo 'xdebug.default_enable=0' >> /etc/php/7.2/cli/php.ini
 ```
 
-From the container and in the `framework` folder run the following commands
+You can generate code coverage with the following command:
 
 ```linux
 $ phpunit --coverage-html /var/www/public/coverage
