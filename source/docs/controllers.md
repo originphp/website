@@ -412,32 +412,29 @@ Logs are stored in `logs` and make it easy to debug and keep track of what is go
  OriginPHP uses a minimalistic file logger based upon the PSR 3 standard.
 
 Each line in the log includes the date, channel, type of message and the message itself. 
-You set the channel when creating the logger object.
 
 
 ```php
-use Origin\Core\Logger;
-$logger = new Logger('Controller');
-$logger->error('something has gone wrong');
+use Origin\Log\Log;
+Log::error('something has gone wrong',['channel'=>'controller']);
 ```
 
 That will produce a line like this in the log:
 
 ```
-[2019-03-10 13:37:49] Controller ERROR: something has gone wrong.
+[2019-03-10 13:37:49] controller ERROR: something has gone wrong.
 ```
 
 You can also use place holders
 
 ```php
-$logger = new Logger('EmailsController');
-$logger->warning('{key} was null',['key'=>'foo']);
+Log::warning('{key} was null',['key'=>'foo']);
 ```
 
 This will produce a line like this in the log:
 
 ```
-[2019-03-10 14:25:50] EmailsController WARNING: foo was null.
+[2019-03-10 14:25:50] application WARNING: foo was null.
 ```
 
 You can call the following logging methods on the Logger object:

@@ -32,7 +32,7 @@ If you want to use an anonymous function then you can do so like this
 
 ```php
 $manager->listen('Order.purchaseComplete',function (Event $event) {
-            $logger->info('A new purchase has been complete');
+           Log::info('A new purchase has been complete');
         });
 ```
 

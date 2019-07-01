@@ -76,7 +76,7 @@ If there is a job in the queue then it will return a Job object. When you proces
         $job->executed();
     } catch (Exception $e) {
         $job->failed();
-        $logger->error('Job with id {id} failed.',['id'=>$job->id]);
+        Log::error('Job with id {id} failed.',['id'=>$job->id]);
     }  
  }
 ```
