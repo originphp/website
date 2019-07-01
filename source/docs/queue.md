@@ -21,7 +21,7 @@ $ bin/console db:schema:load queue
 To create a Queue object which uses the default database connection.
 
 ```php
-Use Origin\Utility\Queue;
+Use Origin\Queue\Queue;;
 $queue = new Queue();
 ```
 
@@ -29,7 +29,7 @@ If you want to use a different datasource and/or table then you can configure th
 options. These options are the same as when creating a model.
 
 ```php
-Use Origin\Utility\Queue;
+Use Origin\Queue\Queue;;
 $queue = new Queue([
     'datasource'=>'queue-server',
     'table'=>'jobs'
@@ -43,7 +43,7 @@ You will most likely be adding jobs to a queue from either the controller, model
 To add a job to the queue you just use set a queue name and then pass array of data. The queue name can consist of letters,numbers,hyphens, dots and underscores. Once you have added the job it will return the job id.
 
 ```php
-Use Origin\Utility\Queue;
+Use Origin\Queue\Queue;;
 $queue = new Queue();
 $jobId = $queue->add('welcome_emails',[
     'user_id'=>1024
@@ -66,7 +66,7 @@ The fetch method pulls one job at a time and locks it to prevent the job from be
 If there is a job in the queue then it will return a Job object. When you process a job, it is best to run through a try block, in-case of any unexpected errors or exceptions that might happen.
 
 ```php
- Use Origin\Utility\Queue;
+ Use Origin\Queue\Queue;;
  $queue = new Queue();
 
  while ($job = $queue->fetch('welcome_emails')) {
@@ -88,7 +88,7 @@ Jobs in the queue are typically processed in the background, and this will usual
 ```php
 namespace App\Command;
 use Origin\Command\Command;
-Use Origin\Utility\Queue;
+Use Origin\Queue\Queue;;
 
 class SendEmailNotificationsCommand extends Command
 {

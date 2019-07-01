@@ -174,12 +174,12 @@ Log::config('default',[
 Log::config('critial-emails',[
     'engine' => 'Email',
     'to' => 'you@example.com', 
-    'from' => ['no-reply@example.com','Web Application'] 
+    'from' => ['no-reply@example.com','Web Application'],
     'account' => 'gmail'
     'levels' => ['critical','emergency','alert']
 ]);
 
-// Create a seperate log for everything from payment log
+// Create a seperate log for everything from the payments channel
 Log::config('payments',[
     'engine' => 'File',
     'file' => 'payments.log',

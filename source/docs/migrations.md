@@ -133,6 +133,17 @@ To add a column just pass the table name, column name and column type.
 $this->addColumn('suppliers','name','string',['limit'=>255]);
 ```
 
+The columns types will map according to the database adapter, for example `string` would map to `varchar` in MySQL. The column types to use are `string`,`text`,`integer`,`bigint`,`float`,`decimal`,`datetime`,`date`,`time`,`binary` and `boolean`.
+
+Column modifiers are `type`,`limit`,`default`,`null`, and `precision` and `scale` for decimal and float types. To set a field default to null, set ['default'=>''].
+
+If you are using MySQL and want to use `mediumtext` or `longtext`
+
+```php
+$this->addColumn('suppliers','description','text',['limit'=>16777215]); // medium text bytes
+$this->addColumn('suppliers','description','text',['limit'=>4294967295]); // long text bytes
+```
+
 #### Changing Columns
 
 Changing columns in a table is pretty straight forward.

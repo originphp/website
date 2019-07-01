@@ -93,10 +93,11 @@ Alternatively, you get an individual value from the user array by passing a key.
     $email = $this->Auth->user('email');
 ```
 
-The the default password hasher for OriginPHP uses the php password_hash function, which is very secure, and has been wrapped in its easy to use function.
+The the default password hasher for OriginPHP uses the php password_hash function, which is very secure. To hash a password using the default password hasher:
 
 ```php
-$password = hashPassword($password); // same as  password_hash($password, PASSWORD_DEFAULT); 
+use Origin\Utility\Security;
+Security::hashPassword($entity->password);
 ```
 
 So when a user signs up or changes their password you will need to hash the password, this will normally  be done in your user model, this will help keep your controller slim.
