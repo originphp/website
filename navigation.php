@@ -87,8 +87,11 @@ return [
             'Email' => 'docs/utility/email',
             'File' => 'docs/utility/file',
             'Folder' => 'docs/utility/folder',
+            'Html' => 'docs/utility/html',
             'Http' => 'docs/utility/http',
+            'Markdown' => 'docs/utility/markdown',
             'Security' => 'docs/utility/security',
+            'Text' => 'docs/utility/text',
             'XML' => 'docs/utility/xml',
             'Yaml' => 'docs/utility/yaml'
         ],

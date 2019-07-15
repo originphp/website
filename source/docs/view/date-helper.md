@@ -55,6 +55,14 @@ If you want to format it a different way, you can do so. Time values will still 
 echo $this->Date->format($article->created,'F jS Y'); // January 1st 2019
 ```
 
+## TimeAgoInWords
+
+You can also format datetime strings such as x minutes/months/years ago etc
+
+```php
+echo $this->Date->timeAgoInWords($article->created); // 3 minutes ago
+```
+
 ## Parsing
 
 OriginPHP comes with the Delocalize Behavior, which automatically converts dates,numbers to and from the database. You can disable this in the `AppModel` initialize method.

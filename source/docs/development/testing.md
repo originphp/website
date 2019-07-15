@@ -471,10 +471,10 @@ Set headers for the next request
 
 #### env
 
-Sets server environment $_SERVER
+If you need to modify the $_SERVER variable for testing then can set using env
 
 ```php
-    $this->env('HTTP_ACCEPT_LANGUAGE','en');
+    $this->env('SOME_ENV_NAME','value');
 ```
 
 #### controller()

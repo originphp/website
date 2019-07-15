@@ -152,11 +152,12 @@ In the controller that you want to enable the API authentication method add the 
     }
 ```
 
-You can use the `uid` or `uuid` functions to generate secure api tokens.
+You can use `Security::uid` or `Security::uuid` to generate secure api tokens.
 
 ```php
-$user->api_token = uid(40); // bbd7cebc6274d5ec7aabbdbaa4885e0b2f75d091
-$user->api_token = uuid(); // 1546d376-8b3b-4ce9-b763-f95b8cbbeb82
+use Origin\Utility\Security;
+$user->api_token = Security::uid(40); // bbd7cebc6274d5ec7aabbdbaa4885e0b2f75d091
+$user->api_token = Security::uuid(); // 1546d376-8b3b-4ce9-b763-f95b8cbbeb82
 ```
 
 > Remember you will need to set the request type to json. 

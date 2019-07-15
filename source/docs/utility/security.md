@@ -96,3 +96,20 @@ $plain = Security::decrypt($encrypted,$key);
 ```
 
 It will return `null` if it is unable to decrypt because the key or data is wrong. It will return `false`, if it might have been tampered with.
+
+## UID
+
+To generate a secure UID
+
+```php
+$uid = Security::uid(); // 64fd8778d899339e
+```
+
+
+### UUID
+
+To generate a secure UUID (version 4)
+
+```php
+$uid = Security::uuid(); // 38c67382-d3ab-4430-a27e-0c719813c09f
+```

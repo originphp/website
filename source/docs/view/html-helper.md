@@ -95,3 +95,12 @@ You can easily add images to your view, you must provide an extension and if the
 echo $this->Html->img('spinner.png');
 echo $this->Html->img('/somewherelse/images/spinner.gif'); // from public folder
 ```
+
+## Div
+
+To wrap content in a DIV tag, and you can pass an array with optional attributes.
+
+```php
+echo $this->Html->div($content);
+echo $this->Html->div($content,['class'=>'highlight']);
+```

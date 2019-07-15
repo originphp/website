@@ -101,6 +101,7 @@ You can also pass an options array with any of the following keys.
 - `conditions` an array of additional conditions to the join
 - `fields` an array of fields to return from the join model, by default it returns all
 - `type` default is `LEFT`, this is the join type used to fetch the associated record.
+- `counterCache`: default is `null`. Counter cache allows you to cache counts of records instead of running counts each time. If you use counter cache anytime a record is created or deleted the counter will be updated. Set a field name to update the count, if set to true it will use the plural of the current model with e.g. `comments_count`. Lets say you wanted to track number of comments for each post, in your Post model, when setup the belongsTo assocation, say for Comment, set `counterCache` to true or the name of the field to increment and decrement.
 
 ```php
   class Profile extends AppModel

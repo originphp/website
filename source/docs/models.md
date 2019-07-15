@@ -343,7 +343,9 @@ Or you can delete in bulk but this wont trigger callbacks or delete related reco
 
 ## Saving Associated Data
 
-You can save records with with associated data such, simply pass an array to the new method on the article and this will build the entity object for you. 
+By default associated records will be saved automatically.
+
+To create an entity with associated data simply pass an array to the new method on the article.
 
 ```php
   $data = [
@@ -363,7 +365,7 @@ You can save records with with associated data such, simply pass an array to the
   $this->Article->save($article);
 ```
 
-By default associated records will be saved, you can disable this by setting associated to false. 
+If you don't want to save associated data, then you can disable this by setting associated to false. 
 
 ```php
   $article = $this->Article->new($data,[
@@ -449,6 +451,12 @@ If you need to just save one field, you can also pass an array with options such
     $this->Article->saveField(1024,'title','New Article Title');
 ```
 
+Remember if in your validation rules you set a rule to required, then you will need to disable validation to prevent issues.
+
+```php
+    $this->Article->saveField(1024,'title','New Article Title',['validate'=>false]);
+```
+
 ## Validation
 
 Validating data is very important and can easily be setup. You use the `initialize` method which is called immediately after the construct, its basically so you don't have to overide the `__construct()` method.
@@ -474,6 +482,15 @@ class Product extends AppModel
 }
 ```
 For more information on validation see our [Validation Guide](/docs/model/validation).
+
+## Incrementing and Decrementing Counters
+
+If you are using a field as counter, you can increase and decrease these counters like this:
+
+```php
+$this->Post->increment('views',$id);
+$this->User->decrement('credits',$id);
+```
 
 ## Callbacks
 

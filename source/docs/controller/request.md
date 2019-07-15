@@ -9,13 +9,20 @@ The request object contains information on the current request that has been mad
 
 ## Request Methods
 
-### Getting the URL
+### Getting the URL and Path
 
 To retrieve the full url including query string use `url` method, if you don't want the query string then pass false as an argument
 
 ```php
-$url = $request->url(); // url: /contacts/view/100
-$withQuery = $request->url(true);// url: /contacts/view/100?page=1
+$url = $request->url(); // url: http://localhost:8000/contacts/view/100
+$withQuery = $request->url(true);// url: http://localhost:8000/contacts/view/100?page=1
+```
+
+Getting the path only (without the scheme,host and port)
+
+```php
+$url = $request->path(); // url: /contacts/view/100
+$withQuery = $request->path(true);// url: /contacts/view/100?page=1
 ```
 
 ## Determining the request method
@@ -40,6 +47,30 @@ public function delete($id = null)
     $this->request->allowMethod(['post', 'delete']);
     ...
 }
+```
+
+### Getting the IP address of the client
+
+To get the IP address
+```php
+$ip = $this->request->ip();
+```
+
+### Getting the Host name
+
+To get the hostname
+
+```php
+$host = $this->request->host();
+```
+
+### Checking for SSL and Ajax
+
+You can also check if the request is AJAX or using SSL
+
+```php
+$result = $this->request->ssl();
+$result = $this->request->ajax();
 ```
 
 ## Request Headers

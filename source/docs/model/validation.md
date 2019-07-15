@@ -43,7 +43,7 @@ A validation rule array consists of the following keys:
 - *message*: error message to display if validation fails
 - *on*: default is `null`. You can also set to `create` or `update` to only check validation rule when a record is created or updated.
 - *required*: default is `false`. If set to true then the entity must have the field and it must not be blank. This can cause issues if you run on this on both update and create, and then try to use saveField, validation will fail. If you use this then you should probably set on = create.
-- *allowBlank* - default is `false`. If the value is empty validation automatically fails. Set to true to skip validation on empty values. Not the same as required, this just allows a validation test to pass or fail on empty values. This is a fine grain control. Lets say you have a `minLength` rule on a non required field, and the value is empty. Validation would fail, however `allowBlank` will allow validation to pass in this instance.
+- *allowBlank* - default is `false`. Allows validation to pass if empty values. Not the same as required, this allows you to skip a validation test if the value is empty. This is a fine grain control. Lets say you have a `minLength` rule on a non required field, and the value is empty. Validation would fail, however `allowBlank` will allow validation to pass in this instance.
 
 ## Validation Rules
 
@@ -189,13 +189,17 @@ Checks that a value equals another value
 
 ### extension
 
-Checks that a value matches an array of extensions
+Checks that the extension of the filename against an list of extensions
+
 ```php
  $this->validate('filename',[
     'rule' => ['extension',['csv','txt']]
       'message' => 'Only csv or text files can be uploaded'
   ]);
 ```
+
+The extension validation rule also works with file uploads, just set the name of the field to same as what you used
+on the form.
 
 ### float
 
@@ -278,6 +282,17 @@ Checks if string is less than or equals to the max length.
  $this->validate('username',[
     'rule' => ['maxLength',12],
     'message' => 'Username is too long'
+  ]);
+```
+
+### mimeType
+
+Checks if file or file upload has a certain mime type.
+
+```php
+ $this->validate('filename',[
+    'rule' => ['mimeType',['image/jpeg','image/png']],
+    'message' => 'Invalid file'
   ]);
 ```
 
@@ -369,4 +384,25 @@ If you want to consider `www.google.com` a valid url (without the protocol)  the
   ]);
 
    
+```
+
+### upload
+
+Checks that a uploaded file has not errors
+
+```php
+ $this->validate('filename',[
+    'rule' => 'upload',
+    'message' => 'Error uploading file'
+  ]);
+```
+
+When uploading files, if no file is uploaded then validation will fail since an error occurred. If the file upload
+is optional, then set it like this
+
+```php
+ $this->validate('filename',[
+    'rule' => ['upload',true],
+    'message' => 'Error uploading file'
+  ]);
 ```
