@@ -25,7 +25,7 @@ To load and enable the `AuthComponent`, in your app controller initialize method
 
 The default config for the `AuthComponent`.
 
-- *authenticate*: Supports `Form` and `Http`
+- *authenticate*: Supports `Form` , `Http` and `Controller`
 - *loginAction*: This is the login action for the Form
 - *loginRedirect*: This is where users are taken too when they login
 - *logoutRedirect*: This is where users are taken too when they logout
@@ -112,7 +112,7 @@ class User extends AppModel
             return false;
         }
 
-        if(!empty($entity->password)){
+        if ($entity->modified('password')) {
             $entity->password = Security::hashPassword($entity->password);
         }
 
@@ -161,3 +161,18 @@ $user->api_token = Security::uuid(); // 1546d376-8b3b-4ce9-b763-f95b8cbbeb82
 ```
 
 > Remember you will need to set the request type to json. 
+
+### Controller
+
+To add an additional layer, you can use the `Controller`.
+
+In your controller create a method called `isAuthorized`.
+
+```php
+public function isAuthorized(array $user){
+    if($user['admin'] === 1){
+        return true;
+    }
+    return false;
+}
+```

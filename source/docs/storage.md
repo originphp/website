@@ -117,7 +117,7 @@ Storage::config('default', [
     'host' => 'example.com',
     'port' => 21,
     'username' => 'james',
-    'password' => 'secret,
+    'password' => 'secret',
     'ssl' => false
  ]);
 ```
@@ -148,7 +148,7 @@ Storage::config('default', [
     'host' => 'example.com',
     'port' => 22,
     'username' => 'james',
-    'password' => 'secret
+    'password' => 'secret'
  ]);
 ```
 

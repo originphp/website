@@ -43,8 +43,9 @@ unless you tell it otherwise.
 ## Formating numbers
 
 ```php
-$this->Number->format('123456789.123456789'); // 123,456,789.12
-$this->Number->format('123456789.123456789',['places'=>4]); //123,456,789.1235
+$this->Number->format(123456789); // 123456789
+$this->Number->format(123456789.123456789); // 123,456,789.12
+$this->Number->format(123456789.123456789,['places'=>4]); //123,456,789.1235
 ```
 
 Options for the number formatting are these, currency, decimal and percentage use the number formatter so you can also pass these options to those methods as well.
@@ -61,9 +62,10 @@ To format a currency you can do it like this, if you don't supply a currency as 
 it will use your default currency.
 
 ```php
-echo $this->Number->currency('1000000'); // $1,000,000.00
-echo $this->Number->currency('1000000','GBP'); //£1,000,000.00
-echo $this->Number->currency('1000','USD',['places'=>'per group']);
+echo $this->Number->currency(1000000); // $1,000,000
+echo $this->Number->currency(1000000.00); // $1,000,000.00
+echo $this->Number->currency(1000000,'GBP'); //£1,000,000
+echo $this->Number->currency(1000,'USD',['places'=>0]);
 ```
 
 By default the number helper can work with USD, GBP, EUR, CAD, AUD,CHF AND JPY out of the box. But you can also add your own currencies.
@@ -77,14 +79,14 @@ public function initialize(){
 Then from your view just supply the currency code as the second argument.
 
 ```php
-echo $this->Number->currency('1000000', 'CNY'); // ¥1,000,000.00
+echo $this->Number->currency(1000000, 'CNY'); // ¥1,000,000.00
 ```
 
 ## Formating Numbers to a precision
 
 ```php
-echo $this->Number->precision('100'); // 100.00
-echo $this->Number->precision('100.1',3); // 100.100
+echo $this->Number->precision(100); // 100.00
+echo $this->Number->precision(100.1,3); // 100.100
 ```
 
 ## Formating Percentages

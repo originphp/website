@@ -70,7 +70,6 @@ The options for control allow you to change the default settings.
 - class: change the name of the class of the input element e.g. form-input
 - label: (default:true), boolean, a string which will be the label text, or an array with the text key and any other options
 - escape: (default:true) escape values
- e.g. class
 
  All other options will be passed to the form element, if it does not recognize the option it will treat it as an attribute.
 
@@ -85,7 +84,7 @@ The standard options which be used in most form inputs which are used by the con
 - value: set the default value to be used by the input
 - escape: (default:true) escape values that are displayed
 
-Any other keys passed to the form inputs will be treated as attributes for html tag e.g. class, pattern,placeholder etc.
+Any other keys passed to the form inputs will be treated as attributes for a HTML tag e.g. class, pattern,placeholder etc.
 
 ## Input Types
 

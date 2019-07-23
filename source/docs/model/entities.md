@@ -132,6 +132,13 @@ Gets a list of fields that were modified.
 $fields = $entity->modified();
 ```
 
+If you want to see a particular field was modified.
+
+
+```php
+$bool = $entity->modified('email');
+```
+
 ### name
 
 Gets the model name of the entity.

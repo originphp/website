@@ -157,13 +157,13 @@ When adding an argument, you can pass an array with the following keys
 
 ### Output
 
-The Command uses the ConsoleIO object to create output to create some pretty straight forward output.
+The Command class uses the ConsoleIO object to create output, and it is pretty straight forward.
 
 ```php
 $this->out('Some text');
 ```
 
-These are wrappers and will wrap text in the same name tags and color this according.
+These will wrap text in the same name tags and color this according.
 
 ```php
 $this->success('Something went well'); // stdout
@@ -171,8 +171,6 @@ $this->info('This is some information'); // stdout
 
 $this->warning('This some warning text'); // stderr
 $this->error('This is an error'); // stderr
-
-
 ```
 
 When you send messages to the debug method, these will only be displayed if the `--verbose` option is used. This is used to display additional detailed or debug information to the user.

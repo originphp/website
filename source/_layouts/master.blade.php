@@ -85,10 +85,10 @@
                     &copy; Copyright 2019 Jamiel Sharief.
                 </li>
 
-                <li>
+                <!--li>
                     Built with <a href="http://jigsaw.tighten.co" title="Jigsaw by Tighten">Jigsaw</a>
                     and <a href="https://tailwindcss.com" title="Tailwind CSS, a utility-first CSS framework">Tailwind CSS</a>.
-                </li>
+                </li-->
             </ul>
         </footer>
     </body>

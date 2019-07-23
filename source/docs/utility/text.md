@@ -81,7 +81,7 @@ $string = Text::insert('Record {id} has been updated',[
     ]); // Record 1234568 has been updated
 
 $string = Text::insert('Record :id has been updated',[
-    'id'=>1234568,['before'=>':','after'=>'']
+    'id'=>1234568,'before'=>':','after'=>''
     ]); // Record 1234568 has been updated
 ```
 
