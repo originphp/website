@@ -16,7 +16,9 @@ $ composer require phpunit/phpunit 7.5
 
 > A benefit of installing this using composer is that when you are developing your IDE will show you code hinting for the PHPUnit classes.
 
-The first thing to do is to create a test database, and setup the test database configuration.
+### Setting up the database
+
+The first thing to do is to setup the test database configuration.
 
 In your `config/database.php` add database configuration.
 
@@ -29,12 +31,25 @@ In your `config/database.php` add database configuration.
     ));
 ```
 
-Lets create the database, the db shell will take the settings from the connection manager and use that
-to connect to db server and create the database.
+Make sure you have an up to date `schema.sql` file.
 
 ```linux
-$ bin/console db:create --datasource=test
+$ bin/console db:schema:dump
 ```
+
+Then create the db, import the structure
+
+```linux
+$ bin/console db:setup -ds=test
+```
+
+When you make changes to the db structure you run the `db:reset` which drops, creates and imports the schema.
+
+```linux
+$ bin/console db:reset -ds=test
+```
+
+> Always take care when running the db:reset or db:drop commands, running these on a production server without specifiying the datasource will drop the database and all its database.
 
 ### Conventions
 
@@ -45,46 +60,20 @@ When you create tests these will go in the `tests/TestCase` folder, and then dep
 `tests/TestCase/Lib/MathLibraryTest.php`
 
 When you create the test files, the filename should end with `Test.php` and they will extends either
+
 - `\PHPUnit\Framework\TestCase` - To use PHPUnit directly without extra features of Origin such as fixtures
 - `Origin\TestSuite\TestCase` - For testing everything else
 
-## Testing Models
+## Fixtures
 
-You will create a test case class like this, defining the fixtures that you will use in testing (including models that are used by other models etc).
+Fixtures are sets of sample data that you can use to test your app with. When working with fixtures, the `test` datasource is used, see the `Setting up the database` section.
 
-```php
-namespace App\Test\Model;
+### Creating Fixtures
 
-use Origin\TestSuite\OriginTestCase;
-use Origin\Model\ModelRegistry;
-use Origin\Model\Entity;
+When you use create a model using the `generate` command, a fixture will automatically be created for you in the `tests\Fixture` folder.
 
-class BookmarkTest extends OriginTestCase
-{
-    public $fixtures = ['Bookmark'];
-
-    // alias for PHPunit setUp in the OriginTestCase
-    public function startup()
-    {
-        parent::startup(); // remember parent
-        $this->Bookmark = ModelRegistry::get('Bookmark');
-    }
-
-    // alias for PHPunit tearDown in the OriginTestCase
-    public function shutdown()
-    {
-        parent::shutdown(); // remember parent
-    }
-
-}
-
-```
-
-If you are want to load a fixture from a plugin, then add the plugin name with the dot notation to list, e.g. `MyPlugin.Bookmark`.
-
-Create the fixtures in the `tests\Fixture` folder. 
-
-You are most likely going to be testing existing models, so we can import the schema easily using the model settings (table name and datasource).
+If you need to manually create a fixture, you should create in the `tests\Fixture` starting with the model name
+Create the fixtures in the `tests\Fixture` folder. A fixture for the Article model should be called `ArticleFixture`, this will use the `articles` table, unless you specify a different table using the `table` property method in the fixture.
 
 ```php
 namespace App\Test\Fixture;
@@ -93,34 +82,6 @@ use Origin\TestSuite\Fixture;
 
 class ArticleFixture extends Fixture
 {
-    public $import = ['model' =>'Article']
-}
-```
-
-Or you can just set the table name
-
-```php
-namespace App\Test\Fixture;
-
-use Origin\TestSuite\Fixture;
-
-class ArticleFixture extends Fixture
-{
-    public $import = ['table' =>'articles']
-}
-```
-
-To set some test data set the `records` property.
-
-```php
-namespace App\Test\Fixture;
-
-use Origin\TestSuite\Fixture;
-
-class ArticleFixture extends Fixture
-{
-    public $import = ['table' =>'articles'];
-
     public $records = [
         [
             'id' => 1,
@@ -161,7 +122,7 @@ Sometimes you will want to use dynamic data, in this case you will modify the da
                 'body' => 'Article body goes here',
                 'published' => 1,
                 'created' => date('Y-m-d H:i:s'],
-                'modified' => date('Y-m-d H:i:s'],
+                'modified' => date('Y-m-d H:i:s']
             ],
         );
         parent::initialize(); // always call parent
@@ -169,45 +130,66 @@ Sometimes you will want to use dynamic data, in this case you will modify the da
 
 ```
 
-You can also manually specify the schema, the type field using our own mapping designed to be database agnostic. The types are `string`,`text`,`integer`,`bigint`,`float`,`decimal`,`datetime`,`date`,`time`,`binary` and `boolean`.
+### Loading Fixtures
 
-Here is an example:
+To load a fixture, in your test case which extends `OriginTestCase` use the `fixtures` var.
 
 ```php
-namespace App\Test\Fixture;
+namespace App\Test\Model;
 
-use Origin\TestSuite\Fixture;
+use Origin\TestSuite\OriginTestCase;
 
-class ArticleFixture extends Fixture
+class BookmarkTest extends OriginTestCase
 {
-    public $schema = [
-         'id' => ['type' => 'primaryKey'],
-         'title' => [
-           'type' => 'string',
-           'length' => 255,
-           'null' => false,
-         ],
-         'body' => 'text',
-         'published' => [
-           'type' => 'integer',
-           'default' => '0',
-           'null' => false,
-         ],
-         'created' => 'datetime',
-         'modified' => 'datetime',
-     );
+    public $fixtures = ['Bookmark'];
+}
+```
+
+If you are want to load a fixture from a plugin, then add the plugin name with the dot notation to list, e.g. `MyPlugin.Bookmark`.
+
+
+## Testing Models
+
+You will create a test case class like this, defining the fixtures that you will use in testing (including models that are used by other models etc).
+
+```php
+namespace App\Test\Model;
+
+use Origin\TestSuite\OriginTestCase;
+use Origin\Model\ModelRegistry;
+use Origin\Model\Entity;
+
+class BookmarkTest extends OriginTestCase
+{
+    public $fixtures = ['Bookmark'];
+
+    // this is called when the testcase is constructed
+    public function initialize() 
+    {
+        
+    }
+
+    // alias for PHPunit setUp in the OriginTestCase
+    public function startup()
+    {
+        parent::startup(); // remember parent
+        $this->Bookmark = ModelRegistry::get('Bookmark');
+    }
+
+    // example assertion
+    public function testHasBookmarks(){
+        $this->assertTrue($this->Bookmkark->hasBookmarks());
+    }
+
+    // alias for PHPunit tearDown in the OriginTestCase
+    public function shutdown()
+    {
+        parent::shutdown(); // remember parent
+    }
+
 }
 
 ```
-
-You can generate the schema from your existing database using the following command:
-
-```linux
-$ bin/console db:schema:dump --type:php
-```
-
-This will create a folder in your config folder, called schema with a PHP file for each table. You can run this anytime you make changes, but you will need to update the fixture file separately. 
-When you are first developing your app, using the import method makes the most sense, since it will just your current database at all times. As you start to get into beta and production, you can code the field data into the fixtures - but it is up to you.
 
 ### Mocking Models
 
@@ -328,13 +310,31 @@ In your controller test case add the `IntegrationTestTrait`
 ```php
 use Origin\TestSuite\OriginTestCase;
 use Origin\TestSuite\IntegrationTestTrait;
+
 class BookmarksControllerTest extends OriginTestCase
 {
     use IntegrationTestTrait;
+
+    // this is called when the testcase is constructed
+    public function initialize()
+    {
+
+    }
+
+    // alias for PHPunit setUp in the OriginTestCase
+    public function startup()
+    { 
+    }
+
     public function testIndex(){
         $this->get('/bookmarks/index');
         $this->assertResponseOk();
         $this->assertResponseContains('<h2>Bookmarks</h2>');
+    }
+
+    // alias for PHPunit setUp in the OriginTestCase
+    public function shutdown()
+    { 
     }
 }
 ```
