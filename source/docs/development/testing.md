@@ -66,7 +66,7 @@ When you create the test files, the filename should end with `Test.php` and they
 
 ## Fixtures
 
-Fixtures are sets of sample data that you can use to test your app with. When working with fixtures, the `test` datasource is used, see the `Setting up the database` section.
+Fixtures are sets of sample data that you can use to test your app with, the data in the fixtures in inserted into the table for the fixture. When testing with PHPUnit, the `test` datasource is used by all models, see the `Setting up the database` section.
 
 ### Creating Fixtures
 
