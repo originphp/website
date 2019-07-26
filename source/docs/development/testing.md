@@ -82,7 +82,9 @@ class BookmarkTest extends OriginTestCase
 
 If you are want to load a fixture from a plugin, then add the plugin name with the dot notation to list, e.g. `MyPlugin.Bookmark`.
 
-Create the fixtures in the `tests\Fixture` folder. You are most likely going to be testing existing models, so we can import the schema easily.
+Create the fixtures in the `tests\Fixture` folder. 
+
+You are most likely going to be testing existing models, so we can import the schema easily using the model settings (table name and datasource).
 
 ```php
 namespace App\Test\Fixture;
@@ -93,7 +95,19 @@ class ArticleFixture extends Fixture
 {
     public $import = ['model' =>'Article']
 }
+```
 
+Or you can just set the table name
+
+```php
+namespace App\Test\Fixture;
+
+use Origin\TestSuite\Fixture;
+
+class ArticleFixture extends Fixture
+{
+    public $import = ['table' =>'articles']
+}
 ```
 
 To set some test data set the `records` property.
@@ -105,14 +119,14 @@ use Origin\TestSuite\Fixture;
 
 class ArticleFixture extends Fixture
 {
-    public $import = ['model' =>'Article'];
+    public $import = ['table' =>'articles'];
 
     public $records = [
         [
             'id' => 1,
             'title' => 'Article #1',
             'body' => 'Article body #1',
-            'published' => '1',
+            'published' => 1,
             'created' => '2018-12-19 13:29:10',
             'modified' => '2018-12-19 13:30:20',
         ],
@@ -120,7 +134,7 @@ class ArticleFixture extends Fixture
             'id' => 2,
             'title' => 'Article #2',
             'body' => 'Article body #2',
-            'published' => '1',
+            'published' => 1,
             'created' => '2018-12-19 13:31:30',
             'modified' => '2018-12-19 13:32:40',
         ],
@@ -128,7 +142,7 @@ class ArticleFixture extends Fixture
             'id' => 3,
             'title' => 'Article #3',
             'body' => 'Article body #3',
-            'published' => '1',
+            'published' => 1,
             'created' => '2018-12-19 13:33:50',
             'modified' => '2018-12-19 13:34:59',
         ],
@@ -145,7 +159,7 @@ Sometimes you will want to use dynamic data, in this case you will modify the da
                 'id' => 1,
                 'title' => 'First Article',
                 'body' => 'Article body goes here',
-                'published' => '1',
+                'published' => 1,
                 'created' => date('Y-m-d H:i:s'],
                 'modified' => date('Y-m-d H:i:s'],
             ],

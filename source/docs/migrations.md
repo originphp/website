@@ -214,6 +214,14 @@ To remove an index by index name
 $this->removeIndex('customers',['name'=>'index_name']);
 ```
 
+#### Listing Indexes
+
+To get a list of indexes
+
+```php
+$indexes = $this->indexes('articles');
+```
+
 ### Foreign Keys
 
 #### Adding a Foreign Key
@@ -234,7 +242,7 @@ $this->addForeignKey('articles','users',[
     ]);
 ```
 
-### Removing Foreign Keys
+#### Removing Foreign Keys
 
 Again, if you followed conventions then to remove a foreign key you only need to supply the two table names.
 
@@ -248,6 +256,25 @@ You can also remove by column or constraint name.
 $this->removeForeignKey('articles',['column'=>'owner_id']);
 $this->removeForeignKey('accounts',['name'=>'fk_origin_1234567891'];
 ```
+
+#### Listing Foreign Keys
+
+To get a list of foreign keys
+
+```php
+$foreignKeys = $this->foreignKeys('articles');
+/*
+$foreignKeys = [
+    'table' => 'articles',
+    'column' => 'author_id',
+    'name' => 'fk_origin_12345',
+    'referencedTable' => 'users',
+    'referencedColumn' => 'id',
+];
+*/
+```
+
+
 
 ### Custom SQL Queries
 
