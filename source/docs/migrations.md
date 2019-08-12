@@ -94,11 +94,24 @@ You can also pass a third argument of options using the following keys:
 
 - id: default is true, whether to automatically create the primary key field
 - primaryKey: default is `id` this is the name of the primary key field
-- options: this is database specific string which is added to the create table statement. e.g. `ENGINE=InnoDB DEFAULT CHARSET=utf8`
+- autoIncrement: this sets the auto increment or serial value. e.g. 10000
+- engine: This is the storage engine used for the table for MySQL e.g InnoDB
+- charset: The character set for the table in MySQL e.g. utf8
+- collate: Sets the collate option for the table in MySQL. utf8_unicode_ci
+
+```php
+$options = ['engine' => 'InnoDB','autoIncrement'=>10000,'charset' => 'utf8','collate' => 'utf8_unicode_ci'];
+
+$this->createTable('products',[
+        'name' => ['type'=>'integer','limit'=>10,'null'=>false],
+        'amount' => ['type'=>'decimal','precision'=>8,'scale'=>2],
+        'status' => ['type'=>'string','default'=>'new']
+    ],$options);
+```
 
 #### Creating a join table
 
-When you are working with `hasAndBelongsToMany` you will need a additonal table to manage the relationship.
+When you are working with `hasAndBelongsToMany` you will need a additional table to manage the relationship.
 
 ```php
 $this->createJoinTable('contacts','tags');
@@ -208,7 +221,7 @@ $this->removeIndex('customers','account_number');
 $this->removeIndex('customers',['owner_id','tenant_id']);
 ```
 
-To remove an index by index name
+To remove an index using the index name
 
 ```php
 $this->removeIndex('customers',['name'=>'index_name']);
@@ -239,6 +252,23 @@ If you have not or need to customize this you can pass an options array with `co
 $this->addForeignKey('articles','users',[
     'column'=>'author_id', // column in articles table
     'primaryKey'=>'lng_id' // column in users table
+    ]);
+```
+
+You can also set options for on delete and on update. See [Referential Actions](https://dev.mysql.com/doc/refman/8.0/en/create-table-foreign-keys.html#foreign-keys-referential-actions)
+
+- cascade
+- restrict
+- setNull
+- setDefault
+- noAction
+
+For example:
+
+```php
+$this->addForeignKey('articles','users', [
+    'update' => 'cascade',
+    'delete' => 'setNull'
     ]);
 ```
 
@@ -320,6 +350,12 @@ When you run the db migrate command it will check for migrations which have not 
 
 ```linux
 $ bin/console db:migrate
+```
+
+To rollback the last migration (this can be run multiple times)
+
+```linux
+$ bin/console db:rollback
 ```
 
 If you want to migrate to a specific version or rollback, add the version number to the command, its really that simple.

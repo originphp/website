@@ -31,25 +31,20 @@ In your `config/database.php` add database configuration.
     ));
 ```
 
-Make sure you have an up to date `schema.sql` file.
+Make sure you have an up to date schema file `db/schema.php`. You can use the schema dump command, by default the database commands use the agnostic version `php`, this can be changed in your `config/application.php` or by passing the option `--type=sql`.
 
 ```linux
 $ bin/console db:schema:dump
+$ bin/console db:schema:dump --type=sql
 ```
 
-Then create the db, import the structure
+When dumping an SQL version, the schema:dump command uses the SHOW CREATE TABLE for MySQL and the internal version for PostgreSQL, which include the create table information such as columns, constraints and indexes.
+
+When you make changes to the db structure you  should run the `db:test:prepare` which drops and then recreates the test database, and then loads the schema in the test database.
 
 ```linux
-$ bin/console db:setup -ds=test
+$ bin/console db:test:prepare
 ```
-
-When you make changes to the db structure you run the `db:reset` which drops, creates and imports the schema.
-
-```linux
-$ bin/console db:reset -ds=test
-```
-
-> Always take care when running the db:reset or db:drop commands, running these on a production server without specifiying the datasource will drop the database and all its database.
 
 ### Conventions
 

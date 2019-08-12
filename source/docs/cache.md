@@ -103,8 +103,9 @@ In all these examples,we are only configuring the default configuration, you can
 ```php
 Cache::config('default', [
     'engine' => 'File',
-    'duration' => 3600,
+    'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
     'prefix' => 'cache_'
+    'serialize' => true // set to false if you going to cache strings such as output
      ]);
 ```
 
@@ -113,7 +114,7 @@ Cache::config('default', [
 ```php
 Cache::config('default', [
     'engine' => 'Apcu',
-    'duration' => 3600,
+    'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
     'prefix' => 'cache_'
      ]);
 ```
@@ -127,7 +128,7 @@ Cache::config('default', [
         'engine' => 'Memcached',
         'host' => '127.0.0.1',
         'port' => '11211',
-        'duration' => 3600, 
+        'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
         'prefix' => 'cache_'
      ]);
 ```
@@ -141,7 +142,7 @@ Cache::config('default', [
         'port' => '11211',
         'username' => 'james',
         'password' => 'secret',
-        'duration' => 3600,
+        'duration' => '+60 minutes', // 3600,
         'prefix' => 'cache_'
      ]);
 ```
@@ -169,7 +170,7 @@ Cache::config('default', [
         'engine' => 'Redis',
         'host' => '127.0.0.1',
         'port' => 6379,
-        'duration' => 3600,
+        'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
         'timeout' => 0,
         'prefix' => 'cache_'
      ]);
@@ -183,7 +184,7 @@ Cache::config('default', [
         'host' => '127.0.0.1',
         'port' =>  6379,
         'password' => 'secret',
-        'duration' => 3600,
+        'duration' => 3600, // duration can also be string e.g. +60 minutes
         'prefix' => 'cache_'
      ]);
 ```
@@ -206,7 +207,7 @@ Cache::config('default', [
         'host' => '127.0.0.1',
         'port' => 6379,
         'persistent' => 'my-app',
-        'duration' => 3600,
+        'duration' => 3600, // duration can also be string e.g. +60 minutes
         'timeout' => 0,
         'prefix' => 'cache_'
      ]);
