@@ -157,23 +157,26 @@ When adding an argument, you can pass an array with the following keys
 
 ### Output
 
-The Command class uses the ConsoleIO object to create output, and it is pretty straight forward.
+The Command class includes a couple of easy to use output functions which will insert values into placeholders, and colour output depending upon the type.
+
+For standard output use the out function.
 
 ```php
 $this->out('Some text');
+$this->out('Hello {name}',['name'=>'Jon']);
 ```
 
-These will wrap text in the same name tags and color this according.
+To colorize the messages depending upon type:
 
 ```php
-$this->success('Something went well'); // stdout
+$this->success('User with {id} has been created',['id'=>$user->id]); // stdout
 $this->info('This is some information'); // stdout
 
 $this->warning('This some warning text'); // stderr
 $this->error('This is an error'); // stderr
 ```
 
-When you send messages to the debug method, these will only be displayed if the `--verbose` option is used. This is used to display additional detailed or debug information to the user.
+Messages using debug will only be displayed if the `--verbose` option is used. You can use this to display additional detailed or debug information to the user.
 
 ```php
 $this->debug('This additional text that might be helpful');
@@ -253,18 +256,18 @@ The ConsoleIO object handles the input and output from within Commands.
 ### Output
 
 ```php
-$io->out('Text written to stdout');
-$io->err('Text written to stderr');
+$this->io->out('Text written to stdout');
+$this->io->err('Text written to stderr');
 ```
 
 The IO object also has some predefined styles of its own for the following.
 
 ```php
-$io->success('Something went well'); // stdout
-$io->info('This is some information'); // stdout
+$this->io->success('Something went well'); // stdout
+$this->io->info('This is some information'); // stdout
 
-$io->warning('This some warning text'); // stderr
-$io->error('This is an error'); // stderr
+$this->io->warning('This some warning text'); // stderr
+$this->io->error('This is an error'); // stderr
 
 ```
 

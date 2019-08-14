@@ -295,11 +295,13 @@ To get a list of foreign keys
 $foreignKeys = $this->foreignKeys('articles');
 /*
 $foreignKeys = [
-    'table' => 'articles',
-    'column' => 'author_id',
-    'name' => 'fk_origin_12345',
-    'referencedTable' => 'users',
-    'referencedColumn' => 'id',
+    [
+        'table' => 'articles',
+        'column' => 'author_id',
+        'name' => 'fk_origin_12345',
+        'referencedTable' => 'users',
+        'referencedColumn' => 'id'
+    ]
 ];
 */
 ```

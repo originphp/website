@@ -1,0 +1,144 @@
+---
+title: Elasticsearch
+description: Elasticsearch Guide for the OriginPHP Framework
+extends: _layouts.documentation
+section: content
+---
+# Elasticsearch
+
+If you need to improve performance of your database or implement more advanced searching you case use Elasticsearch. OriginPHP makes it ultra simple to implement.
+
+## Configuration
+
+Here I will cover the configuration of Elasticsearch, the installation instructions for Elasticsearch with Docker are at the bottom of this guide.
+
+### Connection
+
+First you need to configure the Elasticsearch connection. In your configuration file `config/application.php` add the following
+
+```php
+use Origin\Utility\Elasticsearch;
+
+Elasticsearch::config('default', [
+    'scheme' => 'http',
+    'host' => 'elasticsearch', // or 127.0.0.1 if not using the docker version
+    'port' => 9200,
+    'timeout' => 400
+]);
+```
+
+### Model
+
+Load the Elasticsearch Behavior, in the `initialize` method of the models that you want to implement Elasticsearch in.
+
+```php
+public function initialize(array $config)
+{
+    $this->loadBehavior('Elasticsearch');
+}
+```
+
+If you want to use a different connection, then you pass the `connection` key this when loading the Elasticsearch Behavior.
+
+```php
+$this->loadBehavior('Elasticsearch',[
+    'connection'=>'other'
+    ]);
+```
+
+### Searching
+
+Whenever you create or delete a record the Elasticsearch index will be updated.
+To carry out a search use the model, which will have new methods from the Behavior.
+
+To search using keywords on one or multiple columns you will do it like this
+
+```php
+$results = $this->Post->search('Top Frameworks 2019',['title','body']); // from Controller
+```
+
+If you want to carry out an advanced search (boolean search) using Elasticsearch [boolean query dsl](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html).
+
+
+```php
+$query = [
+    'must' => [
+        'term' => [ 'user' => 'jimbo' ]
+    ],
+    'filter' => [
+            'term' => [ 'tag' => 'development' ]
+    ],
+    'must_not' => [
+        'range' => [
+            'age' => [ 'gte' => 7, 'lte' => 18 ]
+        ]
+        ],
+    'should' => [
+        [ 'term' => [ 'tag' => 'php' ] ],
+        [ 'term' => [ 'tag' => 'framework' ] ]
+        ],
+    'minimum_should_match' => 1,
+    'boost' => 1.0
+    ];
+    
+$results = $this->Post->advancedSearch($query);
+```
+
+### Mapping
+
+By default, OriginPHP dynamically maps each column to Elasticsearch, all columns for the model will be stored in the index unless you tell it otherwise.
+
+To manually map columns for the indexes, in your model by adding an index property, this takes settings from Elasticsearch [mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html).
+
+
+```php
+class Article extends AppModel
+{
+    public function initialize(array $config)
+    {
+        $this->loadBehavior('Elasticsearch');
+
+        // To index columns
+        $this->index('title',['type'=>'keyword','analyzer'=>'english']);
+        $this->index('body'); // this will dynamically map
+        
+        // To set index settings
+        $this->indexSettings(['number_of_shards' => 1]); 
+    }
+}
+```
+
+You will then need to run the `elasticsearch:index` command telling which models recreate the indexes on with new settings, the data will then be added back to the new indexes.
+
+```linux
+$ bin/console elasticsearch:index Post Comment
+```
+
+> The only time indexes are created with your settings is when this command is run, if not Elasticsearch creates the index if it does not exist with default settings.
+
+## Installing Elastic Search
+
+Add the following to your `docker-compose.yml` file.
+
+```yml
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+```
+
+And under the `volumes:` node add
+
+```yml
+    es-data:
+      driver: local
+```
+
+The next time you run `docker-compose up` the Elasticsearch container will created.
+
+For information on how to install on Ubuntu server see this [article](https://linuxize.com/post/how-to-install-elasticsearch-on-ubuntu-18-04/).

@@ -65,6 +65,7 @@ return [
             'Migrations' => 'docs/migrations',
             'Queue' => 'docs/queue',
             'Storage' => 'docs/storage',
+            'ElasticSearch' => 'docs/elasticsearch',
         ]
         ],
     'Development' => [
