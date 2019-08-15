@@ -14,14 +14,6 @@ Download and install [Composer](https://getcomposer.org/doc/00-intro.md), then r
 $ composer create-project originphp/app blog
 ```
 
-## Installing Requirements
-
-Download and install [Composer](https://getcomposer.org/doc/00-intro.md), then run the following command to create a new project
-
-```linux
-$ composer create-project originphp/app <folder>
-```
-
 OriginPHP comes with both a built-in development server and a [dockerized development environment (dde)](/docs/development/dockerized-development-environment) which works exactly like a real server would work and includes MySQL. Its very easy to setup and work with and it will give you consistent results.
 
 ### Built-in Development server
@@ -29,7 +21,7 @@ OriginPHP comes with both a built-in development server and a [dockerized develo
 To run the built-in development server:
 
 ```linux
-$ cd <folder>
+$ cd blog
 $ bin/server 8000
 ```
 Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
@@ -39,7 +31,7 @@ Then open your web browser and go to [http://localhost:8000](http://localhost:80
 To work with Docker, install [Docker Desktop](https://www.docker.com/products/docker-desktop) then build the docker containers, this must be done from within the project folder. The build process takes a couple of minutes but only needs to be done once.
 
 ```linux
-$ cd <folder>
+$ cd blog
 $ docker-compose build
 ```
 

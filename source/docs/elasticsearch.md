@@ -8,6 +8,8 @@ section: content
 
 If you need to improve performance of your database or implement more advanced searching you case use Elasticsearch. OriginPHP makes it ultra simple to implement.
 
+> To use the Elasticsearch features you will need to install Elasticsearch 7.0 or greater.
+
 ## Configuration
 
 Here I will cover the configuration of Elasticsearch, the installation instructions for Elasticsearch with Docker are at the bottom of this guide.
@@ -38,7 +40,7 @@ public function initialize(array $config)
 }
 ```
 
-If you want to use a different connection, then you pass the `connection` key this when loading the Elasticsearch Behavior.
+If you want to use a different connection, then you pass the `connection` key when loading the Elasticsearch Behavior.
 
 ```php
 $this->loadBehavior('Elasticsearch',[
@@ -51,21 +53,22 @@ $this->loadBehavior('Elasticsearch',[
 Whenever you create or delete a record the Elasticsearch index will be updated.
 To carry out a search use the model, which will have new methods from the Behavior.
 
-To search using keywords on one or multiple columns you will do it like this
+To search using keywords or a [query string](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) on columns in your index
 
 ```php
-$results = $this->Post->search('Top Frameworks 2019'); // from Controller
+$results = $this->Post->search('Top Frameworks 2019');
+$results = $this->Post->search('"Top Frameworks 2019"');
+$results = $this->Post->search('title:how to');
+$results = $this->Post->search('+framework +php -draft');
 ```
 
-
-If you want to carry out an advanced search using Elasticsearch [Elasticsearch query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html) (Domain Specific Language), you can do like this
-
+If you want to carry out a custom search using [Elasticsearch query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html) (Domain Specific Language), you can do like this
 
 ```php
 $query = [
     'query' => [
         'multi_match' => [
-            'query' => $query,
+            'query' => 'php framework',
             'fields' => ['title','body']
             ]
         ]
@@ -97,7 +100,7 @@ public function search(string $keywords)
 
 By default, OriginPHP dynamically maps each column to Elasticsearch, all columns for the model will be stored in the index unless you tell it otherwise.
 
-To manually map columns for the indexes, in your model by adding an index property, this takes settings from Elasticsearch [mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html).
+To manually map columns for the indexes, in your model call the index method for each column that you want to index. You can optionally pass an options array which takes settings from Elasticsearch [mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html).
 
 
 ```php
