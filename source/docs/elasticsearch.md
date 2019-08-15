@@ -20,10 +20,10 @@ First you need to configure the Elasticsearch connection. In your configuration 
 use Origin\Utility\Elasticsearch;
 
 Elasticsearch::config('default', [
-    'scheme' => 'http',
     'host' => 'elasticsearch', // or 127.0.0.1 if not using the docker version
     'port' => 9200,
     'timeout' => 400
+    'ssl' => false
 ]);
 ```
 
@@ -54,34 +54,43 @@ To carry out a search use the model, which will have new methods from the Behavi
 To search using keywords on one or multiple columns you will do it like this
 
 ```php
-$results = $this->Post->search('Top Frameworks 2019',['title','body']); // from Controller
+$results = $this->Post->search('Top Frameworks 2019'); // from Controller
 ```
 
-If you want to carry out an advanced search (boolean search) using Elasticsearch [boolean query dsl](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html).
+
+If you want to carry out an advanced search using Elasticsearch [Elasticsearch query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html) (Domain Specific Language), you can do like this
 
 
 ```php
 $query = [
-    'must' => [
-        'term' => [ 'user' => 'jimbo' ]
-    ],
-    'filter' => [
-            'term' => [ 'tag' => 'development' ]
-    ],
-    'must_not' => [
-        'range' => [
-            'age' => [ 'gte' => 7, 'lte' => 18 ]
+    'query' => [
+        'multi_match' => [
+            'query' => $query,
+            'fields' => ['title','body']
+            ]
         ]
-        ],
-    'should' => [
-        [ 'term' => [ 'tag' => 'php' ] ],
-        [ 'term' => [ 'tag' => 'framework' ] ]
-        ],
-    'minimum_should_match' => 1,
-    'boost' => 1.0
     ];
-    
-$results = $this->Post->advancedSearch($query);
+$results = $this->Post->search($query);
+```
+
+### Customizing Search
+
+If you want to customize the search function or use custom searches from within your model you can do it like this:
+
+```php
+
+public function search(string $keywords)
+{
+    return $this->Elasticsearch->search([
+        'query' => [
+            'multi_match' => [
+                'query' => $keywords,
+                'fields' => ['title','body']
+                ]
+            ]
+    ]);
+}
+
 ```
 
 ### Mapping
