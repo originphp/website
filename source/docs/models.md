@@ -323,16 +323,18 @@ it will attempt to delete it.
     $this->Article->delete($article);
 ```
 
-By default dependent records are deleted, you can disable this by setting the second argument to false when deleting. `hasAndBelongsToMany` are always deleted when you delete a record. You will need to set the `dependent` option when configuring the associations.
+By default dependent records are deleted and `hasAndBelongsToMany` are always deleted when you delete a record. You will need to set the `dependent` option when configuring the associations.
+
+To disable deleting records and their children:
 
 ```php
-    $this->Article->delete($article,false);
+    $this->Article->delete($article,['cascade'=>false]);
 ```
 
-To disable callbacks `beforeDelete` and `afterDelete` set the third argument to false.
+To disable `beforeDelete` and `afterDelete` callbacks:
 
 ```php
-    $this->Article->delete($article,true,false);
+    $this->Article->delete($article,['callbacks'=>false]);
 ```
 
 Or you can delete in bulk but this wont trigger callbacks or delete related records.

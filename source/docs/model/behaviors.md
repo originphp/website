@@ -18,6 +18,9 @@ use Origin\Model\Behavior\Behavior;
 
 class FooBehavior extends Behavior
 {
+  // put your default configuration here. this will be merged
+  protected $defaultConfig = [];
+
   public function doSomething(){
     return true;
   }
@@ -84,6 +87,10 @@ Sometimes you will need to disable or unload behaviors, to do this you will need
     }
 ```
 
+## Behavior Configuration
+
+Behaviors work with the `ConfigTrait`, standardizing and simplifying how you work with configuration. See the [ConfigTrait guide](/docs/config-trait) for more information.
+
 ## Framework Behaviors
 
 ### Timestamp
@@ -93,3 +100,7 @@ This behavior updates created and updated fields when creating or saving records
 ### Delocalize Behavior
 
 This behavior delocalizes data such as dates and numbers from locale format, and converts this into MySQL format for saving.
+
+### Elasticsearch Behavior
+
+Automatically integrate your application with Elasticsearch. See the [Elasticsearch Behavior](/docs/model/elasticsearch-behavior) for more information.

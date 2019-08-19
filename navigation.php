@@ -29,6 +29,7 @@ return [
             'Validation' => 'docs/model/validation',
             'Callbacks' => 'docs/model/callbacks',
             'Behaviors' => 'docs/model/behaviors',
+            'Elasticsearch Behavior' => 'docs/model/elasticsearch-behavior',
         ],
     ],
     'Views' => [
@@ -65,7 +66,6 @@ return [
             'Migrations' => 'docs/migrations',
             'Queue' => 'docs/queue',
             'Storage' => 'docs/storage',
-            'ElasticSearch' => 'docs/elasticsearch',
         ]
         ],
     'Development' => [
@@ -90,6 +90,7 @@ return [
             'Folder' => 'docs/utility/folder',
             'Html' => 'docs/utility/html',
             'Http' => 'docs/utility/http',
+            'Inflector' => 'docs/utility/inflector',
             'Markdown' => 'docs/utility/markdown',
             'Security' => 'docs/utility/security',
             'Text' => 'docs/utility/text',

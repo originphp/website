@@ -131,6 +131,7 @@ options for configuring FTP include:
 - timeout: default 10 seconds
 - passive: deafult false
 - root: the root folder of the storage within your ftp account
+- ssl: default: false
 
 ### SFTP
 

@@ -110,44 +110,6 @@ When working with Helpers, you may need to access the view object, this can be e
 $view = $this->view();
 ```
 
-## Config
+## Helper Configuration
 
-Helpers work with the `ConfigTrait`, so this means you that your helper can have its own standardized configuration.
-
-To get a value from the config:
-
-```php
- $value = $this->config('foo'); // bar
-```
-
-To all of the values from the config
-
-```php
- $array = $this->config();
-```
-
-To set a value in the config:
-
-```php
- $this->config('foo','bar');
- $this->config(['foo'=>'bar']);
-```
-
-To set multiple values (merges config)
-
-```php
- $this->config(['foo'=>'bar']);
-```
-
-When passing an array to the config method on the ConfigTrait, it will only replace values, it will not replace all the config.
-
-If you need your helper to have a default configuration, then you can set the `$defaultConfig` array property, this will be merged with any config passed when loading a helper.
-
-```php
-class FooHelper extends Helper
-{
-    protected $defaultConfig = [
-        'foo' => 'bar'
-    ];
-}
-```
+Helpers work with the `ConfigTrait`, standardizing and simplifying how you work with configuration. See the [ConfigTrait guide](/docs/config-trait) for more information.

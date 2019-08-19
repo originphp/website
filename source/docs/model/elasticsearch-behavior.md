@@ -1,12 +1,12 @@
 ---
-title: Elasticsearch
-description: Elasticsearch Guide for the OriginPHP Framework
+title: Elasticsearch Behavior
+description: Elasticsearch Behavior Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
-# Elasticsearch
+# Elasticsearch Behavior
 
-If you need to improve performance of your database or implement more advanced searching you case use Elasticsearch. OriginPHP makes it ultra simple to implement.
+If you need to improve performance of your application by moving search queries to Elasticsearch or implement more advanced searching, OriginPHP makes it ultra simple to implement Elasticsearch in your web application.
 
 > To use the Elasticsearch features you will need to install Elasticsearch 7.0 or greater.
 
@@ -24,8 +24,8 @@ use Origin\Utility\Elasticsearch;
 Elasticsearch::config('default', [
     'host' => 'elasticsearch', // or 127.0.0.1 if not using the docker version
     'port' => 9200,
-    'timeout' => 400
-    'ssl' => false
+    'timeout' => 400,
+    'https' => false
 ]);
 ```
 
@@ -48,9 +48,12 @@ $this->loadBehavior('Elasticsearch',[
     ]);
 ```
 
+Whenever you create or delete a record the Elasticsearch index will be updated in the background, providing you do not disable callbacks.
+
+> The `Model::updateAll` and `Model::deleteAll` do not trigger callbacks and therefore wont update or delete records from the index. You should loop through each record and update or delete so that the index can be kept in sync.
+
 ### Searching
 
-Whenever you create or delete a record the Elasticsearch index will be updated.
 To carry out a search use the model, which will have new methods from the Behavior.
 
 To search using keywords or a [query string](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) on columns in your index
@@ -81,19 +84,17 @@ $results = $this->Post->search($query);
 If you want to customize the search function or use custom searches from within your model you can do it like this:
 
 ```php
-
-public function search(string $keywords)
+public function search($query)
 {
     return $this->Elasticsearch->search([
         'query' => [
             'multi_match' => [
-                'query' => $keywords,
+                'query' => $query,
                 'fields' => ['title','body']
                 ]
             ]
     ]);
 }
-
 ```
 
 ### Mapping
@@ -102,7 +103,6 @@ By default, OriginPHP dynamically maps each column to Elasticsearch, all columns
 
 To manually map columns for the indexes, in your model call the index method for each column that you want to index. You can optionally pass an options array which takes settings from Elasticsearch [mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html).
 
-
 ```php
 class Article extends AppModel
 {
@@ -110,25 +110,25 @@ class Article extends AppModel
     {
         $this->loadBehavior('Elasticsearch');
 
-        // To index columns
+        // Set the columns to index
         $this->index('title',['type'=>'keyword','analyzer'=>'english']);
         $this->index('body'); // this will dynamically map
-        
+
         // To set index settings
-        $this->indexSettings(['number_of_shards' => 1]); 
+        $this->indexSettings(['number_of_shards' => 1]);
     }
 }
 ```
 
-You will then need to run the `elasticsearch:index` command telling which models recreate the indexes on with new settings, the data will then be added back to the new indexes.
+You will then need to run the `elasticsearch:reindex` command telling which models recreate the indexes on with new settings, the data will then be added back to the new indexes.
 
 ```linux
-$ bin/console elasticsearch:index Post Comment
+$ bin/console elasticsearch:reindex Post Comment
 ```
 
 > The only time indexes are created with your settings is when this command is run, if not Elasticsearch creates the index if it does not exist with default settings.
 
-## Installing Elastic Search
+## Installing Elasticsearch Docker Image
 
 Add the following to your `docker-compose.yml` file.
 

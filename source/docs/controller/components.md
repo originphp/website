@@ -19,6 +19,7 @@ use Origin\Controller\Component\Component;
 
 class MathComponent extends Component
 {
+
   public function sum($x, $y){
     return $x+$y;
   }
@@ -120,45 +121,6 @@ When working with components, you may need to access the controller, this can be
 $controller = $this->controller();
 ```
 
-## Component Config
+## Component Configuration
 
-Components work with the `ConfigTrait`, so this means you that your component can have its own standardized configuration.
-
-
-To get a value from the config:
-
-```php
- $value = $this->config('foo'); // bar
-```
-
-To all of the values from the config
-
-```php
- $array = $this->config();
-```
-
-To set a value in the config:
-
-```php
- $this->config('foo','bar');
- $this->config(['foo'=>'bar']);
-```
-
-To set multiple values (merges config)
-
-```php
- $this->config(['foo'=>'bar']);
-```
-
-When passing an array to the config method on the ConfigTrait, it will only replace values, it will not replace all the config.
-
-If you need your component to have a default configuration, then you can set the `$defaultConfig` array property, this will be merged with any config passed when loading a component.
-
-```php
-class Foocomponent extends component
-{
-    protected $defaultConfig = [
-        'foo' => 'bar'
-    ];
-}
-```
+Components work with the `ConfigTrait`, standardizing and simplifying how you work with configuration. See the [ConfigTrait guide](/docs/config-trait) for more information.

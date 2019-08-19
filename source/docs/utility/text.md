@@ -73,17 +73,34 @@ $result = Text::replace('foo','***','What is FOO bar',['insensitive'=>true]); //
 
 ## Insert
 
-To insert values into a string using placeholders (String interpolation)
+To insert values into a string using placeholders (string interpolation)
 
 ```php
 $string = Text::insert('Record {id} has been updated',[
     'id'=>1234568
     ]); // Record 1234568 has been updated
+```
 
+Another example:
+
+```php
+$letter = file_get_contents('/directory/some-file');
+$string = Text::insert($letter,[
+    'salutation' => 'Mr.',
+    'first_name' => 'Tony',
+    'last_name' => 'Robbins',
+    'address_1' => '100 Santa Monica Road',
+    ]);
+```
+
+You can also change the place holders
+
+```php
 $string = Text::insert('Record :id has been updated',[
     'id'=>1234568,'before'=>':','after'=>''
     ]); // Record 1234568 has been updated
 ```
+
 
 ## Tokenize
 

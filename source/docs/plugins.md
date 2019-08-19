@@ -91,10 +91,52 @@ $results = $this->Contact->find('all');
 
 ## Installing Plugins
 
-You can install plugins from remote GIT repositories using the plugin shell.
+### Installing from remote repository (Public or private)
 
+You can install plugins from remote GIT repositories using the `plugin:install` command, this will download the plugin into your plugins folder and append your application configuration to load the plugin.
+
+To install a plugin from GitHub
 ```linux
-$ bin/console plugin:install https://github.com/username/plugin.git MyPluginName
+$ bin/console plugin:install username/plugin.git 
 ```
 
-If you dont provide a plugin name then  it will use the repository name.
+To install a plugin from any repo
+
+```
+$ bin/console plugin:install https://github.com/username/plugin.git
+```
+
+To install the plugin in a custom plugin folder
+
+```
+$ bin/console plugin:install https://github.com/username/plugin.git NewPluginName
+```
+
+### Using Composer and packagist.org
+
+If you want to package your plugin so it can be installed with Composer, simply add the plugin installer to your `composer.json`, set the packagist information and the namespace.
+
+Lets say you created a new plugin called Super Cache, you would setup the `composer.json` like this
+
+```json
+{
+    "name":"username/super-cache", // packagist info
+    "description":"Super Cache Plugin",
+    "type": "originphp-plugin",
+    "autoload": {
+      "psr-4": {
+        "SuperCache\\": "src/",
+        "SuperCache\\Test\\": "tests/"
+      }
+    },
+    "require": {
+        "originphp/plugin-installer": "*"
+    }
+  }
+```
+
+Then run composer require to add it to any of your projects.
+
+```linux
+$ composer require username/super-cache
+```

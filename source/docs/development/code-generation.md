@@ -118,7 +118,8 @@ If you are going to make a new `Plugin`, then the generate tool will create all 
 ```linux 
 $ bin/console generate plugin ContactManager
 ```
-Then after this run the other generators to create the code in the plugin folder.
+
+Then run the other generators to create the code in the plugin folder.
 
 ```linux 
 $ bin/console generate controller ContactManager.Contacts

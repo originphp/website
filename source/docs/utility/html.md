@@ -6,7 +6,7 @@ section: content
 ---
 # Html Utility
 
-The Html utility provides some useful methods when working with html.
+The Html utility provides some useful functions for when working with html.
 
 ## From Text
 
@@ -28,7 +28,8 @@ This will create:
 <p>This is a paragrpah.<br>This is another line part of the paragraph.</p>
 <p>This is a new paragraph.</p>
 ```
-If want paragraphs to be wrapped with a different tag then 
+
+If want paragraphs to be wrapped with a different tag than `p` then would do so like this
 
 ```php
 $html = Html::fromText($text,['tag'=>'div']);
@@ -181,6 +182,24 @@ Minify cleans up the spacing, removes comments and thus minifies a HTML string.
 ```php
 $minified = Html::minify($html);
 ```
+
+
+## Sanitize
+
+Sanitize enables to only allow certain tags and attributes in a Html string.
+
+```php
+$html = Html::sanitize($html,[
+    'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+    'p',
+    'i', 'em', 'strong', 'b', 'blockquote', 'del',
+    'a' => ['href'],
+    'ul', 'li', 'ol', 'br',
+    'code', 'pre',
+    'img' => ['src','alt']]
+    );
+```
+
 
 ## Strip Tags
 
