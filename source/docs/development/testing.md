@@ -217,6 +217,45 @@ class BookmarkTest extends OriginTestCase
 
 ```
 
+## Testing Behaviors
+
+Lets say you created a Behavior to translate records after they have been retrieved
+
+```php
+namespace App\Test\Model\Behavior;
+
+use Origin\Model\Model;
+use Origin\Model\ModelRegistry;
+use App\Model\Behavior\DuckBehavior;
+use Origin\TestSuite\OriginTestCase;
+
+class TranslateBehaviorTest extends OriginTestCase
+{
+    /**
+    * Use fixture to import data
+    *
+    * @var array
+    */
+    public $fixtures = ['Article'];
+
+    public function startup()
+    {
+        parent::startup();
+
+        $this->Article = ModelRegistry::get('Article');
+        $this->Translate = new TranslateBehavior($this->Article,[
+            'language'=>'es'
+            ]);
+    }
+
+    public function testSomething()
+    {
+        $article  = $this->Article->findById(1000);
+        $this->assertEquals('Hola Mundo',$article->title); // was hello world
+    }
+}
+```
+
 ## Testing Private or Protected Methods or Properties
 
 There will be times you will want to test that protected or private methods or property, we have included a `TestTrait` to make this very easy.  There is a big debate on whether this should be done or just test the public methods and properties. I think it should be down to the specific case, for example if you look at our Email test, I wanted more control and each method to have its own test, I find this easier to write, manage and maintain.
@@ -498,6 +537,85 @@ Returns the request object from the last request
 
 Returns the response object from the last request
 
+
+## Testing Components
+
+This is an example how you might test a component.
+
+
+```php
+namespace App\Test\Controller\Component;
+
+use App\Controller\Component\MathComponent;
+use Origin\Controller\Controller;
+use Origin\Http\Request;
+use Origin\Http\Response;
+
+// A fake controller
+class DummyController extends Controller
+{
+    public function initialize()
+    {
+        $this->loadComponent('Math');
+    }
+}
+
+class MathComponentTest extends OriginTestCase
+{
+    // alias for PHPunit setUp in the OriginTestCase
+    public function startup();
+    {
+        parent::startup();
+        $request = new Request();
+        $response =  new Response();
+        $controller = new DummyController($request,$response);
+        $this->MathComponent = $controller->Math;
+    }
+
+    public function testSum(){
+        $this->assertEquals(2,$this->MathComponent->sum(1,1));
+    }
+
+}
+
+```
+
+## Testing View Helpers
+
+Here is an example on how you might test a View Helper.
+
+```php
+namespace App\View\Helper;
+
+use Origin\View\View;
+use Origin\Http\Request;
+use Origin\Http\Response;
+use Origin\Controller\Controller;
+use Origin\TestSuite\OriginTestCase;
+
+class TagHelperTest extends OriginTestCase
+{
+    /**
+    * @var \App\View\Helper\TagHelper
+    */
+    protected $Tag = null;
+
+    public function startup()
+    {
+        parent::startup();
+        $controller = new Controller(new Request(), new Response());
+        $view = new View($controller);
+        $this->Tag = new TagHelper($view);
+    }
+
+    public function testSum()
+    {
+        $expected = '<div>hello</div>'
+        $this->assertEquals($expected, $this->Tag->div('hello'));
+    }
+}
+```
+
 ## Testing Console Commands
 
 Like with `Controllers` there is a console integration test trait which makes testing `Commands` a breeze.
@@ -572,29 +690,62 @@ $command = $this->command();
 
 ## Testing Middleware
 
+In the example below you will test Middleware, which sets the response body to foo. 
+
 ```php
 namespace App\Test\Middleware;
 
-use Origin\Middleware\FooMiddleware;
 use Origin\Http\Request;
 use Origin\Http\Response;
+use App\Middleware\FooMiddleware;
+use Origin\TestSuite\OriginTestCase;
 
-public function testSomething(){
-    $request = new Request();
-    $response = new Response();
-    $middleware = new FooMiddleware();
+class FooMiddlewareTest extends OriginTestCase
+{
+    /**
+    * @var \Origin\Http\Request
+    */
+    protected $request = null;
 
-    // Do something with request
-    ...
+    /**
+    * @var \Origin\Http\Response
+    */
+    protected $response = null;
 
-    // Invoke Manually
-    $middleware->startup($request); // handles requests
-    $middleware->shutdown($request, $response); // processes response
+    public function startup()
+    {
+        parent::startup();
+        $this->request = new Request();
+        $this->response = new Response();
+    
+        // Invoke the middleware
+        $middleware = new FooMiddleware();
+        $middleware($this->request, $this->response);
+    }
 
-    // OR
-    $middleware($request,$response);
-
+    public function testAbc()
+    {
+        $this->assertContains('foo', $this->response->body());
+    }
 }
+```
+
+If you created a complicated Middleware or want to test at different stages
+
+```php
+   public function testHandle()
+    {
+        $middleware = new FooMiddleware();
+        $middleware->startup($request); // handles requests
+        // now check the request object
+    }
+
+    public function testResponseProcess(){
+        $middleware = new FooMiddleware();
+        $middleware->startup($request); // handles requests
+        $middleware->shutdown($request,$response); // handles requests
+        // check response
+    }
 ```
 
 ## Code Coverage

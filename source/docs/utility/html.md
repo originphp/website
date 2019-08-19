@@ -211,7 +211,7 @@ $html = Html::stripTags($html,['script','iframe','img']);
 
 ## Escape
 
-It is import when displaying user inputted HTML that it is escaped properly for security reasons, see [Cross-site scripting](https://www.google.com/about/appsecurity/learning/xss/) for more information.
+It is important when displaying user inputted HTML that it is escaped properly for security reasons, see [Cross-site scripting](https://www.google.com/about/appsecurity/learning/xss/) for more information.
 
 ```php
 echo Html::escape($html);
