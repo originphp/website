@@ -736,15 +736,15 @@ If you created a complicated Middleware or want to test at different stages
    public function testHandle()
     {
         $middleware = new FooMiddleware();
-        $middleware->startup($request); // handles requests
+        $middleware->startup($request); // handles request
         // now check the request object
     }
 
     public function testResponseProcess(){
         $middleware = new FooMiddleware();
-        $middleware->startup($request); // handles requests
-        $middleware->shutdown($request,$response); // handles requests
-        // check response
+        $middleware->startup($request); // handles request
+        $middleware->shutdown($request,$response); // handles response
+        // now check the response object
     }
 ```
 
