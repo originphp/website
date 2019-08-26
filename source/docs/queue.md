@@ -1,110 +1,236 @@
 ---
-title: Queue Utility
-description: Queue Utility Guide for the OriginPHP Framework
+title: Queue - Background Jobs
+description: Queue Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
-# Queue for Background Jobs
+# Queue
 
-The queue system is for handling background jobs, such as sending emails, carrying out database maintenance and so on. The back-end for queue system is MySQL, and you can use your current database or separate server.
+> For the old version of Queue prior to version 1.28 see the [documentation](/docs/queue-legacy). The database [schema](https://github.com/originphp/app/blob/master/db/queue.php) is also different. 
 
-First you need to import the SQL schema which is in the `db/queue.sql`
+You can easily queue schedule background jobs, the OriginPHP queue system works supports both MySQL and Redis backends.
 
-Run the following command:
+> Job are new in version 1.28, so if you have upgraded you will need to create `src/Job` folder and copy the `AppJob.php` from [github](https://github.com/originphp/app/blob/master/src/Job/AppJob.php).
+
+## Configuring Queue
+
+You must setup the default configuration for the queue, and if you are going to be unit testing the jobs then you will need to create a test configuration, which will be used during tests.
+
+### Database
+
+To use the database engine, you will need to create the queue table
 
 ```linux
 $ bin/console db:schema:load queue
 ```
 
-## Creating the Queue Object
-
-To create a Queue object which uses the default database connection.
+Then in your `config/application.php` you can set 
 
 ```php
-Use Origin\Queue\Queue;;
-$queue = new Queue();
+use Origin\Job\Queue;
+Queue::config('default', [
+    'engine' => 'Database'
+]);
 ```
 
-If you want to use a different datasource and/or table then you can configure this by passing an array of
-options. These options are the same as when creating a model.
+Options are
+
+- `datasource`: The name of the database connection to use. default is `default`;
+
+### Redis
+
+In your `config/application.php` add
 
 ```php
-Use Origin\Queue\Queue;;
-$queue = new Queue([
-    'datasource'=>'queue-server',
-    'table'=>'jobs'
-    ]);
+use Origin\Job\Queue;
+Queue::config('default', [
+    'engine' => 'Redis',
+    'host' => '127.0.0.1',
+    'port' => 6379
+]);
 ```
 
-## Adding Jobs to the Queue
+Options are
 
-You will most likely be adding jobs to a queue from either the controller, model or shell. 
+- `host`: default is `127.0.0.1` however if you are using Docker, then it would something like `redis`
+- `port`: default: `6379`
 
-To add a job to the queue you just use set a queue name and then pass array of data. The queue name can consist of letters,numbers,hyphens, dots and underscores. Once you have added the job it will return the job id.
+## Creating Jobs
 
-```php
-Use Origin\Queue\Queue;;
-$queue = new Queue();
-$jobId = $queue->add('welcome_emails',[
-    'user_id'=>1024
-    ]);
+To create a Job and its test file run the following command
+
+```linux
+$ bin/console generate job SendWelcomeEmail
 ```
 
-You can also delay (or schedule) the job using a `strtotime` compatible string such as `+1 hour` or `2019-07-04 10:00:00`.
+Jobs are stored in the `src/Job` folder
+
+With some slight modification we can get it to send email
 
 ```php
- $queue->add('welcome_emails',[
-    'user_id'=>1024
-    ],
-    '+5 hours');
-```
+namespace App\Job;
+use App\Job\AppJob;
+use Origin\Utility\Email;
+use Origin\Model\Entity;
 
-## Fetching Jobs from the Queue
-
-The fetch method pulls one job at a time and locks it to prevent the job from being run more than once. For example, this can happen when running a cron job every minute, and the first job takes more than a minute, we lock it so even two processes that are running at the same time, so only one of them will get the job.
-
-If there is a job in the queue then it will return a Job object. When you process a job, it is best to run through a try block, in-case of any unexpected errors or exceptions that might happen.
-
-```php
- Use Origin\Queue\Queue;;
- $queue = new Queue();
-
- while ($job = $queue->fetch('welcome_emails')) {
-    try {
-        $message = $job->data();
-        $this->sendWelcomeEmail($message->user_id);
-        $job->executed();
-    } catch (Exception $e) {
-        $job->failed();
-        Log::error('Job with id {id} failed.',['id'=>$job->id]);
-    }  
- }
-```
-
-## Processing Jobs
-
-Jobs in the queue are typically processed in the background, and this will usually be done in a console Command.
-
-```php
-namespace App\Command;
-use Origin\Command\Command;
-Use Origin\Queue\Queue;;
-
-class SendEmailNotificationsCommand extends Command
+class SendWelcomeEmailJob extends AppJob
 {
-    protected $name = 'send:email-notifications';
-    protected $description = 'Sends the email notification';
+    public $queue = 'notifications';
+    // strtotime compatible string
+    public $wait = '+5 minutes'; // wait time before sending new job
+    public $timeout = 60;
 
-    public function execute(){
-        $queue = new Queue();
-        while ($job = $queue->fetch('welcome_emails')) {
-            ...
-        }
+    public function execute(Entity $user)
+    {
+        $Email = new Email();
+        $Email->to($user->email)
+            ->from('do-not-reply@originphp.com')
+            ->subject('Welcome ')
+            ->template('welcome')
+            ->set(['first_name'=>$user->first_name])
+            ->send();
+    }
+
+    public function onError(\Exception $exception)
+    {
+        $this->retry([
+            'wait' => '+30 minutes', // how long to wait before retry
+            'limit' => 3 // maxium retry attempts
+            ]);
+    }
+}
+```
+
+The `onError` method is called when an error occurs such as an exception that was thrown, there you can create logic to retry the job or only retry the job if certain exceptions are raised etc.
+
+It common for Jobs to carry out maintenance on the database, in the `initialize` method you can load any models that you need.
+
+```php
+namespace App\Job;
+use App\Job\AppJob;
+
+class ResetUserCreditsJob extends AppJob
+{
+    public $queue = 'monthly';
+
+    public function initialize()
+    {
+        $this->loadModel('User');
+    }
+
+    public function execute()
+    {
+        $this->User->resetCredits();
+    }
+}
+```
+
+### Callbacks
+
+> The execute and OnSuccess methods are not defined so you can set this with the correct types and names
+
+- `initialize`: this is called when the job created for dispatching
+- `startup`: this is called before the `execute` method
+- `execute`: this is called when the job is dispatched using the arguments you passed when constructing the job instance.
+- `shutdown`: this is called after the `execute` method
+- `onError`: this is called when an exception is caught (job fails)
+- `onSuccess`: if the job ran without issues then this will be called with the same arguments that you passed when constructing the job.
+
+Here is an example Job that if it runs successful with call another job, if it fails it will retry a maximum of 3 times.
+
+```php
+class SendIntroEmailJob extends AppJob
+{
+    public function execute(Entity $user)
+    {
+        $Email = new Email();
+        $Email->to($user->email)
+            ->from('do-not-reply@originphp.com')
+            ->subject('Introduction ')
+            ->template('introduction')
+            ->set(['first_name'=>$user->first_name])
+            ->send();
+    }
+
+    public function onSuccess(Entity $user){
+        (new SendFollowUpEmailJob($user))->dispatch([
+            'wait' => '+7 days' // strtotime compatible string
+            ]);
+    }
+
+    public function onError(\Exception $exception)
+    {
+        $this->retry([
+            'wait' => '+30 minutes', // how long to wait before retry
+            'limit' => 3 // maxium retry attempts
+            ]);
     }
 }
 ```
 
 
+## Dispatching Jobs
+
+To dispatch a Job to the queue
+
+```php
+use App\Job\SendWelcomeEmailJob;
+(new SendWelcomeEmailJob($user))->dispatch();
+```
+
+To dispatch the Job immediately
+
+```php
+(new SendWelcomeEmailJob($user))->dispatchNow();
+```
+
+Sometimes you might want to use send the job to a different queue or set a different delay
+
+```php
+(new SendWelcomeEmailJob($user))->dispatch(
+    [
+        'wait' => 'tomorrow',
+        'queue' => 'a-different-queue'
+    ]
+);
+```
+
+## Worker
+
+OriginPHP comes with its own queue worker
+
+To run the queue worker on the `default` queue
+
+```linux
+$ bin/console queue:worker
+```
+
+To run the queue worker on a different queue connection
+
+```linux
+$ bin/console queue:worker --connection=not-default
+```
+
+To run the queue worker on different or multiple queue(s)
+
+```linux
+$ bin/console queue:worker notifications maintenence
+```
+
+To run the queue work in daemon mode
+
+```linux
+$ bin/console queue:worker -d
+```
+
+You can also set it to sleep a certain amount of seconds when there are no jobs
+
+```linux
+$ bin/console queue:worker -d -sleep=30
+```
+
+
+### Scheduling Using Cron
 
 On Ubuntu to setup cron tab for the `www-data` user type in the following command:
 
@@ -113,29 +239,84 @@ $ sudo crontab -u www-data -e
 ```
 
 Then add the following line, assuming the source code is in the folder `/var/www/app.mydomain.com`.
+
 ```
-0 * * * * cd /var/www/app.mydomain.com && bin/console send:email-notifications
+0 0 * * * cd /var/www/app.mydomain.com && bin/console queue:worker daily
+*/5 * * * * cd /var/www/app.mydomain.com && bin/console queue:worker notifications
 ```
 
-## Accessing The Model
+### Using Supervisor
 
-If you need to do something with records in the queue table you can access the job model calling the `model` method.
+You can use Supervisor to keep the `queue:worker` daemon constantly running
+
+```linux
+sudo apt-get install supervisor
+```
+
+Create the `queue-worker.conf` configuration file in `/etc/supervisor/conf.d` using a text editor such `nano` or `vi`.
+
+This example will run 3 processes of the worker
+
+```
+[program:queue-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=/var/www/app.mydomain.com/bin/console queue:worker -d
+autostart=true
+autorestart=true
+user=www-data
+numprocs=3
+redirect_stderr=true
+stdout_logfile=/var/www/app.mydomain.com/queue-worker.log
+```
+
+Once you have created the configuration file
+
+```linux
+sudo supervisorctl reread
+sudo supervisorctl update
+```
+
+Then to start it up
+
+```linux
+sudo supervisorctl start queue-worker:*
+```
+
+For more information see the [Supervisor documentation](http://supervisord.org/index.html).
+
+
+## Installing Redis
+
+
+### Redis
+
+**To install Redis in the Docker container**
+
+First add the following to the `docker-compose.yml` file, this will load the Redis image.
+
+```
+  redis:
+      image: redis
+```
+
+In the `Dockerfile` add the following lines to install and enable the Redis PHP extension.
+```
+RUN pecl install redis
+RUN echo 'extension=redis.so' >> /etc/php/7.2/apache2/php.ini
+RUN echo 'extension=redis.so' >> /etc/php/7.2/cli/php.ini
+```
+Then run the build command in docker-compose.
+
+```linux
+docker-compose build
+```
+
+Then set the host to `redis` in your cache config.
+
+**To install Redis on a Ubuntu/Debain based server**
 
 ```php
-$Job = $queue->model();
-$jobs = $Job->find('all');
-```
-
-## Purging Jobs
-
-To purge all the executed jobs from the database
-
-```php
-$queue->purge();
-```
-
-Or to just purge a specific a queue, use the queue name
-
-```php
-$queue->purge('welcome-emails');
+pecl install redis
+sudo echo 'extension=redis.so' >> /etc/php/7.2/apache2/php.ini
+sudo echo 'extension=redis.so' >> /etc/php/7.2/cli/php.ini
 ```

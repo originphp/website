@@ -593,6 +593,8 @@ use Origin\Http\Response;
 use Origin\Controller\Controller;
 use Origin\TestSuite\OriginTestCase;
 
+use App\View\Helper\TagHelper;
+
 class TagHelperTest extends OriginTestCase
 {
     /**
@@ -660,7 +662,9 @@ If everything went well then
 ```php
 $this->assertExitSuccess(); // Asserts that the script was run without any problems
 $this->assertOutputContains('needle'); // checks that the output contains a string
+$this->assertOutputNotContains('needle'); // checks that the output does not contains a string
 $this->assertOutputEmpty(); // asserts there was no output
+$this->assertOutputRegExp('/needle/');
 ```
 
 If you want to test there was an error and that the error or warning sent to the screen contains certain text.
@@ -668,7 +672,8 @@ If you want to test there was an error and that the error or warning sent to the
 ```php
 $this->assertExitError(); //Asserts that an error was encounterd. 
 $this->assertErrorContains('needle'); // Checks the error message contains a string
-
+$this->assertErrorNotContains('needle'); // Checks the error message contains a string
+$this->assertErrorRegExp('/needle/');
 ```
 
 ### Getting the output

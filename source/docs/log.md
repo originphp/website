@@ -88,13 +88,13 @@ The default log file can be found in the `logs` folder, it will be either applic
 use Origin\Log\Log;
 Log::config('default',[
     'engine' => 'File',
-    'file' => 'somethingelse.log'
+    'filename' => 'somethingelse.log'
 ]);
 ```
 
 Options for the File Engine are:
 
-- file: filename e.g. `application.log`
+- filename: filename e.g. `application.log`
 - path: default is the logs folder. You can override this by setting the path for where the log file will be saved. e.g. `/var/www`
 - levels: default `[]`. If you want to restrict this configuration to only certain levels, add the levels to an array e.g. `['critical','emergency','alert']`
 - channels: default `[]`. If you want to restrict this configuration to only certain channels, add the channels to an array e.g. `['invoices','payments']`
