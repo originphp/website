@@ -14,7 +14,7 @@ You can easily queue schedule background jobs, the OriginPHP queue system works 
 
 ## Configuring Queue
 
-You must setup the default configuration for the queue, and if you are going to be unit testing the jobs then you will need to create a test configuration, which will be used during tests.
+You must setup the `default` configuration for the queue, and if you are going to be unit testing the jobs then you will need to create a `test` configuration, which will be used when running tests.
 
 ### Database
 
@@ -24,7 +24,7 @@ To use the database engine, you will need to create the queue table
 $ bin/console db:schema:load queue
 ```
 
-Then in your `config/application.php` you can set 
+Then in your `config/application.php` you can add
 
 ```php
 use Origin\Job\Queue;
@@ -63,14 +63,12 @@ To create a Job and its test file run the following command
 $ bin/console generate job SendWelcomeEmail
 ```
 
-Jobs are stored in the `src/Job` folder
-
-With some slight modification we can get it to send email
+Jobs are stored in the `src/Job` folder and must have the `execute` method, any arguments you pass during dispatching will be passed along here.
 
 ```php
 namespace App\Job;
 use App\Job\AppJob;
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 use Origin\Model\Entity;
 
 class SendWelcomeEmailJob extends AppJob
@@ -131,12 +129,12 @@ class ResetUserCreditsJob extends AppJob
 
 - `initialize`: this is called when the job created for dispatching
 - `startup`: this is called before the `execute` method
-- `execute`: this is called when the job is dispatched using the arguments you passed when constructing the job instance.
+- `execute`: this is called when the job is dispatched using the arguments you passed with the `dispatch` or `dispatchNow` method.
 - `shutdown`: this is called after the `execute` method
 - `onError`: this is called when an exception is caught (job fails)
 - `onSuccess`: if the job ran without issues then this will be called with the same arguments that you passed when constructing the job.
 
-Here is an example Job that if it runs successful with call another job, if it fails it will retry a maximum of 3 times.
+Here is an example Job that if it runs successfully, it will call another job, if it fails it will retry a maximum of 3 times waiting 30 minutes in between each try.
 
 ```php
 class SendIntroEmailJob extends AppJob
@@ -153,9 +151,7 @@ class SendIntroEmailJob extends AppJob
     }
 
     public function onSuccess(Entity $user){
-        (new SendFollowUpEmailJob($user))->dispatch([
-            'wait' => '+7 days' // strtotime compatible string
-            ]);
+        (new SendFollowUpEmailJob())->dispatch($user);
     }
 
     public function onError(\Exception $exception)
@@ -175,37 +171,34 @@ To dispatch a Job to the queue
 
 ```php
 use App\Job\SendWelcomeEmailJob;
-(new SendWelcomeEmailJob($user))->dispatch();
+(new SendWelcomeEmailJob())->dispatch($user);
 ```
 
 To dispatch the Job immediately
 
 ```php
-(new SendWelcomeEmailJob($user))->dispatchNow();
+(new SendWelcomeEmailJob())->dispatchNow($user);
 ```
 
-Sometimes you might want to use send the job to a different queue or set a different delay
+Sometimes you might want to use send the job to a different queue or set a different delay, you can do this by passing an options array to the constructor.
 
 ```php
-(new SendWelcomeEmailJob($user))->dispatch(
-    [
-        'wait' => 'tomorrow',
-        'queue' => 'a-different-queue'
-    ]
-);
+$options = [
+    'wait' => 'tomorrow', // strtotime compatible string
+    'queue' => 'a-different-queue'
+];
+(new SendWelcomeEmailJob($options))->dispatch($user);
 ```
 
 ## Worker
 
-OriginPHP comes with its own queue worker
-
-To run the queue worker on the `default` queue
+OriginPHP comes with its own worker,to run the queue worker on the `default` queue, which will process the pending jobs in the queue and then exit.
 
 ```linux
 $ bin/console queue:worker
 ```
 
-To run the queue worker on a different queue connection
+To run the queue worker using a different queue connection
 
 ```linux
 $ bin/console queue:worker --connection=not-default
@@ -217,13 +210,13 @@ To run the queue worker on different or multiple queue(s)
 $ bin/console queue:worker notifications maintenence
 ```
 
-To run the queue work in daemon mode
+To run the queue work in daemon mode, you can use `CTRL+c` to quit.
 
 ```linux
 $ bin/console queue:worker -d
 ```
 
-You can also set it to sleep a certain amount of seconds when there are no jobs
+You can also set it to sleep a certain amount of seconds when there are no jobs when running the work as a daemon.
 
 ```linux
 $ bin/console queue:worker -d -sleep=30
@@ -241,13 +234,12 @@ $ sudo crontab -u www-data -e
 Then add the following line, assuming the source code is in the folder `/var/www/app.mydomain.com`.
 
 ```
-0 0 * * * cd /var/www/app.mydomain.com && bin/console queue:worker daily
 */5 * * * * cd /var/www/app.mydomain.com && bin/console queue:worker notifications
 ```
 
 ### Using Supervisor
 
-You can use Supervisor to keep the `queue:worker` daemon constantly running
+You can use Supervisor to manage the `queue:worker` daemon , it will the worker if it shuts and keep alive a certain number of processes.
 
 ```linux
 sudo apt-get install supervisor
@@ -258,7 +250,7 @@ Create the `queue-worker.conf` configuration file in `/etc/supervisor/conf.d` us
 This example will run 3 processes of the worker
 
 ```
-[program:queue-worker]
+[program:worker]
 process_name=%(program_name)s_%(process_num)02d
 command=/var/www/app.mydomain.com/bin/console queue:worker -d
 autostart=true
@@ -266,7 +258,7 @@ autorestart=true
 user=www-data
 numprocs=3
 redirect_stderr=true
-stdout_logfile=/var/www/app.mydomain.com/queue-worker.log
+stdout_logfile=/var/www/app.mydomain.com/worker.log
 ```
 
 Once you have created the configuration file
@@ -279,14 +271,12 @@ sudo supervisorctl update
 Then to start it up
 
 ```linux
-sudo supervisorctl start queue-worker:*
+sudo supervisorctl start worker:*
 ```
 
 For more information see the [Supervisor documentation](http://supervisord.org/index.html).
 
-
 ## Installing Redis
-
 
 ### Redis
 

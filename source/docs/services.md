@@ -8,7 +8,18 @@ section: content
 
 Services are reusable business logic, that are used to keep both your Controllers and Models skinny whilst making code simpler, easier to test and maintain. Services follow the `dependency injection` and `command` patterns, and the Service only does just one thing, in other words it follows the `single responsibility principle`. It is both a very simple concept and object, but it is very powerful.
 
-Services are a specific business action and should be named with a verb explaining what it should do e.g. `SignupUserService` or `StripeChargeCardService`. Services should be saved to `src/Service`, and are typically called from a `Controller`, `Command` or `Job`. You can also group similar services into their own sub folder.
+Services are a specific business action including workflow and should be named with a verb explaining what it should do e.g. `SignupUserService` or `StripeChargeCardService`. Services should be saved to `src/Service`, and are typically called from a `Controller`, `Command` or `Job`. You can also group similar services into their own sub folder.
+
+For example
+
+```
+|-- src
+|   |-- Service
+|   |   -- Stripe
+|   |       |-- NewCustomerService
+|   |       |-- ChargeCreditCardService
+|   |       |-- RefundCreditCardService
+```
 
 When you create the instance for the Service you inject dependencies in the constructor arguments, these will be passed to the `initialize` method.  An example of this, in the controller you create a new service and pass the User model. The Service requires two methods , `initialize` and `execute`.
 
@@ -66,7 +77,7 @@ class CreateNewUserService extends AppService {
 
     private function sendWelcomeEmail(Entity $user)
     {
-        (new SendWelcomeEmailJob($user))->dispatch();
+        (new SendWelcomeEmailJob())->dispatch($user);
     }
 }
  ```

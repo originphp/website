@@ -66,6 +66,7 @@ return [
             'Cache' => 'docs/cache',
             'Events' => 'docs/event-manager',
             'Logging' => 'docs/log',
+            'Mailer' => 'docs/mailer',
             'Migrations' => 'docs/migrations',
             'Queue' => 'docs/queue',
             'Storage' => 'docs/storage',

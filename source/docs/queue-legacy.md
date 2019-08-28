@@ -4,6 +4,9 @@ description: Queue Utility Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
+> This is the documentation for old version of Queue. See [here](/docs/queue) for the new documentation.
+
 # Queue for Background Jobs
 
 The queue system is for handling background jobs, such as sending emails, carrying out database maintenance and so on. The back-end for queue system is MySQL, and you can use your current database or separate server.

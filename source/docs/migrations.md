@@ -328,7 +328,7 @@ class CreateProductsTableMigration extends Migration
 
 ### Irreversible Migrations
 
-Sometimes you might delete data or do something else that is not reversible, in that case you should throw a custom exception.
+Sometimes you might delete data or do something else that is not reversible, in that case you should throw a `IrreversibleMigrationException`.
 
 ```php
 class CreateProductsTableMigration extends Migration

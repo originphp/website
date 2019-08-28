@@ -8,13 +8,14 @@ section: content
 
 The email class enables you to send emails easily through SMTP.
 
+> As version 1.29 the namespace for Email has been moved to Origin\Mailer\Email from Origin\Utility\Email
 
 ## Email Configuration
 
 You setup your email accounts in your `config/email.php` we have created a template for you, just rename the file and fill your details.
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 
 Email::config(
     'default',[
@@ -47,8 +48,9 @@ For example
 
 ```php
     [
-        'from' => 'james@originphp.com'
-        'bcc' => ['someone@origin.php', 'Someone']
+        'from' => ['james@originphp.com' => 'James'],
+        'replyTo' => 'no-reply@originphp.com'
+        'bcc' => ['someone@origin.php' => 'Someone','another-person@example.com']
     ]
 ```
 
@@ -63,7 +65,7 @@ Email templates are stored in the `View/Email` folder, use the template method t
 To send an email (with both html and text versions):
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 $Email = new Email();
 $Email->to('somebody@originphp.com')
     ->from('me@originphp.com')
@@ -78,7 +80,7 @@ The above example will load the `View/Email/html/welcome.ctp` and if the text ve
 To change the format of the email to either `text` or `html` only, you need to set the format.
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 $Email = new Email();
 $Email->to('somebody@originphp.com')
     ->from('me@originphp.com')
@@ -100,7 +102,7 @@ Here is how you use variables in the email templates:
 The template method also accepts plugin syntax, so to load a template from a plugin  folder just add the plugin name followed by a dot then the template name.
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 $Email = new Email();
 $Email->to('somebody@originphp.com')
     ->from('me@originphp.com')
@@ -117,7 +119,7 @@ $Email->to('somebody@originphp.com')
 To send an email with both html and text versions:
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 
     $Email = new Email();
     $Email->to('somebody@originphp.com')
@@ -133,7 +135,7 @@ use Origin\Utility\Email;
 To send a HTML only email, you need to tell the Email utility use the html format.
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 
     $Email = new Email();
     $Email->to('somebody@originphp.com')
@@ -149,7 +151,7 @@ use Origin\Utility\Email;
 To send a text email, you need to tell the Email utility use the text format.
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 $Email = new Email();
 $Email->to('somebody@originphp.com')
     ->from('me@originphp.com')
@@ -164,7 +166,7 @@ $Email->to('somebody@originphp.com')
 To change the email account (accounts are setup using the `Email::config()` usually in the `config/email.php`)
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 $Email = new Email();
 $Email->to('somebody@originphp.com')
     ->from('me@originphp.com')
@@ -177,7 +179,7 @@ $Email->to('somebody@originphp.com')
 You can also setup the config during the creation of the Email object.
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 $config = [ 
     'host' => 'smtp.gmail.com',
     'port' => 465,
@@ -194,7 +196,7 @@ $Email = new Email($config);
 To add attachments
 
 ```php
-use Origin\Utility\Email;
+use Origin\Mailer\Email;
 $Email = new Email();
 $Email->to('somebody@originphp.com')
     ->from('me@originphp.com')

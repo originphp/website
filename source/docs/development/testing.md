@@ -151,7 +151,6 @@ You will create a test case class like this, defining the fixtures that you will
 namespace App\Test\Model;
 
 use Origin\TestSuite\OriginTestCase;
-use Origin\Model\ModelRegistry;
 use Origin\Model\Entity;
 
 class BookmarkTest extends OriginTestCase
@@ -159,7 +158,7 @@ class BookmarkTest extends OriginTestCase
     public $fixtures = ['Bookmark'];
 
     // this is called when the testcase is constructed
-    public function initialize() 
+    public function initialize()
     {
         
     }
@@ -168,7 +167,7 @@ class BookmarkTest extends OriginTestCase
     public function startup()
     {
         parent::startup(); // remember parent
-        $this->Bookmark = ModelRegistry::get('Bookmark');
+        $this->loadModel('Bookmark');
     }
 
     // example assertion
@@ -265,7 +264,7 @@ There will be times you will want to test that protected or private methods or p
     {
         $Email = new MockEmail();
         $Email = $Email->from('james@originphp.com');
-        $this->assertInstanceOf('Origin\Utility\Email', $Email); // check returning this
+        $this->assertInstanceOf('Origin\Mailer\Email', $Email); // check returning this
 
         $property = $Email->getProperty('from'); # TestTrait
         $this->assertEquals(['james@originphp.com',null], $property);
@@ -751,6 +750,113 @@ If you created a complicated Middleware or want to test at different stages
         $middleware->shutdown($request,$response); // handles response
         // now check the response object
     }
+```
+
+## Testing Jobs
+
+To test Jobs, make sure you have configured a test Queue connection in your `config/application.php`. When the test is run the `test` queue connection will be used.
+
+```
+use Origin\Job\Queue;
+Queue::config('default', [
+    'engine' => 'database',
+    'connection' => 'test',
+]);
+```
+
+Also make you have you added the queue schema to your `db/schema.php` file, then when you run the `db:test:prepare` command this will be setup.  If you have upgraded from an older version make sure you are using the recent version of [queue.php](https://github.com/originphp/app/blob/master/db/queue.php) 
+
+If not you can import
+
+```linux
+$ bin/console db:schema:load queue --datasource=test
+```
+
+A test for a Job would look something like this
+
+```php
+namespace App\Test\Job;
+use App\Job\CreateUserDirectoryJob;
+use Origin\TestSuite\OriginTestCase;
+
+class CreateUserDirectoryJobTest extends OriginTestCase
+{
+    // alias for PHPunit setUp in the OriginTestCase
+    public function startup()
+    {
+        parent::startup(); 
+        $this->loadModel('User');
+    }
+
+    public function testExecute()
+    {
+        $user = $this->User->find('first');
+        $result = (new CreateUserDirectoryJob())->dispatchNow($user);
+        $this->assertTrue($result);
+    }
+}
+```
+
+## Testing Mailers
+
+To test a Mailer, make sure you have configured a test Email account in your `application.php`, this can be a real account or debug, which does not send anything.
+
+```
+use Origin\Mailer\Email;
+Email::config('test',['debug'=>true]);
+```
+
+A test would look something like this
+
+```php
+namespace App\Test\Mailer;
+
+use Origin\TestSuite\OriginTestCase;
+use App\Mailer\SendWelcomeEmailMailer;
+
+class SendWelcomeEmailMailerTest extends OriginTestCase
+{
+    public function startup()
+    {
+        parent::startup();
+        $this->loadModel('User');
+    }
+
+    public function testExecute()
+    {
+        $user = $this->User->find('first', ['conditions' => ['id' => 1000]]);
+
+        $message = (new SendWelcomeEmailMailer())->dispatch($user);
+        $this->assertContains('To: somebody@example.com', $message->header());
+        $this->assertContains('From: Name <demo@example.com>', $message->header());
+        $this->assertContains('Hi Tony,', $message->body());
+    }
+}
+
+```
+
+## Testing Services
+
+To test Services (Service Objects)
+
+```php
+use Origin\TestSuite\OriginTestCase;
+use App\Service\CreateUserService;
+
+class CreateUserServiceTest extends OriginTestCase
+{
+    public function startup()
+    {
+        parent::startup();
+        $this->loadModel('User');
+    }
+
+     public function testExecute()
+    {
+        $result = (new CreateUserService($this->User))->dispatch(['foo'=>'bar']);
+        $this->assertTrue($result->success);
+    }
+}
 ```
 
 ## Code Coverage
