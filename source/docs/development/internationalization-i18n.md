@@ -44,7 +44,7 @@ Whenever you use the [NumberHelper](/docs/view/number-helper) or [DateHelper](/d
 
 ## Translations
 
-Translations are stored in the `src/Locale` folder, and the filename should be the language code with the `php` extension. E.g. `es.php` for the Spanish language. When I18n is initialized it sets the locale and language for locale, unless you specify something else. Then the translations are loaded if the translation file is found.
+Translations are stored in the `app/Locale` folder, and the filename should be the language code with the `php` extension. E.g. `es.php` for the Spanish language. When I18n is initialized it sets the locale and language for locale, unless you specify something else. Then the translations are loaded if the translation file is found.
 
 The file itself should return an array
 

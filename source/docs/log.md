@@ -81,8 +81,7 @@ Add configuration to your `application.php` if the log configuration will be use
 
 ### File Engine
 
-The default log file can be found in the `logs` folder, it will be either application.log or development.log depending if you have debug enabled. This is only used when you do not provide a file name.
-
+The default log file is called `application.log`.
 
 ```php
 use Origin\Log\Log;
@@ -189,7 +188,7 @@ Log::config('payments',[
 
 ### Creating a Custom Logger
 
-To create a custom Log Engine, create the folder structure `src/Log/Engine`, all you need is one function that is the log function
+To create a custom Log Engine, create the folder structure `app/Log/Engine`, all you need is one function that is the log function
 
 ```php
 namespace App\Log\Engine;

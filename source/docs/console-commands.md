@@ -24,7 +24,7 @@ To create a `Command`, use the code generator.
 $ bin/console generate command Backup
 ```
 
-This will create the `BackupCommand` file  in the `/src/Command` folder and the `BackupCommandTest` file in the `/tests/TestCase/Command/` folder.
+This will create the `BackupCommand` file  in the `/app/Command` folder and the `BackupCommandTest` file in the `/tests/TestCase/Command/` folder.
 
 Here is what a simple Command looks like
 

@@ -31,7 +31,7 @@ In your `config/database.php` add database configuration.
     ));
 ```
 
-Make sure you have an up to date schema file `db/schema.php`. You can use the schema dump command, by default the database commands use the agnostic version `php`, this can be changed in your `config/application.php` or by passing the option `--type=sql`.
+Make sure you have an up to date schema file `database/schema.php`. You can use the schema dump command, by default the database commands use the agnostic version `php`, this can be changed in your `config/application.php` or by passing the option `--type=sql`.
 
 ```linux
 $ bin/console db:schema:dump
@@ -764,7 +764,7 @@ Queue::config('default', [
 ]);
 ```
 
-Also make you have you added the queue schema to your `db/schema.php` file, then when you run the `db:test:prepare` command this will be setup.  If you have upgraded from an older version make sure you are using the recent version of [queue.php](https://github.com/originphp/app/blob/master/db/queue.php) 
+Also make you have you added the queue schema to your `database/schema.php` file, then when you run the `db:test:prepare` command this will be setup.  If you have upgraded from an older version make sure you are using the recent version of [queue.php](https://github.com/originphp/app/blob/master/database/queue.php) 
 
 If not you can import
 
@@ -803,7 +803,7 @@ To test a Mailer, make sure you have configured a test Email account in your `ap
 
 ```
 use Origin\Mailer\Email;
-Email::config('test',['debug'=>true]);
+Email::config('test',['engine'=>'Test']);
 ```
 
 A test would look something like this

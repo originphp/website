@@ -45,7 +45,7 @@ If you add datetime fields called `created` and `modified`, then when you create
 
 ## Creating a Model
 
-To create a model is easy, simply create a file in `src/Model` folder which is a subclass of the `AppModel`.
+To create a model is easy, simply create a file in `app/Model` folder which is a subclass of the `AppModel`.
 
 ```php
 <?php

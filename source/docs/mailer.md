@@ -18,13 +18,13 @@ $ bin/console generate mailer SendWelcomeEmail
 This will create 4 files
 
 ```
-[ OK ] /var/www/src/Mailer/SendWelcomeEmailMailer.php
+[ OK ] /var/www/app/Mailer/SendWelcomeEmailMailer.php
 [ OK ] /var/www/tests/TestCase/Mailer/SendWelcomeEmailMailerTest.php
-[ OK ] /var/www/src/View/Mailer/SendWelcomeEmail/html.ctp
-[ OK ] /var/www/src/View/Mailer/SendWelcomeEmail/text.ctp
+[ OK ] /var/www/app/View/Mailer/SendWelcomeEmail/html.ctp
+[ OK ] /var/www/app/View/Mailer/SendWelcomeEmail/text.ctp
 ```
 
-Now open `src/Mailer/SendWelcomeEmail.php` and adjust the email subject
+Now open `app/Mailer/SendWelcomeEmail.php` and adjust the email subject
 
 ```php
 namespace App\Mailer;
@@ -44,7 +44,7 @@ class SendWelcomeEmailMailer extends AppMailer
 }
 ```
 
-Now open the HTML template `/src/View/Mailer/SendWelcomeEmail/html.ctp` and adjust the message
+Now open the HTML template `/app/View/Mailer/SendWelcomeEmail/html.ctp` and adjust the message
 
 ```php
 <p>Hi <?= $user->name ?></p>
@@ -72,7 +72,7 @@ class AppMailer extends Mailer
         'replyTo' => 'noreply@somewhere.com',
     ];
 
-    # src/View/Layout/mailer.ctp
+    # app/View/Layout/mailer.ctp
     public $layout = 'mailer';
 
     # Email account
@@ -84,7 +84,7 @@ class AppMailer extends Mailer
 
 if you want to wrap your HTML emails in a template you can use layouts for this
 
-Create `src/View/Layout/mailer.ctp`
+Create `app/View/Layout/mailer.ctp`
 
 ```php
 <!DOCTYPE html>
@@ -170,10 +170,8 @@ Email::config('default',[
     ]);
 
 Email::config('test',[
-        'debug' => true
+        'engine' => 'Test'
     ]);
 ```
-
-If you want the tests to actually send the email, then adjust the configuration settings above. By setting `debug` to `true`, the email is not sent.
 
 For more information on configuration see the [Email Utility](/docs/utility/email').

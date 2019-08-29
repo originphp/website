@@ -25,7 +25,7 @@ class ArticlesController extends AppController
 }
 ```
 
-The file for the view is `src/View/Articles/latest.ctp` and might look something like this:
+The file for the view is `app/View/Articles/latest.ctp` and might look something like this:
 
 ```php
 <h1>Latest</h1>
@@ -40,7 +40,7 @@ The file for the view is `src/View/Articles/latest.ctp` and might look something
 </ul>
 ```
 
-That view will be rendered inside a `layout`, the framework comes with two starter layouts `default` and `basic` which can be found in the `src/View/Layout` folder.
+That view will be rendered inside a `layout`, the framework comes with two starter layouts `default` and `basic` which can be found in the `app/View/Layout` folder.
 
 ```html
 <!doctype html>

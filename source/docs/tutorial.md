@@ -83,14 +83,14 @@ $ bin/console generate controller Welcome index
 This will create a few files
 
 ```linux
-[ OK ] /var/www/src/Controller/WelcomeController.php
-[ OK ] /var/www/src/blog/src/View/Welcome/index.ctp
-[ OK ] /var/www/src/blog/tests/TestCase/Controller/WelcomeControllerTest.php
+[ OK ] /var/www/app/Controller/WelcomeController.php
+[ OK ] /var/www/app/blog/app/View/Welcome/index.ctp
+[ OK ] /var/www/app/blog/tests/TestCase/Controller/WelcomeControllerTest.php
 ```
 
 The Controller is where the logic is placed and the View is where the information that will be displayed to the user.
 
-Open the `src/View/Welcome/index.ctp` and change the contents so it looks like this
+Open the `app/View/Welcome/index.ctp` and change the contents so it looks like this
 
 ```html
 <h1>Welcome</h1>
@@ -140,7 +140,7 @@ Now you will see a missing action exception error, this because the controller t
 
 ![Missing Action Exception](/assets/images/missing-action-exception.png)
 
-Edit the `/src/Controller/ArticlesController.php` file, so it looks like this
+Edit the `/app/Controller/ArticlesController.php` file, so it looks like this
 
 ```php
 namespace  App\Controller;
@@ -159,7 +159,7 @@ Now you will get a missing view exception error, this is because there is no vie
 ![Missing View Exception](/assets/images/missing-view-exception.png)
 
 
-Create a folder called `Articles` in the `View` folder, and save the file as `index.ctp`, e.g. `src/View/Welcome/index.ctp`
+Create a folder called `Articles` in the `View` folder, and save the file as `index.ctp`, e.g. `app/View/Welcome/index.ctp`
 
 ```html
 <h1>New Article</h1>
@@ -178,23 +178,23 @@ $ bin/console generate model Article title:string body:text
 This will output
 
 ```linux
-[ OK ] /var/www/src/Model/Article.php
+[ OK ] /var/www/app/Model/Article.php
 [ OK ] /var/www/tests/TestCase/Model/ArticleTest.php
 [ OK ] /var/www/tests/Fixture/ArticleFixture.php
-[ OK ] /var/www/db/migrate/20190606063934CreateArticleTable.php
+[ OK ] /var/www/database/migrations/20190606063934CreateArticleTable.php
 ```
 
 Not only has it created the Model and test files, it has created a migration file so that you can create the table. 
 
 ### Running A Migration
 
-Before you can use the migrations feature, you will need to create the migrations table in your database. Run the following command to create the table for you, it will load the schema from the `db/migrations.sql`.
+Before you can use the migrations feature, you will need to create the migrations table in your database. Run the following command to create the table for you, it will load the schema from the `database/migrations.sql`.
 
 ```linux
 $ bin/console db:schema:load migrations
 ```
 
-If you look at the migration file `db/migrate/YYYYMMDDHHMMSSCreateArticleTable.php`, it will look like this
+If you look at the migration file `database/migrations/YYYYMMDDHHMMSSCreateArticleTable.php`, it will look like this
 
 ```php
 class CreateArticleTableMigration extends Migration
@@ -234,7 +234,7 @@ See the [Migrations Guide](/docs/development/migrations) for more information.
 
 ### Adding a Form
 
-Now create a basic form for getting the input. Create the view for the new action.  The file for this would be `src/View/Articles/new.ctp`
+Now create a basic form for getting the input. Create the view for the new action.  The file for this would be `app/View/Articles/new.ctp`
 
 > The <?= is the PHP shorthand for <?php echo 
 
@@ -259,7 +259,7 @@ See the [Form Helper](/docs/view/form-helper) for more information.
 
 ### Add Controller Code
 
-Now add code to the Controller `/src/Controller/ArticlesController.php` to handle the form in the new method, it needs to take the POST data from the request and convert this to article [entity](/docs/model/entities) (a single record object). If the request is POST request, then it will save the record and redirect to the view action to show the article that it just created. It will set object in the view so that the FormHelper can use it.
+Now add code to the Controller `/app/Controller/ArticlesController.php` to handle the form in the new method, it needs to take the POST data from the request and convert this to article [entity](/docs/model/entities) (a single record object). If the request is POST request, then it will save the record and redirect to the view action to show the article that it just created. It will set object in the view so that the FormHelper can use it.
 
 ```php
 public function new()
@@ -321,7 +321,7 @@ public function view($id)
 }
 ```
 
-And now create the view file for this `src/View/Articles/view.ctp`
+And now create the view file for this `app/View/Articles/view.ctp`
 
 Open [http://localhost:8000/articles/new](http://localhost:8000/articles/new) and create an article, this
 will redirect you to the view page.
@@ -338,7 +338,7 @@ public function index()
 }
 ```
 
-Now create the view file for this `src/View/Articles/index.ctp`
+Now create the view file for this `app/View/Articles/index.ctp`
 
 ```php
 <h1>Articles</h1>
@@ -364,14 +364,14 @@ Open [http://localhost:8000/articles/index](http://localhost:8000/articles/index
 
 So you have some basic actions such as creating and viewing an article as well listing all the articles in the database. So lets add a link from the home page
 
-Open `src/View/Welcome/index.ctp` and change the contents so it looks like this
+Open `app/View/Welcome/index.ctp` and change the contents so it looks like this
 
 ```html
 <h1>Welcome</h1>
 <p><?= $this->Html->link('My Blog', ['controller'=>'Articles']) ?></p>
 ```
 
-Open `src/View/Articles/index.ctp` and add a link for creating a new article.
+Open `app/View/Articles/index.ctp` and add a link for creating a new article.
 
 ```php
 <h1>Articles</h1>
@@ -396,7 +396,7 @@ Go to the welcome page [http://localhost:8000](http://localhost:8000) and you no
 
 ### Add Validation
 
-Let's add some validation you will need to edit the article Model, which can be found in `/src/Model/Article.php`. The validation rule should make sure that the article cannot be saved if there is not Article title.
+Let's add some validation you will need to edit the article Model, which can be found in `/app/Model/Article.php`. The validation rule should make sure that the article cannot be saved if there is not Article title.
 
 ```php
 class Article extends AppModel
@@ -408,7 +408,7 @@ class Article extends AppModel
     }
 ```
 
-Now open the view file `src/View/Articles/new.ctp` again, change code to as follows, which has new lines to loop through the error messages and display them in a list. Note, this is just to show how it works, in moment I will show you how to use the `Form::control`, which does this all for you.
+Now open the view file `app/View/Articles/new.ctp` again, change code to as follows, which has new lines to loop through the error messages and display them in a list. Note, this is just to show how it works, in moment I will show you how to use the `Form::control`, which does this all for you.
 
 ```php
 <h1>New Article</h1>
@@ -449,7 +449,7 @@ Goto [http://localhost:8000/articles/new](http://localhost:8000/articles/new) an
 ### Form Control
 
 The `FormHelper` control method wraps ups form elements in div, adds a label,classes and handles the validation. 
-Open the new view `src/View/Articles/new.ctp` and change it as follows
+Open the new view `app/View/Articles/new.ctp` and change it as follows
 
 ```php
 <h1>New Article</h1>
@@ -464,7 +464,7 @@ When you goto [http://localhost:8000/articles/new](http://localhost:8000/article
 
 ### Editing Records
 
-Open the articles controller `/src/Controller/ArticlesController.php` and add the edit method. This is slightly different since you need to load the article from the database, and then if its a post then you need to patch the article entity with the request data that was posted.
+Open the articles controller `/app/Controller/ArticlesController.php` and add the edit method. This is slightly different since you need to load the article from the database, and then if its a post then you need to patch the article entity with the request data that was posted.
 
 
 ```php
@@ -486,7 +486,7 @@ public function edit($id=null)
 }
 ```
 
-Now create the view file `src/View/Articles/edit.ctp`, using the new view, just changing the title.
+Now create the view file `app/View/Articles/edit.ctp`, using the new view, just changing the title.
 
 ```php
 <h1>Edit Article</h1>
@@ -497,7 +497,7 @@ Now create the view file `src/View/Articles/edit.ctp`, using the new view, just 
 <?= $this->Form->end() ?>
 ```
 
-And add an edit link to the index view `src/View/Articles/index.ctp`.
+And add an edit link to the index view `app/View/Articles/index.ctp`.
 
 ```php
 <h1>Articles</h1>
@@ -543,7 +543,7 @@ Goto [http://localhost:8000/articles/delete/1](http://localhost:8000/articles/de
 
 ![Method Not Allowed Exception](/assets/images/method-not-allowed-exception.png)
 
-Now edit the index view `src/View/Articles/index.ctp`, adding a link for deleting, but the link will be a post link (which is a link wrapped in a form)
+Now edit the index view `app/View/Articles/index.ctp`, adding a link for deleting, but the link will be a post link (which is a link wrapped in a form)
 
 
 ```php
@@ -588,7 +588,7 @@ $ bin/console db:migrate
 
 ### Associate Models
 
-Open the article model `src/Model/Article.php` and in the initialize method setup the association.
+Open the article model `app/Model/Article.php` and in the initialize method setup the association.
 
 ```php
 public function initialize(array $config)
@@ -599,7 +599,7 @@ public function initialize(array $config)
 }
 ```
 
-Open the comment `src/Model/Comment.php` and in the initialize method setup the association. 
+Open the comment `app/Model/Comment.php` and in the initialize method setup the association. 
 
 ```php
 public function initialize(array $config)
@@ -609,7 +609,7 @@ public function initialize(array $config)
 }
 ```
 
-Open the articles controller `/src/Controller/ArticlesController.php` and edit the view method, so that it retrieves associated records.
+Open the articles controller `/app/Controller/ArticlesController.php` and edit the view method, so that it retrieves associated records.
 
 ```php
 public function view($id)
@@ -629,7 +629,7 @@ For more information see the [Associations Guide](/docs/model/associations).
 $ bin/console generate controller Comments
 ```
 
-Now add the `add` method to the comments controller file  `/src/Controller/CommentsController.php`.
+Now add the `add` method to the comments controller file  `/app/Controller/CommentsController.php`.
 
 ```php
 class CommentsController extends AppController
@@ -651,7 +651,7 @@ class CommentsController extends AppController
 
 ### Add the Comment Form
 
-Edit `src/View/Articles/view.ctp` and adjust so it includes the comments form and the loop which lists all 
+Edit `app/View/Articles/view.ctp` and adjust so it includes the comments form and the loop which lists all 
 comments for this article.
 
 ```php

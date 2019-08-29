@@ -6,11 +6,11 @@ section: content
 ---
 # Queue
 
-> For the old version of Queue prior to version 1.28 see the [documentation](/docs/queue-legacy). The database [schema](https://github.com/originphp/app/blob/master/db/queue.php) is also different. 
+> For the old version of Queue prior to version 1.28 see the [documentation](/docs/queue-legacy). The database [schema](https://github.com/originphp/app/blob/master/database/queue.php) is also different. 
 
 You can easily queue schedule background jobs, the OriginPHP queue system works supports both MySQL and Redis backends.
 
-> Job are new in version 1.28, so if you have upgraded you will need to create `src/Job` folder and copy the `AppJob.php` from [github](https://github.com/originphp/app/blob/master/src/Job/AppJob.php).
+> Job are new in version 1.28, so if you have upgraded you will need to create `app/Job` folder and copy the `AppJob.php` from [github](https://github.com/originphp/app/blob/master/app/Job/AppJob.php).
 
 ## Configuring Queue
 
@@ -63,7 +63,7 @@ To create a Job and its test file run the following command
 $ bin/console generate job SendWelcomeEmail
 ```
 
-Jobs are stored in the `src/Job` folder and must have the `execute` method, any arguments you pass during dispatching will be passed along here.
+Jobs are stored in the `app/Job` folder and must have the `execute` method, any arguments you pass during dispatching will be passed along here.
 
 ```php
 namespace App\Job;

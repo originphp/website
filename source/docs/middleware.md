@@ -53,7 +53,7 @@ class FooMiddleware extends Middleware
 
 ## Loading Middleware
 
-To load the middleware, you need to call `loadMiddleware` in the initialize method of `src/Application.php` file. When web requests are run, the middlewares will be run, first startup will be called (handle) by each middleware, and modify the request object, then once it has finished, each middleware will run the shutdown (process) using the modified request object.
+To load the middleware, you need to call `loadMiddleware` in the initialize method of `app/Application.php` file. When web requests are run, the middlewares will be run, first startup will be called (handle) by each middleware, and modify the request object, then once it has finished, each middleware will run the shutdown (process) using the modified request object.
 
 ```php
 public function initialize()

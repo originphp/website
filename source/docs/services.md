@@ -8,7 +8,7 @@ section: content
 
 Services are reusable business logic, that are used to keep both your Controllers and Models skinny whilst making code simpler, easier to test and maintain. Services follow the `dependency injection` and `command` patterns, and the Service only does just one thing, in other words it follows the `single responsibility principle`. It is both a very simple concept and object, but it is very powerful.
 
-Services are a specific business action including workflow and should be named with a verb explaining what it should do e.g. `SignupUserService` or `StripeChargeCardService`. Services should be saved to `src/Service`, and are typically called from a `Controller`, `Command` or `Job`. You can also group similar services into their own sub folder.
+Services are a specific business action including workflow and should be named with a verb explaining what it should do e.g. `SignupUserService` or `StripeChargeCardService`. Services should be saved to `app/Service`, and are typically called from a `Controller`, `Command` or `Job`. You can also group similar services into their own sub folder.
 
 For example
 
@@ -25,7 +25,6 @@ When you create the instance for the Service you inject dependencies in the cons
 
 Any dependencies that you passed when constructing will be passed to the initialize method. The execute method is where the logic is stored. Services also work with `startup` and `shutdown` callbacks which are triggered when you dispatch the service. Any other methods should be private (or at least protected).
 
-> Services are new in version 1.28, so if you have upgraded you will need to create `src/Service` folder and copy the `AppService.php` from [github](https://github.com/originphp/app/blob/master/src/Service/AppService.php).
 
 Use the generate command to create the Service and its test for you
 

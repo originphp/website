@@ -32,7 +32,7 @@ Creating a migration is easy peasy, just run the migration command with a name o
 $ bin/console generate migration CreateProductTable
 ```
 
-Migrations are automatically versioned by adding a `YYYYMMDDHHMMSS` prefix to the filename and are stored in `db/migrate`.
+Migrations are automatically versioned by adding a `YYYYMMDDHHMMSS` prefix to the filename and are stored in `database/migrations`.
 
 ## How Migrations Works
 

@@ -9,7 +9,7 @@ section: content
 A behavior is way to add functionality to you models and then share this with other models, similar to controller components.
 Behaviors have Behavior added on the end of the class and filename.
 
-To create a behavior you will need to create a file in `src/Model/Behavior` folder and call it `FooBehavior`.
+To create a behavior you will need to create a file in `app/Model/Behavior` folder and call it `FooBehavior`.
 
 ```php
 

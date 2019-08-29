@@ -6,29 +6,18 @@ section: content
 ---
 # Configuration
 
-The configuration for your application can be found in the `config` folder. There you will find the configuration files for the database, SMTP email accounts, storage and for the server specific installation.
+The configuration for your application can be found in the `config` folder. There you will find the configuration files for the application, database, SMTP email accounts, storage, cache and logs.
 
-## Application
+When you first create a project, rename the `.env.php.default` to `.env.php` and set your information there. This information is specific to your current installation.
 
-The application configuration is set in  `config/application.php`, the configuration is for all environments, e.g. development, staging etc. For server specific configuration use `config/server.php`;
+Use the Config class to work with configuration values.
 
-## Server
+```php
+use Origin\Core\Config;
+Config::write('key','value');
+$value = Config::read('key');
+```
 
-The `server.php` file is the configuration specific to the installation. This is handy when your application might use different settings for different installations (e.g production, development, staging). Examples might include debug levels, log or domain information, api keys (non public projects).
-
-> Update server.php.template to include the default configuration parameters but without sensitive information such as usernames, passwords or api keys. So when you deploy or reinstall your application, save a copy of the template and fill out the values.
-
-## Database
-
-Save a copy of `database.php.default` to `database.php` and update the database name,username and password.
-
-## Email Accounts (SMTP)
-
-Save a copy of `email.php.default` to `email.php` and update database name,username and password.
-
-## Storage
-
-The default storage is set to local which is a file based storage, so if you are not using any other storage engines then you do not need to configure it unless you want a different directory or multiple storage locations. To configure, save a copy of `storage.php.default` to `storage.php` and fill in the details.
 
 ## DotEnv
 

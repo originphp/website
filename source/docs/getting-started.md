@@ -94,7 +94,7 @@ $ bin/console db:setup
 The db setup command will :
 
 - Create the database
-- Load the schema from `db/schema.sql` file (if its found)
-- Seed the database with records from the `db/seed.sql` file if its found
+- Load the schema from `database/schema.sql` file (if its found)
+- Seed the database with records from the `database/seed.sql` file if its found
 
 If all went well when you go to [http://localhost:8000](http://localhost:8000)  it should now say that it is connected to the database.
