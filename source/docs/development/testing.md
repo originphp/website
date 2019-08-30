@@ -754,7 +754,7 @@ If you created a complicated Middleware or want to test at different stages
 
 ## Testing Jobs
 
-To test Jobs, make sure you have configured a test Queue connection in your `config/application.php`. When the test is run the `test` queue connection will be used.
+To test Jobs, make sure you have configured a test Queue connection in your `config/queue.php`. When the test is run the `test` queue connection will be used.
 
 ```
 use Origin\Job\Queue;

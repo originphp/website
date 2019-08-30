@@ -24,7 +24,7 @@ To use the database engine, you will need to create the queue table
 $ bin/console db:schema:load queue
 ```
 
-Then in your `config/application.php` you can add
+The settings for Queue can be found in `config/queue.php`, by default the `Database` engine is used with the default connection. When you test queues, this will automatically be switcehd to your test configuration.
 
 ```php
 use Origin\Job\Queue;
@@ -39,7 +39,7 @@ Options are
 
 ### Redis
 
-In your `config/application.php` add
+This is how you would configure Redis
 
 ```php
 use Origin\Job\Queue;

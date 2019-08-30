@@ -73,7 +73,7 @@ When it asks you for the password type in **root**, then copy and paste the foll
 
 ### Configuring PostgreSQL in Docker
 
-If you prefer to use PostgreSQL as your database then change the engine to `pgsql` in the database configuration file. You will also need to adjust the docker settings.
+If you prefer to use PostgreSQL as your database then change the `DB_ENGINE` engine to `pgsql` in the `config/.env.php` file. You will also need to adjust the docker settings.
 
 In the the root folder edit the `Dockerfile`, and add the following lines after `php-dev \` 
 ```

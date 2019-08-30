@@ -77,7 +77,7 @@ Log::debug('debug-level message');
 
 The default Log Engine is file, you can use multiple engines at once, and you can customize which levels to Log on.
 
-Add configuration to your `application.php` if the log configuration will be used on all installations (e.g. production,staging etc), or just add to `server.php` on the server where you have it installed.
+Edit your Log configuration in `config/log.php`.
 
 ### File Engine
 
@@ -229,7 +229,7 @@ class DatabaseEngine extends BaseEngine
 }
 ```
 
-To use this Log engine, in your `config/application.php`
+To use this Log engine, in your `config/log.php`
 
 ```php
 use Origin\Log\Log;

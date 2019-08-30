@@ -30,7 +30,7 @@ You can use the generate plugin to create the folder structure, routes and the p
 $ bin/console generate plugin ContactManager
 ```
 
-Then in your `config/application.php` add:
+Then in your `config/bootstrap.php` add:
 
 `Plugin::load('ContactManager');` 
 
@@ -96,6 +96,7 @@ $results = $this->Contact->find('all');
 You can install plugins from remote GIT repositories using the `plugin:install` command, this will download the plugin into your plugins folder and append your application configuration to load the plugin.
 
 To install a plugin from GitHub
+
 ```linux
 $ bin/console plugin:install username/plugin.git 
 ```

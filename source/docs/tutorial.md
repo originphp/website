@@ -45,18 +45,18 @@ Then open your web browser and go to [http://localhost:8000](http://localhost:80
 
 ### Configure the Database Connection
 
-Open the file `config/database.php.default` in your IDE, I recommend [Visual Studio Code](https://code.visualstudio.com/). Set the host, database, username and password as follows and then save a copy as `database.php`.
-
+Use the `config/.env.php.default` to create the `config/.env.php` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment you will need to adjust the database settings.
 
 ```php
-ConnectionManager::config('default', [
-    'host' => 'db',
-    'database' => 'blog',
-    'username' => 'root',
-    'password' => 'root',
-    'engine' => 'mysql' // or pgsql
-]);
+/**
+ * Database Settings
+ */
+'DB_HOST' => 'db',
+'DB_USERNAME' => 'root',
+'DB_PASSWORD' => 'root',
+'DB_ENGINE' => 'mysql',
 ```
+
 
 Next you need to run the `db:setup` command, if you are using the Dockerized Development Environment, you will need to access the container first, this is because the hostname for accessing the MySQL server is different from within the container.
 

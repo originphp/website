@@ -98,6 +98,8 @@ $value = Cache::read('My.key',[
 
 In all these examples,we are only configuring the default configuration, you can set different configuration names instead of default. When you use the caching functions the default configuration is used by default unless you say otherwise.
 
+The configuration for Cache can be found in `config/cache.php`.
+
 ### File Engine
 
 ```php
@@ -189,8 +191,7 @@ Cache::config('default', [
      ]);
 ```
 
-If you are going to use socket then instead of setting host and port, then set the `path` key with the location
-of the socket.
+If you are going to use socket then instead of setting host and port, then set the `path` key with the location of the socket.
 
 ```php
 Cache::config('default', [
@@ -215,7 +216,7 @@ Cache::config('default', [
 
 ### Custom Engine
 
-If you want to work with a different backend, it easy to create your own. When configuring cache, instead of passing the  `engine` key, use `className` and include the full namespace. 
+If you want to work with a different backend, it easy to create your own. When configuring cache, instead of passing the `engine` key, use `className` and include the full namespace. 
 
 ```php
 Cache::config('default', [
