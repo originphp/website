@@ -8,20 +8,28 @@ section: content
 
 The configuration for your application can be found in the `config` folder. There you will find the configuration files for the application, database, SMTP email accounts, storage, cache and logs.
 
+## Environment Settings
+
 When you first create a project, rename the `.env.php.default` to `.env.php` and set your information there. This information is specific to your current installation.
 
-Use the Config class to work with configuration values.
+## Config Class
+
+Use the Config class to work with configuration values within your application.
 
 ```php
 use Origin\Core\Config;
 Config::write('key','value');
 $value = Config::read('key');
+Config::delete('key');
+$bool Config::exists('key');
 ```
 
 
 ## DotEnv
 
-You can also `.env` files for your configuration needs. When your application is run either a HTTP request or through the command line, OriginPHP will look for `.env` in your applications config folder.
+You can also `.env` scripts for your configuration needs. When your application is run either a HTTP request or through the command line, OriginPHP will look for `.env` in your applications' `config` folder.
+
+> The bootstrap process first checks for a .env file since these require processing, if not it looks for .env.php which returns a PHP array. 
 
 Here is an example
 
