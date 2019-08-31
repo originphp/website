@@ -64,7 +64,7 @@ return [
         'url' => 'docs/libraries',
         'children' => [
             'Cache' => 'docs/cache',
-            'Events' => 'docs/event-manager',
+            'Events' => 'docs/events',
             'Logging' => 'docs/log',
             'Mailer' => 'docs/mailer',
             'Migrations' => 'docs/migrations',

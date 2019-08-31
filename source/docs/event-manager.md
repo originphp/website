@@ -13,12 +13,21 @@ The first thing to do is to get the Event Manager
 
 ## Getting the Event Manager
 
+Create an instance of the Event manager
+
+```php
+use Origin\Event\EventManager;
+$manager = new EventManager();
+```
+
+To register global events get the instance.
+
 ```php
 use Origin\Event\EventManager;
 $manager = EventManager::instance();
 ```
 
-## Listening for Events
+## Listening for Events (Subscribing)
 
 The next thing is to setup the listeners which will be called once an event is dispatched.
 

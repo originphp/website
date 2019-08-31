@@ -166,7 +166,6 @@ class BookmarkTest extends OriginTestCase
     // alias for PHPunit setUp in the OriginTestCase
     public function startup()
     {
-        parent::startup(); // remember parent
         $this->loadModel('Bookmark');
     }
 
@@ -781,11 +780,11 @@ use Origin\TestSuite\OriginTestCase;
 
 class CreateUserDirectoryJobTest extends OriginTestCase
 {
-    // alias for PHPunit setUp in the OriginTestCase
+    public $fixtures = ['Bookmark'];
+
     public function startup()
     {
-        parent::startup(); 
-        $this->loadModel('User');
+        $this->loadModel('Bookmark');
     }
 
     public function testExecute()
@@ -816,10 +815,11 @@ use App\Mailer\SendWelcomeEmailMailer;
 
 class SendWelcomeEmailMailerTest extends OriginTestCase
 {
+    public $fixtures = ['Bookmark'];
+    
     public function startup()
     {
-        parent::startup();
-        $this->loadModel('User');
+        $this->loadModel('Bookmark');
     }
 
     public function testExecute()
@@ -845,10 +845,11 @@ use App\Service\CreateUserService;
 
 class CreateUserServiceTest extends OriginTestCase
 {
+    public $fixtures = ['Bookmark'];
+    
     public function startup()
     {
-        parent::startup();
-        $this->loadModel('User');
+        $this->loadModel('Bookmark');
     }
 
      public function testExecute()

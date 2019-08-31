@@ -133,7 +133,7 @@ class UserController extends Controller
 
 ### Queuing Emails
 
-If you have have configured [Queues](/docs/queue) you can queue emails to be sent later, when you queue a Mailer, it is added to the `mailer` queue using the `default` queue connection.
+If you have have configured [Queues](/docs/queue) you can queue emails to be sent later, when you queue a Mailer, it is added to the `mailers` queue using the `default` queue connection.
 
 To a queue a Mailer to be sent
 

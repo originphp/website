@@ -65,7 +65,7 @@ If you want to work with PostgreSQL then see the [dockerized development environ
 
 ### Configure the Database Connection
 
-Use the `config/.env.php.default` to create the `config/.env.php` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment you will need to adjust the database settings.
+When you create the project with Composer, it will create a copy of `config/.env.php.default` and save as `config/.env.php` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment you will need to adjust the database settings.
 
 ```php
 /**
@@ -76,7 +76,6 @@ Use the `config/.env.php.default` to create the `config/.env.php` file, this con
 'DB_PASSWORD' => 'root',
 'DB_ENGINE' => 'mysql',
 ```
-
 
 Next you need to run the `db:setup` command, if you are using the Dockerized Development Environment, you will need to access the container first, this is because the hostname for accessing the MySQL server is different from within the container.
 
