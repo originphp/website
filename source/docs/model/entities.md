@@ -139,6 +139,22 @@ If you want to see a particular field was modified.
 $bool = $entity->modified('email');
 ```
 
+### Created
+
+After saving an entity you can see if it was a newly created record
+
+```php
+$bool = $entity->created();
+```
+
+### Deleted
+
+You can check if the entity was deleted
+
+```php
+$bool = $entity->deleted();
+```
+
 ### name
 
 Gets the model name of the entity.

@@ -19,10 +19,12 @@ use Origin\Publisher\PublisherTrait;
 class Order extends Model
 {
     use PublisherTrait; # 1
+    
     public function initialize(array $config)
     {
         $this->subscribe('OrderNotifier'); #2
     }
+
     public function afterSave(Entity $entity, bool $created, array $options = [])
     {
         if($created){
@@ -32,7 +34,7 @@ class Order extends Model
 }
 ```
 
-When this model is saved and a new order is created, it will publish (broadcast) the event to the subscribed listeners.
+When this model is saved and a new order is created, it will publish the event to the all subscribed listeners on this object and the global listeners.
 
 ## Listeners
 
@@ -119,7 +121,7 @@ public function initialize(array $config)
 
 ## Global
 
-Create a file called `listeners.php` like this
+To create events globally,create a file the `config/listeners.php` like this
 
 ```php
 use Origin\Publisher\Publisher

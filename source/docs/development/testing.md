@@ -860,6 +860,35 @@ class CreateUserServiceTest extends OriginTestCase
 }
 ```
 
+## Testing Model Repositories
+
+```php
+namespace App\Test\Model\Repository;
+
+use Origin\TestSuite\OriginTestCase;
+use App\Model\Repository\UserRepository;
+
+/**
+ * @property \App\Model\User $User
+ */
+class UserRepositoryTest extends OriginTestCase
+{
+    public $fixtures = ['User'];
+
+    public function startup()
+    {
+        $this->loadModel('User');
+    }
+
+    public function testRepositoryMethod()
+    {
+        $repository = new UserRepository($this->User);
+        $user = $this->User->find('first');
+        $this->assertTrue($respository->doSomething($user));
+    }
+}
+```
+
 ## Code Coverage
 
 The Dockerized Development Environment comes with PHPUnit and XDebug pre-installed so you can run code coverage easily.

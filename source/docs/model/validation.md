@@ -42,7 +42,7 @@ A validation rule array consists of the following keys:
 - *rule*: this is the name of the rule to run
 - *message*: error message to display if validation fails
 - *on*: default is `null`. You can also set to `create` or `update` to only check validation rule when a record is created or updated.
-- *required*: default is `false`. If set to true then the entity must have the field and it must not be blank. This can cause issues if you run on this on both update and create, and then try to use saveField, validation will fail. If you use this then you should probably set on = create.
+- *required*: default is `false`. If set to true then the entity must have the field and it must not be blank.
 - *allowBlank* - default is `false`. Allows validation to pass if empty values. Not the same as required, this allows you to skip a validation test if the value is empty. This is a fine grain control. Lets say you have a `minLength` rule on a non required field, and the value is empty. Validation would fail, however `allowBlank` will allow validation to pass in this instance.
 
 ## Validation Rules

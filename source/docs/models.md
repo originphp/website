@@ -445,18 +445,12 @@ When saving records you can pass an array of options
 - transaction: default is true, whether to wrap the save in a database transaction 
 - associated: default is true. here you can specify an array of associated model names that you want to save data for, or true or false. true will enable saving on the first level of assocations.
 
-## Saving a field
+## Updating a single column
 
-If you need to just save one field, you can also pass an array with options such as whether to turn off validation and callbacks.
-
-```php
-    $this->Article->saveField(1024,'title','New Article Title');
-```
-
-Remember if in your validation rules you set a rule to required, then you will need to disable validation to prevent issues.
+If you need to just update one column, note no validation or callbacks will be triggered when using saveField
 
 ```php
-    $this->Article->saveField(1024,'title','New Article Title',['validate'=>false]);
+    $this->Article->updateColumn(1024,'title','New Article Title');
 ```
 
 ## Validation

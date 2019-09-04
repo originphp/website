@@ -30,6 +30,7 @@ return [
             'Callbacks' => 'docs/model/callbacks',
             'Behaviors' => 'docs/model/behaviors',
             'Elasticsearch Behavior' => 'docs/model/elasticsearch-behavior',
+            'Repositories' => 'docs/model/repositories',
         ],
     ],
     'Views' => [
