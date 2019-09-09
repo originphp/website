@@ -258,7 +258,7 @@ autorestart=true
 user=www-data
 numprocs=3
 redirect_stderr=true
-stdout_logfile=/var/www/app.mydomain.com/worker.log
+stdout_logfile=/var/www/app.mydomain.com/logs/worker.log
 ```
 
 Once you have created the configuration file

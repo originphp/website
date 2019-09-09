@@ -133,7 +133,7 @@ The result will look like this:
 Origin\Service\Result Object
 (
     [success] =>
-    [error] => stdClass Object
+    [error] => Array
         (
             [message] => Invalid Credit Card Number
             [code] => 500
