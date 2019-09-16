@@ -137,20 +137,37 @@ Sometimes you want to know if the User is logged in, to do this use the `isLogge
 
 ## Authentication using API Token
 
-Add a column to your users table called api_token, you can call it something else but you will have to change the authentication configuration.
+Add a column to your users table called api_token, you can call it something else but you will have to change the AuthComponent configuration for fields.
+
+### Configuration
 
 In the controller that you want to enable the API authentication method add the following code.
 
 ```php
+class ApiController extends AppController
+{
     public function initialize()
     {
-        parent::initialize(); // !Important whenever you use a callback or initialize method
         $this->loadComponent('Auth',[
             'authenticate' => ['Api']
         ]);
-        ...
     }
+}
 ```
+
+Then in your `config/routes.php` add the following route, assuming your controller is called Api, this will ensure that errors are rendered in json automatically.
+
+```php
+Router::add('/api/:action/*', ['controller'=>'Api','type'=>'json']);
+```
+
+Then your API requests will look like this 
+
+```
+GET http://localhost:8000/api/dosomething/12345?api_token=3905604a-b14d-4fe8-906e-7867b39289b7
+```
+
+### Generating API tokens
 
 You can use `Security::uid` or `Security::uuid` to generate secure api tokens.
 
@@ -159,8 +176,6 @@ use Origin\Utility\Security;
 $user->api_token = Security::uid(40); // bbd7cebc6274d5ec7aabbdbaa4885e0b2f75d091
 $user->api_token = Security::uuid(); // 1546d376-8b3b-4ce9-b763-f95b8cbbeb82
 ```
-
-> Remember you will need to set the request type to json. 
 
 ### Controller
 
