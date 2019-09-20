@@ -180,15 +180,22 @@ To dispatch the Job immediately
 (new SendWelcomeEmailJob())->dispatchNow($user);
 ```
 
-Sometimes you might want to use send the job to a different queue or set a different delay, you can do this by passing an options array to the constructor.
+To schedule a job for a particular time (or using a delay)
+
+```php
+(new SendWelcomeEmailJob())->schedule('+ 10 minutes')->dispatchNow($user);
+```
+
+You can also pass the wait and queue options to the constructor
 
 ```php
 $options = [
-    'wait' => 'tomorrow', // strtotime compatible string
+    'wait' => 'tomorrow', // strtotime compatible string (same as calling schedule)
     'queue' => 'a-different-queue'
 ];
 (new SendWelcomeEmailJob($options))->dispatch($user);
 ```
+
 
 ## Worker
 

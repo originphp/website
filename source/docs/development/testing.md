@@ -862,29 +862,25 @@ class CreateUserServiceTest extends OriginTestCase
 
 ## Testing Model Repositories
 
+If you wanted to test a test a method in the UsersRepository called `disableAccount`
+
 ```php
 namespace App\Test\Model\Repository;
 
 use Origin\TestSuite\OriginTestCase;
-use App\Model\Repository\UserRepository;
+use App\Model\Repository\UsersRepository;
 
 /**
  * @property \App\Model\User $User
  */
-class UserRepositoryTest extends OriginTestCase
+class UsersRepositoryTest extends OriginTestCase
 {
     public $fixtures = ['User'];
 
-    public function startup()
-    {
-        $this->loadModel('User');
-    }
-
     public function testRepositoryMethod()
     {
-        $repository = new UserRepository($this->User);
-        $user = $this->User->find('first');
-        $this->assertTrue($respository->doSomething($user));
+        $repository = new UsersRepository();
+        $this->assertTrue($respository->disableAccount(1000));
     }
 }
 ```

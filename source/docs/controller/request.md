@@ -78,7 +78,7 @@ $result = $this->request->ajax();
 To get all headers:
 
 ```php
-$headers =  $this->request->headers();
+$headers = $this->request->headers();
 ```
 
 To get a header
@@ -90,8 +90,8 @@ $keepAlive = $this->request->headers('Connection');
 You can also modify the request headers.
 
 ```php
-$this->request->headers('Accept-Encoding','gzip,deflate');
-$this->request->headers('HTTP/1.0 404 Not Found',null); // Using no value
+$this->request->header('Accept-Encoding','gzip,deflate');
+$this->request->header('Content-type: application/pdf');
 ```
 
 ## Checking the accepts header
@@ -132,12 +132,12 @@ $value = $this->request->cookies('key');
 You can also change the values for the request
 
 ```php
-$this->request->cookies('key','value');
+$this->request->cookie('key','value');
 ```
 
 ## Getting the Session Object
 
-If you need get the session object for the request, then you can do so. The session object is the backend for the `SessionHelper` and `SessionComponent`.
+If you need get the session object for the request, then you can do so. The session object is the backend for `SessionHelper` and `SessionComponent`.
 
 ```php
 $this->request->session()->write('key','value');
