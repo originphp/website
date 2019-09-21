@@ -32,7 +32,7 @@ use Origin\Model\Repository\Repository;
 use App\Model\User;
 use Origin\Model\Entity;
 
-class UserRepository extends Repository
+class UsersRepository extends Repository
 {
     public function save(Entity $user)
     {
@@ -53,7 +53,7 @@ class UserRepository extends Repository
 }
 ```
 
-## Adding the Repo to the Controller
+## Loading the Repository
 
 Open your Controller, in the `initialize` method create the `Repository`, then change the save function to use the `Repository` instead of the `Model`.
 
@@ -64,7 +64,7 @@ class UsersController extends AppController
 {
     public function initialize()
     {
-        parent::initialize(); 
+        parent::initialize();
         $this->UsersRepository = new UsersRepository();
     }
 
