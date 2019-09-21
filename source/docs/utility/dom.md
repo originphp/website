@@ -30,7 +30,7 @@ Example usage:
 
 ```php
 use Origin\Utility\Dom;
-$dom = new Dom();
+$dom = new Dom('1.0','UTF-8');
 $dom->loadHtml($html); // this is a dom function
 $element = $dom->querySelector('div.foo div.sub h1');
 $paragraphs = $dom->querySelectorAll('div.p');
