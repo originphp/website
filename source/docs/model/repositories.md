@@ -60,7 +60,7 @@ Open your Controller, in the `initialize` method create the `Repository`, then c
 ```php
 use App\Model\Repository\UserRepository;
 
-class UsersController extends AppController
+class UsersController extends ApplicationController
 {
     public function initialize()
     {

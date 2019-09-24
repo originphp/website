@@ -104,9 +104,9 @@ So when a user signs up or changes their password you will need to hash the pass
 
 ```php
 use Origin\Utility\Security;
-class User extends AppModel
+class User extends ApplicationModel
 {
-    public function beforeSave(Entity $entity, array $options = [])
+    public function beforeSave(Entity $entity, ArrayObject $options)
     {
         if(!parent::beforeSave($entity,$options)){
             return false;
@@ -144,7 +144,7 @@ Add a column to your users table called api_token, you can call it something els
 In the controller that you want to enable the API authentication method add the following code.
 
 ```php
-class ApiController extends AppController
+class ApiController extends ApplicationController
 {
     public function initialize()
     {

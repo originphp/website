@@ -6,11 +6,7 @@ section: content
 ---
 # Queue
 
-> For the old version of Queue prior to version 1.28 see the [documentation](/docs/queue-legacy). The database [schema](https://github.com/originphp/app/blob/master/database/queue.php) is also different. 
-
 You can easily queue schedule background jobs, the OriginPHP queue system works supports both MySQL and Redis backends.
-
-> Job are new in version 1.28, so if you have upgraded you will need to create `app/Job` folder and copy the `AppJob.php` from [github](https://github.com/originphp/app/blob/master/app/Job/AppJob.php).
 
 ## Configuring Queue
 
@@ -35,7 +31,7 @@ Queue::config('default', [
 
 Options are
 
-- `datasource`: The name of the database connection to use. default is `default`;
+- `connection`: The name of the database connection to use. default is `default`;
 
 ### Redis
 

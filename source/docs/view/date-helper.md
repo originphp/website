@@ -11,7 +11,7 @@ The date helper makes it easy to format dates, in your `AppController` setup the
 To localize your web application, call the initialize from your
 
 ```php
-class AppController extends Controller
+class ApplicationController extends Controller
 {
     public function initialize(){
         parent::initialize();

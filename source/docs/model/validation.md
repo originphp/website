@@ -13,7 +13,7 @@ Validation rules are defined in the `initialize` method of your model.
 You can define a rule as a string, rule array, or array with multiple rules.
 
 ```php
-  class User extends AppModel
+  class User extends ApplicationModel
   {
     public function initialize(array $config)
     {

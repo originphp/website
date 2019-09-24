@@ -14,7 +14,7 @@ Models are singular camel cased, for example the model for a user profile is `Us
 
 ```php
 namespace App\Controller;
-class UserProfilesController extends AppController
+class UserProfilesController extends ApplicationController
 {
     public function index(){
         $records = $this->UserProfile->find('all');
@@ -52,7 +52,7 @@ To create a model is easy, simply create a file in `app/Model` folder which is a
 
 namespace App\Model;
 
-class Product extends AppModel
+class Product extends ApplicationModel
 {
 
 }
@@ -113,7 +113,7 @@ Sometimes you might need to use a different table name, you can overide this wit
 
 ```php
 <?php
-class Product extends AppModel
+class Product extends ApplicationModel
 {
     public $table = 'productz';
 }
@@ -124,7 +124,7 @@ class Product extends AppModel
 To access a model from the controller, it is the singular name of the controller.
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function doSomething(){
         $articles = $this->Article->find('all');
@@ -147,7 +147,7 @@ $products = $this->Product->find('all');
 To access [associated](/docs/model/associations) models from within other models.
 
 ```php
-class Article extends AppModel
+class Article extends ApplicationModel
 {
     public function doSomething(){
        $comments = $this->Comment->find('all');
@@ -179,7 +179,7 @@ CRUD stands for Create Read Update and Delete.
 When you create a record you will usually take data from the request (i.e. when somebody submits a form) or if you need to create something on the fly. 
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function add(){
         if($this->request->is('post')){
@@ -196,7 +196,7 @@ NOTE: You should create the entity from the model that you want to use for savin
 The bottom line is you will use new to create the entity which is the object and either populate the data when calling new or add it afterwards like this:
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function add(){
         if($this->request->is('post')){
@@ -283,7 +283,7 @@ If you are processing updated data from the request then the preferred way is us
 The patch method marshals the data, includes some security features and is clever enough to work with associated data as well. 
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function edit($id){
         $article = $this->Article->new();
@@ -458,7 +458,7 @@ If you need to just update one column, note no validation or callbacks will be t
 Validating data is very important and can easily be setup. You use the `initialize` method which is called immediately after the construct, its basically so you don't have to overide the `__construct()` method.
 
 ```php
-class Product extends AppModel
+class Product extends ApplicationModel
 {
     public function initialize(array $config){
         parent::initialize($config); // important to remember to call parent!!

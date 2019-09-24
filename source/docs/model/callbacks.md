@@ -6,29 +6,27 @@ section: content
 ---
 # Callbacks
 
+Create any of the following methods in your `Model` or `Behavior` and these will be triggered automatically.
+
 ## beforeFind
 
-This is called before any find operation. The `query` array passed to the `beforeFind` callback contains information such as conditions, fields etc.
-
-If `beforeFind` returns `false` then the find operation is canceled.  Return `true` or the modified `query`.
+This is called before any find operation, the query options converted into an `ArrayObject` and then passed to the 
+callback. Return `false` to halt the callbacks.
 
 ```php
-public function beforeFind(array $query = []){
-  if(!parent::beforeFind($query)){
-    return false;
-  }
-  $query['conditions']['published'] = true;
-  return $query;
+public function beforeFind(ArrayObject $options) : bool
+{
+    return true;
 }
 ```
 
 ## afterFind
 
-This is called after any find operation. Results from the find operation are passed to this function and needs to return back the results. Here you can modify data or carry out other tasks.
+This is called after a find operation when the result is an `Entity` or `Collection` of entities.
 
 ```php
-public function afterFind($results){
-  $results = parent::afterFind($results);
+public function afterFind($results, ArrayObject $options)
+{
   foreach($results as $article){
     $this->doSomething($article);
   }
@@ -38,13 +36,11 @@ public function afterFind($results){
 
 ## beforeValidate
 
-This is called just before data is validated and must return true. Use this callback to modify data before validate
+This is called just before data is validated and must return `true`. Use this callback to modify data before validate
 
 ```php
-public function beforeValidate(Entity $entity){
-  if(!parent::beforeValidate($entity)){
-    return false;
-  }
+public function beforeValidate(Entity $entity, ArrayObject $options) : bool
+{
   $this->doSomething($entity);
   return true;
 }
@@ -55,37 +51,78 @@ public function beforeValidate(Entity $entity){
 This is called after the data has been validated, even if validation fails this callback is executed. You can get the validation errors from the entity by calling `errors` on the entity.
 
 ```php
-public function afterValidate(Entity $entity,bool $success){
-    parent::afterValidate($entity,$success);
-    $this->doSomething();
+public function afterValidate(Entity $entity, ArrayObject $options) : bool
+{
+    if($entity->errors()){
+      // do something
+    }
 }
 ```
 
 
 ## beforeSave
-This is called before any save operation. The `options` array is the same as the one passed to the save method. The filter must return `true` or saving will stopped.
+
+This is called before any save operation. The `options` object contains the options that were passed to the `save` method. The filter must return `true` or saving will stopped.
 
 ```php
-public function beforeSave(Entity $entity,array $options=[]){
-  if(!parent::beforeSave($entity,$options)){
-    return false;
-  }
+public function beforeSave(Entity $entity, ArrayObject $options) : bool
+{
   $entity->slug = Slugger::slug($entity->title);
   return true;
 }
 ```
 
-## afterSave
-This is called after a save operation. If a record was created then `created` is set to `true`.
+## beforeCreate
+
+This is called before a record is created in the database but after `beforeSave` is called. The `options` object contains the options that were passed to the `save` method. The filter must return `true` or saving will stopped.
 
 ```php
-public function afterSave(Entity $entity,bool $created,array $options =[]){
-  parent::afterSave($entity,$created,$options);
-  if($created){
+public function beforeCreate(Entity $entity, ArrayObject $options) : bool
+{
+    return true;
+}
+```
+
+## beforeUpdate
+
+This is called before an existing record is updated but after `beforeSave` is called. The `options` object contains the options that were passed to the `save` method. The filter must return `true` or saving will stopped.
+
+```php
+public function beforeUpdate(Entity $entity, ArrayObject $options) : bool
+{
+    return true;
+}
+```
+
+## afterCreate
+
+This is called after a record is created in the database but before `afterSave` is called. The `options` object contains the options that were passed to the `save` method.
+
+```php
+public function afterCreate(Entity $entity, ArrayObject $options) : void
+{
+}
+```
+
+## afterUpdate
+
+This is called after an existing record is updated but before `afteSave` is called. The `options` object contains the options that were passed to the `save` method.
+
+```php
+public function afterUpdate(Entity $entity, ArrayObject $options) : void
+{
+}
+```
+
+## afterSave
+
+This is called after a save operation. The `options` object contains the options that were passed to the `save` method.
+
+```php
+public function afterSave(Entity $entity, ArrayObject $options) : bool
+{
+  if($entity->created()){
     $this->doSomething($entity->id);
-  }
-  else{
-    $this->doSomethingElse($entity->id);
   }
 }
 ```
@@ -97,11 +134,9 @@ This is called just before a record is deleted must return `true`. Use this call
 Note: When saving (including creating) or deleting a record the primary key can be found on the id property of the model.
 
 ```php
-public function beforeDelete(Entity $entity, bool $cascade){
-  if(!parent::beforeDelete($entity,$cascade))){
-    return false;
-  }
-  $this->doSomething($this->id);
+public function beforeDelete(Entity $entity, ArrayObject $options) : bool
+{
+  $this->doSomething($entity->id);
   return true;
 }
 ```
@@ -111,8 +146,42 @@ public function beforeDelete(Entity $entity, bool $cascade){
 This is called after a record is deleted.
 
 ```php
-public function afterDelete(Entity $entity,bool $success){
-    parent::afterDelete();
-    $this->doSomething($this->id);
+public function afterDelete(Entity $entity, ArrayObject $options) : void
+{
+    
+}
+```
+
+## onError
+
+This is called if an exception is caught during the operation.
+
+```php
+public function onError(\Exception $exception) : void
+{
+}
+```
+
+## afterCommit
+
+This is called after data from a transaction has been committed.
+
+```php
+public function afterCommit(Entity $entity, ArrayObject $options) : void
+{
+  if($entity->deleted()){
+    // do something
+  }
+}
+```
+
+## afterRollback
+
+This is called after data from a transaction has been committed.
+
+```php
+public function afterRollback(Entity $entity, ArrayObject $options) : void
+{
+  // do something
 }
 ```

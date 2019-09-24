@@ -104,7 +104,7 @@ By default, OriginPHP dynamically maps each column to Elasticsearch, all columns
 To manually map columns for the indexes, in your model call the index method for each column that you want to index. You can optionally pass an options array which takes settings from Elasticsearch [mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html).
 
 ```php
-class Article extends AppModel
+class Article extends ApplicationModel
 {
     public function initialize(array $config)
     {

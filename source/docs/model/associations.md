@@ -43,7 +43,7 @@ You can define the relationship using the `hasOne` method.
 Create a method in your model called `initialize` and this will be called when the model is constructed.
 
 ```php
-class User extends AppModel
+class User extends ApplicationModel
 {
     public function initialize(array $config){
         parent::initialize($config);
@@ -61,7 +61,7 @@ You can also pass an options array with any of the following keys.
 - `dependent` default is `false`, if set to true when delete is called with cascade it will related records.
 
 ```php
-  class User extends AppModel
+  class User extends ApplicationModel
   {
     public function initialize(array $config){
       parent::initialize($config);
@@ -83,7 +83,7 @@ This is a many-to-many relationship. The current model contains the foreign key.
 Create a method in your model called `initialize` and this will be called when the model is constructed.
 
 ```php
-class Profile extends AppModel
+class Profile extends ApplicationModel
 {
     public function initialize(array $config){
         parent::initialize($config);
@@ -104,7 +104,7 @@ You can also pass an options array with any of the following keys.
 - `counterCache`: default is `null`. Counter cache allows you to cache counts of records instead of running counts each time. If you use counter cache anytime a record is created or deleted the counter will be updated. Set a field name to update the count, if set to true it will use the plural of the current model with e.g. `comments_count`. Lets say you wanted to track number of comments for each post, in your Post model, when setup the belongsTo assocation, say for Comment, set `counterCache` to true or the name of the field to increment and decrement.
 
 ```php
-  class Profile extends AppModel
+  class Profile extends ApplicationModel
   {
     public function initialize(array $config){
       parent::initialize($config);
@@ -129,7 +129,7 @@ e.g. User has many Emails, the foreign key is in the other table, this would be 
 Create a method in your model called `initialize` and this will be called when the model is constructed.
 
 ```php
-class User extends AppModel
+class User extends ApplicationModel
 {
     public function initialize(array $config){
         parent::initialize($config);
@@ -150,7 +150,7 @@ You can also pass an options array with any of the following keys.
 - `offset` if you are using limit then set from where to start fetching
 
 ```php
-class User extends AppModel
+class User extends ApplicationModel
 {
     public function initialize(array $config){
         parent::initialize($config);
@@ -182,7 +182,7 @@ This is the table that you would need.
 Create a method in your model called `initialize` and this will be called when the model is constructed.
 
 ```php
-  class User extends AppModel
+  class User extends ApplicationModel
   {
     public function initialize(array $config){
       parent::initialize($config);
@@ -209,7 +209,7 @@ You can also pass an options array with any of the following keys. If you are fo
     - `append`: this should be set to append, if you will store other data in the join table, as it wont delete relationships which it is adding back. The table should have an id column and it should be set as the primary key.
 
 ```php
-  class User extends AppModel
+  class User extends ApplicationModel
   {
     public function initialize(array $config){
       parent::initialize($config);

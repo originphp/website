@@ -51,15 +51,13 @@ Now open the HTML template `/app/View/Mailer/SendWelcomeEmail/html.ctp` and adju
 <p>Welcome to FunkyApp</p>
 ```
 
-If a text version of the HTML mailer is not found and you are sending the email in both HTML and text, OriginPHP will automatically convert the HTML version to a text version using the [Html Utility](/docs/utilitity/html).
+If a text version of the HTML mailer is not found and you are sending the email in both HTML and text, OriginPHP will automatically convert the HTML version to a text version using the [Html Utility](/docs/utility/html).
 
 > It is considered a best practice to send both the HTML and Text version, and it will improve deliverability.
 
 ### Sending Defaults
 
 The code generation command will create Mailers which extend the `AppMailer` class, there you can set your default settings for your Mailers.
-
-> Mailer is new in version 1.29, so if you have upgraded then you will need to create this file manually.
 
 ```php
 namespace App\Mailer;

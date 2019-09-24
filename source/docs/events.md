@@ -6,8 +6,6 @@ section: content
 ---
 # Events
 
-> The new events system aims to replace the [Event Manager](/docs/event-manager), it is easier to use, more efficient.
-
 The Events module follows the Publisher-Subscriber pattern and can help you decouple your code in to a more hexagonal style architecture.
 
 ## How it works
@@ -25,7 +23,7 @@ class Order extends Model
         $this->subscribe('OrderNotifier'); #2
     }
 
-    public function afterSave(Entity $entity, bool $created, array $options = [])
+    public function afterSave(Entity $entity, ArrayObject $options)
     {
         if($created){
             $this->publish('orderCreated',$entity); #3

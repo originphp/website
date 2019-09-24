@@ -26,7 +26,7 @@ namespace App\View\Helper;
 
 use Origin\View\Helper\Helper;
 
-class FooHelper extends Helper
+class FooHelper extends ApplicationHelper
 {
     /**
      * This is called when the Helper is created. You can put any logic here
@@ -49,12 +49,12 @@ class FooHelper extends Helper
 Once you have created the Helper, the next thing to do is to load this in the controller, you can optionally pass an array of options.
 
 ```php
-    class AppController extends Controller
-    {
-        public function initialize(){
-            $this->loadHelper('Foo',['setting'=>'on']);
-        }
+class ApplicationController extends Controller
+{
+    public function initialize(){
+        $this->loadHelper('Foo',['setting'=>'on']);
     }
+}
 ```
 
 ## Using Helpers
@@ -69,10 +69,13 @@ Then you can access the Helper from the view
 You can also load Helpers within helpers, in your helper `initialize` method, call the `loadHelper` method. Then you access another helper from within your helper.
 
 ```php
-public function initialize(array $config){
+public function initialize(array $config)
+{
     $this->loadHelper('Session');
 }
-public function magic(){
+
+public function magic()
+{
     $secret = $this->Session->read('Magic.tricks.rabbit');
 }
 ```

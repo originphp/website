@@ -9,7 +9,7 @@ section: content
 The examples below will relate to the following models and because the tables are setup using conventions, we don't need to pass parameters.
 
 ```php
-class Article extends AppModel
+class Article extends ApplicationModel
 {
   public function initialize(array $config){
     $this->hasOne('Author');
@@ -19,7 +19,7 @@ class Article extends AppModel
 ```
 
 ```php
-class Author extends AppModel
+class Author extends ApplicationModel
 {
   public function initialize(array $config){
     $this->belongsTo('Article');
@@ -28,7 +28,7 @@ class Author extends AppModel
 ```
 
 ```php
-class Comment extends AppModel
+class Comment extends ApplicationModel
 {
   public function initialize(array $config){
     $this->belongsTo('Article');

@@ -6,7 +6,8 @@ section: content
 ---
 # Behaviors
 
-A behavior is way to add functionality to you models and then share this with other models, similar to controller components.
+A `Behavior` is used to extend functionality in a model, like a plugin for this. Let's say you want to create a taggable, soft delete, ACL or Tree behavior.
+
 Behaviors have Behavior added on the end of the class and filename.
 
 To create a behavior you will need to create a file in `app/Model/Behavior` folder and call it `FooBehavior`.
@@ -31,7 +32,7 @@ class FooBehavior extends Behavior
 To load the behavior, call `loadBehavior` from the `initialize` method.
 
 ```php
-    class Article extends AppModel
+    class Article extends ApplicationModel
     {
       public function initialize(array $config)
       {
@@ -45,7 +46,7 @@ To load the behavior, call `loadBehavior` from the `initialize` method.
 To use a behavior the functions will be added to the model.
 
 ```php
-class Article extends AppModel
+class Article extends ApplicationModel
 {
     public function demo()
     {
@@ -73,7 +74,7 @@ Behaviors have the same [callbacks](/docs/model/callbacks) functions as models. 
 Sometimes you will need to disable or unload behaviors, to do this you will need access the behavior registry
 
 ```php
-    class Article extends AppModel
+    class Article extends ApplicationModel
     {
       public function import()
       {

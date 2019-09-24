@@ -38,7 +38,7 @@ that you need to be executed when a component is created. This is a hook so you 
 To load a component in the controller, you call `loadComponent` from within the `initialize` method so the the callbacks can be executed.
 
 ```php
-  class WidgetsController extends AppController
+  class WidgetsController extends ApplicationController
   {
     public function initialize(array $config)
     {
@@ -54,7 +54,7 @@ To load a component in the controller, you call `loadComponent` from within the 
  To use a component, you call it from within your controller methods.
 
 ```php
-    class WidgetsController extends AppController
+    class WidgetsController extends ApplicationController
     {
       public function doSomething(){
         return $this->Math->sum(1,2);

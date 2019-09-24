@@ -128,7 +128,7 @@ This will create the Articles controller
 
 ```php
 namespace  App\Controller;
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
 
 }
@@ -144,7 +144,7 @@ Edit the `/app/Controller/ArticlesController.php` file, so it looks like this
 
 ```php
 namespace  App\Controller;
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function new(){
 
@@ -399,7 +399,7 @@ Go to the welcome page [http://localhost:8000](http://localhost:8000) and you no
 Let's add some validation you will need to edit the article Model, which can be found in `/app/Model/Article.php`. The validation rule should make sure that the article cannot be saved if there is not Article title.
 
 ```php
-class Article extends AppModel
+class Article extends ApplicationModel
 {
     public function initialize(array $config)
     {
@@ -632,7 +632,7 @@ $ bin/console generate controller Comments
 Now add the `add` method to the comments controller file  `/app/Controller/CommentsController.php`.
 
 ```php
-class CommentsController extends AppController
+class CommentsController extends ApplicationController
 {
     public function add(){
         if($this->request->is('post')){

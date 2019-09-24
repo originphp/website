@@ -9,7 +9,7 @@ section: content
 The Flash component enables you to display messages to the user either in the current request or on the next if redirecting.
 
 ```php
-class ContactsController extends AppController
+class ContactsController extends ApplicationController
 {
     public function edit($id){
         if($result){

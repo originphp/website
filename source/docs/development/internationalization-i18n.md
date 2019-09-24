@@ -11,7 +11,7 @@ Inernationalization of your app includes translating messages and displaying dat
 To localize your web application, call the initialize from your
 
 ```php
-class AppController extends Controller
+class ApplicationController extends Controller
 {
     public function initialize(){
         parent::initialize();

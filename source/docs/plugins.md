@@ -58,7 +58,7 @@ namespace ContactManager\Controller;
 
 use App\Controller\AppController;
 
-class ContactManagerAppController extends AppController
+class ContactManagerAppController extends ApplicationController
 {
 }
 ```
@@ -73,7 +73,7 @@ namespace ContactManager\Model;
 
 use App\Model\AppModel;
 
-class ContactManagerAppModel extends AppModel
+class ContactManagerAppModel extends ApplicationModel
 {
 }
 

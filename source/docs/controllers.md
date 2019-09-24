@@ -21,7 +21,7 @@ When you create a controller it will extend the `AppController` and save this to
 ```php
 namespace App\Controller;
 
-class ContactsController extends AppController {
+class ContactsController extends ApplicationController {
   public function view($id){
 
   }
@@ -31,7 +31,7 @@ class ContactsController extends AppController {
 For example, if a user wants to create a new contact and in your application they would go to  `/contacts/create`, this will load the `ContactsController` and run the `create` method, this will then automatically render the `/app/View/Contacts/create.ctp` unless you tell it otherwise. In the method we will create a Contact entity, which is a object which represents a single row of data, and then we will send it to the view using `set`. We do this by calling the `new` method on the Contact model.
 
 ```php
-class ContactsController extends AppController {
+class ContactsController extends ApplicationController {
   public function new(){
       $contact = $this->Contact->new();
 
@@ -201,7 +201,7 @@ One of the jobs of the controller is to send data to view, so the view can displ
 To send the data to the view, use the `set` method.
 
 ```php
-class ContactsController extends AppController
+class ContactsController extends ApplicationController
 {
     public function view($id)
     {
@@ -214,7 +214,7 @@ class ContactsController extends AppController
 If the client requests with a header or extension for json or xml then the default format will be the changed for automatic rendering if serialzable data has been set. This makes the code easy and clean when working with multiple formats from the same controller. If serialize is not set then the view file will be rendered.
 
 ```php
-class ContactsController extends AppController
+class ContactsController extends ApplicationController
 {
     public function view($id)
     {
@@ -240,7 +240,7 @@ More information on how views work can be found in the [views guide](/docs/views
 You can quickly and easily render JSON data using results returned from find or get operations, arrays of data and strings. The controller will automatically call the `toJson` on the objects.
 
 ```php
-class ContactsController extends AppController
+class ContactsController extends ApplicationController
 {
     public function view($id)
     {
@@ -253,7 +253,7 @@ class ContactsController extends AppController
 You can also set the status code, this is handy when dealing with errors.
 
 ```php
-class ContactsController extends AppController
+class ContactsController extends ApplicationController
 {
     public function view($id = null)
     {
@@ -285,7 +285,7 @@ To render a xml view, just pass a result from the database, an array or a xml st
 
 ```php
 use Origin\Utility\Xml;
-class PostsController extends AppController
+class PostsController extends ApplicationController
 {
     public function lastest()
     {
@@ -308,7 +308,7 @@ class PostsController extends AppController
 Here is another example using data returned from the find operation.
 
 ```php
-class ContactsController extends AppController
+class ContactsController extends ApplicationController
 {
     public function all()
     {
@@ -327,7 +327,7 @@ The controller has filters which are run before and after actions, and even in-b
 This is called before the action on the controller (but after initialize), here you can access or modify request data, check user permissions or session data. If you need too you can even stop the action from continuing by throwing an exception or redirecting to somewhere else.
 
 ```php
-class PostsController extends AppController
+class PostsController extends ApplicationController
 {
     public function beforeFilter(){
         if($this->Auth->isLoggedIn()){
@@ -342,7 +342,7 @@ class PostsController extends AppController
 This is called after the controller action has been run and the view has been rendered, but before the response has been sent to the client.
 
 ```php
-class PostsController extends AppController
+class PostsController extends ApplicationController
 {
     public function afterFilter(){
         $this->doSomething();
@@ -458,7 +458,7 @@ From the controller action that you want use pagination, call the controller met
 
 
 ````php 
-class BookmarksController extends AppController
+class BookmarksController extends ApplicationController
 {
     // Default pagination settings to be used by all actions
     public $paginate = [

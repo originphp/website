@@ -14,7 +14,7 @@ data which can be sent to the view, then the view will now display this to user.
 This framework favors  'convention over configuration' and views are a good example of this, if a user requests `/articles/latest`, the articles controller will be loaded and the view called latest will be rendered. You pass data to the view from the controller using the `set` method.
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function latest(){
         $articles = $this->Article->find('all',[
@@ -62,7 +62,7 @@ That view will be rendered inside a `layout`, the framework comes with two start
 To render a different layout change the name of the `layout` property in the controller, or if you do not want to use a layout set the property to `false`.
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
    public $layout = 'default';
 }
@@ -77,7 +77,7 @@ Views are rendered automatically unless you set the `autoRender` property in the
 If you want to render a different view call the render function with the name of the view that you want to render.
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function something_else(){
         $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
@@ -114,7 +114,7 @@ You can render XML setting the xml option and either pass
 - result: you can return a result or set of results and these be be converted to xml.
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function latest(){
         $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
@@ -131,7 +131,7 @@ You can render JSON by passing an array with the key json, the value can be eith
 - anything else: any value that you pass will go through the `json_encode` function.
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function latest(){
         $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
@@ -163,7 +163,7 @@ You can change the status code sent to browser, for example 404. By setting this
 Both ways are demonstrated here.
 
 ```php
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     public function view($id = null)
     {
@@ -196,7 +196,7 @@ If you want to set the code and generate an error page for the status, then you 
 
 ```php
 use Origin\Exception\BadRequestException;
-class ArticlesController extends AppController
+class ArticlesController extends ApplicationController
 {
     function backdoor(){
         throw new BadRequestException('Bad Request');

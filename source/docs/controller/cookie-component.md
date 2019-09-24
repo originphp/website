@@ -11,7 +11,7 @@ You can work with cookies from controllers and views, The cookie component allow
 Here are some examples how to use it:
 
 ```php
-class ContactsController extends AppController
+class ContactsController extends ApplicationController
 {
     public function createCookies(){
       $this->Cookie->write('for-a-month',rand());
