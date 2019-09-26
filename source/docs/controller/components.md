@@ -83,18 +83,24 @@ There are two callbacks which Components use `startup` and `shutdown`. To use th
 
 ### Startup callback
 
-This called after the controller `beforeFilter` but before the controller action.
+This called after the controller `beforeAction` but before the controller action.
 
 ```php
-    public function startup(){}
+public function startup()
+{
+
+}
 ```
 
 ### Shutdown callback
 
-This is called after the controller action but before the controller `afterFilter`.
+This is called after the controller action but before the controller `afterAction`.
 
 ```php
-    public function stutdown(){}
+public function shutdown()
+{
+
+}
 ```
 
 ## Accessing the request object

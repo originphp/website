@@ -37,13 +37,13 @@ properties so you can use them later in the execute method.
 
 ```php
 namespace App\Service;
-use App\Service\AppService;
+use App\Service\ApplicationService;
 use Origin\Exception\Exception;
 use Origin\Log\Log;
 use Origin\Service\Result;
 use App\Job\SendWelcomeEmail;
 
-class CreateNewUserService extends AppService {
+class CreateNewUserService extends ApplicationService {
 
     protected $User = null;
 

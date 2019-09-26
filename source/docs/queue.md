@@ -63,11 +63,11 @@ Jobs are stored in the `app/Job` folder and must have the `execute` method, any 
 
 ```php
 namespace App\Job;
-use App\Job\AppJob;
+use App\Job\ApplicationJob;
 use Origin\Mailer\Email;
 use Origin\Model\Entity;
 
-class SendWelcomeEmailJob extends AppJob
+class SendWelcomeEmailJob extends ApplicationJob
 {
     public $queue = 'notifications';
     // strtotime compatible string
@@ -101,9 +101,9 @@ It common for Jobs to carry out maintenance on the database, in the `initialize`
 
 ```php
 namespace App\Job;
-use App\Job\AppJob;
+use App\Job\ApplicationJob;
 
-class ResetUserCreditsJob extends AppJob
+class ResetUserCreditsJob extends ApplicationJob
 {
     public $queue = 'monthly';
 
@@ -133,7 +133,7 @@ class ResetUserCreditsJob extends AppJob
 Here is an example Job that if it runs successfully, it will call another job, if it fails it will retry a maximum of 3 times waiting 30 minutes in between each try.
 
 ```php
-class SendIntroEmailJob extends AppJob
+class SendIntroEmailJob extends ApplicationJob
 {
     public function execute(Entity $user)
     {

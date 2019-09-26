@@ -186,3 +186,86 @@ Converts the entity into a json string.
 ```php
 $json = $entity->toJson();
 ```
+
+## Custom Entity Classes
+
+By default the `Origin\Entity` class is used for each row of a model, however you can use your own `Entity` classes.
+
+Create a your `Entity` files in the `app/Model/Entity` folder
+
+```php
+namespace App\Model\Entity;
+use Origin\Model\Entity;
+
+class User extends Entity
+{
+  public function softDelete()
+  {
+    $this->deleted = now();
+  }
+}
+```
+
+## Accessors & Mutators
+
+### Accessor
+
+To create an accessor
+
+```php
+namespace App\Model\Entity;
+use Origin\Model\Entity;
+
+class User extends Entity
+{
+  public function getFullName()
+  {
+    return $this->first_name . ' ' . $this->last_name;
+  }
+}
+```
+
+Now when you work with results from the database
+
+```php
+echo $user->full_name;
+```
+
+#### Virtual Fields
+
+You can also set this a virtual field so that when you export data to json, xml or an array this value is included. Add the fields to the `_virtual` property.
+
+```php
+class User extends Entity
+{
+  protected $_virtual = ['full_name'];
+}
+```
+
+#### Mutator
+
+To create a mutator
+
+```php
+namespace App\Model\Entity;
+use Origin\Model\Entity;
+
+class User extends Entity
+{
+  protected function setFirstName($value)
+  {
+    return ucfirst(strtolower($value));
+  }
+}
+```
+
+## Hiding Fields
+
+To hide fields when being exported to an array, json or xml set the `_hidden` property.
+
+```php
+class User extends Entity
+{
+  protected $_hidden = ['password','tenant_id'];
+}
+```

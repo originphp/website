@@ -28,9 +28,9 @@ Now open `app/Mailer/SendWelcomeEmail.php` and adjust the email subject
 
 ```php
 namespace App\Mailer;
-use App\Mailer\AppMailer;
+use App\Mailer\ApplicationMailer;
 
-class SendWelcomeEmailMailer extends AppMailer
+class SendWelcomeEmailMailer extends ApplicationMailer
 {
     public function execute(Entity $user)
     {
@@ -57,13 +57,13 @@ If a text version of the HTML mailer is not found and you are sending the email 
 
 ### Sending Defaults
 
-The code generation command will create Mailers which extend the `AppMailer` class, there you can set your default settings for your Mailers.
+The code generation command will create Mailers which extend the `ApplicationMailer` class, there you can set your default settings for your Mailers.
 
 ```php
 namespace App\Mailer;
 use Origin\Mailer\Mailer;
 
-class AppMailer extends Mailer
+class ApplicationMailer extends Mailer
 {
     public $defaults = [
         'from' => ['noreply@somewhere.com','Funky App'],

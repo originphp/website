@@ -65,7 +65,7 @@ class UsersController extends ApplicationController
     public function initialize()
     {
         parent::initialize();
-        $this->UsersRepository = new UsersRepository();
+        $this->Users = new UsersRepository();
     }
 
     public function signup()
@@ -73,12 +73,13 @@ class UsersController extends ApplicationController
         $user = $this->User->new();
 
         if ($this->request->is(['post'])) {
-            // Safeguard request data
+            // Safeguard request data (model)
             $user = $this->User->new($this->request->data(), [
                 'fields' => ['email','username','password','full_name'],
             ]);
 
-            if ($this->UsersRepository->save($user)) {
+            // Use the Users Repository
+            if ($this->Users->save($user)) {
                 $this->Flash->success(__('You have been signed up'));
 
                 return $this->redirect('/');

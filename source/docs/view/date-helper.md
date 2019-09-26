@@ -6,7 +6,7 @@ section: content
 ---
 # Date Helper
 
-The date helper makes it easy to format dates, in your `AppController` setup the default timezone, and date formats (using PHP date function style formats), and the date helper will automatically format dates and times unless you tell it to use a different format. The date helper uses the Date utility.
+The date helper makes it easy to format dates, in your `ApplicationController` setup the default timezone, and date formats (using PHP date function style formats), and the date helper will automatically format dates and times unless you tell it to use a different format. The date helper uses the Date utility.
 
 To localize your web application, call the initialize from your
 
@@ -65,7 +65,7 @@ echo $this->Date->timeAgoInWords($article->created); // 3 minutes ago
 
 ## Parsing
 
-OriginPHP comes with the Delocalize Behavior, which automatically converts dates,numbers to and from the database. You can disable this in the `AppModel` initialize method.
+OriginPHP comes with the Delocalize Behavior, which automatically converts dates,numbers to and from the database. You can disable this in the `ApplicationModel` initialize method.
 
 If you need to manually parse dates etc, use the Date utility. The date formatter assumes that the dates that you are formatting are in MySQL format, e.g. Y-m-d H:i:s. You can use the Date utility to delocalize user submitted data to convert to this format and timezone.
 

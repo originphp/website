@@ -58,9 +58,7 @@ return [
            // 'Tasks' => 'docs/console/tasks'
         ],
     ],
-    'Plugins' => [
-        'url' => 'docs/plugins',
-    ],
+   
     'Libraries' => [
         'url' => 'docs/libraries',
         'children' => [
@@ -101,6 +99,13 @@ return [
             'Text' => 'docs/utility/text',
             'XML' => 'docs/utility/xml',
             'Yaml' => 'docs/utility/yaml'
+        ],
+    ],
+    'Plugins' => [
+        'url' => 'docs/plugins',
+        'children' => [
+            'User Authentication' => 'docs/plugins/user-authentication',
+            'Multi Tenant' => 'docs/plugins/multi-tenant',
         ],
     ],
 ];

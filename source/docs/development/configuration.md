@@ -27,11 +27,15 @@ $bool Config::exists('key');
 
 ## DotEnv
 
-You can also `.env` scripts for your configuration needs. When your application is run either a HTTP request or through the command line, OriginPHP will look for `.env` in your applications' `config` folder.
+By default OriginPHP will look for a `.env.php` file in the your `config` folder. However, if you need to use `.env` script, then in your `config/bootstrap.php` you can add the following code:
 
-> The bootstrap process first checks for a .env file since these require processing, if not it looks for .env.php which returns a PHP array. 
+```php
+use Origin\Core\DotEnv;
+$dotEnv = new Origin\Core\DotEnv();
+$dotEnv->load(CONFIG . DS . '.env');
+```
 
-Here is an example
+Here is an example of a dotenv file.
 
 ```linux
 GMAIL_USERNAME=foo@gmail.com

@@ -16,7 +16,7 @@ The name of the controller. should be in plural camel case and it needs to end w
 
 ## Controller Methods and Actions
 
-When you create a controller it will extend the `AppController` and save this to the `app/Controller` folder. Your controller class will contain methods just like any other class, but only public methods will be treated as routeable actions.  When your application receives a request, the router will determine which controller and action to use, and then create an instance of the controller and run the action.
+When you create a controller it will extend the `ApplicationController` and save this to the `app/Controller` folder. Your controller class will contain methods just like any other class, but only public methods will be treated as routeable actions.  When your application receives a request, the router will determine which controller and action to use, and then create an instance of the controller and run the action.
 
 ```php
 namespace App\Controller;
@@ -318,18 +318,19 @@ class ContactsController extends ApplicationController
 }
 ```
 
-## Filters
+## Callbacks
 
-The controller has filters which are run before and after actions, and even in-between such as before rendering or before redirecting. If you want the filters to be run in every controller, then add them to the `AppController` and all child controllers will run this. Just remember to call the parent one as well.
+The Controller has callbacks which are run before and after actions, and even in-between such as before rendering or before redirecting. If you want the callbacks to be run in every controller, then add them to the `ApplicationController` and all child controllers will run this. Just remember to call the parent one as well.
 
-### Before Filter
+### Before Action
 
 This is called before the action on the controller (but after initialize), here you can access or modify request data, check user permissions or session data. If you need too you can even stop the action from continuing by throwing an exception or redirecting to somewhere else.
 
 ```php
 class PostsController extends ApplicationController
 {
-    public function beforeFilter(){
+    public function beforeAction()
+    {
         if($this->Auth->isLoggedIn()){
             $this->Flash->info('Welcome back');
         }
@@ -337,14 +338,15 @@ class PostsController extends ApplicationController
 }
 ```
 
-### After Filter
+### After Action
 
 This is called after the controller action has been run and the view has been rendered, but before the response has been sent to the client.
 
 ```php
 class PostsController extends ApplicationController
 {
-    public function afterFilter(){
+    public function afterAction()
+    {
         $this->doSomething();
     }
 }
@@ -494,3 +496,7 @@ You can pass an array with the following keys, which are the same as used in Mod
             ]
     ];
 ```
+
+### Initializer Trait
+
+Controllers have the `InitializerTrait` enabled allow you to call an initialization method when a trait created. See the [InitializerTrait guide](/docs/initializer-trait) for more information.

@@ -14,7 +14,7 @@ To install the PHP Intl Extension on your server
 $ apt-get install php-intl
 ```
 
-You can configure the defaults in your `AppController` like this:
+You can configure the defaults in your `ApplicationController` like this:
 
 ```php
 use Origin\I18n\Number;

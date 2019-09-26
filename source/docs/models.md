@@ -45,7 +45,7 @@ If you add datetime fields called `created` and `modified`, then when you create
 
 ## Creating a Model
 
-To create a model is easy, simply create a file in `app/Model` folder which is a subclass of the `AppModel`.
+To create a model is easy, simply create a file in `app/Model` folder which is a subclass of the `ApplicationModel`.
 
 ```php
 <?php
@@ -502,12 +502,20 @@ Callbacks get called a certain moments during a certain lifecycle, such as creat
 - beforeValidate
 - afterValidate
 - beforeSave
+- beforeCreate
+- beforeUpdate
+- afterCreate
+- afterUpdate
 - afterSave
+- afterCommit
+- afterRollback
 
 ## Deleting Records
 
 - beforeDelete
 - afterDelete
+- afterCommit
+- afterRollback
 
 You can find more information about these in the [Callbacks Guide](/docs/model/callbacks).
 
@@ -516,3 +524,7 @@ Hint: If you are using a good ide like [Visual Studio Code](https://code.visuals
 ## Behaviors
 
 You can extend your models with behaviors and share these across models. Behaviors are similar to [components](/docs/controller/components) and you can find more information by seeing the [behaviors guide](/docs/model/behaviors).
+
+### Initializer Trait
+
+Models have the `InitializerTrait` enabled allow you to call an initialization method when a trait created. See the [InitializerTrait guide](/docs/initializer-trait) for more information.

@@ -48,32 +48,32 @@ use Origin\Http\Router;
 Router::add('/contact_manager/:controller/:action/*', ['plugin'=>'ContactManager']);
 ```
 
-## Create AppController
+## Create ApplicationController
 
-Create `ContactManagerAppController.php` in the `plugins/contact_manager/src/Controller` folder.
+Create `ContactManagerApplicationController.php` in the `plugins/contact_manager/src/Controller` folder.
 
 ```php
 <?php 
 namespace ContactManager\Controller;
 
-use App\Controller\AppController;
+use App\Controller\ApplicationController;
 
-class ContactManagerAppController extends ApplicationController
+class ContactManagerApplicationController extends ApplicationController
 {
 }
 ```
 
-## Create AppModel
+## Create ApplicationModel
 
-Create `ContactManagerAppModel.php` in the `plugins/contact_manager/src/Model` folder.
+Create `ContactManagerApplicationModel.php` in the `plugins/contact_manager/src/Model` folder.
 
 ```php
 <?php 
 namespace ContactManager\Model;
 
-use App\Model\AppModel;
+use App\Model\ApplicationModel;
 
-class ContactManagerAppModel extends ApplicationModel
+class ContactManagerApplicationModel extends ApplicationModel
 {
 }
 

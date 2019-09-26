@@ -22,10 +22,11 @@ public function beforeFind(ArrayObject $options) : bool
 
 ## afterFind
 
-This is called after a find operation when the result is an `Entity` or `Collection` of entities.
+This is called after a find first or find all operation.
 
 ```php
-public function afterFind($results, ArrayObject $options)
+use Origin\Model\Collection;
+public function afterFind(Collection $results, ArrayObject $options)
 {
   foreach($results as $article){
     $this->doSomething($article);
