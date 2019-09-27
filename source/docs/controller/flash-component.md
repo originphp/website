@@ -11,7 +11,8 @@ The Flash component enables you to display messages to the user either in the cu
 ```php
 class ContactsController extends ApplicationController
 {
-    public function edit($id){
+    public function edit($id)
+    {
         if($result){
             $this->Flash->success('Result is true');
         }

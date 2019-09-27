@@ -126,7 +126,8 @@ To access a model from the controller, it is the singular name of the controller
 ```php
 class ArticlesController extends ApplicationController
 {
-    public function doSomething(){
+    public function doSomething()
+    {
         $articles = $this->Article->find('all');
     }
 }
@@ -149,7 +150,8 @@ To access [associated](/docs/model/associations) models from within other models
 ```php
 class Article extends ApplicationModel
 {
-    public function doSomething(){
+    public function doSomething()
+    {
        $comments = $this->Comment->find('all');
     }
 }
@@ -181,7 +183,8 @@ When you create a record you will usually take data from the request (i.e. when 
 ```php
 class ArticlesController extends ApplicationController
 {
-    public function add(){
+    public function add()
+    {
         if($this->request->is('post')){
             $article = $this->Article->new($this->request->data());
             $this->Article->save($article);
@@ -191,16 +194,17 @@ class ArticlesController extends ApplicationController
 ```
 This will take the data from the request and create an article entity.
 
-NOTE: You should create the entity from the model that you want to use for saving data.
+> You always should create the entity from the model that you want to use for saving data.
 
 The bottom line is you will use new to create the entity which is the object and either populate the data when calling new or add it afterwards like this:
 
 ```php
 class ArticlesController extends ApplicationController
 {
-    public function add(){
+    public function add()
+    {
+        $article = $this->Article->new();
         if($this->request->is('post')){
-            $article = $this->Article->new();
             $article->title = $this->request->data('title');
             $article->description = $this->request->data('description');
             $this->Article->save($article);
@@ -285,7 +289,8 @@ The patch method marshals the data, includes some security features and is cleve
 ```php
 class ArticlesController extends ApplicationController
 {
-    public function edit($id){
+    public function edit($id)
+    {
         $article = $this->Article->new();
 
         if($this->request->is('post')){
@@ -352,13 +357,13 @@ To create an entity with associated data simply pass an array to the new method 
 ```php
   $data = [
     'title' => 'How to save data with associated data',
-    'author' => [         // belongsTo (singular)
+    'author' => [    // belongsTo (singular)
         'name' => 'Jane Smith',
       ],
-    'approval' => [     // hasOne (singular)
+    'approval' => [  // hasOne (singular)
         'approved_by' => 'Tony'
       ],
-    'comments' => [    // Has Many (plural)
+    'comments' => [  // Has Many (plural)
         ['text' => 'foo'],
         ['text' => 'bar'],
       ]
@@ -460,7 +465,8 @@ Validating data is very important and can easily be setup. You use the `initiali
 ```php
 class Product extends ApplicationModel
 {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
         parent::initialize($config); // important to remember to call parent!!
         
         $this->validate('password','notBlank'); // String

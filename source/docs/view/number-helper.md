@@ -13,8 +13,8 @@ To localize your web application, call the initialize from your
 ```php
 class ApplicationController extends Controller
 {
-    public function initialize(){
-        parent::initialize();
+    public function initialize() : void
+    {
         I18n::initialize(['locale' => 'en_GB','language'=>'en','timezone'=>'Europe/London']);
     }
 }
@@ -26,8 +26,8 @@ Or if you want to set the number settings manually.
 ```php
 use Origin\Utility\Number;
 
-public function initialize(){
-    parent::initialize();
+public function initialize() : void
+{
     Number::locale([
         'currency'=>'USD', // default currency
         'thousands'=>',',
@@ -71,7 +71,8 @@ echo $this->Number->currency(1000,'USD',['places'=>0]);
 By default the number helper can work with USD, GBP, EUR, CAD, AUD,CHF AND JPY out of the box. But you can also add your own currencies.
 
 ```php
-public function initialize(){
+public function initialize() : void
+{
     Number::addCurrency('CNY',['before'=>'¥','name'=>'Chinese Yuan']);
 }
 ```

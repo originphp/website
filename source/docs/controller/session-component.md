@@ -11,9 +11,11 @@ When you need to persist small amounts of data between requests you typically wo
 Session data is stored using key value pairs, you can also use dot notation to deeper levels of an array. For example, `userProfile.id` would first look for the key would look for the key `userProfile` and if its value is an array and has the key `id` it will return the value. If it there is no key set then it will return a `null` value.
 
 ```php
-class ContactsController extends ApplicationController {
-  public function getUserId(){
-     return $this->Session->read('user_id');
+class ContactsController extends ApplicationController 
+{
+  public function getUserId()
+  {
+    return $this->Session->read('user_id');
   }
 }
 ```
@@ -21,8 +23,10 @@ class ContactsController extends ApplicationController {
 To store data in the session:
 
 ```php
-class ContactsController extends ApplicationController {
-  public function setUserId($id){
+class ContactsController extends ApplicationController 
+{
+  public function setUserId($id)
+  {
      $this->Session->write('user_id',$id);
   }
 }
@@ -31,8 +35,10 @@ class ContactsController extends ApplicationController {
 To delete an item from the session
 
 ```php
-class ContactsController extends ApplicationController {
-  public function deleteUserId(){
+class ContactsController extends ApplicationController
+{
+  public function deleteUserId()
+  {
      $this->Session->delete('user_id');
   }
 }

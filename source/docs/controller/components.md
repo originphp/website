@@ -19,11 +19,13 @@ use Origin\Controller\Component\Component;
 
 class MathComponent extends Component
 {
-
-  public function sum($x, $y){
+  public function sum($x, $y)
+  {
     return $x+$y;
   }
-  public function doSomethingWithControler(){
+
+  public function doSomethingWithControler()
+  {
     $controller = $this->controller(); // get current controller
     $result = $controller->method('xyz');
   }
@@ -40,7 +42,7 @@ To load a component in the controller, you call `loadComponent` from within the 
 ```php
   class WidgetsController extends ApplicationController
   {
-    public function initialize(array $config)
+    public function initialize(array $config) : void
     {
         parent::initialize($config);
         $this->loadComponent('Math');
@@ -56,7 +58,8 @@ To load a component in the controller, you call `loadComponent` from within the 
 ```php
     class WidgetsController extends ApplicationController
     {
-      public function doSomething(){
+      public function doSomething()
+      {
         return $this->Math->sum(1,2);
       }
     }
@@ -68,7 +71,7 @@ If you want to use a component within a component then you call the `loadCompone
 ```php
 class MathComponent extends Component
 {
-   public function initialize(array $config)
+   public function initialize(array $config) : void
     {
       $this->loadComponent('Math',$config);
     }

@@ -34,7 +34,7 @@ Elasticsearch::config('default', [
 Load the Elasticsearch Behavior, in the `initialize` method of the models that you want to implement Elasticsearch in.
 
 ```php
-public function initialize(array $config)
+public function initialize(array $config) : void
 {
     $this->loadBehavior('Elasticsearch');
 }
@@ -106,7 +106,7 @@ To manually map columns for the indexes, in your model call the index method for
 ```php
 class Article extends ApplicationModel
 {
-    public function initialize(array $config)
+    public function initialize(array $config) : void
     {
         $this->loadBehavior('Elasticsearch');
 

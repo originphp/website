@@ -16,7 +16,8 @@ This framework favors  'convention over configuration' and views are a good exam
 ```php
 class ArticlesController extends ApplicationController
 {
-    public function latest(){
+    public function latest()
+    {
         $articles = $this->Article->find('all',[
             'order'=>'created DESC','limit' =>5
             ]);
@@ -79,7 +80,8 @@ If you want to render a different view call the render function with the name of
 ```php
 class ArticlesController extends ApplicationController
 {
-    public function something_else(){
+    public function something_else()
+    {
         $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
         $this->set('articles',$articles);
         $this->render('latest');
@@ -116,7 +118,8 @@ You can render XML setting the xml option and either pass
 ```php
 class ArticlesController extends ApplicationController
 {
-    public function latest(){
+    public function latest()
+    {
         $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
         $this->render(['xml'=>$articles]);
     }
@@ -133,7 +136,8 @@ You can render JSON by passing an array with the key json, the value can be eith
 ```php
 class ArticlesController extends ApplicationController
 {
-    public function latest(){
+    public function latest()
+    {
         $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
         $this->render(['json'=>$articles]);
     }
@@ -170,10 +174,12 @@ class ArticlesController extends ApplicationController
         $json = ['errors'=>['message' =>'Not Found']];
         $this->render(['json'=>$json,'status'=>404]);
     }
-    public function anotherWay(){
+    public function anotherWay()
+    {
          $this->render(['status'=>404]);
     }
-     public function latest(){
+    public function latest()
+    {
         $this->response->status(404);
     }
 }
@@ -198,7 +204,8 @@ If you want to set the code and generate an error page for the status, then you 
 use Origin\Exception\BadRequestException;
 class ArticlesController extends ApplicationController
 {
-    function backdoor(){
+    public function backdoor()
+    {
         throw new BadRequestException('Bad Request');
     }
 }
@@ -211,7 +218,8 @@ Exceptions for each of the above status codes are available as well as few other
 Helpers allow you share code between views, similar to the controller components. To load helpers call the `loadHelper` method in the `initialize` method of your controller.
 
 ```php
-public function initialize(){
+public function initialize() : void
+{
     $this->loadHelper('TableMagic');
 }
 ```

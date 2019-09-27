@@ -47,7 +47,7 @@ class CreateNewUserService extends ApplicationService {
 
     protected $User = null;
 
-    public function initialize(User $user)
+    public function initialize(User $user) : void
     {
         $this->User = $user;
     }

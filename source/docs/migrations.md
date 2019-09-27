@@ -14,7 +14,7 @@ Here is a sample migration to a create a table called products.
 ```php
 class CreateProductsTableMigration extends Migration
 {
-    public function change()
+    public function change() : void
     {
         $this->createTable('products',[
             'owner_id' => ['type'=>'integer','limit'=>10],
@@ -45,11 +45,12 @@ For example
 ```php
 class AddNameColumnToSuppliersMigration extends Migration
 {
-    public function up()
+    public function up() : void
     {
         $this->addColumn('suppliers','name','string');
     }
-     public function down()
+    
+    public function down() : void
     {
         $this->removeColumn('suppliers','name');
     }
@@ -315,11 +316,11 @@ If you need to run custom SQL queries you can, but we can't magically reverse th
 ```php
 class CreateProductsTableMigration extends Migration
 {
-    public function up()
+    public function up() : void
     {
         $this->execute($sqlThatDoesSomething);
     }
-     public function down()
+     public function down() : void
     {
         $this->execute($sqlThatUndoesWhatUpDid);
     }
@@ -333,7 +334,7 @@ Sometimes you might delete data or do something else that is not reversible, in 
 ```php
 class CreateProductsTableMigration extends Migration
 {
-     public function reversable() // or use down if you are using up
+    public function reversable() : void // or use down if you are using up
     {
         $this->throwIrreversibleMigrationException();
     }

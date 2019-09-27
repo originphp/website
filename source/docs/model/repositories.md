@@ -34,7 +34,7 @@ use Origin\Model\Entity;
 
 class UsersRepository extends Repository
 {
-    public function save(Entity $user)
+    public function save(Entity $user) : bool
     {
         if(!$this->User->save($user)){
             return false;
@@ -49,6 +49,7 @@ class UsersRepository extends Repository
 
             (new SlackNotificationService()->dispatch($user));
         }
+        return true;
     }
 }
 ```
@@ -62,7 +63,7 @@ use App\Model\Repository\UserRepository;
 
 class UsersController extends ApplicationController
 {
-    public function initialize()
+    public function initialize() : void
     {
         parent::initialize();
         $this->Users = new UsersRepository();

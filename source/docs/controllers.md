@@ -22,7 +22,8 @@ When you create a controller it will extend the `ApplicationController` and save
 namespace App\Controller;
 
 class ContactsController extends ApplicationController {
-  public function view($id){
+  public function view($id)
+  {
 
   }
 }
@@ -32,7 +33,8 @@ For example, if a user wants to create a new contact and in your application the
 
 ```php
 class ContactsController extends ApplicationController {
-  public function new(){
+  public function new()
+  {
       $contact = $this->Contact->new();
 
       $contact->first_name = 'James';
@@ -178,7 +180,8 @@ See the [routing guide](/docs/development/routing) for more information on routi
 Components are objects which can be shared between controllers. The framework comes with a number of components and you can also build your own. To load helpers call the `loadComponent` method in the `initialize` method of your controller.
 
 ```php
-public function initialize(){
+public function initialize() : void
+{
     $this->loadComponent('Security');
 }
 ```

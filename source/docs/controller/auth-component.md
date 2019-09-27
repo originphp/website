@@ -13,14 +13,12 @@ You enable login via forms and/or http requests. By default only forms is enable
 To load and enable the `AuthComponent`, in your app controller initialize method add the following
 
 ```php
-
-    public function initialize()
-    {
-        parent::initialize(); // !Important whenever you use a callback or initialize method
-        $this->loadComponent('Auth',$options);
-        ...
-    }
-
+public function initialize() : void
+{
+    parent::initialize(); // !Important whenever you use a callback or initialize method
+    $this->loadComponent('Auth',$options);
+    ...
+}
 ```
 
 The default config for the `AuthComponent`.
@@ -106,7 +104,7 @@ So when a user signs up or changes their password you will need to hash the pass
 use Origin\Utility\Security;
 class User extends ApplicationModel
 {
-    public function beforeSave(Entity $entity, ArrayObject $options)
+    public function beforeSave(Entity $entity, ArrayObject $options) : bool
     {
         if(!parent::beforeSave($entity,$options)){
             return false;
@@ -146,7 +144,7 @@ In the controller that you want to enable the API authentication method add the 
 ```php
 class ApiController extends ApplicationController
 {
-    public function initialize()
+    public function initialize() : void
     {
         $this->loadComponent('Auth',[
             'authenticate' => ['Api']
@@ -184,7 +182,8 @@ To add an additional layer, you can use the `Controller`.
 In your controller create a method called `isAuthorized`.
 
 ```php
-public function isAuthorized(array $user){
+public function isAuthorized(array $user)
+{
     if($user['admin'] === 1){
         return true;
     }

@@ -51,7 +51,7 @@ use MultiTenant\Tenant;
 
 class AppController extends Controller
 {
-    public function initialize()
+    public function initialize() : void
     {
         $this->loadComponent('Auth');
 

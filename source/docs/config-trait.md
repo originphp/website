@@ -46,7 +46,8 @@ class Foocomponent extends component
         'foo' => 'bar'
     ];
 
-    public function whatIsFoo(){
+    public function whatIsFoo()
+    {
         return $this->config('foo');
     }
 }

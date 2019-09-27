@@ -209,7 +209,8 @@ class DatabaseEngine extends BaseEngine
      *
      * @var array
      */
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
 
     }
 
@@ -219,9 +220,9 @@ class DatabaseEngine extends BaseEngine
       * @param string $level e.g debug, info, notice, warning, error, critical, alert, emergency.
       * @param string $message 'this is a {what}'
       * @param array $context  ['what'='string']
-      * @return void
+      * @return bool
       */
-    public function log(string $level, string $message, array $context = [])
+    public function log(string $level, string $message, array $context = []) : bool
     {
         $message = $this->format($level, $message, $context);
         // do something

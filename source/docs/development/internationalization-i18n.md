@@ -13,7 +13,8 @@ To localize your web application, call the initialize from your
 ```php
 class ApplicationController extends Controller
 {
-    public function initialize(){
+    public function initialize() : void
+    {
         parent::initialize();
         I18n::initialize(['locale' => 'en_GB','language'=>'en','timezone'=>'Europe/London']);
     }

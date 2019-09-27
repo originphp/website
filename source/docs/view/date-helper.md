@@ -13,8 +13,8 @@ To localize your web application, call the initialize from your
 ```php
 class ApplicationController extends Controller
 {
-    public function initialize(){
-        parent::initialize();
+    public function initialize() : void
+    {
         I18n::initialize(['locale' => 'en_GB','language'=>'en','timezone'=>'Europe/London']);
     }
 }
@@ -27,7 +27,8 @@ Or if you want to set the date settings manually.
 ```php
 use Origin\Utility\Date;
 
-public function initialize(){
+public function initialize() : void
+{
      Date::locale([
          'timezone' => 'UTC',
          'date' => 'm/d/Y',

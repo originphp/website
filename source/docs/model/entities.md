@@ -218,7 +218,7 @@ use Origin\Model\Entity;
 
 class User extends Entity
 {
-  public function getFullName()
+  protected function getFullName()
   {
     return $this->first_name . ' ' . $this->last_name;
   }

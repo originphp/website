@@ -8,13 +8,11 @@ section: content
 
 ## Getting Ready for Testing
 
-OriginPHP uses PHPUnit 7.5 for unit testing and this is already installed in the Docker container, just type in `phpunit` anywhere. If you are not using the Docker container you can install the composer package, which will install PHPUnit into the `vendor/bin` folder. 
+OriginPHP works with PHPUnit 8.x for unit testing, rename the `phpunit.xml.dist` to `phpunit.xml` and from the project root type:
 
 ```linux
-$ composer require phpunit/phpunit 7.5
+$ vendor/bin/phpunit
 ```
-
-> A benefit of installing this using composer is that when you are developing your IDE will show you code hinting for the PHPUnit classes.
 
 ### Setting up the database
 
@@ -109,7 +107,8 @@ class ArticleFixture extends Fixture
 Sometimes you will want to use dynamic data, in this case you will modify the data using the `initialize` method.
 
 ```php
-    public function initialize() {
+    public function initialize() : void
+    {
         $this->records = [
             [
                 'id' => 1,
@@ -158,26 +157,27 @@ class BookmarkTest extends OriginTestCase
     public $fixtures = ['Bookmark'];
 
     // this is called when the testcase is constructed
-    public function initialize()
+    public function initialize() : void
     {
         
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    public function startup()
+    public function startup() : void
     {
         $this->loadModel('Bookmark');
     }
 
     // example assertion
-    public function testHasBookmarks(){
+    public function testHasBookmarks()
+    {
         $this->assertTrue($this->Bookmkark->hasBookmarks());
     }
 
     // alias for PHPunit tearDown in the OriginTestCase
-    public function shutdown()
+    public function shutdown() : void
     {
-        parent::shutdown(); // remember parent
+        
     }
 
 }
@@ -186,7 +186,7 @@ class BookmarkTest extends OriginTestCase
 
 ### Mocking Models
 
-To mock models extend your Test case by `OriginTestCase` and then call the `getMockForModel` method. When the Model is mocked, it will also be added to the model registry. Remember if use the `tearDown` method in your test case, then call `parent::tearDown()`;
+To mock models extend your Test case by `OriginTestCase` and then call the `getMockForModel` method. When the Model is mocked, it will also be added to the model registry.
 
 To get a mock model with the find method stubbed.
 
@@ -200,7 +200,8 @@ You can also pass an array of options, which are passed to the model constructor
 
 class BookmarkTest extends OriginTestCase
 {
-    public function testSomething(){
+    public function testSomething()
+    {
 
         $model = $this->getMockForModel('Bookmark', ['something']);
 
@@ -236,7 +237,7 @@ class TranslateBehaviorTest extends OriginTestCase
     */
     public $fixtures = ['Article'];
 
-    public function startup()
+    public function startup() : void
     {
         parent::startup();
 
@@ -284,10 +285,10 @@ use Origin\TestSuite\TestTrait;
 class BookmarkTest extends OriginTestCase
 {
     use TestTrait;
-    public function testPrivateProperty(){
-
+    public function testPrivateProperty()
+    {
         $privateProperty = $this->getProperty('hidden');
-        ..
+        ...
     }
 }
 
@@ -348,24 +349,25 @@ class BookmarksControllerTest extends OriginTestCase
     use IntegrationTestTrait;
 
     // this is called when the testcase is constructed
-    public function initialize()
+    public function initialize() : void
     {
 
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    public function startup()
+    public function startup() : void
     { 
     }
 
-    public function testIndex(){
+    public function testIndex()
+    {
         $this->get('/bookmarks/index');
         $this->assertResponseOk();
         $this->assertResponseContains('<h2>Bookmarks</h2>');
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    public function shutdown()
+    public function shutdown() : void
     { 
     }
 }
@@ -552,7 +554,7 @@ use Origin\Http\Response;
 // A fake controller
 class DummyController extends Controller
 {
-    public function initialize()
+    public function initialize() : void
     {
         $this->loadComponent('Math');
     }
@@ -561,9 +563,8 @@ class DummyController extends Controller
 class MathComponentTest extends OriginTestCase
 {
     // alias for PHPunit setUp in the OriginTestCase
-    public function startup();
+    public function startup() : void
     {
-        parent::startup();
         $request = new Request();
         $response =  new Response();
         $controller = new DummyController($request,$response);
@@ -600,9 +601,8 @@ class TagHelperTest extends OriginTestCase
     */
     protected $Tag = null;
 
-    public function startup()
+    public function startup() : void
     {
-        parent::startup();
         $controller = new Controller(new Request(), new Response());
         $view = new View($controller);
         $this->Tag = new TagHelper($view);
@@ -715,9 +715,8 @@ class FooMiddlewareTest extends OriginTestCase
     */
     protected $response = null;
 
-    public function startup()
+    public function startup() : void
     {
-        parent::startup();
         $this->request = new Request();
         $this->response = new Response();
     
@@ -743,7 +742,8 @@ If you created a complicated Middleware or want to test at different stages
         // now check the request object
     }
 
-    public function testResponseProcess(){
+    public function testResponseProcess()
+    {
         $middleware = new FooMiddleware();
         $middleware->startup($request); // handles request
         $middleware->shutdown($request,$response); // handles response
@@ -782,7 +782,7 @@ class CreateUserDirectoryJobTest extends OriginTestCase
 {
     public $fixtures = ['Bookmark'];
 
-    public function startup()
+    public function startup() : void
     {
         $this->loadModel('Bookmark');
     }
@@ -817,7 +817,7 @@ class SendWelcomeEmailMailerTest extends OriginTestCase
 {
     public $fixtures = ['Bookmark'];
     
-    public function startup()
+    public function startup() : void
     {
         $this->loadModel('Bookmark');
     }
@@ -847,7 +847,7 @@ class CreateUserServiceTest extends OriginTestCase
 {
     public $fixtures = ['Bookmark'];
     
-    public function startup()
+    public function startup() : void
     {
         $this->loadModel('Bookmark');
     }

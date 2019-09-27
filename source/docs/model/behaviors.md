@@ -34,7 +34,7 @@ To load the behavior, call `loadBehavior` from the `initialize` method.
 ```php
     class Article extends ApplicationModel
     {
-      public function initialize(array $config)
+      public function initialize(array $config) : void
       {
           parent::initialize($config);
           $this->loadBehavior('Foo');
@@ -63,7 +63,8 @@ To access a model from within a behavior
 ```php
 class WidgetBehavior extends Behavior
 {
-    public function doSomething(){
+    public function doSomething()
+    {
         $widgets = $this->model()->find('all');
     }
 }

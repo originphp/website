@@ -11,7 +11,8 @@ The examples below will relate to the following models and because the tables ar
 ```php
 class Article extends ApplicationModel
 {
-  public function initialize(array $config){
+  public function initialize(array $config) : void
+  {
     $this->hasOne('Author');
     $this->hasMany('Comment');
   }
@@ -21,7 +22,8 @@ class Article extends ApplicationModel
 ```php
 class Author extends ApplicationModel
 {
-  public function initialize(array $config){
+  public function initialize(array $config) : void
+  {
     $this->belongsTo('Article');
   }
 }
@@ -30,7 +32,8 @@ class Author extends ApplicationModel
 ```php
 class Comment extends ApplicationModel
 {
-  public function initialize(array $config){
+  public function initialize(array $config) : void
+  {
     $this->belongsTo('Article');
   }
 }

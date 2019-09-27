@@ -45,7 +45,8 @@ Create a method in your model called `initialize` and this will be called when t
 ```php
 class User extends ApplicationModel
 {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
         parent::initialize($config);
         $this->hasOne('Profile');
     }
@@ -63,7 +64,8 @@ You can also pass an options array with any of the following keys.
 ```php
   class User extends ApplicationModel
   {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
       parent::initialize($config);
       $this->hasOne('Profile', [
           'className' => 'UserProfile',
@@ -85,7 +87,8 @@ Create a method in your model called `initialize` and this will be called when t
 ```php
 class Profile extends ApplicationModel
 {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
         parent::initialize($config);
         $this->belongsTo('User');
     }
@@ -106,7 +109,8 @@ You can also pass an options array with any of the following keys.
 ```php
   class Profile extends ApplicationModel
   {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
       parent::initialize($config);
       $this->belongsTo('SuperUser',[
           'className' => 'User',
@@ -131,7 +135,8 @@ Create a method in your model called `initialize` and this will be called when t
 ```php
 class User extends ApplicationModel
 {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
         parent::initialize($config);
         $this->hasMany('Email');
     }
@@ -152,7 +157,8 @@ You can also pass an options array with any of the following keys.
 ```php
 class User extends ApplicationModel
 {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
         parent::initialize($config);
         $this->hasMany('SentEmail',[
             'className' => 'Email',
@@ -184,7 +190,8 @@ Create a method in your model called `initialize` and this will be called when t
 ```php
   class User extends ApplicationModel
   {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
       parent::initialize($config);
       $this->hasAndBelongsToMany('Tag');
     }
@@ -211,7 +218,8 @@ You can also pass an options array with any of the following keys. If you are fo
 ```php
   class User extends ApplicationModel
   {
-    public function initialize(array $config){
+    public function initialize(array $config) : void
+    {
       parent::initialize($config);
       $this->hasAndBelongsToMany('Tag',[
       'className' => 'Tag',

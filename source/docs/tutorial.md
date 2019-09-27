@@ -146,7 +146,8 @@ Edit the `/app/Controller/ArticlesController.php` file, so it looks like this
 namespace  App\Controller;
 class ArticlesController extends ApplicationController
 {
-    public function new(){
+    public function new()
+    {
 
     }
 }
@@ -199,7 +200,7 @@ If you look at the migration file `database/migrations/YYYYMMDDHHMMSSCreateArtic
 ```php
 class CreateArticleTableMigration extends Migration
 {
-    public function change()
+    public function change() : void
     {
         $this->createTable('articles',[
             'title' => 'string',
@@ -401,7 +402,7 @@ Let's add some validation you will need to edit the article Model, which can be 
 ```php
 class Article extends ApplicationModel
 {
-    public function initialize(array $config)
+    public function initialize(array $config) : void 
     {
         parent::initialize($config); // Always call the parent.
         $this->validate('title', 'notBlank');
@@ -527,7 +528,8 @@ Open [http://localhost:8000/articles/index](http://localhost:8000/articles/index
 The last part, is the deleting of the records. You want to prevent people from calling a delete url directly (i.e a GET request).
 
 ```php
-public function delete($id){
+public function delete($id)
+{
     $this->request->allowMethod(['post', 'delete']);
     $article = $this->Article->get($id);
     if ($this->Article->delete($article)) {
@@ -591,7 +593,7 @@ $ bin/console db:migrate
 Open the article model `app/Model/Article.php` and in the initialize method setup the association.
 
 ```php
-public function initialize(array $config)
+public function initialize(array $config) : void
 {
     parent::initialize($config);
     $this->validate('title', 'notBlank');
@@ -602,7 +604,7 @@ public function initialize(array $config)
 Open the comment `app/Model/Comment.php` and in the initialize method setup the association. 
 
 ```php
-public function initialize(array $config)
+public function initialize(array $config) : void
 {
     parent::initialize($config);
     $this->belongsTo('Comment');
@@ -634,7 +636,8 @@ Now add the `add` method to the comments controller file  `/app/Controller/Comme
 ```php
 class CommentsController extends ApplicationController
 {
-    public function add(){
+    public function add()
+    {
         if($this->request->is('post')){
             $comment = $this->Comment->new($this->request->data());
             if($this->Comment->save($comment)){

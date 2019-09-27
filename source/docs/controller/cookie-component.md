@@ -13,14 +13,17 @@ Here are some examples how to use it:
 ```php
 class ContactsController extends ApplicationController
 {
-    public function createCookies(){
+    public function createCookies()
+    {
       $this->Cookie->write('for-a-month',rand());
       $this->Cookie->write('for-seven-days',rand(),'+7 days');
     }
-    public function readCookie(){
+    public function readCookie()
+    {
         return $this->Cookie->read('monster');
     }
-    public function deleteCookie(){
+    public function deleteCookie()
+    {
         if($this->Cookie->exists('monster')){
             $this->Cookie->delete('monster');
         }
