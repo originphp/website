@@ -22,9 +22,9 @@ You can create helpers, which are like components, and can contain logic for cre
 Helpers are stored in the `View/Helper` folder of your app. Here is an example of a simple helper:
 
 ````php
-namespace App\View\Helper;
+namespace app\Http\View\Helper;
 
-use Origin\View\Helper\Helper;
+use Origin\Http\View\Helper\Helper;
 
 class FooHelper extends ApplicationHelper
 {

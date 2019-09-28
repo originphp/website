@@ -14,8 +14,8 @@ Create the component file in the `Controller/Component` folder.
 
 ```php
 
-namespace App\Controller\Component;
-use Origin\Controller\Component\Component;
+namespace app\Http\Controller\Component;
+use Origin\Http\Controller\Component\Component;
 
 class MathComponent extends Component
 {

@@ -10,18 +10,21 @@ You can also create Plugins which are a combinations of controllers,models,views
 
 The first step to creating a plugin is to create the folders.
 
-Lets say you want to create a contact manager plugin, you create the folder structure. It uses the same structure as the src folder, you can add what you need.
+Lets say you want to create a contact manager plugin, you create the folder structure. It uses the same structure as the app folder, you can add what you need.
 
 ```
-.
-|-- plugins
-|   |-- contact_manager
-|   |   -- config
-|   |   -- src
-|   |       |-- Controller
-|   |       |-- Model
-|   |       |-- View
-|   |   -- tests
+-- contact_manager
+    |-- config
+    |-- database
+    |   -- migrations
+    |-- src
+    |   |-- Console
+    |   |   |-- Command
+    |   |-- Http
+    |   |   |-- Controller
+    |   |   |-- View
+    |   |-- Model
+    |-- tests
 ```
 
 You can use the generate plugin to create the folder structure, routes and the plugin controller and model.
@@ -56,7 +59,7 @@ Create `ContactManagerApplicationController.php` in the `plugins/contact_manager
 <?php 
 namespace ContactManager\Controller;
 
-use App\Controller\ApplicationController;
+use app\Http\Controller\ApplicationController;
 
 class ContactManagerApplicationController extends ApplicationController
 {

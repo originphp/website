@@ -20,8 +20,8 @@ This will create 4 files
 ```
 [ OK ] /var/www/app/Mailer/SendWelcomeEmailMailer.php
 [ OK ] /var/www/tests/TestCase/Mailer/SendWelcomeEmailMailerTest.php
-[ OK ] /var/www/app/View/Mailer/SendWelcomeEmail/html.ctp
-[ OK ] /var/www/app/View/Mailer/SendWelcomeEmail/text.ctp
+[ OK ] /var/www/app/Http/View/Mailer/SendWelcomeEmail/html.ctp
+[ OK ] /var/www/app/Http/View/Mailer/SendWelcomeEmail/text.ctp
 ```
 
 Now open `app/Mailer/SendWelcomeEmail.php` and adjust the email subject
@@ -44,7 +44,7 @@ class SendWelcomeEmailMailer extends ApplicationMailer
 }
 ```
 
-Now open the HTML template `/app/View/Mailer/SendWelcomeEmail/html.ctp` and adjust the message
+Now open the HTML template `/app/Http/View/Mailer/SendWelcomeEmail/html.ctp` and adjust the message
 
 ```php
 <p>Hi <?= $user->name ?></p>
@@ -70,7 +70,7 @@ class ApplicationMailer extends Mailer
         'replyTo' => 'noreply@somewhere.com',
     ];
 
-    # app/View/Layout/mailer.ctp
+    # app/Http/View/Layout/mailer.ctp
     public $layout = 'mailer';
 
     # Email account
@@ -82,7 +82,7 @@ class ApplicationMailer extends Mailer
 
 if you want to wrap your HTML emails in a template you can use layouts for this
 
-Create `app/View/Layout/mailer.ctp`
+Create `app/Http/View/Layout/mailer.ctp`
 
 ```php
 <!DOCTYPE html>

@@ -24,13 +24,13 @@ To create a `Command`, use the code generator.
 $ bin/console generate command Backup
 ```
 
-This will create the `BackupCommand` file  in the `/app/Command` folder and the `BackupCommandTest` file in the `/tests/TestCase/Command/` folder.
+This will create the `BackupCommand` file  in the `/app/Console/Command` folder and the `BackupCommandTest` file in the `/tests/TestCase/Command/` folder.
 
 Here is what a simple Command looks like
 
 ```php
-namespace App\Command;
-use Origin\Command\Command;
+namespace app\Console\Command;
+use Origin\Console\Command\Command;
 
 class HelloCommand extends Command
 {

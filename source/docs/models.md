@@ -13,7 +13,7 @@ Model is the M in MVC (Model View Controller). Model interacts with the database
 Models are singular camel cased, for example the model for a user profile is `UserProfile` this you can access from the controller or from a related model.
 
 ```php
-namespace App\Controller;
+namespace app\Http\Controller;
 class UserProfilesController extends ApplicationController
 {
     public function index(){

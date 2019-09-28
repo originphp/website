@@ -21,7 +21,7 @@ $ bin/console generate middleware Foo
 This is what it will look like
 
 ```php
-namespace App\Middleware;
+namespace app\Http\Middleware;
 use Origin\Http\Request;
 use Origin\Http\Response;
 use Origin\Http\Middleware;

@@ -546,8 +546,8 @@ This is an example how you might test a component.
 ```php
 namespace App\Test\Controller\Component;
 
-use App\Controller\Component\MathComponent;
-use Origin\Controller\Controller;
+use app\Http\Controller\Component\MathComponent;
+use Origin\Http\Controller\Controller;
 use Origin\Http\Request;
 use Origin\Http\Response;
 
@@ -584,20 +584,20 @@ class MathComponentTest extends OriginTestCase
 Here is an example on how you might test a View Helper.
 
 ```php
-namespace App\View\Helper;
+namespace app\Http\View\Helper;
 
-use Origin\View\View;
+use Origin\Http\View\View;
 use Origin\Http\Request;
 use Origin\Http\Response;
-use Origin\Controller\Controller;
+use Origin\Http\Controller\Controller;
 use Origin\TestSuite\OriginTestCase;
 
-use App\View\Helper\TagHelper;
+use app\Http\View\Helper\TagHelper;
 
 class TagHelperTest extends OriginTestCase
 {
     /**
-    * @var \App\View\Helper\TagHelper
+    * @var \app\Http\View\Helper\TagHelper
     */
     protected $Tag = null;
 
@@ -700,7 +700,7 @@ namespace App\Test\Middleware;
 
 use Origin\Http\Request;
 use Origin\Http\Response;
-use App\Middleware\FooMiddleware;
+use app\Http\Middleware\FooMiddleware;
 use Origin\TestSuite\OriginTestCase;
 
 class FooMiddlewareTest extends OriginTestCase

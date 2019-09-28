@@ -51,7 +51,7 @@ use Origin\Model\Entity;
 
 class OrderNotifierListener extends Listener
 {
-    public function intitialize()
+    public function initialize() : void
     {
         $this->loadModel('User');
     }
