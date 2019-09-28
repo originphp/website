@@ -533,4 +533,4 @@ You can extend your models with behaviors and share these across models. Behavio
 
 ### Initializer Trait
 
-Models have the `InitializerTrait` enabled allow you to call an initialization method when a trait created. See the [InitializerTrait guide](/docs/initializer-trait) for more information.
+Models have the `InitializerTrait` enabled, enables you to use an initialization method on traits. See the [InitializerTrait guide](/docs/initializer-trait) for more information.

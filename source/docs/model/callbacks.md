@@ -26,12 +26,11 @@ This is called after a find first or find all operation.
 
 ```php
 use Origin\Model\Collection;
-public function afterFind(Collection $results, ArrayObject $options)
+public function afterFind(Collection $results, ArrayObject $options) : void
 {
   foreach($results as $article){
     $this->doSomething($article);
   }
-  return $results;
 }
 ```
 

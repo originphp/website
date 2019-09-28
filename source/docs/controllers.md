@@ -502,4 +502,4 @@ You can pass an array with the following keys, which are the same as used in Mod
 
 ### Initializer Trait
 
-Controllers have the `InitializerTrait` enabled allow you to call an initialization method when a trait created. See the [InitializerTrait guide](/docs/initializer-trait) for more information.
+Controllers have the `InitializerTrait` enabled, enables you to use an initialization method on traits. See the [InitializerTrait guide](/docs/initializer-trait) for more information.

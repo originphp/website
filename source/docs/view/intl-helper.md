@@ -6,7 +6,7 @@ section: content
 ---
 # Intl Helper
 
-The IntlHelper uses PHP's intl extension to format dates and numbers. The date and number utilitites that it uses can also parse international dates and numbers but thats a minefield if you ask me - and if you want to use a datepicker...
+The IntlHelper uses PHP's intl extension to format dates and numbers. The date and number utilitites that it uses can also parse international dates and numbers but thats a minefield if you ask me - and if you want to use a datepicker... 
 
 To install the PHP Intl Extension on your server
 
@@ -99,7 +99,6 @@ You can also pass different formats to the date functions either as string for a
 echo $this->Intl->datetime('2018-12-31 19:21:00','dd MMM, y H:mm'); // Pattern
 echo $this->Intl->datetime('2018-12-31 19:21:00',['IntlDateFormatter::NONE, IntlDateFormatter::FULL]); // Array with format options for date + time
 ```
-
 
 ## Parsing
 

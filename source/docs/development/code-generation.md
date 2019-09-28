@@ -73,6 +73,22 @@ To generate a `Helper` to be used in your views.
 $ bin/console generate helper FunkyForm
 ```
 
+## Job
+
+To generate a Job
+
+```linux 
+$ bin/console generate job ClearCache
+```
+
+## Mailer
+
+To generate a mailer
+
+```linux 
+$ bin/console generate mailer WelcomeEmail
+```
+
 ## Model
 
 To generate a `Model`, its test and fixture file.
@@ -125,6 +141,23 @@ Then run the other generators to create the code in the plugin folder.
 $ bin/console generate controller ContactManager.Contacts
 $ bin/console generate model ContactManager.Contact
 ```
+
+## Repository
+
+To generate a Repository
+
+```linux 
+$ bin/console generate repository Users
+```
+
+## Services (Service Objects)
+
+To quickly create a Service Object (Service)
+
+```linux 
+$ bin/console generate service SlackNotification
+```
+
 
 ## Scaffold
 

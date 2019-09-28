@@ -39,7 +39,7 @@ if($this->request->is('post')){
 
 ## Allowing certain method
 
-You can also allow only certain HTTP request methods, this can be a string or an array of methods.
+You can also allow only certain HTTP request methods, this can be a string or an array of methods, if a method is used that is not in the list, it will throw an exception.
 
 ```php
 public function delete($id = null)
