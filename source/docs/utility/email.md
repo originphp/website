@@ -8,8 +8,6 @@ section: content
 
 The email class enables you to send emails easily through SMTP.
 
-> As version 1.29 the namespace for Email has been moved to Origin\Mailer\Email from Origin\Utility\Email
-
 ## Email Configuration
 
 You setup your email accounts in your `config/email.php` we have created a template for you, just rename the file and fill your details.

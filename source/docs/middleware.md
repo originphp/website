@@ -24,7 +24,7 @@ This is what it will look like
 namespace app\Http\Middleware;
 use Origin\Http\Request;
 use Origin\Http\Response;
-use Origin\Http\Middleware;
+use Origin\Http\Middleware\Middleware;
 
 class FooMiddleware extends Middleware
 {
@@ -32,8 +32,9 @@ class FooMiddleware extends Middleware
      * Handles the request. This is run on all middlewares first.
      *
      * @param \Origin\Http\Request $request
+     * @return void
      */
-    public function startup(Request $request) 
+    public function invoke(Request $request) : void
     {
         $request->data('foo','bar'); // Change the request data
     }
@@ -43,8 +44,9 @@ class FooMiddleware extends Middleware
      *
      * @param \Origin\Http\Request $request
      * @param \Origin\Http\Response $response
+     * @return void
      */
-    public function shutdown(Request $request,Response $response)
+    public function process(Request $request,Response $response) : void
     {
         $response->cookie('foo',$request->data('foo')); // Changes the response
     }
@@ -53,7 +55,7 @@ class FooMiddleware extends Middleware
 
 ## Loading Middleware
 
-To load the middleware, you need to call `loadMiddleware` in the initialize method of `app/Application.php` file. When web requests are run, the middlewares will be run, first startup will be called (handle) by each middleware, and modify the request object, then once it has finished, each middleware will run the shutdown (process) using the modified request object.
+To load the middleware, you need to call `loadMiddleware` in the initialize method of `app/Http/Application.php` file. When web requests are run, the middlewares will be run, first startup will be called (handle) by each middleware, and modify the request object, then once it has finished, each middleware will run the shutdown (process) using the modified request object.
 
 ```php
 public function initialize() : void
@@ -71,13 +73,27 @@ public function initialize() : void
 }
 ```
 
+If you prefer to add the Middleware Object
+
+```php
+use App\Http\Middleware\RequestModifierMiddleware;
+public function initialize() : void
+{
+    $this->addMiddleware(new RequestModifierMiddleware());
+}
+```
+
+## Callbacks
+
+Middleware has also have `startup` and `shutdown` callbacks.
+
 ## CSRF Protection Middleware
 
 OriginPHP comes with the CSRF Protection Middleware which is enabled by default, when running the PHPUnit tests, the validation is disabled automatically.
 
-How this works, is it creates a secure long token, then it inserts this into every form when you call Form::create, and a cookie is also created. When data is posted, the CSRF Protection Middleware, checks that the cookie exists and the values match up.
+How this works is, it creates a secure long token, then it inserts this into every form when you call Form::create, and a cookie is also created. When data is posted, the CSRF Protection Middleware, checks that the CSRF token is valid.
 
-> If you are creating a form without the FormHelper, then you can call Form->csrf() to create the field manually.
+> If you are creating a form without the `FormHelper`, then you can call Form->csrf() to create the field manually.
 
 The CSRF token is stored in the request parameters which you can access using the request object.
 

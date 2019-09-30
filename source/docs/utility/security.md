@@ -99,12 +99,25 @@ It will return `null` if it is unable to decrypt because the key or data is wron
 
 ## UID
 
-To generate a secure UID
+If you need to generate a unique id, and don't need to use a UUID, then the UID method provides a more memory and disk space efficient way for this.
+
+> If you are generating a API token or another form of string that a user might need to type in, then use `Security::random` or `Security::uuid` instead since these use lower case characters.
+
+To generate a cryptographically secure unique id (UID)
 
 ```php
-$uid = Security::uid(); // 64fd8778d899339e
+$uid = Security::uid(); // 64cjBxfz2JPhyCQ
 ```
 
+## Random
+
+To generate a cryptographically secure random string
+
+```php
+$uid = Security::random(); // 5f31ecf661dabb04dc
+```
+
+> Security::random default length is 18, will means it will use 9 raw bytes of data with 72 bits of possible values and therefore a 50% chance of collision at 2^36 records (69 billion records), according to the [birthday problem](https://en.wikipedia.org/wiki/Birthday_problem).
 
 ### UUID
 

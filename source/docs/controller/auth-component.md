@@ -167,11 +167,11 @@ GET http://localhost:8000/api/dosomething/12345?api_token=3905604a-b14d-4fe8-906
 
 ### Generating API tokens
 
-You can use `Security::uid` or `Security::uuid` to generate secure api tokens.
+You can use `Security::random` or `Security::uuid` to generate secure api tokens.
 
 ```php
 use Origin\Utility\Security;
-$user->api_token = Security::uid(40); // bbd7cebc6274d5ec7aabbdbaa4885e0b2f75d091
+$user->api_token = Security::random(40); // bbd7cebc6274d5ec7aabbdbaa4885e0b2f75d091
 $user->api_token = Security::uuid(); // 1546d376-8b3b-4ce9-b763-f95b8cbbeb82
 ```
 

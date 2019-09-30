@@ -4,7 +4,7 @@ description: Services Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
-# Services
+# Services (Service Objects)
 
 Services are reusable business logic, that are used to keep both your Controllers and Models skinny whilst making code simpler, easier to test and maintain. Services follow the `dependency injection` and `command` patterns, and the Service only does just one thing, in other words it follows the `single responsibility principle`. It is both a very simple concept and object, but it is very powerful.
 

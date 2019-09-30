@@ -46,7 +46,7 @@ return [
             'Intl Helper' => '/docs/view/intl-helper'
         ],
     ],
-    'Services' => [
+    'Services (Service Objects)' => [
         'url' => 'docs/services',
     ],
     'Middleware' => [
