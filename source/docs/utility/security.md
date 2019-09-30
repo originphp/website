@@ -114,7 +114,7 @@ $uid = Security::uid(); // 64cjBxfz2JPhyCQ
 To generate a cryptographically secure random string
 
 ```php
-$uid = Security::random(); // 5f31ecf661dabb04dc
+$randomString = Security::random(); // 5f31ecf661dabb04dc
 ```
 
 > Security::random default length is 18, will means it will use 9 raw bytes of data with 72 bits of possible values and therefore a 50% chance of collision at 2^36 records (69 billion records), according to the [birthday problem](https://en.wikipedia.org/wiki/Birthday_problem).
