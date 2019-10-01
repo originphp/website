@@ -12,16 +12,16 @@ The Mailer object enables to you easily create reusable and easy to test email c
 To create a Mailer and its test file run the following command
 
 ```linux
-$ bin/console generate mailer SendWelcomeEmail
+$ bin/console generate mailer WelcomeEmail
 ```
 
 This will create 4 files
 
 ```
-[ OK ] /var/www/app/Mailer/SendWelcomeEmailMailer.php
-[ OK ] /var/www/tests/TestCase/Mailer/SendWelcomeEmailMailerTest.php
-[ OK ] /var/www/app/Http/View/Mailer/SendWelcomeEmail/html.ctp
-[ OK ] /var/www/app/Http/View/Mailer/SendWelcomeEmail/text.ctp
+[ OK ] /var/www/app/Mailer/WelcomeEmailMailer.php
+[ OK ] /var/www/tests/TestCase/Mailer/WelcomeEmailMailerTest.php
+[ OK ] /var/www/app/Mailer/Template/welcome_email.html.ctp
+[ OK ] /var/www/app/Mailer/Template/welcome_email.text.ctp
 ```
 
 Now open `app/Mailer/SendWelcomeEmail.php` and adjust the email subject
@@ -44,7 +44,7 @@ class SendWelcomeEmailMailer extends ApplicationMailer
 }
 ```
 
-Now open the HTML template `/app/Http/View/Mailer/SendWelcomeEmail/html.ctp` and adjust the message
+Now open the HTML template `/app/Mailer/Template/welcome_email.html.ctp` and adjust the message
 
 ```php
 <p>Hi <?= $user->name ?></p>
@@ -70,8 +70,8 @@ class ApplicationMailer extends Mailer
         'replyTo' => 'noreply@somewhere.com',
     ];
 
-    # app/Http/View/Layout/mailer.ctp
-    public $layout = 'mailer';
+    # app/Http/View/Layout/default.ctp
+    public $layout = 'default';
 
     # Email account
     public $account = 'default';
@@ -80,9 +80,9 @@ class ApplicationMailer extends Mailer
 
 ### Creating Layouts
 
-if you want to wrap your HTML emails in a template you can use layouts for this
+If you want to wrap your HTML emails in a template you can use layouts for this
 
-Create `app/Http/View/Layout/mailer.ctp`
+Create `app/Mailer/Layout/mailer.ctp`
 
 ```php
 <!DOCTYPE html>

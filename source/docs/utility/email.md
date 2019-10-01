@@ -10,7 +10,7 @@ The email class enables you to send emails easily through SMTP.
 
 ## Email Configuration
 
-You setup your email accounts in your `config/email.php` we have created a template for you, just rename the file and fill your details.
+You setup your email accounts in your `config/email.php` which looks something like this.
 
 ```php
 use Origin\Mailer\Email;
@@ -38,18 +38,17 @@ The keys for the config are as follows:
 - *tls*: default is false, set to true if you want to enable TLS
 - *timeout*: how many seconds to timeout
 - *domain*: When we send the HELO command to the sever we have to identify your hostname, so we will use localhost or HTTP_SERVER var if client is not set.
-- *debug*: If set and is true the headers and message is rendered and returned (without sending via SMTP)
 
 You can also pass keys such as `from`,`to`,`cc`,`bcc`,`sender` and `replyTo` this pass the data to its functions either as string if its just an email or an array if you want to include a name. Remember if you are going to automatically cc or bcc somewhere, then you have to next call addBcc or addCc to ensure that you don't overwrite this.
 
 For example
 
 ```php
-    [
-        'from' => ['james@originphp.com' => 'James'],
-        'replyTo' => 'no-reply@originphp.com'
-        'bcc' => ['someone@origin.php' => 'Someone','another-person@example.com']
-    ]
+[
+    'from' => ['james@originphp.com' => 'James'],
+    'replyTo' => 'no-reply@originphp.com'
+    'bcc' => ['someone@origin.php' => 'Someone','another-person@example.com']
+]
 ```
 
 If a config for `default` is found this will be used unless you specify something else with the `account`.
@@ -58,7 +57,7 @@ If a config for `default` is found this will be used unless you specify somethin
 
 The default email sending behavior is to send a HTML message with a text version, which is a best practice and reduces the risk of your email ending up in spam folders. If you don't provide a text version of the message, the Email utility will automatically convert your HTML into a text version.
 
-Email templates are stored in the `View/Email` folder, use the template method to set the name and use the set method to send variables to the templates.
+Email templates are stored in the `Mailer/Template` folder, use the template method to set the name and use the set method to send variables to the templates.
 
 To send an email (with both html and text versions):
 
@@ -73,7 +72,7 @@ $Email->to('somebody@originphp.com')
     ->send();
 ```
 
-The above example will load the `View/Email/html/welcome.ctp` and if the text version exists, that too from `View/Email/text/welcome.ctp`. If the text version does not exist then it will create a text version from the html message.
+The above example will load the `Mailer/Template/welcome.html.ctp` and if the text version exists, that too from `Mailer/Template/welcome.text.ctp`. If the text version does not exist then it will create a text version from the html message.
 
 To change the format of the email to either `text` or `html` only, you need to set the format.
 
@@ -92,12 +91,12 @@ $Email->to('somebody@originphp.com')
 Here is how you use variables in the email templates:
 
 ```php
-// View/Email/html/welcome.ctp
+// Mailer/Template/welcome.html.ctp
 <p>Hi <?= $first_name ?></p>
 <p>How is your day so far?</p>
 ```
 
-The template method also accepts plugin syntax, so to load a template from a plugin  folder just add the plugin name followed by a dot then the template name.
+The template method also accepts plugin syntax, so to load a template from a plugin folder just add the plugin name followed by a dot then the template name.
 
 ```php
 use Origin\Mailer\Email;

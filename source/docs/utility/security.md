@@ -72,7 +72,7 @@ use Origin\Utility\Security;
 $key = Security::generateKey(); // 33d80476167cc95c363bf7df3c95e1d1
 ```
 
-The key length must be a minimum length of 32 bytes (256 bits).
+The key length must be 32 bytes (256 bits) to use with the encryption decryption functions.
 
 ### Encrypting Text
 
@@ -81,7 +81,7 @@ To encrypt a string
 ```php
 use Origin\Utility\Security;
 $key = '33d80476167cc95c363bf7df3c95e1d1';
-$encrypted = Security::encrypt('foo',$key); 
+$encrypted = Security::encrypt('foo',$key);
 ```
 
 ### Decrypting Text
@@ -97,27 +97,25 @@ $plain = Security::decrypt($encrypted,$key);
 
 It will return `null` if it is unable to decrypt because the key or data is wrong. It will return `false`, if it might have been tampered with.
 
-## UID
-
-If you need to generate a unique id, and don't need to use a UUID, then the UID method provides a more memory and disk space efficient way for this.
-
-> If you are generating a API token or another form of string that a user might need to type in, then use `Security::random` or `Security::uuid` instead since these use lower case characters.
-
-To generate a cryptographically secure unique id (UID)
-
-```php
-$uid = Security::uid(); // 64cjBxfz2JPhyCQ
-```
-
 ## Random
 
-To generate a cryptographically secure random string
+To generate a cryptographically secure random string, the default length is 18.
 
 ```php
 $randomString = Security::random(); // 5f31ecf661dabb04dc
 ```
 
-> Security::random default length is 18, will means it will use 9 raw bytes of data with 72 bits of possible values and therefore a 50% chance of collision at 2^36 records (69 billion records), according to the [birthday problem](https://en.wikipedia.org/wiki/Birthday_problem).
+## UID
+
+If you need to generate a unique id, and don't need to use a UUID, then the UID method provides a more memory and disk space efficient way when working with unique ids.
+
+> If you are generating a API token or another form of string that a user might need to type in, then use `Security::random` or `Security::uuid` instead since these use lower case characters.
+
+To generate a cryptographically secure unique id (UID) with the default length of 15.
+
+```php
+$uid = Security::uid(); // 64cjBxfz2JPhyCQ
+```
 
 ### UUID
 

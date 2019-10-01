@@ -180,7 +180,7 @@ To dispatch the Job immediately
 To schedule a job for a particular time (or using a delay)
 
 ```php
-(new SendWelcomeEmailJob())->schedule('+ 10 minutes')->dispatchNow($user);
+(new SendWelcomeEmailJob())->schedule('+ 10 minutes')->dispatch($user);
 ```
 
 You can also pass the wait and queue options to the constructor
