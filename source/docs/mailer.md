@@ -70,10 +70,10 @@ class ApplicationMailer extends Mailer
         'replyTo' => 'noreply@somewhere.com',
     ];
 
-    # app/Http/View/Layout/default.ctp
-    public $layout = 'default';
+    // app/Mailer/Layout/mailer.ctp
+    public $layout = 'mailer';
 
-    # Email account
+    // Email account
     public $account = 'default';
 }
 ```
@@ -82,7 +82,7 @@ class ApplicationMailer extends Mailer
 
 If you want to wrap your HTML emails in a template you can use layouts for this
 
-Create `app/Mailer/Layout/mailer.ctp`
+Create `app/Mailer/Layout/mailer.ctp` and add the following contents
 
 ```php
 <!DOCTYPE html>
