@@ -108,4 +108,7 @@ return [
             'Multi Tenant' => 'docs/plugins/multi-tenant',
         ],
     ],
+    'Upgrade Guide' => [
+        'url' => 'docs/upgrade',
+    ],
 ];

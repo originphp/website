@@ -119,8 +119,22 @@ $uid = Security::uid(); // 64cjBxfz2JPhyCQ
 
 ### UUID
 
-To generate a secure UUID (version 4)
+The Security class can generate both version 4 and version 1 UUIDs.
+
+To generate a random UUID (version 4)
 
 ```php
 $uid = Security::uuid(); // 38c67382-d3ab-4430-a27e-0c719813c09f
+```
+
+For a version 1 UUID using a random MAC address and the current timestamp.
+
+```php
+$uid = Security::uuid(['timestamp'=>true]); // ac337932-e4e5-11e9-928f-8bda39fe8887
+```
+
+For a version 1 UUID using a provided MAC address and the current timestamp.
+
+```php
+$uid = Security::uuid(['macAddress'=>'00:0a:95:9d:68:16']); // 769c6fa4-e4e5-11e9-b8d5-000a959d6816
 ```

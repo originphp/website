@@ -51,7 +51,7 @@ public function beforeValidate(Entity $entity, ArrayObject $options) : bool
 This is called after the data has been validated, even if validation fails this callback is executed. You can get the validation errors from the entity by calling `errors` on the entity.
 
 ```php
-public function afterValidate(Entity $entity, ArrayObject $options) : bool
+public function afterValidate(Entity $entity, ArrayObject $options) : void
 {
     if($entity->errors()){
       // do something
