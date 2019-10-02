@@ -35,7 +35,8 @@ class ContactsController extends ApplicationController
 If you don't want the values of the cookies to be encrypted, then you can disable this when writing the cookie value.
 
 ```php
-$this->Cookie->write('my_app','some_value','+6 months',[
+$this->Cookie->write('my_app','some_value',[
+    'expires' = >'+6 months',
     'encrypt' => false
     ]);
 ```

@@ -6,8 +6,7 @@ section: content
 ---
 # Cookie Helper
 
-The Cookie helper works exactly the same way as the Cookie Component, the only difference is the Cookie Helper is available
-in your views.
+The Cookie helper works exactly the same way as the Cookie Component, the only difference is the Cookie Helper is available in your views.
 
 ```php
 $value =  $this->Cookie->read('monster');

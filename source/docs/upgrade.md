@@ -239,6 +239,10 @@ The framework has been updated to work with PHPunit 8.3+.
 
 The migration schema has changed, version is now a `bigint` field.
 
+## Cookies
+
+When writing cookies, setting the expiration is done via the options array, now the third argument, in any class that allows you to write cookies.
+
 ## Note
 
 Log out of your existing application and delete any cookies to prevent possible errors.

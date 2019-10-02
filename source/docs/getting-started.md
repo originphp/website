@@ -6,6 +6,8 @@ section: content
 ---
 # Getting Started with OriginPHP
 
+> This documentation is for version 2.x, see [1.x documentation](/1.0/getting-started) for the prior version. We also have produced an [upgrade guide](/docs/upgrade).
+
 ## What is OriginPHP?
 
 OriginPHP is a web application framework written in PHP that uses a number of well known software design patterns, including convention over configuration, MVC (Model View Controller), association data mapping, and front controller.

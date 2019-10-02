@@ -8,7 +8,7 @@ section: content
 
 You can easily queue schedule background jobs, the OriginPHP queue system works supports both MySQL and Redis backends.
 
-## Configuring Queue
+## Configuring Queues
 
 You must setup the `default` configuration for the queue, and if you are going to be unit testing the jobs then you will need to create a `test` configuration, which will be used when running tests.
 

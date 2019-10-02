@@ -52,12 +52,12 @@ $this->response->file('/tmp/transactions.pdf',['download'=>true]);
 
 ## Cookie
 
-You also write cookies using the response object instead of the Cookie Component.
+You also write cookies using the response object instead of the `CookieComponent` or `CookieHelper`
 
 ```php
 $this->response->cookie('key','value');
-$this->response->cookie('key','value','+7 days');
-$this->response->cookie('keyToDelete','','-60 minutes'); // to delete
+$this->response->cookie('key','value',['expires' =>'+7 days']);
+$this->response->cookie('keyToDelete','',['expires' => '-60 minutes']); // to delete
 ```
 
 > When writing cookies the values wont be available for reading until the next request, since they are only sent after everything has been rendered to the screen.
