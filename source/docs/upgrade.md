@@ -6,7 +6,55 @@ section: content
 ---
 # Upgrade Guide
 
+## Welcome
+
 Version 2 removes deprecated features and provides a more organized folder structure and makes it easier to work with given the number of folders that are now used. I been working full time on the framework to get this where it is now, changes going forward from here should be slow, with a focus on improving code base, developing and testing with future PHP versions, bug and security fixes.
+
+## Not Upgrading
+
+Firstly, if you don't want to upgrade to the new version then you will need to update your `composer.json` file, to ensure that when you run composer update you download version 2.x, the `composer.json` file from most versions of the framework will just update to the latest version automatically.
+
+> Very early versions of the framework might trigger errors when upgrading to later versions
+
+```json
+  "require": {
+    "php": "^7.2.0",
+    "originphp/framework": "^1.30"
+  },
+  "require-dev": {
+    "originphp/debug-plugin": "1.3.3",
+    "phpunit/phpunit": "^7.5"
+  }
+```
+
+## Composer.json
+
+The composer.json file has been changed, this now respects versions.
+
+```json
+{
+  "name": "originphp/app",
+  "description": "OriginPHP Application",
+  "homepage": "https://www.originphp.com",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": "^7.2.0",
+    "originphp/framework": "^2.0"
+  },
+  "require-dev": {
+    "originphp/debug-plugin": "^1.4",
+    "phpunit/phpunit": "^8.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "optimize-autoloader": true,
+    "sort-packages": true
+  }
+}
+```
 
 ## Front Controller
 
@@ -39,15 +87,31 @@ Parent classes such as `AppController` have been renamed to use the Application 
 - AppJob
 - AppHelper
 
-Console now introduces its own Application.php, this will allow for adding shared features and configuration to console
-commands in the future.
+## New Classes
+
+### Console/Application.php
+Console now introduces its own Application.php, this will allow for adding shared features and configuration to console commands in the future.
+
+Here is the contents of `app/Console/Application.php`
 
 ```php
-// app/Console/Application.php
-<?php
 namespace App\Console;
 use Origin\Console\BaseApplication;
 class Application extends BaseApplication
+{
+}
+```
+
+### Exception/ApplicationException
+
+A new folder called exception has been added, and the class `ApplicationException` has been added.
+
+Here is the contents of `app/Exception/ApplicationException.php`
+
+```php
+namespace App\Exception;
+use Origin\Exception\Exception;
+class ApplicationException extends Exception
 {
 }
 ```
@@ -71,6 +135,13 @@ HTTP and Console have been separated, as a result views for Http are in the HTTP
     |-- Model
 ```
 
+Moving the files to new folder structure will require references to these to be changed as below:
+
+- `App\Command` change to `App\Console\Command`
+- `App\Controller` change to `App\Http\View`
+- `App\View` change to `App\Http\View`
+- `App\Middleware` change to `App\Http\Middleware`
+
 ## Mailer Templates
 
 Templates for Mailers are now stored in a different location and use a different filename structure
@@ -80,26 +151,41 @@ Templates for Mailers are now stored in a different location and use a different
 
 Layouts for mailers location have also changed
 
-`app/Mailer/Layout/mailer.ctp`
+`app/Mailer/Layout/mailer.ctp`.
+
+Create the default layout `app/Mailer/Layout/default.ctp`
+
+```php
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+     <?= $this->content() ?>
+  </body>
+</html>
+```
 
 ## Class Location Changes
 
 As a result of folder structure changes framework classes have been moved following the same structure
 
-For example
-`Origin\Controller\Controller` is now `Origin\Http\Controller\Controller`;
+Framework Locations
 
-This affects the following
+- `Origin\Command\Command` changed to `Origin\Console\Command\Command`
+- `Origin\Controller\Controller` changed to `Origin\Http\Controller\Controller`
+- `Origin\Controller\Component\Component` changed to `Origin\Http\Component\Component`
+- `Origin\View\View` changed to  `Origin\Http\View\View`
+- `Origin\Http\Middleware` changed to `Origin\Http\Middleware\Middleware`
 
-- Controllers
-- Components
-- Middlewares
-- Views
-- Commands
-- Exception
 
-Http exceptions such as `NotFoundException` can now be found in `Origin\Http\Exception`. 
-Previously the Middleware class was in `Http`, now it is `Http\Middleware`.
+All HTTP exceptions for example:
+
+- `Origin\Exception\NotFoundException` changed to `Origin\Exception\NotFoundException`
+
+These include BadRequest,Forbidden,HttpException,InternalError,MethodNotAllowed, ServiceUnavailable, NotImplemented.
+
 
 ## Controller Callbacks
 
@@ -128,6 +214,8 @@ The `Configure` class has been renamed to `Config`, depending upon the version y
 
 `Initialize` and `execute` methods have a return type of void.
 
+In your PHPUnit tests `startup` and `shutdown` also have a return type of void.
+
 ## Removed Features
 
 All previous deprecated features have been removed, the following functions have also been removed
@@ -146,3 +234,11 @@ All previous deprecated features have been removed, the following functions have
 ## PHPUnit
 
 The framework has been updated to work with PHPunit 8.3+. 
+
+## Migations
+
+The migration schema has changed, version is now a `bigint` field.
+
+## Note
+
+Log out of your existing application and delete any cookies to prevent possible errors.
