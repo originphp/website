@@ -137,7 +137,7 @@ $this->request->cookie('key','value');
 
 ## Getting the Session Object
 
-If you need get the session object for the request, then you can do so. The session object is the backend for `SessionHelper` and `SessionComponent`.
+If you prefer to work with the Session object from the request, you can do so. The session object is the backend for `SessionHelper` and `SessionComponent`.
 
 ```php
 $this->request->session()->write('key','value');

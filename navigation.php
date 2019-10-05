@@ -18,6 +18,7 @@ return [
             'Cookie Component' => 'docs/controller/cookie-component',
             'Flash Component' => 'docs/controller/flash-component',
             'Auth Component' => 'docs/controller/auth-component',
+            'Concerns' => 'docs/controller/concerns',
         ],
     ],
     'Models' => [
@@ -28,8 +29,8 @@ return [
             'Finding Records' => 'docs/model/finding-records',
             'Validation' => 'docs/model/validation',
             'Callbacks' => 'docs/model/callbacks',
-            'Behaviors' => 'docs/model/behaviors',
-            'Elasticsearch Behavior' => 'docs/model/elasticsearch-behavior',
+            'Concerns' => 'docs/model/concerns',
+            'Elasticsearch' => 'docs/model/elasticsearch-concern',
             'Repositories' => 'docs/model/repositories',
         ],
     ],

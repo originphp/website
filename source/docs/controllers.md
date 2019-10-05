@@ -325,14 +325,29 @@ class ContactsController extends ApplicationController
 
 The Controller has callbacks which are run before and after actions, and even in-between such as before rendering or before redirecting. If you want the callbacks to be run in every controller, then add them to the `ApplicationController` and all child controllers will run this. Just remember to call the parent one as well.
 
-### Before Action
 
-This is called before the action on the controller (but after initialize), here you can access or modify request data, check user permissions or session data. If you need too you can even stop the action from continuing by throwing an exception or redirecting to somewhere else.
+### Initialize
+
+This is method is really a hook so you don't have to overide the `__construct`, this is called when the `Controller` is created.
 
 ```php
 class PostsController extends ApplicationController
 {
-    public function beforeAction()
+    public function initialize()
+    {
+       $this->loadComponent('Auth');
+    }
+}
+```
+
+### Startup
+
+This is called before the action on the controller (but after `initialize`), here you can access or modify request data, check user permissions or session data. If you need too you can even stop the action from continuing by throwing an exception or redirecting to somewhere else.
+
+```php
+class PostsController extends ApplicationController
+{
+    public function startup()
     {
         if($this->Auth->isLoggedIn()){
             $this->Flash->info('Welcome back');
@@ -341,23 +356,40 @@ class PostsController extends ApplicationController
 }
 ```
 
-### After Action
+### Shutdown
 
 This is called after the controller action has been run and the view has been rendered, but before the response has been sent to the client.
 
 ```php
 class PostsController extends ApplicationController
 {
-    public function afterAction()
+    public function shutdown()
     {
         $this->doSomething();
     }
 }
 ```
 
-### Other Filters
+### Registering Additonal Callbacks
 
-There are two other filters in the controllers that you can use, and these are `beforeRender` and `beforeRedirect`.
+To register callbacks before the controller action, this will be called after the `startup` action in the controller, but before the controller action.
+
+```php
+$this->beforeAction('checkRequest');
+```
+
+To register callbacks after the controller action, this will be called before the `shutdown` action in the controller, but after the controller action.
+
+```php
+$this->afterAction('compressResponse');
+```
+
+There are two other events in the controllers that you can use to register callbacks, and these are `beforeRender` and `beforeRedirect`.
+
+```php
+$this->beforeRender('cacheView');
+$this->beforeRedirect('doSomethingIamOutOfIdeas');
+```
 
 ## Redirecting
 

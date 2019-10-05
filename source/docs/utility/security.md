@@ -95,8 +95,6 @@ $encrypted = 'ohRRdAydx+4wfOd7Vm+LHmmV9zBH+3r0WLQylyPMPu2RvCjX9FVgoeUBZuLYBTLM4x
 $plain = Security::decrypt($encrypted,$key);
 ```
 
-It will return `null` if it is unable to decrypt because the key or data is wrong. It will return `false`, if it might have been tampered with.
-
 ## Random
 
 To generate a cryptographically secure random string, the default length is 18.

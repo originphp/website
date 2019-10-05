@@ -1,10 +1,10 @@
 ---
-title: Elasticsearch Behavior
-description: Elasticsearch Behavior Guide for the OriginPHP Framework
+title: Elasticsearch Concern
+description: Elasticsearch Concern Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
-# Elasticsearch Behavior
+# Elasticsearch Concern
 
 If you need to improve performance of your application by moving search queries to Elasticsearch or implement more advanced searching, OriginPHP makes it ultra simple to implement Elasticsearch in your web application.
 
@@ -16,10 +16,10 @@ Here I will cover the configuration of Elasticsearch, the installation instructi
 
 ### Connection
 
-First you need to configure the Elasticsearch connection. In your configuration file `config/application.php` add the following
+First you need to configure the Elasticsearch connection. In your configuration file `config/application.php` add the following (or create a separate file and adjust the bootstrap);
 
 ```php
-use Origin\Utility\Elasticsearch;
+use Origin\Utility\Elasticsearch; // Utility
 
 Elasticsearch::config('default', [
     'host' => 'elasticsearch', // or 127.0.0.1 if not using the docker version
@@ -31,21 +31,21 @@ Elasticsearch::config('default', [
 
 ### Model
 
-Load the Elasticsearch Behavior, in the `initialize` method of the models that you want to implement Elasticsearch in.
+Add the Elasticsearch `Concern` to your `Model`.
 
 ```php
-public function initialize(array $config) : void
+use Origin\Model\Concern\ElasticSearch;
+
+class MyModel extends ApplicationModel
 {
-    $this->loadBehavior('Elasticsearch');
+    use ElasticSearch;
 }
 ```
 
-If you want to use a different connection, then you pass the `connection` key when loading the Elasticsearch Behavior.
+If you want to use a different connection, then you will need to set the `elasticSearchConnection` property on in your `Model`.
 
 ```php
-$this->loadBehavior('Elasticsearch',[
-    'connection'=>'other'
-    ]);
+protected $elasticSearchConnection = 'some-other-connection';
 ```
 
 Whenever you create or delete a record the Elasticsearch index will be updated in the background, providing you do not disable callbacks.
@@ -84,9 +84,9 @@ $results = $this->Post->search($query);
 If you want to customize the search function or use custom searches from within your model you can do it like this:
 
 ```php
-public function search($query)
+public function searchTitleAndBody(string $query)
 {
-    return $this->Elasticsearch->search([
+    return $this->search([
         'query' => [
             'multi_match' => [
                 'query' => $query,
@@ -99,17 +99,18 @@ public function search($query)
 
 ### Mapping
 
-By default, OriginPHP dynamically maps each column to Elasticsearch, all columns for the model will be stored in the index unless you tell it otherwise.
+By default, OriginPHP dynamically maps each column to Elasticsearch, all columns for the `Model` will be stored in the index unless you tell it otherwise.
 
 To manually map columns for the indexes, in your model call the index method for each column that you want to index. You can optionally pass an options array which takes settings from Elasticsearch [mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html).
 
 ```php
+use Origin\Model\Concern\ElasticSearch;
+
 class Article extends ApplicationModel
 {
+    use Elasticsearch;
     public function initialize(array $config) : void
     {
-        $this->loadBehavior('Elasticsearch');
-
         // Set the columns to index
         $this->index('title',['type'=>'keyword','analyzer'=>'english']);
         $this->index('body'); // this will dynamically map

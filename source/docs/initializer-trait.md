@@ -10,12 +10,12 @@ OriginPHP comes with the Initializer Trait which is enabled on both Controllers 
 
 ## Configuring the Trait
 
-Create a trait with the Trait suffix, and put the code that you want be called when the object using the trait is created in a method with the same name as the trait, but without the trait suffix.
+To create the initialization method, add `intialize` before the name of the trait, if the trait ends with Trait, this is ignored.
 
 ```php
 trait DeletableTrait
 {
-    public function deleteable()
+    protected function initializeDeleteable()
     {
         // put your initialization code here
     }

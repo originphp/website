@@ -6,15 +6,15 @@ section: content
 ---
 # Components
 
-Components are a way to share code between your controllers. When you create a component, you can use other components within the component and access the current controller.
+Components are objects that you can share between controller. When you create a component, you can use other components within the component and access the current controller.
 
 ## Creating a Component
 
-Create the component file in the `Controller/Component` folder.
+Create the component file in the `App/Http/Controller/Component` folder.
 
 ```php
 
-namespace app\Http\Controller\Component;
+namespace App\Http\Controller\Component;
 use Origin\Http\Controller\Component\Component;
 
 class MathComponent extends Component
@@ -32,8 +32,7 @@ class MathComponent extends Component
 }
 ```
 
-After a component is created the component `initialize` method will be called, this is where you can put any code
-that you need to be executed when a component is created. This is a hook so you don't need to override the `___construct()`.
+After a component is created the component `initialize` method will be called, this is where you can put any code that you need to be executed when a component is created. This is a hook so you don't need to override the `___construct()`.
 
 ## Loading Components
 
@@ -86,7 +85,7 @@ There are two callbacks which Components use `startup` and `shutdown`. To use th
 
 ### Startup callback
 
-This called after the controller `beforeAction` but before the controller action.
+This called after the controller `startup` but before the controller action.
 
 ```php
 public function startup()
@@ -97,7 +96,7 @@ public function startup()
 
 ### Shutdown callback
 
-This is called after the controller action but before the controller `afterAction`.
+This is called after the controller action but before the controller `shutdown`.
 
 ```php
 public function shutdown()

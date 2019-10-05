@@ -8,11 +8,17 @@ section: content
 
 ## Welcome
 
-Version 2 removes deprecated features and provides a more organized folder structure and makes it easier to work with given the number of folders that are now used. I been working full time on the framework to get this where it is now, changes going forward from here should be slow, with a focus on improving code base, developing and testing with future PHP versions, bug and security fixes.
+Version 2 removes deprecated features and provides a more organized folder structure and makes it easier to work with given the number of folders that are now used. 
+
+Other changes such as strict return types and changes to take advantage of newer PHP features. For example, `Model` and `Controller` callbacks have been redesigned to be registered and work with `Concerns` in a powerful way.
+
+I have been working full time on the framework to get this where it is now, changes going forward from here should be slow, with a focus on improving code base, developing and testing with future PHP versions, bug and security fixes.
+
+I will be happy to help you with upgrading if you contact me within the following weeks, just send me an email to `js@originphp.com`.
 
 ## Not Upgrading
 
-Firstly, if you don't want to upgrade to the new version then you will need to update your `composer.json` file, to ensure that when you run composer update you download version 2.x, the `composer.json` file from most versions of the framework will just update to the latest version automatically.
+Firstly, if you don't want to upgrade to the new version then you will need to update your `composer.json` file, to ensure that when you run `composer update` it does not download version 2.x, the `composer.json` file from most versions of the framework will just update to the latest version automatically.
 
 > Very early versions of the framework might trigger errors when upgrading to later versions
 
@@ -189,7 +195,18 @@ These include BadRequest,Forbidden,HttpException,InternalError,MethodNotAllowed,
 
 ## Controller Callbacks
 
-`beforeFilter` and `afterFilter` have been renamed to `beforeAction` and `afterAction` respectively.
+`beforeFilter` and `afterFilter` have been renamed to `startup` and `shutdown` respectively, these do not need to be registered. 
+
+You can register additional callbacks which are called between these, using the following methods
+
+```php
+$this->beforeAction('checkRequest');
+$this->afterAction('cleanResponse');
+$this->beforeRedirect('logSomething');
+$this->beforeRender('cacheView');
+```
+
+If you have used `beforeRedirect` or `beforeRender` rename these, and then register as above.
 
 ## Connection
 
@@ -200,9 +217,21 @@ Console commands with the `datasource` option has been renamed to `connection` o
 
 ## Model Callbacks
 
-Model callbacks have been changed completely, before callbacks must return true to continue, and the arguments are both the entity and an `ArrayObject` with the option. With the exception, before and after find.
+Model callbacks have been changed completely, the return types and and the arguments are both the entity and an `ArrayObject` with the option. With the exception, `beforeFind` and `afterfind`. The `afterfind` first argument is always a `Origin\Model\Collection`, even if you are doing find first.
 
-After find now always returns a collection even if you are doing a find first.
+Callbacks are now registered but use the same name for registration so any callbacks that have used you will need to rename the existing callback, by adding a callbacks suffix, then just defining it. For example:
+
+```php
+public function initialize(array $config)
+{
+  $this->beforeFind('beforeFindCallback');
+}
+
+public function beforeFindCallback(ArrayObject $options) : bool
+{
+    return true;
+}
+```
 
 See [Callbacks guide](https://www.originphp.com/docs/model/callbacks/) for more information.
 
@@ -212,9 +241,13 @@ The `Configure` class has been renamed to `Config`, depending upon the version y
 
 ## Return Types
 
-`Initialize` and `execute` methods have a return type of void.
+`Initialize` and `execute` methods have a return type of void, except in Service Objects where the execute method should return nothing or a `Result` object.
 
 In your PHPUnit tests `startup` and `shutdown` also have a return type of void.
+
+## Middlware
+
+Previously Middlware used `startup` and `shutdown` as aliases for `invoke` and `process`, this has been changed, and startup and shutdown now callbacks inline with rest of framework. Rename your Middleware `startup` to `invoke` and `shutdown` to `process`.
 
 ## Removed Features
 
@@ -229,19 +262,38 @@ All previous deprecated features have been removed, the following functions have
 
 ## Other Changes
 
-- Security::uid returns base 62 string with a length of 15. e.g 64cjBxfz2JPhyCQ
+- Security::uid returns base 62 string with a length of 15. e.g `64cjBxfz2JPhyCQ`
 
 ## PHPUnit
 
-The framework has been updated to work with PHPunit 8.3+. 
+The framework has been updated to work with PHPUnit 8.3+. 
 
 ## Migations
 
-The migration schema has changed, version is now a `bigint` field.
+The [migration schema](https://github.com/originphp/app/blob/master/database/migrations.php) has changed, version is now a `bigint` field. You will need to reload the schema into your database.
 
 ## Cookies
 
 When writing cookies, setting the expiration is done via the options array, now the third argument, in any class that allows you to write cookies.
+
+```php
+$this->response->cookie('key','value',['expires'=>'+ 10 days']);
+$this->Cookie->write('key','value',['expires'=>'+ 10 days']);
+```
+
+## Initialization Trait
+
+If you have used the Initialization trait, then you will need to change the initialization method name, which now must include the prefix initialize
+
+```php
+trait  Foo
+{
+  protected function initializeFoo()
+  {
+
+  }
+}
+```
 
 ## Note
 
