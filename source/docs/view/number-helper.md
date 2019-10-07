@@ -101,7 +101,7 @@ echo $this->Number->percent(0.3333333333, 2, ['multiply'=>true]);// 33.33%
 
 ## Parsing
 
-OriginPHP comes with the Delocalize Behavior, which automatically converts dates,numbers to and from the database. You can disable this in the `ApplicationModel` initialize method.
+OriginPHP comes with the `Delocalizable` `Concern`, which automatically converts dates,numbers to and from the database. You can disable this in the `ApplicationModel` initialize method.
 
 The number formatter assumes that the numbers are do not have a thousands separator and the decimal point is
 `.`. You can delocalize the user inputted data in the middleware, the controller or model. The simplest way is to use the model callbacks such as `beforeValidate` or `beforeSave`.

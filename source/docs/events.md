@@ -20,15 +20,14 @@ class Order extends Model
     
     public function initialize(array $config) : void
     {
+        $this->afterCreate('newOrder'); // Register callback
         $this->subscribe('OrderNotifier'); #2
+         
     }
 
-    public function afterSave(Entity $entity, ArrayObject $options) : void
+    public function newOrder(Entity $entity, ArrayObject $options) : void
     {
-        if($created)
-        {
-            $this->publish('orderCreated',$entity); #3
-        }
+         $this->publish('orderCreated',$entity); 
     }
 }
 ```
@@ -42,6 +41,8 @@ Lets create a listener, this will create the file  `app/Listener/OrderNotifierLi
 ```php
 $ bin/console generate listener OrderNotifier
 ```
+
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
 
 Add the `orderCreated` method
 

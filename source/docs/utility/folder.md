@@ -70,12 +70,18 @@ This will return an array of arrays of files, like this
 [
     [
         'name' => 'foo.txt',
+        'path' => '/var/www/my_directory'
         'size' => 1234,
         'timestamp' => 14324234,
         'type' => 'file'
     ]
 ]
+```
 
+You can also get the listing recursively
+
+```php
+$results = Folder::list('/path/somedirectory',['recursive'=>true]);
 ```
 
 To include directories in the results

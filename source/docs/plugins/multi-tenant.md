@@ -1,44 +1,23 @@
 ---
-title: Multi Tenant Plugin
-description: Multi Tenant Plugin Guide for the OriginPHP Framework
+title: MultiTenant Plugin
+description: MultiTenant Plugin Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
-# Multi Tenant Plugin
+# MultiTenant Plugin
 
 The `MultiTenant` plugin enables you to make your web application multi-tenant using a single database.
 
-## Installation
-
-### Automated
-
-Install the the `MultiTenant` plugin using the `plugin:install` command
-
-```linux
-$ bin/console plugin:install originphp/multi_tenant
-```
-
-> The plugin:install command requires that the git command line tools are installed
-
-### Manually
-
-To install the plugin manually, download the source into `plugins/multi_tenant`.
-
-Add the following line to `config/bootstrap.php`
-
-```php
-Plugin::load('MultiTenant');
-```
-
 ## Models
 
-Extend any models using the `MultiTenantModel` and then add the column `tenant_id` to your database (and schema)
+Add the `Tenantable` trait to any model and then add the column `tenant_id` to your database (and schema)
 
 ```php
-use MultiTenant\MultiTenantModel;
-class Contact extends MultiTenantModel
-{
+use MultiTenant\Tenantable;
 
+class Contact extends ApplicationModel
+{
+    use Tenantable;
 }
 ```
 
@@ -71,4 +50,4 @@ Tenant::initialize($userId, [
 ]);
 ```
 
-That is it, as long a tenant is initialized, any model finds will add the `tenant id`, and when you create a record the tenant id will be added automatically.
+That is it, as long the `Tenant` instance has been initialized, any model that finds will add the `tenant id` to query, and when you create a record the tenant id will be added automatically.

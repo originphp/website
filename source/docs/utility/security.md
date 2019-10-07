@@ -125,13 +125,14 @@ To generate a random UUID (version 4)
 $uid = Security::uuid(); // 38c67382-d3ab-4430-a27e-0c719813c09f
 ```
 
-For a version 1 UUID using a random MAC address and the current timestamp.
+For a version 1 UUID, set MAC address to true, this will find the MAC address on Linux systems or generate a random
+one if it can not get this.
 
 ```php
-$uid = Security::uuid(['timestamp'=>true]); // ac337932-e4e5-11e9-928f-8bda39fe8887
+$uid = Security::uuid(['macAddress'=>true]); // ac337932-e4e5-11e9-928f-8bda39fe8887
 ```
 
-For a version 1 UUID using a provided MAC address and the current timestamp.
+You can also set the MAC address manually.
 
 ```php
 $uid = Security::uuid(['macAddress'=>'00:0a:95:9d:68:16']); // 769c6fa4-e4e5-11e9-b8d5-000a959d6816

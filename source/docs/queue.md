@@ -59,6 +59,8 @@ To create a Job and its test file run the following command
 $ bin/console generate job SendWelcomeEmail
 ```
 
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
+
 Jobs are stored in the `app/Job` folder and must have the `execute` method, any arguments you pass during dispatching will be passed along here.
 
 ```php

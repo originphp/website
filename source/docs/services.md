@@ -32,6 +32,8 @@ Use the generate command to create the Service and its test for you
 $ bin/console generate service CreateNewUser
 ```
 
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
+
 An example Service might look this, remember to store any dependencies that you injected as protected
 properties so you can use them later in the execute method.
 

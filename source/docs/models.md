@@ -65,7 +65,7 @@ Remember, you can use the code generation tool to do this for you. The code gene
 $ bin/console generate model Product
 ```
 
-For more information see [code generation](/docs/development/code-generation)
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
 
 Then create the table for the model, which should be lower case, underscored and plural, in this example it would
 be called `products`.
@@ -445,14 +445,14 @@ If you wish to save extra data to the join table or use callbacks then you shoul
 
 When saving records you can pass an array of options
 
-- validate: default is true, whether to validate data
-- callbacks: default is true. whether to trigger callbacks such as beforeSave etc.
-- transaction: default is true, whether to wrap the save in a database transaction 
-- associated: default is true. here you can specify an array of associated model names that you want to save data for, or true or false. true will enable saving on the first level of assocations.
+- validate: default is `true`, whether to validate data
+- callbacks: default is `true`. whether to trigger callbacks such as beforeSave etc.
+- transaction: default is `true`, whether to wrap the save in a database transaction 
+- associated: default is `true`. here you can specify an array of associated model names that you want to save data for, or true or false. true will enable saving on the first level of assocations.
 
 ## Updating a single column
 
-If you need to just update one column, note no validation or callbacks will be triggered when using saveField
+If you need to just update one column, note that no validation checks or callbacks will be triggered when using `updateColumn`.
 
 ```php
     $this->Article->updateColumn(1024,'title','New Article Title');
@@ -508,29 +508,15 @@ Callbacks get called a certain moments during a certain lifecycle, such as creat
 - beforeValidate
 - afterValidate
 - beforeSave
-- beforeCreate
-- beforeUpdate
-- afterCreate
-- afterUpdate
+- beforeCreate/beforeUpdate
+- afterCreate/afterUpdate
 - afterSave
-- afterCommit
-- afterRollback
+- afterCommit/afterRollback
 
 ## Deleting Records
 
 - beforeDelete
 - afterDelete
-- afterCommit
-- afterRollback
+- afterCommit/afterRollback
 
 You can find more information about these in the [Callbacks Guide](/docs/model/callbacks).
-
-Hint: If you are using a good ide like [Visual Studio Code](https://code.visualstudio.com/), when you type in the function name, it will autocomplete the function including the arguments.
-
-## Behaviors
-
-You can extend your models with behaviors and share these across models. Behaviors are similar to [components](/docs/controller/components) and you can find more information by seeing the [behaviors guide](/docs/model/behaviors).
-
-### Initializer Trait
-
-Models have the `InitializerTrait` enabled, enables you to use an initialization method on traits. See the [InitializerTrait guide](/docs/initializer-trait) for more information.

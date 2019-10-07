@@ -106,9 +106,10 @@ return [
         'url' => 'docs/plugins',
         'children' => [
             'User Authentication' => 'docs/plugins/user-authentication',
-            'Multi Tenant' => 'docs/plugins/multi-tenant',
+            'MultiTenant' => 'docs/plugins/multi-tenant'
         ],
     ],
+    
     'Upgrade Guide' => [
         'url' => 'docs/upgrade',
     ],

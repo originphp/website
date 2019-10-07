@@ -10,7 +10,9 @@ The configuration for your application can be found in the `config` folder. Ther
 
 ## Environment Settings
 
-When you first create a project, rename the `.env.php.default` to `.env.php` and set your information there. This information is specific to your current installation.
+When you first create a project with composer,it will rename the `.env.php.default` to `.env.php` and set your information there. This information is specific to your current installation. 
+
+As you build your application then will be some custom variables that you use, make sure you always add these definitions to the `.env.php.default` template, since the `.env.php` wont be stored in the git repository for security reasons. This way when you deploy your app to a new server, simply rename the template and fill out the details.
 
 ## Config Class
 
@@ -27,7 +29,7 @@ $bool Config::exists('key');
 
 ## DotEnv
 
-By default OriginPHP will look for a `.env.php` file in the your `config` folder. However, if you need to use `.env` script, then in your `config/bootstrap.php` you can add the following code:
+By default OriginPHP will look for a `.env.php` file in the your `config` folder, this has been designed due to the overhead in parsing a traditional.env, but most frequently it not used beyond setting simple values. However, if you need to use a `.env` script, then in your `config/bootstrap.php` you can add the following code:
 
 ```php
 use Origin\Core\DotEnv;

@@ -19,7 +19,19 @@ You can create helpers, which are like components, and can contain logic for cre
 
 ## Creating Helpers
 
-Helpers are stored in the `View/Helper` folder of your app. Here is an example of a simple helper:
+Helpers are stored in the `View/Helper` folder of your app. 
+
+To create a `helper`, run the following command
+
+```linux
+$ bin/console generate helper Foo
+```
+
+This will create the `Helper` and its test files.
+
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
+
+Here is an example of a simple helper:
 
 ````php
 namespace app\Http\View\Helper;

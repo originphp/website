@@ -24,6 +24,8 @@ This will create 4 files
 [ OK ] /var/www/app/Mailer/Template/welcome_email.text.ctp
 ```
 
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
+
 Now open `app/Mailer/SendWelcomeEmail.php` and adjust the email subject
 
 ```php

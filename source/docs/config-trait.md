@@ -6,7 +6,7 @@ section: content
 ---
 # Config Trait
 
-Components, helpers and behaviors work with the `ConfigTrait`, to standardize the configuration process.
+Components and helpers work with the `ConfigTrait`, to standardize the configuration process.
 
 When you load one these classes and supply a configuration, it will be merged with the default configuration.
 

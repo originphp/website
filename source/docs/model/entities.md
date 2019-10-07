@@ -233,7 +233,7 @@ echo $user->full_name;
 
 #### Virtual Fields
 
-You can also set this as a virtual field so that when you export data to json, xml or an array this value is included. Add the fields to the `_virtual` property.
+You can also set `aacessors` as virtual fields so that when you export data to json, xml or an array this value is included. Add the fields to the `_virtual` property.
 
 ```php
 class User extends Entity
@@ -242,7 +242,7 @@ class User extends Entity
 }
 ```
 
-#### Mutator
+### Mutator
 
 To create a mutator
 

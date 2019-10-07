@@ -6,9 +6,9 @@ section: content
 ---
 # Concerns
 
-Concerns are `traits` which you use to share code between models or change the behavior of the `Model` that it is attached too. Concerns for models go in the `app/Model/Concern` folder.
+A `Concern` is code which you share between `Models` that go in the `app/Model/Concern` folder. Do not use `Concerns` to reduce code in your `Models` that is an anti-pattern, only use a `Concern` when you need to share code across multiple `Models` or create a behavior that can be dropped into a `Model`.
 
-The first thing to do is generate some code
+The first thing to do, is generate the classes
 
 ```linux
 $ bin/console generate concern_model Sluggable
@@ -21,7 +21,101 @@ This will create two files
 [ OK ] /var/www/tests/TestCase/Model/Concern/SluggableTest.php
 ```
 
-Then we will adjust this to register a callback for `beforeSave`
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
+
+## How to Use
+
+Since `Concerns` are `traits`, you can add to any `Model` like this
+
+```php
+use App\Model\Concern\Sluggable;
+class User extends ApplicationModel
+{
+  use Sluggable;
+}
+```
+
+## Callbacks
+
+You can use callbacks with `Concerns`, the initialization method are `Concern` starts with Initialize then has the trait name (without the Trait suffix), for example `initializeTagabble`.
+
+### Initialization
+
+When the `Model` is created, the initialization method for the `Concern` is called, if it exists, from here you can setup the `Concern`.
+
+```php
+namespace App\Model\Concern;
+
+trait MyConcern
+{
+    protected function initializeMyConcern() : void
+    {
+    }
+}
+```
+
+### Registering Callback from the Concern
+
+To be able to use `Model` callbacks with your `Concern` you must register them, using the `Model` callback registration method such as `beforeFind`, `afterFind` etc.
+
+```php
+protected function initializeMyConcern() : void
+{
+  $this->afterFind('modifyResults');
+}
+
+protected function modifyResults(Collection $results, ArrayObject $options) : void
+{
+  foreach($results as $article){
+    ...
+  }
+}
+```
+
+For more information see the [Model Callbacks Guide](/docs/model/callbacks) 
+
+### Available Callback Events
+
+The available callback events in the order that they are called:
+
+** Finding ** 
+- beforeFind
+- afterFind
+
+** Saving **
+
+- beforeValidate
+- afterValidate
+- beforeSave
+- beforeCreate/beforeUpdate
+- afterCreate/afterUpdate
+- afterSave
+- afterRollback/afterCommit
+
+** Deleting ** 
+- beforeDelete
+- afterDelete
+- afterRollback/afterCommit
+
+For more information see the [Model Callbacks Guide](/docs/model/callbacks) 
+
+### Disabling callbacks
+
+To disable a callback use the `Model` method:
+
+```php
+$this->disableCallback('processResults');
+```
+
+Then to re-enable:
+
+```php
+$this->enableCallback('processResults');
+```
+
+## Model Concern
+
+Here is an example `Model` `Concern`
 
 ```php
 namespace App\Model\Concern;
@@ -67,29 +161,6 @@ class Article extends ApplicationModel
 {
   use Sluggable;
 }
-```
-
-### Initializer Trait
-
-Models have the `InitializerTrait` enabled, enables you to use an initialization method on traits. See the [InitializerTrait guide](/docs/initializer-trait) for more information.
-
-
-## Registering Callbacks
-
-As the `Concern` is attached to the model, you can register [callbacks](/docs/model/callbacks) from within the `Concern`.
-
-## Disabling callbacks
-
-To disable a callback from within the `Model`:
-
-```php
-$this->disableCallback('slugTitle');
-```
-
-Then to re-enable:
-
-```php
-$this->enableCallback('slugTitle');
 ```
 
 ## Model Concerns

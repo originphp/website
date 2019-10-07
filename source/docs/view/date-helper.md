@@ -66,7 +66,7 @@ echo $this->Date->timeAgoInWords($article->created); // 3 minutes ago
 
 ## Parsing
 
-OriginPHP comes with the Delocalize Behavior, which automatically converts dates,numbers to and from the database. You can disable this in the `ApplicationModel` initialize method.
+OriginPHP comes with the `Delocalizable` `Concern` which automatically converts dates,numbers to and from the database. You can disable this in the `ApplicationModel` initialize method.
 
 If you need to manually parse dates etc, use the Date utility. The date formatter assumes that the dates that you are formatting are in MySQL format, e.g. Y-m-d H:i:s. You can use the Date utility to delocalize user submitted data to convert to this format and timezone.
 

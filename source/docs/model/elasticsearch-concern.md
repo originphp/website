@@ -54,7 +54,7 @@ Whenever you create or delete a record the Elasticsearch index will be updated i
 
 ### Searching
 
-To carry out a search use the model, which will have new methods from the Behavior.
+To carry out a search use the model, which will have new methods from the `Concern`.
 
 To search using keywords or a [query string](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html) on columns in your index
 

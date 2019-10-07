@@ -245,14 +245,42 @@ The `Configure` class has been renamed to `Config`, depending upon the version y
 
 In your PHPUnit tests `startup` and `shutdown` also have a return type of void.
 
-## Middlware
+## Middleware
 
-Previously Middlware used `startup` and `shutdown` as aliases for `invoke` and `process`, this has been changed, and startup and shutdown now callbacks inline with rest of framework. Rename your Middleware `startup` to `invoke` and `shutdown` to `process`.
+Previously Middleware used `startup` and `shutdown` as aliases for `invoke` and `process`, this has been changed, and startup and shutdown now callbacks inline with rest of framework. Rename your Middleware `startup` to `invoke` and `shutdown` to `process`.
+
+## Behaviors
+
+### Framework References
+
+In your models any references to old framework behaviors need to be adjusted to their equivalent as a `Concern`. 
+
+```php
+namespace App\Model;
+
+use Origin\Model\Model;
+use Origin\Model\Concern\Delocalizable;
+use Origin\Model\Concern\Timestampable;
+
+class ApplicationModel extends Model
+{
+    use Timestampable,Delocalizable;
+    public function initialize(array $config): void
+    {
+    }
+}
+```
+
+### Custom Behaviors
+
+If you have created any custom Behaviors, these will be need to converted to `Concerns`, the code will be almost identical, except you dont need to reference `$this->model` since a `Concern` is a trait.
+
 
 ## Removed Features
 
 All previous deprecated features have been removed, the following functions have also been removed
 
+- Behaviors
 - Text::random
 - uuid
 - left

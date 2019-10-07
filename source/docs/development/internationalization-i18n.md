@@ -87,7 +87,7 @@ By default, if the string for a zero count is not available it will use the othe
 
 ## Parsing User Input
 
-OriginPHP can parse users input (dates,numbers,time) using its own parsing functions or the PHP Intl extension. The framework also comes with the `DelocalizeBehavior` which uses the `Utility\Date` and `Utility\Number` classes to parse dates and numbers automatically.
+OriginPHP can parse users input (dates,numbers,time) using its own parsing functions or the PHP Intl extension. The framework also comes with the `Delocalizable` `Concern` which uses the `Utility\Date` and `Utility\Number` classes to parse dates and numbers automatically.
 
 ### Parsing Numbers
 

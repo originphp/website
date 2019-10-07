@@ -18,6 +18,8 @@ Using the generate command you can quickly create a new Middleware class.
 $ bin/console generate middleware Foo
 ```
 
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
+
 This is what it will look like
 
 ```php
@@ -34,10 +36,11 @@ class FooMiddleware extends Middleware
      * @param \Origin\Http\Request $request
      * @return void
      */
-    public function invoke(Request $request) : void
+    public function handle(Request $request) : void
     {
         $request->data('foo','bar'); // Change the request data
     }
+    
      /**
      * Processes the response. This is run on all middlewares after the
      * request has been handled.

@@ -6,11 +6,29 @@ section: content
 ---
 # Callbacks
 
-There are various callbacks which can be used and are triggered on certain events, from the initialize method register the callback by using the event name.
+Models callbacks need to be registered to an an event, this provides great flexability and power when using `Concerns`.
 
-> The before callbacks do not need to return true to continue, just if they return false then the callback cycle is stopped.
+With the exception of the `beforeFind` and `afterFind` all callbacks will pass two arguments `Entity $entity` and `ArrayObject $options`. You can cancel callbacks by returning `false` in `before` callback events.
 
-## beforeFind
+## Initialize
+
+This is method is really a hook so you don't have to overide the `__construct`, this is called when a `Model` is created.
+
+```php
+class User extends ApplicationModel
+{
+    public function initialize(array $config) : void
+    {
+       
+    }
+}
+```
+
+## Callback Registration
+
+To register a callback in the `initialize` method set the name of the method that you want to call on a specific event.
+
+### beforeFind
 
 This is triggered before any find operation, the query options converted into an `ArrayObject` and then passed to the callback. Return `false` to halt the callbacks and find operation.
 
@@ -26,12 +44,11 @@ public function doSomething(ArrayObject $options) : bool
 }
 ```
 
-## afterFind
+### afterFind
 
-This is triggered after a find first or find all operation, regardless if the the find is a find first or find all, a `Collection` will be returned.
+This is triggered after a find first or find all operation, regardless if the the find is a find first or find all, a `Origin\Model\Collection` will be returned.
 
 ```php
-use Origin\Model\Collection;
 public function initialize(array $config) : void
 {
   $this->afterFind('modifyResults');
@@ -45,7 +62,7 @@ public function modifyResults(Collection $results, ArrayObject $options) : void
 }
 ```
 
-## beforeValidate
+### beforeValidate
 
 This is triggered just before data is validated. Use this callback to modify data before validate. Return `false` to halt the callbacks and save operation.
 
@@ -72,7 +89,7 @@ public function initialize(array $config) : void
 }
 ```
 
-## afterValidate
+### afterValidate
 
 This is triggered after the data has been validated, even if validation fails this callback is executed. You can get the validation errors from the entity by calling `errors` on the entity.
 
@@ -100,7 +117,7 @@ public function initialize(array $config) : void
 }
 ```
 
-## beforeSave
+### beforeSave
 
 This is triggered before any save operation. The `options` object contains the options that were passed to the `save` method. Return `false` to halt the callbacks and save operation.
 
@@ -127,7 +144,7 @@ public function initialize(array $config) : void
 }
 ```
 
-## beforeCreate
+### beforeCreate
 
 This is triggered before a record is created in the database but after `beforeSave` is triggered. The `options` object contains the options that were passed to the `save` method. Return `false` to halt the callbacks and save operation.
 
@@ -142,7 +159,7 @@ public function prepareNewRecord(Entity $entity, ArrayObject $options) : bool
 }
 ```
 
-## beforeUpdate
+### beforeUpdate
 
 This is triggered before an existing record is updated but after `beforeSave` is triggered. The `options` object contains the options that were passed to the `save` method. Return `false` to halt the callbacks and save operation.
 
@@ -157,7 +174,7 @@ public function prepareForDb(Entity $entity, ArrayObject $options) : bool
 }
 ```
 
-## afterCreate
+### afterCreate
 
 This is triggered after a record is created in the database but before `afterSave` is triggered. The `options` object contains the options that were passed to the `save` method.
 
@@ -171,7 +188,7 @@ public function logNewRecord(Entity $entity, ArrayObject $options) : void
 }
 ```
 
-## afterUpdate
+### afterUpdate
 
 This is triggered after an existing record is updated but before `afteSave` is triggered. The `options` object contains the options that were passed to the `save` method.
 
@@ -185,7 +202,7 @@ public function doSometing(Entity $entity, ArrayObject $options) : void
 }
 ```
 
-## afterSave
+### afterSave
 
 This is triggered after a save operation. The `options` object contains the options that were passed to the `save` method.
 
@@ -213,7 +230,7 @@ public function initialize(array $config) : void
 }
 ```
 
-## beforeDelete
+### beforeDelete
 
 This is triggered just before a record is deleted. Use this callback to carry out tasks before a record is deleted. Return `false` to halt the callbacks and delete operation.
 
@@ -229,7 +246,7 @@ public function doSomething(Entity $entity, ArrayObject $options) : bool
 }
 ```
 
-## afterDelete
+### afterDelete
 
 This is triggered after a record is deleted.
 
@@ -244,7 +261,7 @@ public function doSomething(Entity $entity, ArrayObject $options) : void
 }
 ```
 
-## afterCommit
+### afterCommit
 
 This is triggered after data from a transaction has been committed.
 
@@ -272,7 +289,7 @@ public function initialize(array $config) : void
 }
 ```
 
-## afterRollback
+### afterRollback
 
 This is triggered after data from a transaction has been committed.
 
@@ -298,12 +315,26 @@ public function initialize(array $config) : void
 }
 ```
 
-## onError
+## onError Callback
 
-This callback is a special callback, it is triggered if an exception is caught during the operation, this callback does not need to be registered, just create the method in your `Model`.
+If your `Model` has an `onError` method it will be called if an exception is raised during a database operation.
 
 ```php
 public function onError(\Exception $exception) : void
 {
 }
+```
+
+## Disabling callbacks
+
+You can also disable any callbacks that you have registered.
+
+```php
+$this->disableCallback('checkCount');
+```
+
+Then to re-enable:
+
+```php
+$this->enableCallback('checkCount');
 ```

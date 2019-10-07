@@ -216,48 +216,10 @@ class BookmarkTest extends OriginTestCase
 
 ```
 
-## Testing Behaviors
-
-Lets say you created a Behavior to translate records after they have been retrieved
-
-```php
-namespace App\Test\Model\Behavior;
-
-use Origin\Model\Model;
-use Origin\Model\ModelRegistry;
-use App\Model\Behavior\DuckBehavior;
-use Origin\TestSuite\OriginTestCase;
-
-class TranslateBehaviorTest extends OriginTestCase
-{
-    /**
-    * Use fixture to import data
-    *
-    * @var array
-    */
-    public $fixtures = ['Article'];
-
-    public function startup() : void
-    {
-        parent::startup();
-
-        $this->Article = ModelRegistry::get('Article');
-        $this->Translate = new TranslateBehavior($this->Article,[
-            'language'=>'es'
-            ]);
-    }
-
-    public function testSomething()
-    {
-        $article  = $this->Article->findById(1000);
-        $this->assertEquals('Hola Mundo',$article->title); // was hello world
-    }
-}
-```
 
 ## Testing Private or Protected Methods or Properties
 
-There will be times you will want to test that protected or private methods or property, we have included a `TestTrait` to make this very easy.  There is a big debate on whether this should be done or just test the public methods and properties. I think it should be down to the specific case, for example if you look at our Email test, I wanted more control and each method to have its own test, I find this easier to write, manage and maintain.
+There will be times you will want to test that protected or private methods or property, we have included a `TestTrait` to make this very easy.  There is a big debate on whether this should be done or just test the public methods and properties. 
 
 ```php
     public function testFrom()
@@ -693,7 +655,7 @@ $command = $this->command();
 
 ## Testing Middleware
 
-In the example below you will test Middleware, which sets the response body to foo. 
+In the example below you will test Middleware which sets the response body to foo. 
 
 ```php
 namespace App\Test\Middleware;
@@ -732,22 +694,21 @@ class FooMiddlewareTest extends OriginTestCase
 }
 ```
 
-If you created a complicated Middleware or want to test at different stages
+If you created a complicated Middleware or just want to test at different stages
 
 ```php
    public function testHandle()
     {
         $middleware = new FooMiddleware();
-        $middleware->startup($request); // handles request
+        $middleware->handle($request); // handles request
         // now check the request object
     }
 
     public function testResponseProcess()
     {
         $middleware = new FooMiddleware();
-        $middleware->startup($request); // handles request
-        $middleware->shutdown($request,$response); // handles response
-        // now check the response object
+        $middleware->handle($request); // handles request
+        $middleware->process($request,$response); // handles response
     }
 ```
 
@@ -763,12 +724,12 @@ Queue::config('default', [
 ]);
 ```
 
-Also make you have you added the queue schema to your `database/schema.php` file, then when you run the `db:test:prepare` command this will be setup.  If you have upgraded from an older version make sure you are using the recent version of [queue.php](https://github.com/originphp/app/blob/master/database/queue.php) 
+Also make you have you added the queue schema to your `database/schema.php` file, then when you run the `db:test:prepare` command this will be setup.
 
 If not you can import
 
 ```linux
-$ bin/console db:schema:load queue --datasource=test
+$ bin/console db:schema:load queue --connection=test
 ```
 
 A test for a Job would look something like this

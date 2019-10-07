@@ -49,13 +49,15 @@ Any methods which are not supposed to be actions, should be set to `private` or 
 
 If you want to add logic when the controller is created, you can do so in the `initialize` method.
 
-Remember, you can use the code generation tool to create the Controller and ControllerTest for you.
+## Creating Controllers
+
+To create a `Controller` and its test file
 
 ```linux
 $ bin/console generate controller Products
 ```
 
-For more information see [code generation]((/docs/development/code-generation))
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
 
 ## Models
 
@@ -333,7 +335,7 @@ This is method is really a hook so you don't have to overide the `__construct`, 
 ```php
 class PostsController extends ApplicationController
 {
-    public function initialize()
+    public function initialize() : void
     {
        $this->loadComponent('Auth');
     }
@@ -531,7 +533,3 @@ You can pass an array with the following keys, which are the same as used in Mod
             ]
     ];
 ```
-
-### Initializer Trait
-
-Controllers have the `InitializerTrait` enabled, enables you to use an initialization method on traits. See the [InitializerTrait guide](/docs/initializer-trait) for more information.

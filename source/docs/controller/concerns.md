@@ -6,9 +6,9 @@ section: content
 ---
 # Concerns
 
-Concerns are `traits` which you use to share code between Controllers, these go in the `app/Http/Controller/Concern` folder.
+A `Concern` is code which you share between `Controllers` that go in the `app/Http/Controller/Concern` folder. Do not use `Concerns` to reduce code in your `Controllers` that is an anti-pattern, only use a `Concern` when you need to share code across multiple `Controllers`.
 
-The first thing to do is generate some code
+The first thing to do, is generate the classes
 
 ```linux
 $ bin/console generate concern_controller UserLimit
@@ -21,7 +21,80 @@ This will create two files
 [ OK ] /var/www/tests/TestCase/Http/Controller/Concern/UserLimitTest.php
 ```
 
-Then we will adjust add some functionality to demonstrate
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
+
+## How to Use
+
+Since `Concerns` are  `traits`, you can add to any `Controller` like this
+
+```php
+use App\Http\Controller\Concern\UserLimit;
+class ArticlesController extends ApplicationController
+{
+  use UserLimit;
+}
+```
+
+## Callbacks
+
+You can use callbacks with `Concerns`, the initialization method for `Concerns` starts with initialize then has the trait name (without the Trait suffix), for example `initializeUserLimiter`.
+
+### Initialization
+
+When the `Controller` is created, the initialization method for the `Concern` is called, if it exists, from here you can register callbacks or run other functions if needed.
+
+```php
+namespace App\Http\Controller\Concern;
+
+trait MyConcern
+{
+    protected function initializeMyConcern() : void
+    {
+    }
+}
+```
+
+### Registering Callback from the Concern
+
+To be able to use `Controller` callbacks with your `Concern` you must register them, using the `Controller` methods `beforeAction`, `afterAction`, `beforeRedirect` or `beforeRender`.
+
+```php
+protected function initializeMyConcern() : void
+{
+    $this->beforeAction('checkRequest');
+}
+protected function checkRequest()
+{
+    // your code here
+}
+```
+
+### Available Callback Events
+
+The available callback events are
+
+- `beforeAction` - This is called after the controller `startup` callback, but before the controller action
+- `afterAction` - This is called after the controller action but before the controller `shutdown` callback
+- `beforeRender` - Called before the render process starts
+- `beforeRedirect` - Called before any redirect takes place
+
+### Disabling callbacks
+
+To disable a callback use the `Controller` method:
+
+```php
+$this->disableCallback('checkCount');
+```
+
+Then to re-enable:
+
+```php
+$this->enableCallback('checkCount');
+```
+
+## Controller Concern Example
+
+Here is a random example to demonstrate how you an use callbacks with `Concerns`
 
 ```php
 namespace App\Http\Controller\Concern;
@@ -73,31 +146,3 @@ class ArticlesController extends ApplicationController
 }
 ```
 
-## Initializer Trait
-
-Controllers have the `InitializerTrait` enabled, enables you to use an initialization method on traits. See the [InitializerTrait guide](/docs/initializer-trait) for more information.
-
-## Registering Additional Callbacks
-
-As the `Concern` is attached to the `Controller` you can use the controller functions to register additional callbacks on a number of events, `beforeAction`,`afterAction`,`beforeRender` and `beforeRedirect`.
-
-```php
-$this->beforeAction('checkCount');
-$this->afterAction('updateCount');
-$this->beforeRender('cacheView');
-$this->beforeRedirect('doSomethingIamOutOfIdeas');
-```
-
-## Disabling callbacks
-
-To disable a callback from within the `Controller`:
-
-```php
-$this->disableCallback('checkCount');
-```
-
-Then to re-enable:
-
-```php
-$this->enableCallback('checkCount');
-```

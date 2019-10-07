@@ -27,21 +27,28 @@ To generate the Posts controller in the Cms plugin
 $ bin/console generate controller Cms.Posts
 ```
 
-
-## Behavior
-
-To generate a `Behavior` for a `Model`.
-
-```linux 
-$ bin/console generate behavior SoftDelete
-```
-
 ## Command
 
 To generate a console `Command`:
 
 ```linux 
 $ bin/console generate command CacheReset
+```
+
+## Concern (Controller)
+
+To generate a `Concern` for a `Controller`
+
+```linux 
+$ bin/console generate concern_controller ResponseChecker
+```
+
+## Concern (Model)
+
+To generate a `Concern` for a `Model`
+
+```linux 
+$ bin/console generate concern_model SoftDeleteable
 ```
 
 ## Component
@@ -161,10 +168,10 @@ $ bin/console generate service SlackNotification
 
 ## Scaffold
 
-If you have your database setup with tables, and need to build a base for crud application, scaffold is what you want. It will generate a working prototype based upon your database.
+If you have your database setup with tables, and you need to build a base for crud application, scaffold is what you want. It will generate a working prototype based using your tables.
 
 ```linux 
 $ bin/console generate scaffold User
 ```
 
-Just type in the name of the model, so User will look for the users table.
+Just type in the name of the `model`, so User will look for the `users` table.

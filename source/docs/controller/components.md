@@ -6,14 +6,23 @@ section: content
 ---
 # Components
 
-Components are objects that you can share between controller. When you create a component, you can use other components within the component and access the current controller.
+`Components` are objects that you can share between `Controllers`. When you create a `Component`, you can use other `Components` within the `Component` and access the current `Controller`. If you are just looking to share code between `Controllers` then you should use [Concerns](/docs/controller/concerns) instead.
 
 ## Creating a Component
 
-Create the component file in the `App/Http/Controller/Component` folder.
+`Components` are stored in the `App/Http/Controller/Component` folder.
+
+You can run the following command
+
+```linux
+$ bin/console generate component Math
+```
+
+This will create the `Component` and its test file.
+
+For more information on code generation see the [code generation guide](/docs/development/code-generation).
 
 ```php
-
 namespace App\Http\Controller\Component;
 use Origin\Http\Controller\Component\Component;
 
