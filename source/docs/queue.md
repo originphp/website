@@ -123,7 +123,7 @@ class ResetUserCreditsJob extends ApplicationJob
 
 ### Callbacks
 
-> The execute and OnSuccess methods are not defined so you can set this with the correct types and names
+> The execute and onSuccess methods are not defined so you can set this with the correct types and names
 
 - `initialize`: this is called when the job created for dispatching
 - `startup`: this is called before the `execute` method

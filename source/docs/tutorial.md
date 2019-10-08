@@ -159,8 +159,7 @@ Now you will get a missing view exception error, this is because there is no vie
 
 ![Missing View Exception](/assets/images/missing-view-exception.png)
 
-
-Create a folder called `Articles` in the `View` folder, and save the file as `index.ctp`, e.g. `app/Http/View/Welcome/index.ctp`
+Create a folder called `Articles` in the `View` folder, and save the file as `new.ctp`, e.g. `app/Http/View/Articles/new.ctp`
 
 ```html
 <h1>New Article</h1>
@@ -219,13 +218,13 @@ $ bin/console db:migrate
 Which will create the table and output:
 
 ```linux
-CreateArticleTable [20190606063934]
+CreateArticleTable [20191008121607]
 
- > CREATE TABLE articles (
- id INT NOT NULL AUTO_INCREMENT,
- title VARCHAR(255),
- body TEXT,
- PRIMARY KEY (id)
+ > CREATE TABLE `articles` (
+  `id` INT AUTO_INCREMENT,
+  `title` VARCHAR(255),
+  `body` TEXT,
+  PRIMARY KEY (id)
 )
 
 Migration Complete. 1 migrations in 0 ms
@@ -237,7 +236,7 @@ See the [Migrations Guide](/docs/development/migrations) for more information.
 
 Now create a basic form for getting the input. Create the view for the new action.  The file for this would be `app/Http/View/Articles/new.ctp`
 
-> The <?= is the PHP shorthand for <?php echo 
+> The `<?=` is the PHP shorthand for `<?php echo`.
 
 ```php
 <h1>New Article</h1>
@@ -260,7 +259,7 @@ See the [Form Helper](/docs/view/form-helper) for more information.
 
 ### Add Controller Code
 
-Now add code to the Controller `/app/Http/Controller/ArticlesController.php` to handle the form in the new method, it needs to take the POST data from the request and convert this to article [entity](/docs/model/entities) (a single record object). If the request is POST request, then it will save the record and redirect to the view action to show the article that it just created. It will set object in the view so that the FormHelper can use it.
+Now add code to the Controller `/app/Http/Controller/ArticlesController.php` to handle the form in the new method, it needs to take the POST data from the request and convert this to article [entity](/docs/model/entities) (a single record object). If the request is POST request, then it will save the record and redirect to the view action to show the article that it just created. It will set object in the view so that the `FormHelper` can use it.
 
 ```php
 public function new()
@@ -324,8 +323,13 @@ public function view($id)
 
 And now create the view file for this `app/Http/View/Articles/view.ctp`
 
+```php
+<h1><?= $article->title ?></h1>
+<p><?= $article->body ?></p>
+```
+
 Open [http://localhost:8000/articles/new](http://localhost:8000/articles/new) and create an article, this
-will redirect you to the view page.
+will then redirect you to the view the article.
 
 ### Listing all articles
 
@@ -407,6 +411,7 @@ class Article extends ApplicationModel
         parent::initialize($config); // Always call the parent.
         $this->validate('title', 'notBlank');
     }
+}
 ```
 
 Now open the view file `app/Http/View/Articles/new.ctp` again, change code to as follows, which has new lines to loop through the error messages and display them in a list. Note, this is just to show how it works, in moment I will show you how to use the `Form::control`, which does this all for you.
@@ -601,12 +606,14 @@ public function initialize(array $config) : void
 }
 ```
 
-Open the comment `app/Model/Comment.php` and in the initialize method setup the association. 
+Open the comment `app/Model/Comment.php` and in the initialize method setup the association and add some basic validation.
 
 ```php
 public function initialize(array $config) : void
 {
     parent::initialize($config);
+    $this->validate('name', 'notBlank');
+    $this->validate('body', 'notBlank');
     $this->belongsTo('Comment');
 }
 ```
@@ -631,12 +638,12 @@ For more information see the [Associations Guide](/docs/model/associations).
 $ bin/console generate controller Comments
 ```
 
-Now add the `add` method to the comments controller file  `/app/Http/Controller/CommentsController.php`.
+Now add the `new` method to the comments controller file  `/app/Http/Controller/CommentsController.php`.
 
 ```php
 class CommentsController extends ApplicationController
 {
-    public function add()
+    public function new()
     {
         if($this->request->is('post')){
             $comment = $this->Comment->new($this->request->data());
@@ -663,13 +670,13 @@ comments for this article.
 
 <h2>Comments</h2>
 <strong>Add Comment</strong>
-<?= $this->Form->create(null,[
-        'url'=>['controller'=>'Comments','action'=>'add']
+<?= $this->Form->create(null, [
+        'url'=>['controller'=>'Comments','action'=>'new']
         ]); ?>
 <?= $this->Form->control('name') ?>
 <?= $this->Form->control('body')  ?>
-<?= $this->Form->hidden('article_id',['value'=>$article->id]) ?>
-<?= $this->Form->submit('Save comment') ?>
+<?= $this->Form->hidden('article_id', ['value'=>$article->id]) ?>
+<?= $this->Form->submit('Save comment', ['btn btn-primary']) ?>
 <?= $this->Form->end() ?>
 
 <?php foreach ($article->comments as $comment): ?>
@@ -693,7 +700,7 @@ $ bin/console generate scaffold Article
 $ bin/console generate scaffold Comment
 ```
 
-Now goto [http://localhost:8000/articles/index](http://localhost:8000/articles/index), to see it in action. If you need to customize the scaffolding templates, copy the templates folder from the `vendor/originphp/framework` folder into your project folder, then customise as you see fit.
+Now goto [http://localhost:8000/articles/index](http://localhost:8000/articles/index), to see it in action. If you need to customize the scaffolding templates, copy the templates folder from the `vendor/originphp/framework` folder into your project folder, then customize as you see fit.
 
 This concludes the tutorial, any suggestions how to make this better? Let me know.
 

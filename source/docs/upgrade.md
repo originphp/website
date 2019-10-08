@@ -10,7 +10,9 @@ section: content
 
 Version 2 removes deprecated features and provides a more organized folder structure and makes it easier to work with given the number of folders that are now used. 
 
-Other changes such as strict return types and changes to take advantage of newer PHP features. For example, `Model` and `Controller` callbacks have been redesigned to be registered and work with `Concerns` in a powerful way.
+Other changes such as strict, return types, dropping public properties and other changes to take advantage of modern PHP features and best practices. 
+
+`Model` and `Controller` callbacks have been redesigned to be registered and work with `Concerns` in a powerful way.
 
 I have been working full time on the framework to get this where it is now, changes going forward from here should be slow, with a focus on improving code base, developing and testing with future PHP versions, bug and security fixes.
 
@@ -245,10 +247,9 @@ The `Configure` class has been renamed to `Config`, depending upon the version y
 
 In your PHPUnit tests `startup` and `shutdown` also have a return type of void.
 
-
 ## Public Properties
 
-All public properties have been changed to protected, including `Mailer` and `Job` which previously used public properties for configuration.
+All public properties have been changed to protected, including `Mailer`,`Job`, `Schema` which previously used public properties for configuration.
 
 ## Middleware
 
