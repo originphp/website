@@ -115,7 +115,7 @@ Sometimes you might need to use a different table name, you can overide this wit
 <?php
 class Product extends ApplicationModel
 {
-    public $table = 'productz';
+    protected $table = 'productz';
 }
 ```
 

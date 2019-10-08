@@ -71,10 +71,10 @@ use Origin\Model\Entity;
 
 class SendWelcomeEmailJob extends ApplicationJob
 {
-    public $queue = 'notifications';
+    protected $queue = 'notifications';
     // strtotime compatible string
-    public $wait = '+5 minutes'; // wait time before sending new job
-    public $timeout = 60;
+    protected $wait = '+5 minutes'; // wait time before sending new job
+    protected $timeout = 60;
 
     public function execute(Entity $user) : void
     {
@@ -107,7 +107,7 @@ use App\Job\ApplicationJob;
 
 class ResetUserCreditsJob extends ApplicationJob
 {
-    public $queue = 'monthly';
+    protected $queue = 'monthly';
 
     public function initialize() : void
     {

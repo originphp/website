@@ -65,7 +65,7 @@ To render a different layout change the name of the `layout` property in the con
 ```php
 class ArticlesController extends ApplicationController
 {
-   public $layout = 'default';
+   protected $layout = 'default';
 }
 ```
 

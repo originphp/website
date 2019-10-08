@@ -67,16 +67,16 @@ use Origin\Mailer\Mailer;
 
 class ApplicationMailer extends Mailer
 {
-    public $defaults = [
+    protected $defaults = [
         'from' => ['noreply@somewhere.com','Funky App'],
         'replyTo' => 'noreply@somewhere.com',
     ];
 
     // app/Mailer/Layout/mailer.ctp
-    public $layout = 'mailer';
+    protected $layout = 'mailer';
 
     // Email account
-    public $account = 'default';
+    protected $account = 'default';
 }
 ```
 

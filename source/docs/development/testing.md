@@ -75,7 +75,7 @@ use Origin\TestSuite\Fixture;
 
 class ArticleFixture extends Fixture
 {
-    public $records = [
+    protected $records = [
         [
             'id' => 1,
             'title' => 'Article #1',
@@ -135,7 +135,7 @@ use Origin\TestSuite\OriginTestCase;
 
 class BookmarkTest extends OriginTestCase
 {
-    public $fixtures = ['Bookmark'];
+    protected $fixtures = ['Bookmark'];
 }
 ```
 
@@ -154,7 +154,7 @@ use Origin\Model\Entity;
 
 class BookmarkTest extends OriginTestCase
 {
-    public $fixtures = ['Bookmark'];
+    protected $fixtures = ['Bookmark'];
 
     // this is called when the testcase is constructed
     public function initialize() : void
@@ -741,7 +741,7 @@ use Origin\TestSuite\OriginTestCase;
 
 class CreateUserDirectoryJobTest extends OriginTestCase
 {
-    public $fixtures = ['Bookmark'];
+    protected $fixtures = ['Bookmark'];
 
     public function startup() : void
     {
@@ -776,7 +776,7 @@ use App\Mailer\SendWelcomeEmailMailer;
 
 class SendWelcomeEmailMailerTest extends OriginTestCase
 {
-    public $fixtures = ['Bookmark'];
+    protected $fixtures = ['Bookmark'];
     
     public function startup() : void
     {
@@ -806,7 +806,7 @@ use App\Service\CreateUserService;
 
 class CreateUserServiceTest extends OriginTestCase
 {
-    public $fixtures = ['Bookmark'];
+    protected $fixtures = ['Bookmark'];
     
     public function startup() : void
     {
@@ -836,7 +836,7 @@ use App\Model\Repository\UsersRepository;
  */
 class UsersRepositoryTest extends OriginTestCase
 {
-    public $fixtures = ['User'];
+    protected $fixtures = ['User'];
 
     public function testRepositoryMethod()
     {

@@ -393,6 +393,20 @@ $this->beforeRender('cacheView');
 $this->beforeRedirect('doSomethingIamOutOfIdeas');
 ```
 
+### Disabling Callbacks
+
+To disable a callback use the `Controller` method:
+
+```php
+$this->disableCallback('checkCount');
+```
+
+Then to re-enable:
+
+```php
+$this->enableCallback('checkCount');
+```
+
 ## Redirecting
 
 A common thing to do from a controller is to redirect. To redirect to a different url use the redirect method. You can pass either a string or an array.
@@ -500,7 +514,7 @@ From the controller action that you want use pagination, call the controller met
 class BookmarksController extends ApplicationController
 {
     // Default pagination settings to be used by all actions
-    public $paginate = [
+    protected $paginate = [
         'limit' => 20,
     ];
 

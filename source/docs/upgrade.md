@@ -245,6 +245,11 @@ The `Configure` class has been renamed to `Config`, depending upon the version y
 
 In your PHPUnit tests `startup` and `shutdown` also have a return type of void.
 
+
+## Public Properties
+
+All public properties have been changed to protected, including `Mailer` and `Job` which previously used public properties for configuration.
+
 ## Middleware
 
 Previously Middleware used `startup` and `shutdown` as aliases for `invoke` and `process`, this has been changed, and startup and shutdown now callbacks inline with rest of framework. Rename your Middleware `startup` to `invoke` and `shutdown` to `process`.
