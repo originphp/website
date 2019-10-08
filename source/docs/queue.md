@@ -87,7 +87,7 @@ class SendWelcomeEmailJob extends ApplicationJob
             ->send();
     }
 
-    public function onError(\Exception $exception)
+    public function onError(\Exception $exception) : void
     {
         $this->retry([
             'wait' => '+30 minutes', // how long to wait before retry
