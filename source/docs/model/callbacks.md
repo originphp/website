@@ -28,6 +28,8 @@ class User extends ApplicationModel
 
 To register a callback in the `initialize` method set the name of the method that you want to call on a specific event.
 
+> Callback methods should be set as protected, if not they can be called from outside of the `Model` and will therefore violate the principle of object encapsulation.
+
 ### beforeFind
 
 This is triggered before any find operation, the query options converted into an `ArrayObject` and then passed to the callback. Return `false` to halt the callbacks and find operation.
@@ -38,7 +40,7 @@ public function initialize(array $config) : void
   $this->beforeFind('doSomething');
 }
 
-public function doSomething(ArrayObject $options) : bool
+protected function doSomething(ArrayObject $options) : bool
 {
     return true;
 }
@@ -54,7 +56,7 @@ public function initialize(array $config) : void
   $this->afterFind('modifyResults');
 }
 
-public function modifyResults(Collection $results, ArrayObject $options) : void
+protected function modifyResults(Collection $results, ArrayObject $options) : void
 {
   foreach($results as $article){
     ...
@@ -71,7 +73,7 @@ public function initialize(array $config) : void
 {
   $this->beforeValidate('parseResults');
 }
-public function parseResults(Entity $entity, ArrayObject $options) : bool
+protected function parseResults(Entity $entity, ArrayObject $options) : bool
 {
   ...
   return true;
@@ -98,7 +100,7 @@ public function initialize(array $config) : void
 {
   $this->afterValidate('logErrors');
 }
-public function logErrors(Entity $entity, ArrayObject $options) : void
+protected function logErrors(Entity $entity, ArrayObject $options) : void
 {
     if($entity->errors()){
       // do something
@@ -126,7 +128,7 @@ public function initialize(array $config) : void
 {
   $this->beforeSave('slugEntity');
 }
-public function slugEntity(Entity $entity, ArrayObject $options) : bool
+protected function slugEntity(Entity $entity, ArrayObject $options) : bool
 {
   $entity->slug = Slugger::slug($entity->title);
   return true;
@@ -153,7 +155,7 @@ public function initialize(array $config) : void
 {
   $this->beforeCreate('prepareNewRecord');
 }
-public function prepareNewRecord(Entity $entity, ArrayObject $options) : bool
+protected function prepareNewRecord(Entity $entity, ArrayObject $options) : bool
 {
     return true;
 }
@@ -168,7 +170,7 @@ public function initialize(array $config) : void
 {
   $this->beforeUpdate('prepareForDb');
 }
-public function prepareForDb(Entity $entity, ArrayObject $options) : bool
+protected function prepareForDb(Entity $entity, ArrayObject $options) : bool
 {
     return true;
 }
@@ -183,7 +185,7 @@ public function initialize(array $config) : void
 {
   $this->afterCreate('logNewRecord');
 }
-public function logNewRecord(Entity $entity, ArrayObject $options) : void
+protected function logNewRecord(Entity $entity, ArrayObject $options) : void
 {
 }
 ```
@@ -197,7 +199,7 @@ public function initialize(array $config) : void
 {
   $this->afterUpdate('doSometing');
 }
-public function doSometing(Entity $entity, ArrayObject $options) : void
+protected function doSometing(Entity $entity, ArrayObject $options) : void
 {
 }
 ```
@@ -211,7 +213,7 @@ public function initialize(array $config) : void
 {
   $this->afterSave('doSometing');
 }
-public function doSometing(Entity $entity, ArrayObject $options) : bool
+protected function doSometing(Entity $entity, ArrayObject $options) : bool
 {
   if($entity->created()){
     ...
@@ -239,7 +241,7 @@ public function initialize(array $config) : void
 {
   $this->beforeDelete('doSomething');
 }
-public function doSomething(Entity $entity, ArrayObject $options) : bool
+protected function doSomething(Entity $entity, ArrayObject $options) : bool
 {
   ...
   return true;
@@ -255,7 +257,7 @@ public function initialize(array $config) : void
 {
   $this->afterDelete('doSomething');
 }
-public function doSomething(Entity $entity, ArrayObject $options) : void
+protected function doSomething(Entity $entity, ArrayObject $options) : void
 {
     
 }
@@ -270,7 +272,7 @@ public function initialize(array $config) : void
 {
   $this->afterCommit('runChecks');
 }
-public function runChecks(Entity $entity, ArrayObject $options) : void
+protected function runChecks(Entity $entity, ArrayObject $options) : void
 {
   if($entity->deleted()){
     // do something
@@ -298,7 +300,7 @@ public function initialize(array $config) : void
 {
   $this->afterRollback('runBot');
 }
-public function runBot(Entity $entity, ArrayObject $options) : void
+protected function runBot(Entity $entity, ArrayObject $options) : void
 {
   ...
 }
