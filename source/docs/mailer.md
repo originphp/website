@@ -68,7 +68,7 @@ use Origin\Mailer\Mailer;
 class AppMailer extends Mailer
 {
     public $defaults = [
-        'from' => ['noreply@somewhere.com','Funky App'],
+        'from' => ['noreply@somewhere.com' => 'Funky App'],
         'replyTo' => 'noreply@somewhere.com',
     ];
 
