@@ -209,7 +209,7 @@ class DatabaseEngine extends BaseEngine
      *
      * @var array
      */
-    public function initialize(array $config) : void
+    protected function initialize(array $config) : void
     {
 
     }

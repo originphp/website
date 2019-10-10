@@ -13,7 +13,7 @@ You enable login via forms and/or http requests. By default only forms is enable
 To load and enable the `AuthComponent`, in your app controller initialize method add the following
 
 ```php
-public function initialize() : void
+protected function initialize() : void
 {
     parent::initialize(); // !Important whenever you use a callback or initialize method
     $this->loadComponent('Auth',$options);
@@ -144,7 +144,7 @@ In the controller that you want to enable the API authentication method add the 
 ```php
 class ApiController extends ApplicationController
 {
-    public function initialize() : void
+    protected function initialize() : void
     {
         $this->loadComponent('Auth',[
             'authenticate' => ['Api']

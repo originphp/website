@@ -61,7 +61,7 @@ class FooMiddleware extends Middleware
 To load the middleware, you need to call `loadMiddleware` in the initialize method of `app/Http/Application.php` file. When web requests are run, the middlewares will be run, first `handle` will be called by each middleware, to modify the request object, then once it has finished, each middleware will run the `process` method using the final modified request object that has been passed through all the middlewares.
 
 ```php
-public function initialize() : void
+protected function initialize() : void
 {
     $this->loadMiddleware('RequestModifier');
 }
@@ -70,7 +70,7 @@ public function initialize() : void
 You can also load middlewares from plugin folders.
 
 ```php
-public function initialize() : void
+protected function initialize() : void
 {
     $this->loadMiddleware('MyPlugin.RequestModifier');
 }
@@ -80,7 +80,7 @@ If you prefer to add the Middleware Object
 
 ```php
 use App\Http\Middleware\RequestModifierMiddleware;
-public function initialize() : void
+protected function initialize() : void
 {
     $this->addMiddleware(new RequestModifierMiddleware());
 }

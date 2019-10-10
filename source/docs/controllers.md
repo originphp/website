@@ -182,7 +182,7 @@ See the [routing guide](/docs/development/routing) for more information on routi
 Components are objects which can be shared between controllers. The framework comes with a number of components and you can also build your own. To load helpers call the `loadComponent` method in the `initialize` method of your controller.
 
 ```php
-public function initialize() : void
+protected function initialize() : void
 {
     $this->loadComponent('Security');
 }
@@ -335,7 +335,7 @@ This is method is really a hook so you don't have to overide the `__construct`, 
 ```php
 class PostsController extends ApplicationController
 {
-    public function initialize() : void
+    protected function initialize() : void
     {
        $this->loadComponent('Auth');
     }
@@ -349,7 +349,7 @@ This is called before the action on the controller (but after `initialize`), her
 ```php
 class PostsController extends ApplicationController
 {
-    public function startup()
+    protected function startup()
     {
         if($this->Auth->isLoggedIn()){
             $this->Flash->info('Welcome back');
@@ -365,7 +365,7 @@ This is called after the controller action has been run and the view has been re
 ```php
 class PostsController extends ApplicationController
 {
-    public function shutdown()
+    protected function shutdown()
     {
         $this->doSomething();
     }

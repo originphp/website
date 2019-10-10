@@ -15,7 +15,7 @@ You can define a rule as a string, rule array, or array with multiple rules.
 ```php
   class User extends ApplicationModel
   {
-    public function initialize(array $config) : void
+    protected function initialize(array $config) : void
     {
         parent::initialize($config);
         // String
@@ -80,7 +80,7 @@ Checks if a value is a boolean true or false.
 You can create your own functions in model which can be used to validate.
 
 ```php
-public function initialize(array $config) : void
+protected function initialize(array $config) : void
 {
   $this->validate('dob','birthdate');
 }
@@ -97,7 +97,7 @@ public function birthdate($value) : bool
 You can also pass more arguments
 
 ```php
-public function initialize(array $config) : void
+protected function initialize(array $config) : void
 {
   $this->validate('status',[
     'rule' => ['statusCheck','go']

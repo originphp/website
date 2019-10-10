@@ -76,7 +76,7 @@ class SendWelcomeEmailJob extends ApplicationJob
     protected $wait = '+5 minutes'; // wait time before sending new job
     protected $timeout = 60;
 
-    public function execute(Entity $user) : void
+    protected function execute(Entity $user) : void
     {
         $Email = new Email();
         $Email->to($user->email)
@@ -109,12 +109,12 @@ class ResetUserCreditsJob extends ApplicationJob
 {
     protected $queue = 'monthly';
 
-    public function initialize() : void
+    protected function initialize() : void
     {
         $this->loadModel('User');
     }
 
-    public function execute() : void
+    protected function execute() : void
     {
         $this->User->resetCredits();
     }
@@ -137,7 +137,7 @@ Here is an example Job that if it runs successfully, it will call another job, i
 ```php
 class SendIntroEmailJob extends ApplicationJob
 {
-    public function execute(Entity $user) : void
+    protected function execute(Entity $user) : void
     {
         $Email = new Email();
         $Email->to($user->email)

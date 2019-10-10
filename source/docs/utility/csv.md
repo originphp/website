@@ -101,7 +101,7 @@ $data = Csv::toArray($csv,['keys'=>['First Name','Email Address']]);
 
 ## Processing Large Files
 
-To process large CSV files in a memory efficient way use the `process` method, which takes the the same options as `toArray`. The difference here is that, it will reads the CSV file one line at a time, returns its for processing, then gos the next.
+To process large CSV files in a memory efficient way use the `process` method, which takes the the same options as `toArray`. The difference here is that, it will reads the CSV file one line at a time, returns its for processing, then goes the next.
 
 ```php
 $rows = Csv::process('/path/to/file.csv',['keys'=>['First Name','Email Address']]);

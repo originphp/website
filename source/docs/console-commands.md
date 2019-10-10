@@ -37,7 +37,7 @@ class HelloCommand extends Command
     protected $name = 'hello';
     protected $description = 'A simple hello world command.';
 
-    public function execute() : void
+    protected function execute() : void
     {
        $this->out('Hello world');
     }
@@ -86,7 +86,7 @@ By default when adding an option the datatype is considered a string e.g `--data
 To add an option to your command, add the code to the `initialize` method.
 
 ```php
-public function initialize() : void
+protected function initialize() : void
 {
     $this->addOption('datasource',[
         'description' => 'The datasource to use',
@@ -99,7 +99,7 @@ public function initialize() : void
     ]);
 }
 
-public function execute() : void
+protected function execute() : void
 {
     $datasource = $this->options('datasource');
     $fileType = $this->options('type');
@@ -126,7 +126,7 @@ When adding an option, you can pass an array with the following keys
 Arguments are different that options, since they are obtained by the order that they are provided.
 
 ```php
-public function initialize() : void
+protected function initialize() : void
 {
     $this->addArgument('database',[
         'description' => 'The name of the database',
@@ -138,7 +138,7 @@ public function initialize() : void
     ]);
 }
 
-public function execute() : void
+protected function execute() : void
 {
     $database = $this->arguments('database');
     $tables =  $this->arguments('tables');
@@ -191,12 +191,12 @@ $this->debug('This additional text that might be helpful');
 Call `loadModel` from within your console command to load any `Model`, this works just like in `Controllers`.
 
 ```php
-public function initialize() : void
+protected function initialize() : void
 {
     $this->loadModel('User');
 }
 
-public function execute() : void
+protected function execute() : void
 {
     $users = $this->User->find('list');
 }
@@ -208,7 +208,7 @@ If you need to run another command from within your command, use the same comman
 from the console and then pass an array of arguments
 
 ```php
-public function execute() : void
+protected function execute() : void
 {
     $this->runCommand('database:backup',[
         '--datasource' => $datasource, # option with value
@@ -286,7 +286,7 @@ This is what a warning looks like when using the IO warning
 ### Asking Questions
 
 ```php
-public function execute() : void
+protected function execute() : void
 {
     $name = $this->io->ask('What is your name?');
 }
@@ -297,7 +297,7 @@ public function execute() : void
 You can ask multiple choice questions like this:
 
 ```php
-public function execute() : void
+protected function execute() : void
 {
     $response = $this->io->askChoice('Are you sure',['yes','no'],'no'); // default no
     if($response === 'no'){

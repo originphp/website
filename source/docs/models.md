@@ -465,7 +465,7 @@ Validating data is very important and can easily be setup. You use the `initiali
 ```php
 class Product extends ApplicationModel
 {
-    public function initialize(array $config) : void
+    protected function initialize(array $config) : void
     {
         parent::initialize($config); // important to remember to call parent!!
         

@@ -107,7 +107,7 @@ class ArticleFixture extends Fixture
 Sometimes you will want to use dynamic data, in this case you will modify the data using the `initialize` method.
 
 ```php
-    public function initialize() : void
+    protected function initialize() : void
     {
         $this->records = [
             [
@@ -157,13 +157,13 @@ class BookmarkTest extends OriginTestCase
     protected $fixtures = ['Bookmark'];
 
     // this is called when the testcase is constructed
-    public function initialize() : void
+    protected function initialize() : void
     {
         
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    public function startup() : void
+    protected function startup() : void
     {
         $this->loadModel('Bookmark');
     }
@@ -175,7 +175,7 @@ class BookmarkTest extends OriginTestCase
     }
 
     // alias for PHPunit tearDown in the OriginTestCase
-    public function shutdown() : void
+    protected function shutdown() : void
     {
         
     }
@@ -311,13 +311,13 @@ class BookmarksControllerTest extends OriginTestCase
     use IntegrationTestTrait;
 
     // this is called when the testcase is constructed
-    public function initialize() : void
+    protected function initialize() : void
     {
 
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    public function startup() : void
+    protected function startup() : void
     { 
     }
 
@@ -329,7 +329,7 @@ class BookmarksControllerTest extends OriginTestCase
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    public function shutdown() : void
+    protected function shutdown() : void
     { 
     }
 }
@@ -516,7 +516,7 @@ use Origin\Http\Response;
 // A fake controller
 class DummyController extends Controller
 {
-    public function initialize() : void
+    protected function initialize() : void
     {
         $this->loadComponent('Math');
     }
@@ -525,7 +525,7 @@ class DummyController extends Controller
 class MathComponentTest extends OriginTestCase
 {
     // alias for PHPunit setUp in the OriginTestCase
-    public function startup() : void
+    protected function startup() : void
     {
         $request = new Request();
         $response =  new Response();
@@ -563,7 +563,7 @@ class TagHelperTest extends OriginTestCase
     */
     protected $Tag = null;
 
-    public function startup() : void
+    protected function startup() : void
     {
         $controller = new Controller(new Request(), new Response());
         $view = new View($controller);
@@ -677,7 +677,7 @@ class FooMiddlewareTest extends OriginTestCase
     */
     protected $response = null;
 
-    public function startup() : void
+    protected function startup() : void
     {
         $this->request = new Request();
         $this->response = new Response();
@@ -743,7 +743,7 @@ class CreateUserDirectoryJobTest extends OriginTestCase
 {
     protected $fixtures = ['Bookmark'];
 
-    public function startup() : void
+    protected function startup() : void
     {
         $this->loadModel('Bookmark');
     }
@@ -778,7 +778,7 @@ class SendWelcomeEmailMailerTest extends OriginTestCase
 {
     protected $fixtures = ['Bookmark'];
     
-    public function startup() : void
+    protected function startup() : void
     {
         $this->loadModel('Bookmark');
     }
@@ -808,7 +808,7 @@ class CreateUserServiceTest extends OriginTestCase
 {
     protected $fixtures = ['Bookmark'];
     
-    public function startup() : void
+    protected function startup() : void
     {
         $this->loadModel('Bookmark');
     }

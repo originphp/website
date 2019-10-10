@@ -175,6 +175,15 @@ Create the default layout `app/Mailer/Layout/default.ctp`
 </html>
 ```
 
+Adjust your `Mailers` to use the `default` layout, if you have previously used a layout.
+
+```
+class ApplicationMailer extends Mailer
+{
+  protected $layout = 'default';
+}
+```
+
 ## Class Location Changes
 
 As a result of folder structure changes framework classes have been moved following the same structure
@@ -224,12 +233,12 @@ Model callbacks have been changed completely, the return types and and the argum
 Callbacks are now registered but use the same name for registration so any callbacks that have used you will need to rename the existing callback, by adding a callbacks suffix, then just defining it. For example:
 
 ```php
-public function initialize(array $config)
+protected function initialize(array $config)
 {
   $this->beforeFind('beforeFindCallback');
 }
 
-public function beforeFindCallback(ArrayObject $options) : bool
+protected function beforeFindCallback(ArrayObject $options) : bool
 {
     return true;
 }
@@ -239,7 +248,7 @@ See [Callbacks guide](https://www.originphp.com/docs/model/callbacks/) for more 
 
 ## Configure Class
 
-The `Configure` class has been renamed to `Config`, depending upon the version you used to create your project you may have already been using this. You should your check your `config/application.php` file.
+The `Configure` class has been renamed to `Config`, depending upon the version you used to create your project you may have already been using this. You should your check your `config/application.php` file. Find `Configure::` references.
 
 ## Return Types
 
@@ -257,6 +266,8 @@ Previously Middleware used `startup` and `shutdown` as aliases for `invoke` and 
 
 ## Behaviors
 
+Behaviors have been removed and replaced with `Concerns`, but don't be concerned they work the same way just that now they use traits, so now we just use less magic.
+
 ### Framework References
 
 In your models any references to old framework behaviors need to be adjusted to their equivalent as a `Concern`. 
@@ -271,7 +282,7 @@ use Origin\Model\Concern\Timestampable;
 class ApplicationModel extends Model
 {
     use Timestampable,Delocalizable;
-    public function initialize(array $config): void
+    protected function initialize(array $config): void
     {
     }
 }

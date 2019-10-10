@@ -44,7 +44,7 @@ class FooHelper extends ApplicationHelper
      * This is called when the Helper is created. You can put any logic here
      * instead of overiding the construct.
      */
-    public function initialize(array $config)
+    protected function initialize(array $config)
     {
         ...
     }
@@ -64,7 +64,7 @@ Once you have created the Helper, the next thing to do is to load this in the co
 ```php
 class ApplicationController extends Controller
 {
-    public function initialize() : void
+    protected function initialize() : void
     {
         $this->loadHelper('Foo',['setting'=>'on']);
     }
@@ -83,7 +83,7 @@ Then you can access the Helper from the view
 You can also load Helpers within helpers, in your helper `initialize` method, call the `loadHelper` method. Then you access another helper from within your helper.
 
 ```php
-public function initialize(array $config) : void
+protected function initialize(array $config) : void
 {
     $this->loadHelper('Session');
 }

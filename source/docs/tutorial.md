@@ -406,7 +406,7 @@ Let's add some validation you will need to edit the article Model, which can be 
 ```php
 class Article extends ApplicationModel
 {
-    public function initialize(array $config) : void 
+    protected function initialize(array $config) : void 
     {
         parent::initialize($config); // Always call the parent.
         $this->validate('title', 'notBlank');
@@ -598,7 +598,7 @@ $ bin/console db:migrate
 Open the article model `app/Model/Article.php` and in the initialize method setup the association.
 
 ```php
-public function initialize(array $config) : void
+protected function initialize(array $config) : void
 {
     parent::initialize($config);
     $this->validate('title', 'notBlank');
@@ -609,7 +609,7 @@ public function initialize(array $config) : void
 Open the comment `app/Model/Comment.php` and in the initialize method setup the association and add some basic validation.
 
 ```php
-public function initialize(array $config) : void
+protected function initialize(array $config) : void
 {
     parent::initialize($config);
     $this->validate('name', 'notBlank');

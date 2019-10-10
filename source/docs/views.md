@@ -218,7 +218,7 @@ Exceptions for each of the above status codes are available as well as few other
 Helpers allow you share code between views, similar to the controller components. To load helpers call the `loadHelper` method in the `initialize` method of your controller.
 
 ```php
-public function initialize() : void
+protected function initialize() : void
 {
     $this->loadHelper('TableMagic');
 }

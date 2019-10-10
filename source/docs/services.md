@@ -49,13 +49,13 @@ class CreateNewUserService extends ApplicationService {
 
     protected $User = null;
 
-    public function initialize(User $user) : void
+    protected function initialize(User $user) : void
     {
         $this->User = $user;
     }
 
     # Use any type or number of params and it should return Result object or nothing.
-    public function execute(array $params)
+    protected function execute(array $params) : ?Result
     {
         $user = $this->User->create($params);
         if($this->User->save($user)){
@@ -76,7 +76,7 @@ class CreateNewUserService extends ApplicationService {
         ]]);
     }
 
-    private function sendWelcomeEmail(Entity $user)
+    private function sendWelcomeEmail(Entity $user) : void
     {
         (new SendWelcomeEmailJob())->dispatch($user);
     }

@@ -20,7 +20,7 @@ You can configure the defaults in your `ApplicationController` like this:
 use Origin\I18n\Number;
 use Origin\I18n\Date;
 
-public function initialize() : void
+protected function initialize() : void
 {
     Number::locale('en_GB');
     Date::locale('en_GB');

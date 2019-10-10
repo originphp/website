@@ -28,12 +28,12 @@ use Origin\Http\Controller\Component\Component;
 
 class MathComponent extends Component
 {
-  public function sum($x, $y)
+  public function sum(int $x,int $y) : int
   {
     return $x+$y;
   }
 
-  public function doSomethingWithControler()
+  public function doSomethingWithControler() : void
   {
     $controller = $this->controller(); // get current controller
     $result = $controller->method('xyz');
@@ -50,7 +50,7 @@ To load a component in the controller, you call `loadComponent` from within the 
 ```php
   class WidgetsController extends ApplicationController
   {
-    public function initialize(array $config) : void
+    protected function initialize(array $config) : void
     {
         parent::initialize($config);
         $this->loadComponent('Math');
@@ -66,7 +66,7 @@ To load a component in the controller, you call `loadComponent` from within the 
 ```php
     class WidgetsController extends ApplicationController
     {
-      public function doSomething()
+      public function doSomething() : int
       {
         return $this->Math->sum(1,2);
       }
@@ -79,7 +79,7 @@ If you want to use a component within a component then you call the `loadCompone
 ```php
 class MathComponent extends Component
 {
-   public function initialize(array $config) : void
+   protected function initialize(array $config) : void
     {
       $this->loadComponent('Math',$config);
     }
@@ -90,7 +90,7 @@ class MathComponent extends Component
 
 ## Callbacks
 
-There are two callbacks which Components use `startup` and `shutdown`. To use the callbacks, just create a method in your component with the callback name.
+There are two callbacks which Components use `startup` and `shutdown`. To use the callbacks, just create a method in your component with the callback name. Both these callbacks must be public since the `Controller` will call these.
 
 ### Startup callback
 

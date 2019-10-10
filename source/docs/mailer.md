@@ -34,7 +34,7 @@ use App\Mailer\ApplicationMailer;
 
 class SendWelcomeEmailMailer extends ApplicationMailer
 {
-    public function execute(Entity $user) : void
+    protected function execute(Entity $user) : void
     {
         $this->user = $user;
 

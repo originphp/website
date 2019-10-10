@@ -109,7 +109,7 @@ use Origin\Model\Concern\ElasticSearch;
 class Article extends ApplicationModel
 {
     use Elasticsearch;
-    public function initialize(array $config) : void
+    protected function initialize(array $config) : void
     {
         // Set the columns to index
         $this->index('title',['type'=>'keyword','analyzer'=>'english']);
