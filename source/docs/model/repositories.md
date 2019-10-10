@@ -45,6 +45,7 @@ class UsersRepository extends Repository
         if(!$this->User->save($user)){
             return false;
         }
+
         if ($user->created()) {
             Log::write('info', 'User registered', [
                 'channel' => 'users',

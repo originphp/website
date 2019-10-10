@@ -32,6 +32,7 @@ return [
             'Concerns' => 'docs/model/concerns',
             'Elasticsearch' => 'docs/model/elasticsearch-concern',
             'Repositories' => 'docs/model/repositories',
+            'Query Objects' => 'docs/model/query-objects',
         ],
     ],
     'Views' => [
