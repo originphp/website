@@ -8,20 +8,6 @@ section: content
 
 The Text utility has a number of methods to help when working with strings.
 
-## Random
-
-To generate a random string
-
-```php
-$tmp = Text::random(); // ppI7N5ychw85YQCP
-```
-
-The default length is 16 characters, however you can also pass the amount you want.
-
-```php
-$tmp = Text::random(8);
-```
-
 ## Converting Strings to Ascii
 
 To convert a string into Ascii (Transliterate)
