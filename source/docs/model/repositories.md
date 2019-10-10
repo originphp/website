@@ -6,11 +6,11 @@ section: content
 ---
 # Repository
 
-To keep logic that has nothing to do with data persistence from bloating up your models, aka fat Models, you can use the OriginPHP Repository which is based upon the Repository Pattern.
+To keep logic that has nothing to do with data persistence from bloating up your models, aka fat Models, you can use the OriginPHP `Repository` which is based upon the [Repository Pattern](https://martinfowler.com/eaaCatalog/repository.html).
 
-A good candidate for this example is a User model, since this always gets really bloated.
+A good candidate for this example is a User `model`, since this always gets really bloated.
 
-The first thing to do is to create a Repository class using the plural name of the Model.
+The first thing to do is to create a `repository` class using the plural name of the Model.
 
 ```linux
 $ bin/console generate respository Users
@@ -25,7 +25,7 @@ This will create two files
 
 ## How To use
 
-Typically you will have either code in the Controller or in a callback to do something once a new User registers, you are going to take that code out and put this in the Repository. Note it is not just for callbacks, basically any code that you would put in the model, you now put in this new layer.
+Take the code that queries, or saves and deletes from your `Models` and place these in their own `Repository`, the `Model` will be auto-detected using the name of the `Repository`.
 
 ```php
 use Origin\Model\Repository\Repository;
@@ -34,6 +34,12 @@ use Origin\Model\Entity;
 
 class UsersRepository extends Repository
 {
+    public function findListActiveUsers() : array
+    {
+        $conditions = ['active'=>true];
+        return $this->User->find('list',['conditions'=>$conditions]);
+    }
+
     public function save(Entity $user) : bool
     {
         if(!$this->User->save($user)){
@@ -63,7 +69,7 @@ use App\Model\Repository\UserRepository;
 
 class UsersController extends ApplicationController
 {
-    public function initialize() : void
+    protected function initialize() : void
     {
         parent::initialize();
         $this->Users = new UsersRepository();
