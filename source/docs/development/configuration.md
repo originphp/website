@@ -29,12 +29,17 @@ $bool Config::exists('key');
 
 ## DotEnv
 
-By default OriginPHP will look for a `.env.php` file in the your `config` folder, this has been designed due to the overhead in parsing a traditional.env, but most frequently it not used beyond setting simple values. However, if you need to use a `.env` script, then in your `config/bootstrap.php` you can add the following code:
+By default OriginPHP will look for a `.env.php` file in the your `config` folder, this has been designed due to the overhead in parsing a traditional.env, but most frequently it not used beyond setting simple values. However, if you need to use a `.env` script, then you can use the `DotEnv` class.
+
+```linux
+$ composer require originphp/dotenv
+```
+
+Then in your `config/bootstrap.php` you can add the following code:
 
 ```php
-use Origin\Core\DotEnv;
-$dotEnv = new Origin\Core\DotEnv();
-$dotEnv->load(CONFIG . DS . '.env');
+use Origin\DotEnv\DotEnv;
+(new DotEnv())->load(CONFIG);
 ```
 
 Here is an example of a dotenv file.

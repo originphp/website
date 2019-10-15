@@ -11,7 +11,7 @@ The YAML utility is for reading (parsing) and writing YAML files. Note: The YAML
 ## Create a YAML string
 
 ```php
-use Origin\Utility\Yaml;
+use Origin\Yaml\Yaml;
 $employees = [
     ['name'=>'Jim','skills'=>['php','mysql','puppeteer']],
     ['name'=>'Amy','skills'=>['ruby','ruby on rails']],

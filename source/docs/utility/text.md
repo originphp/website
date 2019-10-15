@@ -8,6 +8,12 @@ section: content
 
 The Text utility has a number of methods to help when working with strings.
 
+To use
+
+```php
+use Origin\Text\Text
+```
+
 ## Converting Strings to Ascii
 
 To convert a string into Ascii (Transliterate)

@@ -26,6 +26,16 @@ Currently it supports the following selectors:
 
 At the moment it does not support the `~>+^|$` selectors.
 
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/dom
+```
+
+## Usage
+
 Example usage:
 
 ```php

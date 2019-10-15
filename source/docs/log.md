@@ -6,25 +6,37 @@ section: content
 ---
 # Logging
 
-OriginPHP comes with 3 built in Log Engines, and it easy to implement your own.
+OriginPHP comes with 4 built in Log Engines, and it easy to implement your own.
 
 - `File` - Logs messages to files
 - `Console` - Displays the log messages to the console screen
 - `Email` - Sends log messages via email
 - `Syslog` - Recommended for production systems
 
+First you need to configure the Log library, in your `config/log.php`
+
+```php
+Log::config('default', [
+    'engine' => 'File',
+    'file' => LOGS . '/application.log'
+]);
+```
+
+Then to log
+
 ```php
 use Origin\Log\Log;
 Log::error('Something has gone wrong.');
 ```
 
-This will produce something like this in `logs/application.log`.
+This will produce something like this in `/var/www/logs/application.log`.
 
 ```
 [2019-03-10 13:37:49] application ERROR: Something has gone wrong.
 ```
 
 ## Channels
+
 To group your log messages, set a channel name.
 
 ```php
@@ -47,13 +59,15 @@ Log::info('Email sent to {email}',['email'=>'donny@example.com']);
 
 ## Adding data to messages
 
-After placeholders have been replaced (if any), any remaining data will be converted to a json string.
+After placeholders any have been replaced, any remaining data will be converted to a JSON string.
 
 ```php
 Log::info('User registered',['username'=>'pinkpotato']);
 
 ```
+
 Which will output like this
+
 ```
 [2019-03-10 13:37:49] application INFO: User registered {"username":"pinkpotato"}
 ```
@@ -75,60 +89,72 @@ Log::debug('debug-level message');
 
 ## Configuration
 
-The default Log Engine is file, you can use multiple engines at once, and you can customize which levels to Log on.
-
-Edit your Log configuration in `config/log.php`.
+You can use a single engine or multiple engines at once, and you can also customize which levels to Log on.
 
 ### File Engine
 
-The default log file is called `application.log`.
+To configure the file engine logging
 
 ```php
 use Origin\Log\Log;
 Log::config('default',[
     'engine' => 'File',
-    'filename' => 'somethingelse.log'
+    'file' => LOGS . '/application.log'
 ]);
 ```
 
 Options for the File Engine are:
 
-- filename: filename e.g. `application.log`
-- path: default is the logs folder. You can override this by setting the path for where the log file will be saved. e.g. `/var/www`
+- file: file with full path
 - levels: default `[]`. If you want to restrict this configuration to only certain levels, add the levels to an array e.g. `['critical','emergency','alert']`
 - channels: default `[]`. If you want to restrict this configuration to only certain channels, add the channels to an array e.g. `['invoices','payments']`
 
 ### Email Engine
 
-To also log email, set the configuration, if you only want to use email, then change the name to `default`.
+To configure email logging
 
 ```php
 use Origin\Log\Log;
-Log::config('email',[
+Log::config('default',[
     'engine' => 'Email',
     'to' => 'you@example.com', // string email only
-    'from' => ['no-reply@example.com','Web Application'] // to add a name, use an array,
-    'account' => 'gmail'
+    'from' => ['no-reply@example.com' => 'Web Application'] // to add a name, use an array,
+    'host' => 'smtp.example.com',
+    'port' => 465,
+    'username' => 'demo@example.com',
+    'password' => 'secret',
+    'timeout' => 5,
+    'ssl' => true,
+    'tls' => false
 ]);
 ```
 
 Options for the Email Engine are:
 
-- to: The to email address or an array with the email address and name which will be used. e.g. `you@example.com` or `['you@example.com','Tony Robbins']`.
-- from: The from email address or an array with the email address and name which will be used. e.g. `no-reply@example.com` or `['no-reply@example.com','System Notifications']`.
-- account: default:`default`. The name of the email account to use, as set in `Email::config()` see email account configured](/docs/utility/email) for more information.
-- levels: default `[]`. If you want to restrict this configuration to only certain levels, add the levels to an array e.g. `['critical','emergency','alert']`
-- channels: default `[]`. If you want to restrict this configuration to only certain channels, add the channels to an array e.g. `['invoices','payments']`
+- *levels*: default `[]`. If you want to restrict this configuration to only certain levels, add the levels to an array e.g. `['critical','emergency','alert']`
+- *channels*: default `[]`. If you want to restrict this configuration to only certain channels, add the channels to an array e.g. `['invoices','payments']`
+- *to*: The to email address or an array with the email address and name which will be used. e.g. `you@example.com` or `['you@example.com','Tony Robbins']`.
+- *from*: The from email address or an array with the email address and name which will be used. e.g. `no-reply@example.com` or `['no-reply@example.com','System Notifications']`.
+- *host*: this is SMTP server hostname
+- *port*: port number default 25
+- *username*: the username to access this SMTP server
+- *password*: the password to access this SMTP server
+- *ssl*: default is false, set to true if you want to connect via SSL
+- *tls*: default is false, set to true if you want to enable TLS
+- *timeout*: how many seconds to timeout
+
 
 > You should always test your email configuration first, if an exception occurs when trying to send the email, it is caught and is not logged to prevent recursion.
 
 ### Console Engine
 
+![console](console-log.png)
+
 To configure the Console Engine
 
 ```php
 use Origin\Log\Log;
-Log::config('email',[
+Log::config('default',[
     'engine' => 'Console'
 ]);
 ```
@@ -145,7 +171,7 @@ You should use the Syslog engine on your production server. To configure the Sys
 
 ```php
 use Origin\Log\Log;
-Log::config('email',[
+Log::config('default',[
     'engine' => 'Syslog'
 ]);
 ```
@@ -166,22 +192,26 @@ use Origin\Log\Log;
 // Logs all items to file
 Log::config('default',[
     'engine' => 'File',
-    'file' => 'master.log'
+    'file' => '/var/www/logs/master.log'
 ]);
 
 // Send import log items by email
-Log::config('critial-emails',[
+Log::config('critical-emails',[
     'engine' => 'Email',
     'to' => 'you@example.com', 
-    'from' => ['no-reply@example.com','Web Application'],
-    'account' => 'gmail'
-    'levels' => ['critical','emergency','alert']
+    'from' => ['nobody@gmail.com' => 'Web Application'],
+    'levels' => ['critical','emergency','alert'],
+    'host' => 'smtp.gmail.com',
+    'port' => 465,
+    'username' => 'nobody@gmail.com',
+    'password' => 'secret',
+    'ssl' => true,
 ]);
 
 // Create a seperate log for everything from the payments channel
 Log::config('payments',[
     'engine' => 'File',
-    'file' => 'payments.log',
+    'file' => '/var/www/logs/payments.log',
     'channels' => ['payments']
 ]);
 ```
@@ -230,11 +260,11 @@ class DatabaseEngine extends BaseEngine
 }
 ```
 
-To use this Log engine, in your `config/log.php`
+Then in `config/log.php`
 
 ```php
 use Origin\Log\Log;
-Log::config('some-name',[
+Log::config('default',[
     'className' => 'App\Log\Engine\DabaseEngine'
 ]);
 ```

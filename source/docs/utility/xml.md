@@ -13,7 +13,7 @@ You always must pass an array with 1 root element.
 To set attributes, prefix the key with @. You can also set the text value of an element using @.
 
 ```php
-use Origin\Utility\Xml;
+use Origin\Xml\Xml;
 
     $data = [
         'post' => [

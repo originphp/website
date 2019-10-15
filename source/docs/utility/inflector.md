@@ -23,7 +23,7 @@ $plural = Inflector::plural('apple'); // apples
 
 ### Dictionary
 
-The user defined dictionary is a easy to use way to quickly define certain words that might not be picked up by the Inflector, but still enable the framework to continue to do its magic.
+The Inflector comes with a some standard rules which cover most words and is a good starting point for a project. The user defined dictionary is a easy to use way to quickly define certain words that might not be picked up by the Inflector, but still enable the framework to continue to do its magic. 
 
 In your `config/application.php` add any custom words in lowercase
 

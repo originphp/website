@@ -14,6 +14,7 @@ Other changes such as strict, return types, dropping public properties and other
 
 `Model` and `Controller` callbacks have been redesigned to be registered and work with `Concerns` in a powerful way.
 
+
 I have been working full time on the framework to get this where it is now, changes going forward from here should be slow, with a focus on improving code base, developing and testing with future PHP versions, bug and security fixes.
 
 I will be happy to help you with upgrading if you contact me within the following weeks, just send me an email to `js@originphp.com`.
@@ -290,7 +291,7 @@ class ApplicationModel extends Model
 
 ### Custom Behaviors
 
-If you have created any custom Behaviors, these will be need to converted to `Concerns`, the code will be almost identical, except you dont need to reference `$this->model` since a `Concern` is a trait.
+If you have created any custom Behaviors, these will be need to converted to `Concerns`, the code will be almost identical, except you don't need to reference `$this->model` since a `Concern` is a trait.
 
 
 ## Removed Features
@@ -311,7 +312,7 @@ All previous deprecated features have been removed, the following functions have
 
 ## PHPUnit
 
-The framework has been updated to work with PHPUnit 8.3+. 
+The framework has been updated to work with PHPUnit 8.3+.
 
 ## Migations
 
@@ -324,6 +325,14 @@ When writing cookies, setting the expiration is done via the options array, now 
 ```php
 $this->response->cookie('key','value',['expires'=>'+ 10 days']);
 $this->Cookie->write('key','value',['expires'=>'+ 10 days']);
+```
+
+## Locale Definition Files
+
+Your locale files in `config/locales` need to be regenerated, the format has been changed to PHP from YAML.
+
+```linux
+$ bin/console locale:generate en_UK en_US
 ```
 
 ## Initialization Trait
@@ -339,6 +348,18 @@ trait  Foo
   }
 }
 ```
+
+## Decoupling
+
+Packages have been decoupled from the framework and are available as composer packages and also as a result the namespaces changed.
+
+For example
+
+```linux
+$ composer require origin\collection
+```
+
+- `Origin\Utility\Collection` is now `Origin\Collection`
 
 ## Note
 

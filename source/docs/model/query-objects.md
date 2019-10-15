@@ -6,7 +6,7 @@ section: content
 ---
 # Query Object
 
-Query Objects are used to package complex queries into objects which only have one method `execute` returns a result set.
+Query Objects are used to package complex database queries into objects that only have one method `execute` and returns a result set.
 
 It is based upon the [Query Object Pattern](https://www.martinfowler.com/eaaCatalog/queryObject.html). Query Objects are not used for wrapping up every single query, they only for complex queries that might be bloating your `Repository`.
 

@@ -1,24 +1,34 @@
 ---
-title: Collection Utility
-description: Collection Utility Guide for the OriginPHP Framework
+title: Collection
+description: Collection Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
 # Collection
 
-You can create a collection using arrays or the results such as from a find all (which is a different type of collection, `Origin\Model\Collection`.
+You can create a `Collection` using arrays or an object which is an instance of [Traversable](https://www.php.net/manual/en/class.traversable.php).
+
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/collection
+```
+
+## Creating a Collection
 
 To create a collection:
 
 ```php
-    use Origin\Utility\Collection;
-    $collection = new Collection($array);
+use Origin\Collection\Collection;
+$collection = new Collection($array);
 ```
 
-There is also a a helper function which you can use.
+There is also a helper function which you can use.
 
 ```php
-    $collection = collection($array);
+$collection = collection($array);
 ```
 
 ## Collections

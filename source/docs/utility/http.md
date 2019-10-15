@@ -6,13 +6,7 @@ section: content
 ---
 # Http
 
-The Http utility  is a simple yet very powerful utility for making http requests.  
-
-To install the `php-curl` extension on your server.
-
-```linux
-$ sudo apt-get install php-curl
-```
+The Http utility  is a simple yet very powerful utility for making HTTP requests.  
 
 ## Sending Requests
 
@@ -21,7 +15,7 @@ $ sudo apt-get install php-curl
 To send a GET request
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->get('https://api.example.com/posts');
 
@@ -46,7 +40,7 @@ The full list of options are detailed below.
 To make HEAD request, where the body of the request is not fetched.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->head('https://api.example.com/posts');
 
@@ -69,7 +63,7 @@ $response = $http->head('https://api.example.com/posts',[
 To send a POST request. In REST terms post requests are used to create a record.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 
 // to send a post request with empty data
@@ -100,7 +94,7 @@ $response = $http->post('https://api.example.com/posts',[
 To upload files using a post request.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->post('https://api.example.com/posts',[
     'fields' => [
@@ -121,7 +115,7 @@ $response = $http->post('https://api.example.com/posts',[
 To send a PUT request. In REST terms put requests are used to modify a record with complete data (overwriting).
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->put('https://api.example.com/posts/1',[
     'fields' => [
@@ -136,7 +130,7 @@ $response = $http->put('https://api.example.com/posts/1',[
 To send a PATCH request. In REST terms patch requests are used to modify an existing record with partial data.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->patch('https://api.example.com/posts/1',[
      'fields' => [
@@ -150,7 +144,7 @@ $response = $http->patch('https://api.example.com/posts/1',[
 To send a DELETE request.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->delete('https://api.example.com/posts/1');
 
@@ -185,7 +179,7 @@ This is particularly useful when working with multiple requests in an instance. 
 
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http([
     'base' => 'https://www.example.com/api'
 ]);
@@ -211,7 +205,7 @@ Other options:
 When you make a HTTP request, a response object is returned (this is different from the controller response object).
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->head('https://api.example.com/posts');
 
@@ -238,7 +232,7 @@ By default cookies are persisted across all requests for the instance.
 To change this behavior use the `cookieJar` option.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 
 // Persist cookies for this session only (stores in array)
 $http = new Http([
@@ -262,7 +256,7 @@ $http = new Http([
 Occasionally, you might need to set additional cURL options, one example of this, is when there is an issue with SSL certificates. You can set cURL options with the CURLOPT constant or string version of it.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->get('https://api.example.com/posts',[
     'curl' => [
@@ -283,7 +277,7 @@ $response = $http->get('https://api.example.com/posts',[
 To set these as default for settings for all the requests, configure it when creating the Http instance.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $http = new Http([
     'curl' => [
         'ssl_verifyhost' => 0,
@@ -297,7 +291,7 @@ $http = new Http([
 To set a cookie
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $response = $http->get('https://api.example.com/posts',[
     'cookies' => ['name'=>'value']
 ]);
@@ -309,7 +303,7 @@ $response = $http->get('https://api.example.com/posts',[
 The available authentication types are `basic`, `digest`, `nltm` or `any`.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 $response = $http->get('https://api.example.com/posts',[
     'auth' => ['username'=>'foo','password'=>'secret','type'=>'digest']
 ]);
@@ -321,7 +315,7 @@ $response = $http->get('https://api.example.com/posts',[
 To send a HTTP request using a proxy server.
 
 ```php
-use Origin\Utility\Http;
+use Origin\HttpClient\Http;
 // Without autnetication
 $response = $http->get('https://api.example.com/posts',[
     'proxy' => ['proxy'=>'https://www.proxy.com:8080']

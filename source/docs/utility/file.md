@@ -11,7 +11,7 @@ The file utility wraps some important functions in an easy to use and predictabl
 To use the File utility add the following to the top of your file.
 
 ```php
-use Origin\Utility\File
+use Origin\Filesystem\File
 ```
 
 ## Info
@@ -27,8 +27,8 @@ Which will return this
 ```
 Array
 (
+    [name] => insurance.csv
     [path] => /var/www/config
-    [filename] => insurance.csv
     [extension] => csv
     [type] => text/plain
     [size] => 1878

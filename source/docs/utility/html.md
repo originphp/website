@@ -104,6 +104,7 @@ if (php_sapi_name() != 'cli') {
 }
 ... truncated
 </code></pre>
+EOF;
 ```
 
 Will output
@@ -172,8 +173,6 @@ To create text version without formatting:
 $text = Html::toText($html,['format'=>false]);
 ```
 The main difference is headings, tables, code etc are not formatted. The HTML is cleaned up, line breaks are added, and lists are converted. If a list has a sublist then indentation will be added.
-
-> For security reasons text will be escaped first, if you don't want this behavior then pass the options array with the key escape, and set to false.
 
 ## Minify
 

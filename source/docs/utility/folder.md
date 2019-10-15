@@ -11,7 +11,7 @@ The folder utility helps you work with folders on your file system.
 To use the Folder utility add the following to the top of your file.
 
 ```php
-use Origin\Utility\Folder
+use Origin\Filesystem\Folder
 ```
 
 ## Create
@@ -163,5 +163,5 @@ To change the group that the folder belongs to.
 
 ```php
 Folder::chgrp('/path/somedir','www-data');
-older::chgrp('/path/somedir','www-data',['recursive'=>true]);
+Folder::chgrp('/path/somedir','www-data',['recursive'=>true]);
 ```

@@ -8,12 +8,20 @@ section: content
 
 The CSV utility makes it easy to work with CSV files.
 
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/csv
+```
+
 ## Create CSV from an Array
 
 To use an array to create CSV data
 
 ```php
-use Origin\Utility\Csv;
+use Origin\Csv\Csv;
 
 $csv = Csv::fromArray([
     ['jim','jim@example.com'],
@@ -32,7 +40,7 @@ tony,tony@example.com
 You can also use keys from the array as headers
 
 ```php
-use Origin\Utility\Csv;
+use Origin\Csv\Csv;
 
 $csv = Csv::fromArray([
         ['name'=>'jim','email'=>'jim@example.com'],
@@ -52,7 +60,7 @@ tony,tony@example.com
 If you want to use custom headers
 
 ```php
-use Origin\Utility\Csv;
+use Origin\Csv\Csv;
 
 $csv = Csv::fromArray([
         ['name'=>'jim','email'=>'jim@example.com'],
@@ -74,7 +82,7 @@ tony,tony@example.com
 Use the `toArray` method to create an array using CSV data.
 
 ```php
-use Origin\Utility\Csv;
+use Origin\Csv\Csv;
 
 $csv = file_get_contents('/path/file.csv');
 $data = Csv::toArray($csv);
