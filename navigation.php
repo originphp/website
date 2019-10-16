@@ -98,6 +98,7 @@ return [
             'Inflector' => 'docs/utility/inflector',
             'Markdown' => 'docs/utility/markdown',
             'Security' => 'docs/utility/security',
+            'Socket' => 'docs/utility/sockets',
             'Text' => 'docs/utility/text',
             'XML' => 'docs/utility/xml',
             'Yaml' => 'docs/utility/yaml'
