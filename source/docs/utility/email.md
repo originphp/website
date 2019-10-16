@@ -18,19 +18,18 @@ $ composer require originphp/email
 
 ## Email Configuration
 
-
-An example config array
+In `config/email.php` configure your email accounts. Setup a default account, then you do not need to specify an account or configure the instance of the email.
 
 ```php
-$config = [
+Email::config('default',[
     'host' => 'smtp.example.com',
-    'port' => 25,
+    'port' => 465,
     'username' => 'demo@example.com',
     'password' => 'secret',
     'timeout' => 5,
     'ssl' => true,
     'tls' => false
-]
+]);
 ```
 
 The keys for the config are as follows:
@@ -44,6 +43,23 @@ The keys for the config are as follows:
 - *timeout*: how many seconds to timeout
 - *domain*: When we send the HELO command to the sever we have to identify your hostname, so we will use localhost or HTTP_SERVER var if client is not set.
 
+
+
+You can also pass an array with configuration when you create an instance of the Email object.
+
+```php
+$config = [
+    'host' => 'smtp.example.com',
+    'port' => 25,
+    'username' => 'demo@example.com',
+    'password' => 'secret',
+    'timeout' => 5,
+    'ssl' => true,
+    'tls' => false
+]
+$email = new Email($config);
+```
+
 You can also pass keys such as `from`,`to`,`cc`,`bcc`,`sender` and `replyTo` this pass the data to its functions either as string if its just an email or an array if you want to include a name. Remember if you are going to automatically cc or bcc somewhere, then you have to next call addBcc or addCc to ensure that you don't overwrite this.
 
 For example
@@ -56,14 +72,29 @@ For example
 ]
 ```
 
-
 ## Sending Emails
 
-The default email sending behavior is to send a HTML message with a text version, which is a best practice and reduces the risk of your email ending up in spam folders. 
+The default email sending behavior is to send a text version. However it best practice to send both HTML and text and this reduces the risk of your email ending up in spam folders. 
 
-### Send an Email
+When an email is sent it will return a Message object, if an error is encountered when sending then the email class will throw an exception which you can catch in try/catch block.
 
-To send an email with both html and text versions:
+### Sending an Email (Text)
+
+To send an email
+
+```php
+use Origin\Email\Email;
+$Email = new Email($config);
+$Email->to('somebody@originphp.com')
+    ->from('me@originphp.com')
+    ->subject('This is a test')
+    ->textMessage('This is the text content')
+    ->send();
+```
+
+### Send both a HTML and Text Version (Recommend)
+
+To send an email with both HTML and text versions:
 
 ```php
 use Origin\Email\Email;
@@ -73,12 +104,13 @@ $Email->to('somebody@originphp.com')
     ->subject('This is a test')
     ->textMessage('This is the text content')
     ->htmlMessage('<p>This is the html content</p>')
+    ->format('both')
     ->send();
 ```
 
 ### Sending HTML Only Email
 
-To send a HTML only email, you need to tell the Email utility use the html format.
+To send a HTML only email, you need to tell the Email utility use the HTML format.
 
 ```php
 use Origin\Email\Email;
@@ -88,21 +120,6 @@ $Email->to('somebody@originphp.com')
     ->subject('This is a test')
     ->htmlMessage('<p>This is the html content</p>')
     ->format('html')
-    ->send();
-```
-
-### Sending Text Email
-
-To send a text email, you need to tell the Email utility use the text format.
-
-```php
-use Origin\Email\Email;
-$Email = new Email();
-$Email->to('somebody@originphp.com')
-    ->from('me@originphp.com')
-    ->subject('This is a test')
-    ->textMessage('This is the text content')
-    ->format('text')
     ->send();
 ```
 
@@ -119,7 +136,27 @@ $Email->to('somebody@originphp.com')
     ->textMessage('This is the text content')
     ->addAttachment($filename1)
     ->addAttachment($filename2,'Logo.png')
-    ->format('text')
     ->send();
 ```
 
+## Using Multiple Accounts
+
+If you have configured using `Email::config('gmail',$config)` then you can use it like this
+
+```php
+use Origin\Email\Email;
+$Email = new Email('gmail');
+```
+
+or 
+
+```php
+use Origin\Email\Email;
+$Email = new Email();
+$Email->to('somebody@originphp.com')
+    ->from('me@originphp.com')
+    ->subject('This is a test')
+    ->textMessage('This is the text content')
+    ->account('gmail')
+    ->send();
+```

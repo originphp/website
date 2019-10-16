@@ -1,12 +1,12 @@
 ---
-title: Config Trait
-description: Config Trait Guide for the OriginPHP Framework
+title: Configurable
+description: Configurable Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
-# Config Trait
+# Configurable
 
-Components and helpers work with the `ConfigTrait`, to standardize the configuration process.
+Components and helpers work with the `Configurable` package, to standardize the configuration process.
 
 When you load one these classes and supply a configuration, it will be merged with the default configuration.
 

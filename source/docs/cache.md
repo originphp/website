@@ -105,9 +105,11 @@ The configuration for Cache can be found in `config/cache.php`.
 ```php
 Cache::config('default', [
     'engine' => 'File',
+      'file' => LOGS . '/application.log',
     'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
     'prefix' => 'cache_'
     'serialize' => true // set to false if you going to cache strings such as output
+  
      ]);
 ```
 

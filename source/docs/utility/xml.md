@@ -6,6 +6,14 @@ section: content
 ---
 # XML
 
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/xml
+```
+
 ## Create XML from an array
 
 You always must pass an array with 1 root element.

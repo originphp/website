@@ -67,11 +67,11 @@ The composer.json file has been changed, this now respects versions.
 
 ## Front Controller
 
-The front controller `public/index.php` changed to easily allow for changes to be carried out in the framework, if needed. See [Github](https://github.com/originphp/app/blob/master/public/index.php).
+The front controller has been adjusted. See [Github](https://github.com/originphp/app/blob/master/public/index.php).
 
-## Bootstrap
+## Bootstrap Process
 
-The loading of configuration files has been moved from the framework bootstrap to the application bootstrap `config/bootstrap.php`.
+The bootstrap process including loading of configuration files has been moved from the framework bootstrap to the application bootstrap `config/bootstrap.php`. This also affects Console Applications
 
 For example
 
@@ -308,11 +308,11 @@ All previous deprecated features have been removed, the following functions have
 
 ## Other Changes
 
-- Security::uid returns base 62 string with a length of 15. e.g `64cjBxfz2JPhyCQ`
+- Security::uid returns base 62 string with a length of 16. e.g `O64cjBxfz2JPhyCQ`
 
 ## PHPUnit
 
-The framework has been updated to work with PHPUnit 8.3+.
+The framework has been updated to work with PHPUnit 8.0+.
 
 ## Migations
 

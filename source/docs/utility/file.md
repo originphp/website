@@ -8,6 +8,14 @@ section: content
 
 The file utility wraps some important functions in an easy to use and predictable way.
 
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/filesystem
+```
+
 To use the File utility add the following to the top of your file.
 
 ```php

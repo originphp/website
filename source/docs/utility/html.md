@@ -8,6 +8,14 @@ section: content
 
 The Html utility provides some useful functions for when working with html.
 
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/html
+```
+
 ## From Text
 
 If you need to convert a text block to html

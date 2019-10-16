@@ -6,7 +6,15 @@ section: content
 ---
 # Security
 
-The security utility provides various function related to security such as hashing, encryption, decryption.
+The `Security` library provides various function related to security such as hashing, encryption, decryption and secure random string generation.
+
+## Installation
+
+This library is installed by default but if you want to use this in your other projects.
+
+```linux
+$ composer require originphp/security
+```
 
 ## Hashing
 
@@ -17,17 +25,11 @@ The default hashing algorithm used is `sha256`.
 To hash a string (not password)
 
 ```php
-use Origin\Utility\Security;
+use Origin\Security\Security;
 $hashed = Security::hash('foo');
 ```
 
-If you want to add an additional string to the text that is being hashed, a pepper. The set pepper to true, this will use the value from `Security.pepper` from your configuration.
-
-```php
-$hashed = Security::hash('foo',['pepper'=>true]);
-```
-
-To use a different pepper
+To hash a string with a pepper (also incorrectly known as salt).
 
 ```php
 $hashed = Security::hash('foo',['pepper'=>'A random string']);
@@ -68,7 +70,7 @@ $bool = Security::verifyPassword($input,$hashed); // input is user inputted pass
 To encrypt and decrypt a string you will need a key, you can generate a random secure key.
 
 ```php
-use Origin\Utility\Security;
+use Origin\Security\Security;
 $key = Security::generateKey(); // 33d80476167cc95c363bf7df3c95e1d1
 ```
 
@@ -79,7 +81,7 @@ The key length must be 32 bytes (256 bits) to use with the encryption decryption
 To encrypt a string
 
 ```php
-use Origin\Utility\Security;
+use Origin\Security\Security;
 $key = '33d80476167cc95c363bf7df3c95e1d1';
 $encrypted = Security::encrypt('foo',$key);
 ```
@@ -89,18 +91,32 @@ $encrypted = Security::encrypt('foo',$key);
 To decrypt an encrypted string
 
 ```php
-use Origin\Utility\Security;
+use Origin\Security\Security;
 $key = '33d80476167cc95c363bf7df3c95e1d1';
 $encrypted = 'ohRRdAydx+4wfOd7Vm+LHmmV9zBH+3r0WLQylyPMPu2RvCjX9FVgoeUBZuLYBTLM4x9NeZX7U0bUvE1bucATSQ==';
 $plain = Security::decrypt($encrypted,$key);
 ```
 
-## Random
+## Random Strings
 
-To generate a cryptographically secure random string, the default length is 18.
+To generate a cryptographically secure random string, the default length is 16. (This is an alias for hex)
 
 ```php
-$randomString = Security::random(); // 5f31ecf661dabb04dc
+$randomString = Security::random(); // 5f31ecf661dabb04
+```
+
+### Different Encodings
+
+You can generate secure random strings with different encoding.
+
+```php
+$hex = Security::hex(); // gpgf67ezotl06wqs
+$base36 = Security::base36(); // 13owqvwcgb426rvq
+$base58 = Security::base58(); // SyqBFAtGfNxZkZMQ
+$base62 = Security::base62(); // oc1eIfAHKWWt5zrO
+$base64 = Security::base64(); // v3xsI6O+g6LsuY4+
+// url safe
+$base64 = Security::base64(16,true); // YPT9rp-i6jqXWCvA
 ```
 
 ## UID
@@ -109,10 +125,10 @@ If you need to generate a unique id, and don't need to use a UUID, then the UID 
 
 > If you are generating a API token or another form of string that a user might need to type in, then use `Security::random` or `Security::uuid` instead since these use lower case characters.
 
-To generate a cryptographically secure unique id (UID) with the default length of 15.
+To generate a cryptographically secure unique id (UID) with the default length of 16 using base62.
 
 ```php
-$uid = Security::uid(); // 64cjBxfz2JPhyCQ
+$uid = Security::uid(); // O64cjBxfz2JPhyCQ
 ```
 
 ### UUID
@@ -125,8 +141,7 @@ To generate a random UUID (version 4)
 $uid = Security::uuid(); // 38c67382-d3ab-4430-a27e-0c719813c09f
 ```
 
-For a version 1 UUID, set MAC address to true, this will find the MAC address on Linux systems or generate a random
-one if it can not get this.
+For a version 1 UUID, set MAC address to true, this will find the MAC address on Linux systems or generate a random one if it can not get this.
 
 ```php
 $uid = Security::uuid(['macAddress'=>true]); // ac337932-e4e5-11e9-928f-8bda39fe8887

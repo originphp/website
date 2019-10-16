@@ -8,6 +8,14 @@ section: content
 
 The Text utility has a number of methods to help when working with strings.
 
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/text
+```
+
 To use
 
 ```php

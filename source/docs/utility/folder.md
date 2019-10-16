@@ -8,6 +8,14 @@ section: content
 
 The folder utility helps you work with folders on your file system.
 
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/filesystem
+```
+
 To use the Folder utility add the following to the top of your file.
 
 ```php

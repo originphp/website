@@ -8,6 +8,14 @@ section: content
 
 The Http utility  is a simple yet very powerful utility for making HTTP requests.  
 
+## Installation
+
+To install this package
+
+```linux
+$ composer require originphp/http-client
+```
+
 ## Sending Requests
 
 ### Get Request
