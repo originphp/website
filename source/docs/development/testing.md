@@ -625,6 +625,7 @@ $this->assertOutputContains('needle'); // checks that the output contains a stri
 $this->assertOutputNotContains('needle'); // checks that the output does not contains a string
 $this->assertOutputEmpty(); // asserts there was no output
 $this->assertOutputRegExp('/needle/');
+$this->assertExitCode(-1);
 ```
 
 If you want to test there was an error and that the error or warning sent to the screen contains certain text.

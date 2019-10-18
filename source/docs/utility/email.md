@@ -10,7 +10,7 @@ The `Email` class enables you to send emails easily through SMTP, it is installe
 
 ## Installation
 
-If you wish to use the `Email` class in other projects you can install like this
+This package is already installed but if you want to use this in your other projects you can install using composer.
 
 ```linux
 $ composer require originphp/email

@@ -21,7 +21,7 @@ use Origin\Socket\Socket;
 $socket = new Socket([
     'host' => 'localhost',
     'protocol' => 'tcp',
-    'port' => 80,
+    'port' => 25,
     'timeout' => 30,
     'persistent' => false,
 ]);
@@ -34,18 +34,50 @@ if ($socket->connect()) {
 $socket->disconnect();
 ```
 
-You can can also enable encryption using  `slv3`, `sslv23`, `tls`, `tlsv1`, `tlsv11` and `tlsv12` encryption methods. See the [PHP manual](https://www.php.net/manual/en/function.stream-socket-enable-crypto.php) for more information on the encryption methods.
+You can can also enable encryption using  `ssl` or `tls`, you can also specify versions e.g. `sslv2`, `sslv23`, `sslv3`, `tlsv1`, `tlsv11` and `tlsv12`. See the [PHP manual](https://www.php.net/manual/en/function.stream-socket-enable-crypto.php) for more information on the encryption methods.
 
-To enable or disable encryption using `tls_client` method
+To enable encryption
 
 ```php
-$socket->enableEncryption('tls'); 
-$socket->disableEncryption('tls'); // tls_client
+$socket->enableEncryption('tls');
+$socket->enableEncryption('ssl');
 ```
 
-To enable or disable encryption using `tls_server` method
+To disable encryption
 
 ```php
-$socket->enableEncryption('tls','server'); // tls_server
-$socket->disableEncryption('tls','server'); // tls_server
+$socket->disableEncryption('tls');
+$socket->disableEncryption('ssl');
+```
+
+## Host/IP Address
+
+To get the IP address of the connection
+
+```php
+$ipAddress = $socket->address();
+```
+
+To get the hostname
+
+```php
+$hostname = $socket->host();
+```
+
+## Stream Contexts
+
+When creating a Socket you can also provide `context` options that will be used to create a [stream context](https://www.php.net/manual/en/function.stream-context-create.php).
+
+```php
+$socket = new Socket([
+    'host' => 'example.com',
+    'protocol' => 'tcp',
+    'port' => 443,
+    'timeout' => 30,
+    'persistent' => false,
+    'context' => [
+        'ssl' => [
+            'verify_peer' => false
+        ]
+]);
 ```

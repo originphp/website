@@ -8,7 +8,7 @@ section: content
 
 ## Installation
 
-To install this package
+This package is already installed but if you want to use this in your other projects you can install using composer.
 
 ```linux
 $ composer require originphp/xml

@@ -479,7 +479,7 @@ $app->description([
 ]);
 $app->addCommand('backup', 'DatabaseBackup'); // adds DatabaseBackupCommand
 $app->addCommand('restore', 'DatabaseRestore'); // adds DatabaseRestoreCommand
-$app->run();
+exit($app->run());
 ```
 
 You can find a sample Console Application in the bin folder, called `db` to run this
