@@ -65,6 +65,17 @@
                     @if ($page->docsearchApiKey && $page->docsearchIndexName)
                         @include('_nav.search-input')
                     @endif
+                    <nav class="hidden lg:flex items-center justify-end text-lg">
+                        <a title="Blog Starter Template Blog" href="#" class="ml-6 text-grey-darker hover:text-grey-darker">
+                            1.x
+                        </a> 
+                        <a title="Blog Starter Template Blog" href="/docs/getting-started/" class="ml-6 text-grey-darker hover:text-blue-dark">
+                            2.x
+                        </a> 
+                        <!--a title="OriginPHP community" href="https://community.originphp.com" class="ml-6 text-grey-darker hover:text-blue-dark ">
+                            Community
+                        </a-->
+                    </nav>
                 </div>
             </div>
 
