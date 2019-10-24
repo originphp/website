@@ -14,6 +14,9 @@ Other changes such as strict, return types, dropping public properties and other
 
 `Model` and `Controller` callbacks have been redesigned to be registered and work with `Concerns` in a powerful way.
 
+The bootstrap process has changed, the bootstrap process is carried out in your `config` folder.
+
+The framework has been decoupled in various packages.
 
 I have been working full time on the framework to get this where it is now, changes going forward from here should be slow, with a focus on improving code base, developing and testing with future PHP versions, bug and security fixes.
 
@@ -31,59 +34,44 @@ Firstly, if you don't want to upgrade to the new version then you will need to u
     "originphp/framework": "^1.30"
   },
   "require-dev": {
-    "originphp/debug-plugin": "1.3.3",
+    "originphp/debug-plugin": "^1.3",
     "phpunit/phpunit": "^7.5"
   }
 ```
 
-## Composer.json
+## Before You Start
 
-The composer.json file has been changed, this now respects versions.
+> Create a backup of your source code
 
-```json
-{
-  "name": "originphp/app",
-  "description": "OriginPHP Application",
-  "homepage": "https://www.originphp.com",
-  "type": "project",
-  "license": "MIT",
-  "require": {
-    "php": "^7.2.0",
-    "originphp/framework": "^2.0"
-  },
-  "require-dev": {
-    "originphp/debug-plugin": "^1.4",
-    "phpunit/phpunit": "^8.0"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "preferred-install": "dist",
-    "optimize-autoloader": true,
-    "sort-packages": true
-  }
-}
+Its really important to make a backup of your source code, then the next step is make sure your application works up to version `1.33`.
+
+## Summary
+
+Heres is a quick summary of the main changes which are in more detail below
+
+1. Create a new project, this will setup the new bootstrap, add new files, folder structure a project dependencies.
+2. Move your source into the new folder structure (which basically is splitting the console and web app)
+3. controller hooks before/afterFilter have been renamed to startup/shutdown inline with rest of framework.
+4. Model and Controller callbacks are now registered. For example in a model you do `$this->beforeSave('hashPassword');`
+5. Behaviors have been removed and replaced with Concerns (which use traits)
+6. Packages have been decoupled, anything in `Origin\Utility` will need to change to new namespace
+
+If you have any problems or questions, send me an email or open an issue on github.
+
+## Create new Project
+
+It will be best to create a new project since there are a number of new files, and composer dependencies
+
+```linux
+$ composer create-project originphp/app app-upgrade
 ```
 
-## Front Controller
+> Whilst here there might be what seems to be alot, once you create the project move your app files to the new folder structure and adjust references it, you can do this in 20 minutes. Many features you may not have even used so you dont need to do anything.
 
-The front controller has been adjusted. See [Github](https://github.com/originphp/app/blob/master/public/index.php).
+If you have used any custom configuration or load any custom files from your bootstrap, then you will need to copy this over.
 
-## Bootstrap Process
+You will also need to copy over your schema (migrations table has changed more info below)
 
-The bootstrap process including loading of configuration files has been moved from the framework bootstrap to the application bootstrap `config/bootstrap.php`. This also affects Console Applications
-
-For example
-
-```php
-include 'application.php';
-include 'log.php';
-include 'cache.php';
-include 'database.php';
-include 'storage.php';
-include 'email.php';
-include 'queue.php';
-```
 
 ## Parent Class Changes
 
@@ -96,38 +84,11 @@ Parent classes such as `AppController` have been renamed to use the Application 
 - AppJob
 - AppHelper
 
-## New Classes
-
-### Console/Application.php
-Console now introduces its own Application.php, this will allow for adding shared features and configuration to console commands in the future.
-
-Here is the contents of `app/Console/Application.php`
-
-```php
-namespace App\Console;
-use Origin\Console\BaseApplication;
-class Application extends BaseApplication
-{
-}
-```
-
-### Exception/ApplicationException
-
-A new folder called exception has been added, and the class `ApplicationException` has been added.
-
-Here is the contents of `app/Exception/ApplicationException.php`
-
-```php
-namespace App\Exception;
-use Origin\Exception\Exception;
-class ApplicationException extends Exception
-{
-}
-```
-
 ## Folder Structure Changes
 
 HTTP and Console have been separated, as a result views for Http are in the HTTP folder and email templates are stored in the Mailer folder.
+
+You will notice there is a new folder structure 
 
 ```
 -- app
@@ -150,6 +111,12 @@ Moving the files to new folder structure will require references to these to be 
 - `App\Controller` change to `App\Http\View`
 - `App\View` change to `App\Http\View`
 - `App\Middleware` change to `App\Http\Middleware`
+
+This is the same for the Origin namespace as well
+
+- `Origin\Command` change to `Origin\Console\Command`
+- `Origin\Controller` change to `Origin\Http\View`
+- `Origin\View` change to `Origin\Http\View`
 
 ## Mailer Templates
 
@@ -200,10 +167,12 @@ Framework Locations
 
 All HTTP exceptions for example:
 
-- `Origin\Exception\NotFoundException` changed to `Origin\Exception\NotFoundException`
+- `Origin\Exception\NotFoundException` have been moved to the Http folder, for example `Origin\Http\Exception\NotFoundException`
 
 These include BadRequest,Forbidden,HttpException,InternalError,MethodNotAllowed, ServiceUnavailable, NotImplemented.
 
+- `Origin\Exception\InvalidArgumentException` moved to - `Origin\Core\Exception\InvalidArgumentException`
+- `Origin\Exception\Exception` moved to - `Origin\Core\Exception\Exception`
 
 ## Controller Callbacks
 
@@ -249,7 +218,7 @@ See [Callbacks guide](https://www.originphp.com/docs/model/callbacks/) for more 
 
 ## Configure Class
 
-The `Configure` class has been renamed to `Config`, depending upon the version you used to create your project you may have already been using this. You should your check your `config/application.php` file. Find `Configure::` references.
+The `Configure` class has been renamed to `Config`, depending upon the version you used to create your project you may have already been using this. Find `Configure::` references.
 
 ## Return Types
 
@@ -263,13 +232,15 @@ All public properties have been changed to protected, including `Mailer`,`Job`, 
 
 ## Middleware
 
+If you have not created any middleware, then you can skip this section.
+
 Previously Middleware used `startup` and `shutdown` as aliases for `invoke` and `process`, this has been changed, and startup and shutdown now callbacks inline with rest of framework. Rename your Middleware `startup` to `invoke` and `shutdown` to `process`.
 
 ## Behaviors
 
 Behaviors have been removed and replaced with `Concerns`, but don't be concerned they work the same way just that now they use traits, so now we just use less magic.
 
-### Framework References
+### Behavior References
 
 In your models any references to old framework behaviors need to be adjusted to their equivalent as a `Concern`. 
 
@@ -293,7 +264,6 @@ class ApplicationModel extends Model
 
 If you have created any custom Behaviors, these will be need to converted to `Concerns`, the code will be almost identical, except you don't need to reference `$this->model` since a `Concern` is a trait.
 
-
 ## Removed Features
 
 All previous deprecated features have been removed, the following functions have also been removed
@@ -316,7 +286,11 @@ The framework has been updated to work with PHPUnit 8.0+.
 
 ## Migations
 
-The [migration schema](https://github.com/originphp/app/blob/master/database/migrations.php) has changed, version is now a `bigint` field. You will need to reload the schema into your database.
+The [migration schema](https://github.com/originphp/app/blob/master/database/migrations.php) has changed, version is now a `bigint` field. You will need to dump your schema and then delete the migrations table and reimport using the new one
+
+```linux
+$ bin/console db:schema:load migrations
+```
 
 ## Cookies
 
@@ -353,13 +327,30 @@ trait  Foo
 
 Packages have been decoupled from the framework and are available as composer packages and also as a result the namespaces changed.
 
-For example
+These packages are installed as part of the framework, so you only need to change references from `Origin\Utility`
+
+- Inflector is now a composer package and under a different namespace `Origin\Inflector`
+- Security is now a composer package and under a different namespace `Origin\Security`
+- Yaml is now a composer package and under a different namespace `Origin\Yaml`
+- Html is now a composer package and under a different namespace `Origin\Html`
+- Email is now a composer package and under a different namespace `Origin\Email`
+
+The following packages are not installed by default but can be installed through composer
+
+For example 
 
 ```linux
 $ composer require origin\collection
 ```
 
-- `Origin\Utility\Collection` is now `Origin\Collection`
+- Collection is now a composer `originphp/collection` package and under a different namespace `Origin\Collection`
+- CSV is now a composer package `originphp/csv` and under a different namespace `Origin\Csv`
+- DOM is now a composer package `originphp/dom` and under a different namespace `Origin\Dom`
+- File and Folder are now in a composer package (`originphp/filesystem`) and under a different namespace `Origin\Filesystem`
+- Text is now a composer package `originphp/text` and under a different namespace `Origin\Text`
+- Markdown is now a composer package `originphp/markdown` and under a different namespace `Origin\Markdown`
+- Http is now a composer package `originphp/http-client` and under a different namespace `Origin\HttpClient`
+
 
 ## Note
 

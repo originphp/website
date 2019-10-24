@@ -10,7 +10,7 @@ To keep logic that has nothing to do with data persistence from bloating up your
 
 A good candidate for this example is a User `model`, since this always gets really bloated.
 
-The first thing to do is to create a `repository` class using the plural name of the Model.
+The first thing to do is to create a `repository` class using the plural name of the Model, this enables the lazyloading of the model which can be used.
 
 ```linux
 $ bin/console generate respository Users
@@ -59,6 +59,20 @@ class UsersRepository extends Repository
         return true;
     }
 }
+```
+
+When creating the Repository any arguments passed to the constructor will also be passed to the `initialize` hook, so you can use this for dependency injection.
+
+```php
+class UsersRepository extends Repository
+{
+    protected initialize(SomeModel $model,array $config = []) : void
+    {
+        $this->SomeModel = $model;
+        $this->config = $config;
+    }
+}
+
 ```
 
 ## Loading the Repository

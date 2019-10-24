@@ -10,24 +10,11 @@ The User Authentication plugin, provides user registration, sending a welcome em
 
 ## Installation
 
-### Automated
 
-Install the the `UserAuthentication` plugin using the `plugin:install` command
+Install the the `UserAuthentication` plugin
 
 ```linux
-$ bin/console plugin:install originphp/user_authentication
-```
-
-> The plugin:install command requires that the git command line tools are installed
-
-### Manually
-
-To install the plugin manually, download the source into `plugins/user_authentication`.
-
-Add the following line to `config/bootstrap.php`
-
-```php
-Plugin::load('UserAuthentication');
+$ composer require originphp/user_authentication
 ```
 
 ## Setup
