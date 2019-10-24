@@ -8,6 +8,8 @@ section: content
 
 ## Welcome
 
+> There is an Upgrade tool available, see below for more about this. Whilst there are a number of changes, its only the features that you have used which changed need your attention, apart from the main changes, many changes wont affect you.
+
 Version 2 removes deprecated features and provides a more organized folder structure and makes it easier to work with given the number of folders that are now used. 
 
 Other changes such as strict, return types, dropping public properties and other changes to take advantage of modern PHP features and best practices. 
@@ -22,7 +24,7 @@ I have been working full time on the framework to get this where it is now, chan
 
 I will be happy to help you with upgrading if you contact me within the following weeks, just send me an email to `js@originphp.com`.
 
-## Not Upgrading
+## Not Upgrading?
 
 Firstly, if you don't want to upgrade to the new version then you will need to update your `composer.json` file, to ensure that when you run `composer update` it does not download version 2.x, the `composer.json` file from most versions of the framework will just update to the latest version automatically.
 
@@ -39,12 +41,6 @@ Firstly, if you don't want to upgrade to the new version then you will need to u
   }
 ```
 
-## Before You Start
-
-> Create a backup of your source code
-
-Its really important to make a backup of your source code, then the next step is make sure your application works up to version `1.33`.
-
 ## Summary
 
 Heres is a quick summary of the main changes which are in more detail below
@@ -58,19 +54,63 @@ Heres is a quick summary of the main changes which are in more detail below
 
 If you have any problems or questions, send me an email or open an issue on github.
 
-## Create new Project
+## Upgrade Tool
 
-It will be best to create a new project since there are a number of new files, and composer dependencies
+> Create a backup of your source code
+
+The upgrade tool will
+
+1. convert the old folder structure to the new structure and update USE statements
+2. update Namespace changes
+3. warn you of features that you are using that might have changed/removed or require action
+
+What you will need to do (upgrade tool will warn you)
+
+1. Adjust usage of Model or Controller callbacks (register them and rename the old callbacks), see below.
+2. If you used the Email utility, need to migrate this to Mailer or adjust as stated below
+3. Require any packages for your project that have been decoupled (you will be ad)
+4. Your mailer templates will have to be manually moved and renamed as stated below
+5. any public framework properties will need to be changed to protected, e.g Controller::$layout, Model::$table etc. This also affects Jobs and Mailer.
+6. If you have created Behaviors, you will need to recreate them as Concerns (basically make them a trait - see below)
+7. If you created middleware then rename the `startup` and `shutdown` to `handle` and `process`. 
+
+Those are the main things, a few other changes have been made and are listed below, however the upgrade tool will warn you.
+
+Its really important to make a backup of your source code, then the next step is make sure your application works up to version `1.33`, mainly handling any deprecation notices.
+
+Create a new project
 
 ```linux
-$ composer create-project originphp/app app-upgrade
+$ composer create-project originphp/app app-v2
 ```
 
-> Whilst here there might be what seems to be alot, once you create the project move your app files to the new folder structure and adjust references it, you can do this in 20 minutes. Many features you may not have even used so you dont need to do anything.
+Install the upgrade application
 
-If you have used any custom configuration or load any custom files from your bootstrap, then you will need to copy this over.
+```linux
+$ cd app-v2
+$ composer require originphp/upgrade
+```
 
-You will also need to copy over your schema (migrations table has changed more info below)
+Copy the contents of your `app` folder into the `app` folder (leave structure as is), here is an example:
+
+```
+$ cp -r ~/code/original-project/app/* ~/code/app-v2/app
+```
+
+Copy the contents of your `tests` folder into the `tests` folder (leave structure as is), here is an example:
+
+```
+$ cp -r ~/code/original-project/tests/* ~/code/app-v2/tests
+```
+
+Do a DRY run
+
+```linux
+$ bin/console upgrade --dry-run
+```
+
+This will show you what it will change automatically and possible issues that need to be looked
+due to changes ( model callbacks, controller callbacks, composer dependencies, or public properties)
 
 
 ## Parent Class Changes
@@ -240,6 +280,11 @@ Previously Middleware used `startup` and `shutdown` as aliases for `invoke` and 
 
 Behaviors have been removed and replaced with `Concerns`, but don't be concerned they work the same way just that now they use traits, so now we just use less magic.
 
+You can create the base like this and move your code (callbacks work the same as in models see this page for info)
+```
+$ bin/console generate concern_model NameOfConcern
+```
+
 ### Behavior References
 
 In your models any references to old framework behaviors need to be adjusted to their equivalent as a `Concern`. 
@@ -322,6 +367,13 @@ trait  Foo
   }
 }
 ```
+
+## Email Utility
+
+If you used the email utility, the functionality of this has been reduced to just sending emails, so it no longer uses templates or creates a text version automatically, also the default type is `text`.  You should rewrite any usage of this to use the [OriginPHP Mailer](/docs/mailer.md) or if you can't use this for some reasons, then make sure
+
+1. set `$email->format('both')` since the default has changed to text.
+2. if you are not supplying a text version and was relying on automatically creating one, then use the [Html](/docs/utility\html) tool to convert the HTML body into text e.g. `Html::toText($message)`
 
 ## Decoupling
 
