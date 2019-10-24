@@ -66,10 +66,10 @@
                         @include('_nav.search-input')
                     @endif
                     <nav class="hidden lg:flex items-center justify-end text-lg">
-                        <a title="Blog Starter Template Blog" href="/1.0/getting-started/" class="ml-6 text-grey-darker hover:text-blue-dark ">
+                        <a title="1.x Documentation" href="/1.0/getting-started/" class="ml-6 text-grey-darker hover:text-blue-dark ">
                             1.x
                         </a> 
-                        <a title="Blog Starter Template Blog" href="#" class="ml-6 text-grey-darker hover:text-grey-darker">
+                        <a title="2.x Documentation" href="#" class="ml-6 text-grey-darker hover:text-grey-darker">
                             2.x
                         </a> 
                         <!--a title="OriginPHP community" href="https://community.originphp.com" class="ml-6 text-grey-darker hover:text-blue-dark ">
