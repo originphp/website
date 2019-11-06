@@ -54,17 +54,19 @@ use Origin\Storage\Storage;
 $allFiles = Storage::list();
 ```
 
-Storage contents are listed recursively and it will provide you with an array of arrays. Each file has its own array.
+Storage contents are listed recursively and it will provide you with an array of `FileObjects`. Each file has is an object which can be accessed as an array or an object
 
 ```php
 
 // Will look like this
 [
-    'name' => 'my_folder/test.txt',
-    'size' => 1024,
-    'timestamp' => 1559692998
+    'name' => 'profiles/furion.pdf',
+    'timestamp' => 1572444094,
+    'size' => 1024
 ];
 
+echo $file->name;
+echo $file['name'];
 ```
 
 If you just want the files of particular folder, then it will list all files recursively under that folder.

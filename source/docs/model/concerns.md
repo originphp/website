@@ -121,7 +121,7 @@ Here is an example `Model` `Concern`
 namespace App\Model\Concern;
 
 use Origin\Model\Entity;
-use Origin\Utility\Text;
+use Origin\Security\Text;
 use ArrayObject;
 
 trait Sluggable
@@ -177,4 +177,63 @@ This `Concern` delocalizes data. This is enabled by default in the `ApplicationM
 
 ### Elasticsearch
 
-Automatically integrate your application with Elasticsearch. See the [Elasticsearch Concern](/docs/model/elasticsearch-concern) for more information.
+Automatically integrate your application with Elasticsearch. See the [Elasticsearch Plugin](/docs/plugins/elasticsearch) for more information.
+
+### Cacheable
+
+Automatically cache the database results in your application.
+
+```php
+use Origin\Model\Concern\Cacheable;
+
+class ApplicationModel extends Model
+{
+  use Cacheable;
+}
+```
+
+By default it will use your `default` cache configuration, if you want to change this
+
+```php
+protected function initialize(array $config) : void
+{
+    parent::initialize($config);
+    $this->cacheConfig('redis');
+}
+```
+
+#### Invalidating Cache Manually
+
+If you use model methods which modify the database but do not trigger callbacks such as `updateColumn`,`updateAll`,`deleteAll`,`increment` or `decrement` then you should manually call `invalidateCache`.
+
+```php
+public function doSomething() 
+{
+  $this->updateColumn(1000,'status','new');
+  $this->invalidateCache();
+}
+```
+
+#### Disabling and Reenabling
+
+Sometimes you might want to disable the Caching features for a particular operation.
+
+```php
+public function doSomething() 
+{
+  $this->disableCache();
+  ... // your code here
+  $this->enableCache(); // put it back
+}
+```
+
+#### Cache Configuration
+
+Configure your cache in `config/cache.php`
+
+```php
+Cache::config('apcu', [
+    'engine' => 'Apcu',
+    'duration' => '+15 minutes', // string or number of seconds e.g. 3600,
+]);
+```

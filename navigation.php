@@ -30,7 +30,6 @@ return [
             'Validation' => 'docs/model/validation',
             'Callbacks' => 'docs/model/callbacks',
             'Concerns' => 'docs/model/concerns',
-            'Elasticsearch' => 'docs/model/elasticsearch-concern',
             'Repositories' => 'docs/model/repositories',
             'Query Objects' => 'docs/model/query-objects',
         ],
@@ -108,7 +107,8 @@ return [
         'url' => 'docs/plugins',
         'children' => [
             'User Authentication' => 'docs/plugins/user-authentication',
-            'MultiTenant' => 'docs/plugins/multi-tenant'
+            'MultiTenant' => 'docs/plugins/multi-tenant',
+            'Elasticsearch' => 'docs/plugins/elasticsearch',
         ],
     ],
     

@@ -286,10 +286,10 @@ class ContactsController extends ApplicationController
 
 ### XML Views
 
-To render a xml view, just pass a result from the database, an array or a xml string. Data is converted using the XML utility. If you need to wrap some data in cdata tags, then make sure to include `use Origin\Utility\Xml` at the top of your file so you can call it directly.
+To render a xml view, just pass a result from the database, an array or a xml string. Data is converted using the XML utility. If you need to wrap some data in cdata tags, then make sure to include `use Origin\Xml\Xml` at the top of your file so you can call it directly.
 
 ```php
-use Origin\Utility\Xml;
+use Origin\Xml\Xml;
 class PostsController extends ApplicationController
 {
     public function lastest()
@@ -412,14 +412,16 @@ $this->enableCallback('checkCount');
 A common thing to do from a controller is to redirect. To redirect to a different url use the redirect method. You can pass either a string or an array.
 
 ```php
-$this->redirect('/thanks');
-$this->redirect('https://www.wikipedia.org');
+return $this->redirect('/thanks');
+return $this->redirect('https://www.wikipedia.org');
 ```
+
+The redirect method will return a `Response`, you should always return this to prevent any other code from being run and so the dispatcher can handle the rendering properly.
 
 You can also use an array, if you dont specify a controller, it will assume you want to redirect to the same controller. The array function here for redirect works the same way elsewhere in the framework when using an array for a URL.
 
 ```php
-$this->redirect([
+return $this->redirect([
   'controller' => 'users',
   'action' => 'view',
   1024
@@ -429,7 +431,7 @@ $this->redirect([
 To use a query string, pass a `?` key with the array.
 
 ```php
-$this->redirect([
+return $this->redirect([
   'controller' => 'users',
   'action' => 'view',
   1024,
@@ -446,7 +448,7 @@ You can also use `#` for fragments, to scroll to a part of the page.
 OriginPHP also supports named parameters.
 
 ```php
-$this->redirect([
+return $this->redirect([
   'controller' => 'orders',
   'action' => 'confirmation',
   'product' => 'ebook',
@@ -462,10 +464,8 @@ which will generate a URL like
 ## Logging
 
 Logs are stored in `logs` and make it easy to debug and keep track of what is going on.
- OriginPHP uses a minimalistic file logger based upon the PSR 3 standard.
 
 Each line in the log includes the date, channel, type of message and the message itself. 
-
 
 ```php
 use Origin\Log\Log;

@@ -119,3 +119,108 @@ You can disable CSRF Protection for routes.
 ```js
 Router::add('/api/:controller/:action/*',['type'=>'json','csrfProtection'=>false])
 ```
+
+## AccessLog Middleware
+
+This is a simple Middleware that creates an access log using the Apache Common LOG format, but using the logged in user id.
+
+To the load the Middleware:
+
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('AccessLog');
+}
+```
+
+## Firewall Middleware
+
+The Middleware can be used to block certain IPs or only allow certain IPs.
+
+Create a `blacklist.php` or `whitelist.php` in your `config` directory, then load the Middleware.
+
+The files should return an array like this 
+
+```php
+return [
+    '80.80.80.12'
+];
+```
+
+Whitelist will allow you restrict access to only certain IPs, and blacklist is used to block ips.
+
+To the load the Middleware:
+
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('Firewall');
+}
+```
+
+## IDS (Intrusion Detection System) Middleware
+
+This is lightweight but powerful application level IDS (Intrusion Detection System) to help you identify IP addresses that are trying to use SQL injection or XSS attacks on your web application. 
+
+It also provides an engine for you to extend the rules if you want too.
+
+Create a `config/rules.php` with the following keys, if you use a rules file, then the default rules will be overwritten using the rules that you provide.
+
+```php
+return [
+    [
+        'name' => 'SQL Injection (paranoid)',
+        'signature' => '/(\%27)|(\')|(?<!=)=(?!=)|(\%23)|(\#)|(\-\-)|(\%2D)/ix',
+        'description' => 'Check for SQL specific meta-characters such as quote, equals comments #/-- and their hex equivalent',
+        'level' => 3
+    ],
+];
+```
+
+It supports different levels, included are rules from levels 1-3. 3 being warnings that can catch anything, 1 should be almost certain and 2 in-between.
+
+In your `app/Http/Application.php`
+
+
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('Ids',[
+        'level' => 3
+    ]);
+}
+```
+
+## Profiler Middleware
+
+This Middleware keeps track of the memory usage and time it takes for each request. This is handy
+for new application being deployed to locate memory leaks and long running requests.
+
+This will produce something like this in  `/var/www/logs/profile.log`
+
+`[2019-11-03 13:49:11] GET http://localhost:3000/bookmarks/add 0.0644s 934.87kb`
+
+
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('Profiler');
+}
+```
+
+## Throttle Middleware
+
+You can restrict the rate of requests, block malicious requests and help mitigate DDOS attacks at the application level. Simply enable this middleware and by default it will block and ban IPs that make more than average 1 request per second, by checking over an average of 10 seconds, this allows for bursts and redirects etc.
+
+> This checks requests wether or not they are valid, so an invalid url or missing favicon will trigger a second request.
+
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('Throttle',[
+        'limit' => 10,
+        'seconds' => 10,
+        'ban' => '+30 minutes'
+    ]);
+}
+```

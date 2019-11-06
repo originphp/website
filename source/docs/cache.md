@@ -108,7 +108,7 @@ Cache::config('default', [
       'file' => LOGS . '/application.log',
     'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
     'prefix' => 'cache_'
-    'serialize' => true // set to false if you going to cache strings such as output
+    'serialize' => true // set to false if you going to cache large strings such as output which dont need serialization
   
      ]);
 ```
@@ -131,7 +131,7 @@ This is a simple configuration for using Memcached.
 Cache::config('default', [
         'engine' => 'Memcached',
         'host' => '127.0.0.1',
-        'port' => '11211',
+        'port' => 11211,
         'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
         'prefix' => 'cache_'
      ]);
@@ -143,7 +143,7 @@ If your Memcached server is configured with username and password then
 Cache::config('default', [
         'engine' => 'Memcached',
         'host' => '127.0.0.1',
-        'port' => '11211',
+        'port' => 11211,
         'username' => 'james',
         'password' => 'secret',
         'duration' => '+60 minutes', // 3600,

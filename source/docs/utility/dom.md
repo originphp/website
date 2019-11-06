@@ -39,7 +39,7 @@ $ composer require originphp/dom
 Example usage:
 
 ```php
-use Origin\Utility\Dom;
+use Origin\Dom\Dom;
 $dom = new Dom('1.0','UTF-8');
 $dom->loadHtml($html); // this is a dom function
 $element = $dom->querySelector('div.foo div.sub h1');

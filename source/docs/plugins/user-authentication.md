@@ -10,7 +10,6 @@ The User Authentication plugin, provides user registration, sending a welcome em
 
 ## Installation
 
-
 Install the the `UserAuthentication` plugin
 
 ```linux

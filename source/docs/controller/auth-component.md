@@ -94,22 +94,23 @@ Alternatively, you get an individual value from the user array by passing a key.
 The the default password hasher for OriginPHP uses the php password_hash function, which is very secure. To hash a password using the default password hasher:
 
 ```php
-use Origin\Utility\Security;
+use Origin\Security\Security;
 Security::hashPassword($entity->password);
 ```
 
 So when a user signs up or changes their password you will need to hash the password, this will normally  be done in your user model, this will help keep your controller slim.
 
 ```php
-use Origin\Utility\Security;
+use Origin\Security\Security;
 class User extends ApplicationModel
 {
-    public function beforeSave(Entity $entity, ArrayObject $options) : bool
+    protected function initialize(array $config) : void 
     {
-        if(!parent::beforeSave($entity,$options)){
-            return false;
-        }
-
+        $this->beforeSave('hashPassword');
+    }
+   
+    protected function hashPassword(Entity $entity, ArrayObject $options) : bool
+    {
         if ($entity->modified('password')) {
             $entity->password = Security::hashPassword($entity->password);
         }
@@ -170,7 +171,7 @@ GET http://localhost:8000/api/dosomething/12345?api_token=3905604a-b14d-4fe8-906
 You can use `Security::random` or `Security::uuid` to generate secure api tokens.
 
 ```php
-use Origin\Utility\Security;
+use Origin\Security\Security;
 $user->api_token = Security::random(40); // bbd7cebc6274d5ec7aabbdbaa4885e0b2f75d091
 $user->api_token = Security::uuid(); // 1546d376-8b3b-4ce9-b763-f95b8cbbeb82
 ```

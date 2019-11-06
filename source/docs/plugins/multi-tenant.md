@@ -8,6 +8,12 @@ section: content
 
 The `MultiTenant` plugin enables you to make your web application multi-tenant using a single database.
 
+## Installation
+
+```linux
+$ bin/console plugin:install originphp/multi_tenant
+```
+
 ## Models
 
 Add the `Tenantable` trait to any model and then add the column `tenant_id` to your database (and schema)

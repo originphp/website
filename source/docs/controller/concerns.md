@@ -6,7 +6,7 @@ section: content
 ---
 # Concerns
 
-A `Concern` is code which you share between `Controllers` that go in the `app/Http/Controller/Concern` folder. Do not use `Concerns` to reduce code in your `Controllers` that is an anti-pattern, only use a `Concern` when you need to share code across multiple `Controllers`.
+A `Concern` is a trait which you can use to share code between `Controllers` that go in the `app/Http/Controller/Concern` folder. Do not use `Concerns` to reduce code in your `Controllers` that is an anti-pattern, only use a `Concern` when you need to share code across multiple `Controllers`.
 
 The first thing to do, is generate the classes
 
@@ -113,17 +113,20 @@ trait UserLimit
         $this->afterAction('updateCount');
     }
 
-    public function throwMonthlyLimitException(){
+    public function throwMonthlyLimitException() : void
+    {
           throw new ForbiddenException('You have reached your monthly limit');
     }
     
-    protected function updateCount(){
+    protected function updateCount() : void
+    {
         if($this->Auth->isLoggedIn()){
             $this->User->increment('pages_viewed',$this->Auth->user('id'));
         }
     }
 
-    protected function checkCount(){
+    protected function checkCount() : void
+    {
         if($this->Auth->isLoggedIn()){
             $user = $this->User->get($userId);
             if($user->pages_viewed < $user->monthly_limit){
@@ -131,7 +134,6 @@ trait UserLimit
             }
             $this->throwMonthlyLimitException();
         }
-       return null;
     }
 }
 ```

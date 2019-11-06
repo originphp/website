@@ -1,14 +1,22 @@
 ---
-title: Elasticsearch Concern
-description: Elasticsearch Concern Guide for the OriginPHP Framework
+title: Elasticsearch Plugin
+description: Elasticsearch Plugin Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
-# Elasticsearch Concern
+# Elasticsearch Plugin
 
-If you need to improve performance of your application by moving search queries to Elasticsearch or implement more advanced searching, OriginPHP makes it ultra simple to implement Elasticsearch in your web application.
+If you need to improve the performance of your application by moving search queries to Elasticsearch or implement more advanced searching, OriginPHP makes it ultra simple to implement Elasticsearch in your web application.
 
-> To use the Elasticsearch features you will need to install Elasticsearch 7.0 or greater.
+## Installation
+
+To install this plugin
+
+```linux
+$ composer require originphp/elasticsearch
+```
+
+> To use the Elasticsearch features you will need to install Elasticsearch 7.0 or greater. At the bottom of this text there is information how to do this with Docker.
 
 ## Configuration
 
@@ -19,7 +27,7 @@ Here I will cover the configuration of Elasticsearch, the installation instructi
 First you need to configure the Elasticsearch connection. In your configuration file `config/application.php` add the following (or create a separate file and adjust the bootstrap);
 
 ```php
-use Origin\Utility\Elasticsearch; // Utility
+use Origin\Elasticsearch\Elasticsearch;
 
 Elasticsearch::config('default', [
     'host' => 'elasticsearch', // or 127.0.0.1 if not using the docker version
@@ -34,7 +42,7 @@ Elasticsearch::config('default', [
 Add the Elasticsearch `Concern` to your `Model`.
 
 ```php
-use Origin\Model\Concern\ElasticSearch;
+use Elasticsearch\Model\Concern\ElasticSearch;
 
 class MyModel extends ApplicationModel
 {
@@ -104,11 +112,12 @@ By default, OriginPHP dynamically maps each column to Elasticsearch, all columns
 To manually map columns for the indexes, in your model call the index method for each column that you want to index. You can optionally pass an options array which takes settings from Elasticsearch [mapping types](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html).
 
 ```php
-use Origin\Model\Concern\ElasticSearch;
+use Elasticsearch\Model\Concern\ElasticSearch;
 
 class Article extends ApplicationModel
 {
     use Elasticsearch;
+    
     protected function initialize(array $config) : void
     {
         // Set the columns to index
@@ -155,3 +164,11 @@ And under the `volumes:` node add
 The next time you run `docker-compose up` the Elasticsearch container will created.
 
 For information on how to install on Ubuntu server see this [article](https://linuxize.com/post/how-to-install-elasticsearch-on-ubuntu-18-04/).
+
+## Testing
+
+When testing your application (or this plugin) you will need to start an Elasticsearch instance, you can do this with a nice oneliner from the command line
+
+```
+$ docker run -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.3.0
+```
