@@ -52,7 +52,7 @@ With `get` you can get a single record, also called an `Entity`. See the [Entiti
 $article = $this->Article->get(1000);
 echo $article->title;
 ```
-When you use `get` if the record is not found, it will throw a `NotFoundException`.
+When you use `get` if the record is not found, it will throw a `RecordNotFoundException`.
 
 ### First Finder
 
@@ -67,6 +67,12 @@ echo $article->author->name;
 You can also pass an array of options, which will be explained in the *Find Options* chapter. If no result is found it will return `null`.
 
 If you need the result to be an array form then you can call `toArray` on the result.
+
+You can also call the first method
+
+```php
+$article = $this->Article->first();
+```
 
 ### All Finder
 
@@ -86,6 +92,11 @@ You can also pass an array of options. If no results are found it will return an
 
 If you need the results to be an array form then you can call `toArray` on the results object.
 
+You can also call the all method
+
+```php
+$article = $this->Article->all();
+```
 
 ### List Finder
 
@@ -241,15 +252,13 @@ $result = $this->Article->find('first',['conditions'=>$conditions]);
 
 ### Fields
 
-By default all fields are returned for each model, even if you don't use them. You can reduce the load on the server
-by selecting just the fields that you need.
+By default all fields are returned for each model, even if you don't use them. You can reduce the load on the server by selecting just the fields that you need.
 
 ```php
 $result = $this->Article->find('first',['fields'=>['id','title','author_id']]);
 ```
 
-To use also pass DISTINCT, MIN and MAX etc. When using those database functions remember to include AS then a unique
-field name.
+To use also pass DISTINCT, MIN and MAX etc. When using those database functions remember to include AS then a unique field name.
 
 ```php
 $conditions = ['fields'=>['DISTINCT (authors.name) AS author_name','title']];
@@ -257,23 +266,43 @@ $conditions = ['fields'=>['DISTINCT (authors.name) AS author_name','title']];
 
 ### Order
 
-Use this option to order the results by fields. Make sure you add the alias prefix e.g. `articles.` to the field if you are working with associated data. The order option can be a string or an array.
+Use this option to order the results by fields. 
+
 
 ```php
 $result = $this->Article->find('all',[
-  'order'=>'articles.created DESC'
-  ]);
-
-$result = $this->Article->find('all',[
-  'order'=>['articles.title','articles.created ASC'
-  ]]); // ORDER BY articles.title,articles.created ASC
+  'order'=>['title DESC']
+  ]); // ORDER BY articles.title DESC
 ```
+
+
+```php
+$result = $this->Article->find('all',[
+  'order'=>['title'=>'DESC']
+  ]); // ORDER BY articles.title DESC
+```
+
+You can also sort by multiple fields
+
+```php
+$result = $this->Article->find('all',[
+  'order'=>['title','created ASC']
+  ]); // ORDER BY articles.title, articles.created ASC
+```
+
+Make sure you add the alias prefix e.g. `articles.` to the field if you are working with associated data. The order option can be a string or an array.
+
+```php
+$result = $this->Article->find('all',[
+  'order'=>'authors.created DESC'
+  ]); // ORDER BY authors.created DESC
+```
+
 You can set the default sort order for a model in the model property `order`, any calls to find without order will use this as the natural order.
 
 ### Group
 
-To run a group by query, any aliased fields that don't exist in the table will be added as a property to the
-entity of the current model regardless if it took the data from another table.
+To run a group by query, any aliased fields that don't exist in the table will be added as a property to the entity of the current model regardless if it took the data from another table.
 
 ```php
 $result = $this->Article->find('all',[
@@ -297,8 +326,28 @@ This will return something like this
 Limit is basically what it says it does, it limits the number of results.
 
 ```php
-$result = $this->Article->find('first',['limit'=>5]);
+$result = $this->Article->find('all',['limit'=>5]);
 ```
+
+### Having
+
+You can use having to create filters for a group of rows or aggregates.
+
+```php
+$result = $this->Order->find('all',[
+  'group'=>'order_date',
+  'having'=>['total >'=>1000]
+  ]);
+```
+
+### Locking (SELECT FOR UPDATE)
+
+When you to find a record and lock it for updating, this will execute a select for update statement.
+
+```php
+$result = $this->Article->find('first',['lock'=>true]);
+```
+
 
 ## Eager Loading Associations
 
@@ -345,6 +394,52 @@ By default callbacks are enabled, you can disable them by passing false, then th
 
 ```php
 $result = $this->Article->find('first',['callbacks'=>false]);
+```
+
+## FindBys (new)
+
+FindBys are convenience methods find records by a set of conditions.
+
+```php
+$article = $this->Article->findBy(['title'=>'foo']);
+$articles = $this->Article->findAllBy(['category'=>'new']);
+```
+
+## Aggregates
+
+These functions are used for calculations and support the same options as the `find` method, the field method
+
+```php
+$count = $this->Article->count();
+$count = $this->Article->count('all', $options); // all is alias for *
+$count = $this->Article->count('DISTINCT articles.id');
+
+$avg = $this->Article->average('score');
+$min = $this->Article->minimum('score');
+$max = $this->Article->maximum('score');
+$sum = $this->Article->sum('score');
+```
+
+These methods also work with group queries, which will return an associative array.
+
+```php
+$result = $this->Article->count('all',['group'=>'category']);
+/*
+Array
+(
+    [0] => Array
+        (
+            [count] => 128
+            [category] => Foo
+        )
+
+    [1] => Array
+        (
+            [count] => 64
+            [category] => Bar
+        )
+)
+*/
 ```
 
 ## Finding out if a record exists

@@ -52,6 +52,9 @@ Set the `App.name` value in your `config/application.php`
 ```php
 Config::write('App.name','Web Application');
 ```
+
+> You will need to configure your email in `config/.env.php`
+
 ## Usage
 
 To signup

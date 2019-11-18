@@ -322,7 +322,7 @@ protected function initialize(array $config) : void
 If your `Model` has an `onError` method it will be called if an exception is raised during a database operation.
 
 ```php
-public function onError(\Exception $exception) : void
+protected function onError(\Exception $exception) : void
 {
 }
 ```

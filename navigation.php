@@ -27,6 +27,7 @@ return [
             'Associations' => 'docs/model/associations',
             'Entities' => 'docs/model/entities',
             'Finding Records' => 'docs/model/finding-records',
+            'Query Interface' => 'docs/model/query-interface',
             'Validation' => 'docs/model/validation',
             'Callbacks' => 'docs/model/callbacks',
             'Concerns' => 'docs/model/concerns',
@@ -66,10 +67,12 @@ return [
             'Cache' => 'docs/cache',
             'Events' => 'docs/events',
             'Logging' => 'docs/log',
+            'Mailbox' => 'docs/mailbox',
             'Mailer' => 'docs/mailer',
             'Migrations' => 'docs/migrations',
             'Queue' => 'docs/queue',
             'Storage' => 'docs/storage',
+            
         ]
         ],
     'Development' => [

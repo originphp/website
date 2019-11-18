@@ -223,24 +223,51 @@ You can also whitelist fields (prevent mass assignment attacks) by telling new w
 
 ### Read
 
-Below are few examples of how you can retrieve your data, but for more in-depth information look at the [finding data guide](/docs/model/finding-records).
+Below are few examples of how you can retrieve your data, but for more in-depth information look at the [finding data guide](/docs/model/finding-records) and the [query interface guide](/docs/model/query-interface). 
+
+
+There are multiple ways you can query the database using the OriginPHP ORM
+
+To get a single record 
+
+```php
+$article = $this->Article->get(1000); // throw exception if not found
+
+$article = $this->Article->find('first',[
+    'conditions' => ['id' => 1000]
+    ]);
+
+$article = $this->Article->findBy(['id'=>1000]);
+
+// using the query interface
+$articles = $this->Article->where(['id'=>1000])->first();
+
+```
+
+To get multiple records
+
+```php
+
+$articles = $this->Article->find('all',[
+    'conditions' => ['id !=' => 1000]
+    ]);
+
+$articles = $this->Article->all([
+    'conditions' => ['id !=' => 1000]
+    ]);
+
+$articles = $this->Article->findAllBy(['id !='=>1000]);
+
+// using the query interface
+$articles = $this->Article->where(['id !='=>1000])->all();
+
+```
 
 When you use get it will retrieve a record by the primary key id, if the record does not exist
 it will throw an exception. This saves having to repeat code to check if record exists and if not throw
 a not found exception. 
 
-```php
-    $article = $this->Article->get(1000);
-```
-If you don't want that behavior then you would use the find method.
-
-```php
-    $article = $this->Article->find('first',[
-        'conditions'=>[
-            'id'=>1000
-            ]
-        ]);
-```
+#### Finders
 
 To find the first the record use the first finder
 
@@ -262,6 +289,7 @@ The list finder will return arrays like `['a','b','c']` or `['a'=>'b']` or `['c'
 ```
 
 The count finder will return an integer of records.
+
 ```php
     $count = $this->Article->find('count',[
         'conditions'=>[

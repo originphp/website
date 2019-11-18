@@ -87,7 +87,7 @@ class SendWelcomeEmailJob extends ApplicationJob
             ->send();
     }
 
-    public function onError(\Exception $exception) : void
+    protected function onError(\Exception $exception) : void
     {
         $this->retry([
             'wait' => '+30 minutes', // how long to wait before retry
@@ -148,12 +148,12 @@ class SendIntroEmailJob extends ApplicationJob
             ->send();
     }
 
-    public function onSuccess(Entity $user) : void
+    protected function onSuccess(Entity $user) : void
     {
         (new SendFollowUpEmailJob())->dispatch($user);
     }
 
-    public function onError(\Exception $exception) : void
+    protected function onError(\Exception $exception) : void
     {
         $this->retry([
             'wait' => '+30 minutes', // how long to wait before retry

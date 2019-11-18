@@ -72,6 +72,8 @@ For example
 ]
 ```
 
+Gmail/Gusite will block applications that it deems insecure including using username/password authentication. If you are using Gmail or Gsuite, then you need to enable third party apps. https://myaccount.google.com/lesssecureapps
+
 ## Sending Emails
 
 The default email sending behavior is to send a text version. However it best practice to send both HTML and text and this reduces the risk of your email ending up in spam folders. 
