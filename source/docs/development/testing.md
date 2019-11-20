@@ -847,6 +847,46 @@ class UsersRepositoryTest extends OriginTestCase
 }
 ```
 
+### Testing Mailboxes
+
+To test a mailbox, make sure you have `Mailbox` routes configured and you will need to use
+fixtures, you can copy the framework fixture and adjust the sample data as needed.
+
+> You will need a MailboxFixture and QueueFixture, for projects created with OriginPHP 2.2 or lower you can download these you can download from [Github](https://github.com/originphp/app/tree/master/tests/Fixture).
+
+```php
+namespace App\Test\Mailbox;
+
+use App\Mailbox\SupportMailbox;
+use Origin\Mailbox\Mailbox;
+use Origin\TestSuite\OriginTestCase;
+use Origin\Mailbox\Model\InboundEmail;
+
+class SupportMailboxTest extends OriginTestCase
+{
+    protected $fixtures = ['Mailbox', 'Queue'];
+
+    protected function setUp(): void
+    {
+        $this->InboundEmail = $this->loadModel('InboundEmail', [
+            'className' => InboundEmail::class
+        ]);
+    }
+
+    public function testRouteMatching()
+    {
+        $mailbox = Mailbox::mailbox(['support@yourdomain.com']);
+        $this->assertEquals(SupportMailbox::class, $mailbox);
+    }
+
+    public function testDelivered()
+    {
+        $inboundEmail = $this->InboundEmail->first();
+        $this->assertTrue((new SupportMailbox($inboundEmail))->dispatch());
+    }
+}
+```
+
 ## Code Coverage
 
 The Dockerized Development Environment comes with PHPUnit and XDebug pre-installed so you can run code coverage easily.

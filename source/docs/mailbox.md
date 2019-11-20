@@ -18,17 +18,10 @@ To install these extensions first update your system
 $ sudo apt-get update
 ```
 
-To install the PHP mailparse extension
+To install the PHP mailparse and IMAP extensions
 
 ```linux
-$ sudo apt-get install php-mailparse 
-```
-
-
-To install the PHP IMAP extension
-
-```linux
-$ sudo apt-get install php-imap
+$ sudo apt-get install php-mailparse php-imap
 ```
 
 Load the database schema
@@ -47,11 +40,12 @@ $ bin/console db:schema:load queue
 
 ### Creating a Route 
 
-First you need to create a route for your mailbox in your `config/mailbox.php`, so lets say you to route emails
-that are sent to `support@domain.com`.
+First you need to create a route for your mailbox in your `config/mailbox.php` and then edit your `config/bootstrap.php` to load that file. 
+
+Lets say you to route emails that are sent to `support@domain.com` to this mailbox.
 
 ```php
-Mailbox::route('/^support@/i'', 'Suppoort');
+Mailbox::route('/^support@/i'', 'Support');
 ```
 
 ### Creating a Mailbox
@@ -94,7 +88,7 @@ class SupportMailbox extends Mailbox
 
 When an email comes it it will be parsed into a `Mail` object
 
-properties include
+#### Properties
 
 - to - a string or array of email addresses
 - subject
@@ -110,28 +104,26 @@ properties include
 - textPart - gets a specific decoded body
 - htmlPart - gets a specific decoded body
 
-methods
+#### Methods
 
 - isBounce - detects if the message is a bounced message
 - isAutoresponder - detects if the message is an autoresponder
 - isDeliveryStatusReport - if its a DSR
-- hasAttachments - if the message has attachements
-- attachements - an array of attachments. Attachments are saved to disk in a tmp directory and the array
+- hasAttachments - if the message has attachments
+- attachments - an array of attachments. Attachments are saved to disk in a tmp directory and the array
 - headers - an array of parsed and decoded headers
 provides the name and path of the file
-- recipients - an array of all email addresses that the message was sent to (to,cc and bcc)
+- recipients - an array of all email addresses from the to,cc and bcc headers
 - contentType - gets the email content type
 - multiPart - if the message has multiple parts
 - hasHtml 
 - hasText
 
-
-
 ### Callbacks & Hooks
 
 The `Mailbox` object comes with the `intitialize`, `startup` and `shutdown` events as per the rest of the framework. 
 
-You can also register callbacks to be called before or after processing 
+You can also register callbacks to be called before or after the processing of the email message. 
 
 ```php
 $this->beforeProcess('someFunction');
@@ -140,20 +132,43 @@ $this->afterProcess('anotherFunction');
 
 The `initialize` hook is so you don't have to overwrite the `__construct` method.
 
-The `beforeProcess` callback is called after the `startup` hook and the `afterProcess` is called before the `shutdown` hook.
+The `beforeProcess` callback is called after the `startup` hook and the `afterProcess` is called after the `processs` method has been called but before `shutdown`.
 
 ### Bouncing Emails 
 
-Sometimes you might want to bounce an email back to the sender, for example if an email is missing
-details etc.
+Sometimes you might want to bounce an email back to the sender, for example if the email is not from one of your users.
+
+Call `bounceWith` and pass a name or full class name (with namespace) of the mailer to use, the `Mail` object will be passed to the `Mailer`
 
 ```php
-$this->bounceWith('UnkownUser');
+$this->bounceWith('UnkownUser'); // automatically resolves
+$this->bounceWith(UnkownUserMailer::class); // 
+$this->bounceWith('App\Mailer\UnkownUserMailer');
 ```
 
 When email is bounced back, processing will stop and any other `beforeProcess` or `afterProcess` callbacks will not be run.
 
-Here is an example of it being used
+Here is how to setup the `Mailer`, as you can see the `Mail` object will be passed to the execute method of the `Mailer`.
+
+```php
+namespace App\Mailer;
+
+use App\Mailer\ApplicationMailer;
+use Origin\Mailbox\Mail;
+
+class UnkownUserMailer extends ApplicationMailer
+{
+    protected function execute(Mail $mail) : void
+    {
+        $this->mail([
+            'to' => $mail->to,
+            'subject' => 'Email address not recognized'
+        ]);
+    }
+}
+```
+
+Here is an example of how to bounce an email if its not from one of your web application users.
 
 ```php
 namespace App\Mailbox;
@@ -180,12 +195,12 @@ class SupportMailbox extends Mailbox
 
 ### Error Handling
 
-Exceptions caught during the processing will be logged to `logs/application.log` and if your `Mailbox` controller has a `onError` method this will be called.
+Exceptions caught during the processing will be logged to `logs/application.log` and if your `Mailbox`  has a `onError` method this will be called.
 
 You can create a method like this
 
 ```php
-protected function onError(\Exception $exception) : void 
+protected function onError(\Exception $exception) : void
 {
     // do something
 }
@@ -193,7 +208,7 @@ protected function onError(\Exception $exception) : void
 
 ### Cleaning Mailboxes
 
-By default once an email message has been routed to the mailbox a `MailboxCleanJob` is scheduled to delete this in 30 days. This is configured in `config/application.php`
+When an email comes in either through piping or downloading, a `MailboxCleanJob` is created and scheduled to delete the email in 30 days, to prevent holding onto lots of personal data but at the same time keeping a trail for debugging or inspection. This is configured in `config/application.php`
 
 ```php
 Config::write('Mailbox.keepEmails', '+30 days');
@@ -240,7 +255,7 @@ Mailbox::config('default', [
 
 You can download email messages using the `mailbox:download` command.
 
-To download email messages for the default configured account
+To download email messages for the `default` configured account
 
 ```linux
 $ bin/console mailbox:download
@@ -272,10 +287,11 @@ Then add the following line to run the CRON job every minute
 * * * * * cd /var/www/app.mydomain.com && bin/console mailbox:download
 ```
 
+> Remember if you are going to use multiple email accounts then you will need to add these to the cron command
+
 ## Email Piping Configuration
 
-To work with email piping you need to configure your mail server to pipe the emails to your application, the following
-instructions assume your web application is installed in the `/var/www` directory.
+To work with email piping you need to configure your mail server to pipe the emails to your application, the following instructions assume your web application is installed in the `/var/www` directory.
 
 You will need to configure your email server to pipe the messages to the following script
 
@@ -291,13 +307,13 @@ add the following line to `/etc/postfix/virtual`
 example@yourdomain.com youralias
 ```
 
-Add the following to `/etc/aliases`
+Then add the following to `/etc/aliases`
 
 ```linux
 youralias: "|/usr/bin/php -q /var/www/vendor/originphp/framework/src/Mailbox/pipe.php"
 ```
 
-> Check the path to PHP is the same on your system
+> Remember to check the path to the PHP executable is the same on your system
 
 Now run the following commands to configure Postfix with your new settings
 

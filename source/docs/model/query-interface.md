@@ -69,7 +69,7 @@ $this->Article->select(['id','title','description'])
               ->where(['id'=>1234]);
 ```
 
-> You also must include the foreignKeys if not fields will not be returned from the join table.
+> Remember to include the foreign key when joining tables, if not fields will not be returned from the join table.
 
 ```php
 $this->Article->select(['id','title','description','author_id','authors.id','author.name']) 
@@ -81,8 +81,8 @@ $this->Article->select(['id','title','description','author_id','authors.id','aut
 To use group in the query
 
 ```php
-$summary = $this->Article->select(['count(DISTINCT id) as count','category'])
-                          ->group(['category']);
+$this->Article->select(['count(DISTINCT id) as count','category'])
+              ->group(['category']);
 /*
 Origin\Model\Collection Object
 (
@@ -105,9 +105,9 @@ Origin\Model\Collection Object
 To use having
 
 ```php
-$results = $this->Article->select(['count(id) as count','category'])
-                        ->group(['category'])
-                        ->having(['count >' => 1]);
+$this->Article->select(['count(id) as count','category'])
+              ->group(['category'])
+              ->having(['count >' => 1]);
 /*
 Origin\Model\Collection Object
 (
@@ -125,15 +125,22 @@ Origin\Model\Collection Object
 To set the order
 
 ```php
-$results = $this->Article->select(['id','title'])
-                          ->order(['id ASC']);
+$this->Article->select(['id','title'])
+              ->order(['id ASC']);
 ```
 
-You can also order multiple columns
+You can also use key/value pair
 
 ```php
-$results = $this->Article->select(['id','title'])
-                          ->order(['id','Title ASC']);
+$this->Article->select(['id','title'])
+              ->order(['id' => 'ASC']);
+```
+
+To order on multiple columns is also easy
+
+```php
+$this->Article->select(['id','title'])
+              ->order(['id','title ASC']);
 ```
 
 ### Distinct
@@ -141,8 +148,8 @@ $results = $this->Article->select(['id','title'])
 To run a distinct query
 
 ```php
-$results = $this->Article->select(['id','title'])
-                          ->distinct();
+$this->Article->select(['id','title'])
+               >distinct();
 ```
 
 ### Limit
@@ -158,7 +165,9 @@ $query = $this->Article->where(['category'=>'foo'])->limit(5);
 To set an offset 
 
 ```php
-$query = $this->Article->where(['category'=>'foo'])->limit(5)->offset(20);
+$this->Article->where(['category'=>'foo'])
+              ->limit(5)
+              ->offset(20);
 ```
 
 ### Locking Records
@@ -166,8 +175,8 @@ $query = $this->Article->where(['category'=>'foo'])->limit(5)->offset(20);
 To run a SELECT FOR UPDATE to lock a record or records for updating.
 
 ```php
-$results = $this->Article->select(['id','title'])
-                          ->lock();
+$this->Article->select(['id','title'])
+              ->lock();
 ```
 
 ### With
@@ -214,7 +223,8 @@ $this->Article->select(['id','title','authors.id','authors.name'])
 To execute the query and get a count
 
 ```php
-$count = $this->Article->where(['id !=' => 1000 ])->count();
+$this->Article->where(['id >' => 1000 ])
+              ->count();
 ```
 
 ### Average
@@ -222,15 +232,17 @@ $count = $this->Article->where(['id !=' => 1000 ])->count();
 To execute the query and get an average value of a column
 
 ```php
-$average = $this->Article->where(['id !=' => 1000 ])->average('column_name');
+$this->Article->where(['category' => ['new','draft']])
+              ->average('column_name');
 ```
 
 ### Sum
 
-To execute the query and get an sum of a column
+To execute the query to calculate the sum of a column
 
 ```php
-$average = $this->Article->where(['id !=' => 1000 ])->average('column_name');
+$this->Article->where(['created <' => now()])
+              ->sum('column_name');
 ```
 
 ### Minimum
@@ -238,7 +250,8 @@ $average = $this->Article->where(['id !=' => 1000 ])->average('column_name');
 To execute the query and get the minimum value of a column
 
 ```php
-$average = $this->Article->where(['id !=' => 1000 ])->minimum('column_name');
+$this->Article->where(['id !=' => 1000 ])
+              ->minimum('column_name');
 ```
 
 ### Maximum
@@ -246,5 +259,6 @@ $average = $this->Article->where(['id !=' => 1000 ])->minimum('column_name');
 To execute the query and get the maximum value of a column
 
 ```php
-$average = $this->Article->where(['id !=' => 1000 ])->maximum('column_name');
+$this->Article->where(['user_id' => 1000 ])
+              ->maximum('column_name');
 ```

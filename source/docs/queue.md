@@ -132,6 +132,23 @@ class ResetUserCreditsJob extends ApplicationJob
 - `onError`: this is called when an exception is caught (job fails)
 - `onSuccess`: if the job ran without issues then this will be called with the same arguments that you passed when constructing the job.
 
+You can also register callbacks when a job is queued
+
+```php
+$this->beforeQueue('methodName'); 
+$this->afterQueue('methodName');
+```
+
+Callbacks can also be registered before and after a job is dispatched, these will be called after `startup` and before `shutdown`.
+
+```php
+// startup
+$this->beforeDispatch('methodName'); 
+$this->afterDispatch('methodName');
+// sthudown
+```
+
+
 Here is an example Job that if it runs successfully, it will call another job, if it fails it will retry a maximum of 3 times waiting 30 minutes in between each try.
 
 ```php
