@@ -299,7 +299,7 @@ echo $this->Form->create($article);
 echo $this->Form->control('title');
 
 // $article->author->name - BelongsTo and HasOne
-echo $this->Form->control('authors.name');
+echo $this->Form->control('author.name');
 
 // HasMany and HasAndBelongsToMany
 echo $this->Form->control('tags.0.name');

@@ -458,7 +458,7 @@ You can save `hasAndBelongsToMany` in two ways
     'id' => 1000, // Article Id
     'tags' => [
         ['name' => 'New'],
-        ['id' => 'Featured']
+        ['name' => 'Featured']
      ]
   ];
   $entity = $this->Article->new($data);

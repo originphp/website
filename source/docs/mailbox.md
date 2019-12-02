@@ -307,6 +307,12 @@ add the following line to `/etc/postfix/virtual`
 example@yourdomain.com youralias
 ```
 
+execute the `postmap` command after changing the virtual file.
+
+```linux
+sudo postmap /etc/postfix/virtual
+```
+
 Then add the following to `/etc/aliases`
 
 ```linux

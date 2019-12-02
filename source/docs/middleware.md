@@ -109,7 +109,7 @@ The CSRF Protection Middleware will also check the request headers for `X-CSRF-T
 ```js
 $.ajaxSetup({
     headers: {
-        'X-CSRF-Token': <?= $this->request->params('csrfToken') ?>
+        'X-CSRF-Token': '<?= $this->request->params('csrfToken') ?>'
     }
 });
 ```
