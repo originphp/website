@@ -55,6 +55,34 @@ When setting the rules the name is usually as a string, however some validation 
   ]);
 ```
 
+### accepted
+
+Validate that a checkbox is checked.
+
+```php
+  $this->validate('agree','accepted');
+```
+
+
+### after
+
+To check a date is after a certain date, dates are passed to the `strtotime` function.
+
+```php
+$this->validate('start',[
+  'rule' => ['after','today']
+  ]);
+```
+
+### alpha
+
+```php
+  $this->validate('username',[
+    'rule' => 'alpha',
+    'message' => 'Error only letters are allowed'
+    ]);
+```
+
 ### alphaNumeric
 
 ```php
@@ -62,6 +90,24 @@ When setting the rules the name is usually as a string, however some validation 
     'rule' => 'alphaNumeric',
     'message' => 'Error only letters and numbers are allowed'
     ]);
+```
+
+### array
+
+To check a value is an array
+
+```php
+$this->validate('active','array');
+```
+
+### before
+
+To check a date is before a certain date, dates are passed to the `strtotime` function.
+
+```php
+$this->validate('start',[
+  'rule' => ['before','today +3 days']
+  ]);
 ```
 
 ### boolean
@@ -74,6 +120,21 @@ Checks if a value is a boolean true or false.
     ]);
 ```
 
+### creditCard
+
+To validate a credit card
+
+```php
+$this->validate('cc','creditCard');
+```
+
+If you want to validate a specific type
+
+```php
+ $this->validate('cc',[
+    'rule' => ['creditCard','mastercard']
+    ]);
+```
 
 ### custom (Function)
 
@@ -144,6 +205,17 @@ or
   ]);
 ```
 
+### dateFormat
+
+To check a specific date using a format (this is used by the date,dateTime,and time validations)
+
+```php
+$this->validate('sent',[
+  'rule' => ['dateFormat', 'Y-m-d'],
+  'message' => 'Invalid date format'
+]);
+```
+
 ### datetime
 
 Validates a datetime using a format compatible with the php date function. The default datetime format is `Y-m-d H:i:s`.
@@ -178,6 +250,14 @@ Checks that a value is a valid email address.
   ]);
 ```
 
+You can also check that the email address has valid MX records using the getmxrr function.
+
+```php
+  $this->validate('email',[
+    'rule' => ['email', true],
+    'message' => 'Enter a valid email address'
+  ]);
+```
 
 ### equalTo
 
@@ -215,13 +295,72 @@ Checks if a value is a float. The value must have a decimal place in it. e.g. 12
   ]);
 ```
 
-### inList
+### fqdn
+
+To validate a Fully Qualified Domain Name (FQDN) to see that it looks thats its a valid domain, this is different than URL.
+
+```php
+  $this->validate('website',[
+    'rule' => 'fqdn',
+    'message' => 'Invalid domain'
+  ]);
+```
+
+You can also check the DNS records using `checkdnsrr` to ensure that is really valid and not just looks like its valid.
+
+```php
+  $this->validate('website',[
+    'rule' => ['fqdn',true],
+    'message' => 'Invalid domain'
+  ]);
+```
+
+### greaterThan
+
+To check a value is greater than 
+
+```php
+$this->validate('level',[
+  'rule' => ['greaterThan'=>4],
+  'message' => 'Invalid level'
+]);
+```
+
+### greaterThanOrEqual
+
+To check a value is greater than or equal
+
+```php
+$this->validate('level',[
+  'rule' => ['greaterThanOrEqual'=>4],
+  'message' => 'Invalid level'
+]);
+```
+
+### hexColor
+
+To validate a hex color
+
+```php
+$this->validate('color','hexColor');
+```
+
+### iban
+
+To validate an IBAN number
+
+```php
+$this->validate('account','iban');
+```
+
+
+### in
 
 Checks that a value is in a list.
 
 ```php
  $this->validate('status',[
-    'rule' => ['inList',['draft','new','authorised']]
+    'rule' => ['in',['draft','new','authorised']]
     'message' => 'Invalid status'
   ]);
 ```
@@ -232,6 +371,17 @@ The default is case sensitive search, if you want to the search to be case insen
  $this->validate('status',[
     'rule' => ['inList',['draft','new','authorised'],true]
     'message' => 'Invalid status'
+  ]);
+```
+
+### integer
+
+Checks if a value is an integer (a number without decimal places)
+
+```php
+  $this->validate('quantity',[
+    'rule' => 'integer',
+    'message' => 'Invalid amount'
   ]);
 ```
 
@@ -246,15 +396,24 @@ Checks that a value is a valid ip address.
   ]);
 ```
 
-### integer
-
-Checks if a value is an integer (a number without decimal places)
+To check for a `ipv4` or `ipv6` only 
 
 ```php
-  $this->validate('quantity',[
-    'rule' => 'integer',
-    'message' => 'Invalid amount'
+ $this->validate('ip_address',[
+      'rule' => ['ip', 'ipv4']
+    'message' => 'Enter a valid ip address'
   ]);
+```
+
+### ipRange
+
+To check than IP address is within a certain range
+
+```php
+$this->validate('ip',[
+    'rule' => ['ipRange','192.168.1.2','192.168.1.25'],
+    'message' => 'Enter a valid ip address'
+]);
 ```
 
 ### isUnique
@@ -277,6 +436,70 @@ You can also check multiple values
   ]);
 ```
 
+### json
+
+To check if an input is JSON
+
+```php
+$this->validate('data','json');
+```
+
+### length
+
+To validate a string has a certain length
+
+```php
+$this->validate('account_no',[
+  'rule' => ['length', 4]
+]);
+```
+
+### lessThan
+
+To check a value is less than 
+
+```php
+$this->validate('level',[
+  'rule' => ['lessThan'=>4],
+  'message' => 'Invalid level'
+]);
+```
+
+### lessThanOrEqual
+
+To check a value is less than or equal
+
+```php
+$this->validate('level',[
+  'rule' => ['lessThanOrEqual'=>4],
+  'message' => 'Invalid level'
+]);
+```
+
+### lowercase
+
+To validate a string is in all lowercase
+
+```php
+$this->validate('account','lowercase');
+```
+
+### luan
+
+To validate a number using the luan algorithm (this is used by iban and credit card validation).
+
+```php
+$this->validate('account_number','luan');
+```
+
+### macAddress
+
+To validate a mac address
+
+```php
+$this->validate('mac_address','macAddress');
+```
+
 ### maxLength
 
 Checks if string is less than or equals to the max length.
@@ -286,6 +509,14 @@ Checks if string is less than or equals to the max length.
     'rule' => ['maxLength',12],
     'message' => 'Username is too long'
   ]);
+```
+
+### md5
+
+To validate a MD5 hash
+
+```php
+$this->validate('token','md5');
 ```
 
 ### mimeType
@@ -321,14 +552,14 @@ Checks that a value is not empty and has anything other than whitespaces.
   ]);
 ```
 
-### notEmpty
+### notIn
 
-Checks that a value is not empty.
+To check a value is not in an array of values
 
 ```php
- $this->validate('name',[
-     'rule' => 'notEmpty',
-     'message' => 'You must enter something'
+ $this->validate('membership',[
+     'rule' => ['notIn',['foo','bar']],
+      'message' => 'Invalid membership'
   ]);
 ```
 
@@ -354,6 +585,18 @@ Checks that a value is in a range.
   ]);
 ```
 
+### regex
+
+This validates an input using a provided regex, when you use a rule name with regex, it passed through
+this.
+
+```php
+ $this->validate('data',[
+    'rule' => ['regex','/foo/i'],
+    'message' => 'Enter foo'
+  ]);
+```
+
 ### time
 
 Validates a time using a format compatible with the php date function. The default time format is `H:i:s`.
@@ -365,6 +608,34 @@ Validates a time using a format compatible with the php date function. The defau
   ]);
 ```
 
+### uppercase
+
+To validate an input is in uppercase
+
+```php
+$this->validate('title','uppercase');
+```
+
+### uid
+
+To validate an input is a valid UUID
+
+```php
+ $this->validate('token',[
+   'rule' => 'uuid',
+    'message' => 'Invalid token'
+  ]);
+```
+
+If you are going to allow uppercase
+
+```php
+ $this->validate('token',[
+   'rule' => ['uuid',true],
+    'message' => 'Invalid token'
+  ]);
+```
+
 ### url
 
 Checks that a value is a valid url.
@@ -372,7 +643,7 @@ Checks that a value is a valid url.
 By default a valid url has to have the protocol e.g. `https://www.google.com`.
 
 ```php
- $this->validate('number',[
+ $this->validate('website',[
    'rule' => 'url',
     'message' => 'Invalid URL make sure you include https://'
   ]);
@@ -381,7 +652,7 @@ By default a valid url has to have the protocol e.g. `https://www.google.com`.
 If you want to consider `www.google.com` a valid url (without the protocol)  then you would do so like this.
 
 ```php
- $this->validate('number',[
+ $this->validate('website',[
     'rule' => ['url', false]
     'message' => 'Enter without http://'
   ]);

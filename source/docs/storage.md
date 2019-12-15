@@ -34,6 +34,15 @@ use Origin\Storage\Storage;
 $contents = Storage::read('my_folder/test.txt');
 ```
 
+### Checking
+
+To find out if a file or folder exists
+
+```php
+$result = Storage::exists('test.txt');
+$result = Storage::exists('my_folder/test.txt');
+```
+
 ### Deleting From Storage
 
 To delete files or folders
@@ -179,3 +188,15 @@ options for configuring SFTP include:
 - timeout: default 10 seconds
 - root: the root folder of the storage. e.g. /home/user/sub_folder
 - privateKey: either the private key for the account or the filename where the private key can be loaded from
+
+
+## Zip
+
+To use the ZIP storage engine, provide the filename with a full path.
+
+```php
+Storage::config('default', [
+    'engine' => 'Zip',
+    'file' => '/var/www/backup.zip'
+ ]);
+```
