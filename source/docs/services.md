@@ -13,7 +13,7 @@ Services are a specific business action including workflow and should be named w
 For example
 
 ```
-|-- src
+|-- app
 |   |-- Service
 |   |   -- Stripe
 |   |       |-- NewCustomerService
