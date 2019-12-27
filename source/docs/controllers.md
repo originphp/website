@@ -21,7 +21,8 @@ When you create a controller it will extend the `ApplicationController` and save
 ```php
 namespace app\Http\Controller;
 
-class ContactsController extends ApplicationController {
+class ContactsController extends ApplicationController 
+{
   public function view($id)
   {
 
@@ -32,7 +33,8 @@ class ContactsController extends ApplicationController {
 For example, if a user wants to create a new contact and in your application they would go to  `/contacts/create`, this will load the `ContactsController` and run the `create` method, this will then automatically render the `/app/Http/View/Contacts/create.ctp` unless you tell it otherwise. In the method we will create a Contact entity, which is a object which represents a single row of data, and then we will send it to the view using `set`. We do this by calling the `new` method on the Contact model.
 
 ```php
-class ContactsController extends ApplicationController {
+class ContactsController extends ApplicationController 
+{
   public function new()
   {
       $contact = $this->Contact->new();

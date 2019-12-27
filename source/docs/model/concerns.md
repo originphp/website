@@ -121,7 +121,7 @@ Here is an example `Model` `Concern`
 namespace App\Model\Concern;
 
 use Origin\Model\Entity;
-use Origin\Security\Text;
+use Origin\Text\Text;
 use ArrayObject;
 
 trait Sluggable

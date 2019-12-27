@@ -51,7 +51,16 @@ To generate a `Concern` for a `Model`
 $ bin/console generate concern_model SoftDeleteable
 ```
 
+## Command
+
+To generate a `Command`
+
+```linux 
+$ bin/console generate command CacheClear
+```
+
 ## Component
+
 To generate a `Component` to be used by your `Controllers`.
 
 ```linux 
@@ -72,6 +81,22 @@ You also add a list of methods separated by spaces afterwards, then the methods 
 $ bin/console generate controller Posts index add edit
 ```
 
+## Entity
+
+To generate an `Entity` class
+
+```linux 
+$ bin/console generate entity User
+```
+
+## Exception
+
+To generate an `Exception` class
+
+```linux 
+$ bin/console generate exception NotFound
+```
+
 ## Helper
 
 To generate a `Helper` to be used in your views.
@@ -82,15 +107,31 @@ $ bin/console generate helper FunkyForm
 
 ## Job
 
-To generate a Job
+To generate a `Job` class
 
 ```linux 
-$ bin/console generate job ClearCache
+$ bin/console generate job ClearSessions
+```
+
+## Listener
+
+To generate a `Listener` class
+
+```linux 
+$ bin/console generate listener OrderNotifier
+```
+
+## Mailbox
+
+To generate a `Mailbox` class
+
+```linux 
+$ bin/console generate mailbox Support
 ```
 
 ## Mailer
 
-To generate a mailer
+To generate a `Mailer` class
 
 ```linux 
 $ bin/console generate mailer WelcomeEmail
@@ -118,17 +159,15 @@ $ bin/console db:migrate
 
 ## Middleware
 
-To create a middleware class
+To create a `Middleware` class
 
 ```linux 
 $ bin/console generate middleware FormSecurity
 ```
 
-
 ## Migration
 
-To quickly create a migration
-
+To quickly create a `Migration`
 
 ```linux 
 $ bin/console generate migration AddProductTableIndex
@@ -149,9 +188,17 @@ $ bin/console generate controller ContactManager.Contacts
 $ bin/console generate model ContactManager.Contact
 ```
 
+## Query
+
+To generate a `Query` object class
+
+```linux 
+$ bin/console generate query BooleanSearch
+```
+
 ## Repository
 
-To generate a Repository
+To generate a `Repository`
 
 ```linux 
 $ bin/console generate repository Users
@@ -159,12 +206,11 @@ $ bin/console generate repository Users
 
 ## Services (Service Objects)
 
-To quickly create a Service Object (Service)
+To generate a `Service` (Service Object) class
 
 ```linux 
 $ bin/console generate service SlackNotification
 ```
-
 
 ## Scaffold
 

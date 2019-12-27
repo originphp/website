@@ -189,7 +189,7 @@ $json = $entity->toJson();
 
 ## Custom Entity Classes
 
-By default the `Origin\Entity` class is used for each row of a model, however you can use your own `Entity` classes.
+By default the `Origin\Model\Entity` class is used for each row of a model, however you can use your own `Entity` classes.
 
 Create a your `Entity` files in the `app/Model/Entity` folder
 
