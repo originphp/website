@@ -103,7 +103,8 @@ return [
             'Socket' => 'docs/utility/sockets',
             'Text' => 'docs/utility/text',
             'XML' => 'docs/utility/xml',
-            'Yaml' => 'docs/utility/yaml'
+            'Yaml' => 'docs/utility/yaml',
+            'Zip' => 'docs/utility/zip'
         ],
     ],
     'Plugins' => [
