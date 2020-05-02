@@ -14,7 +14,7 @@ To create a generate a link for  `/articles/view/1234` you can pass an array. Yo
 if the link is to the same controller.
 
 ```php
-echo $this->Html->link(['controller'=>'Articles','action'=>'view',1234]);
+echo $this->Html->link('click me',['controller'=>'Articles','action'=>'view',1234]);
 ```
 
 When using array you can also pass the following additional keys.
@@ -25,13 +25,13 @@ When using array you can also pass the following additional keys.
 All keys that are an integer will be passed as an argument. So to get `/articles/view/1234/abc`, use the following array.
 
 ```php
-echo $this->Html->link(['controller'=>'Articles','action'=>'view',1234,'abc']);
+echo $this->Html->link('click me',['controller'=>'Articles','action'=>'view',1234,'abc']);
 ```
 
 You can also just pass a string
 
 ```php
-echo $this->Html->link('/articles/action/1234');
+echo $this->Html->link('click me','/articles/action/1234');
 ```
 
 ## Scripts Tags

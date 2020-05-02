@@ -72,3 +72,31 @@ class ArticlesRepository extends Repository
     }
 }
 ```
+
+## Batch Insert Query
+
+OriginPHP comes with the `BatchInsertQuery` query object, this makes it easy to batch insert multiple records as one query, this provides MySQL performance increases when saving multiple records, such as importing.
+
+```php
+use Origin\Model\Query\BatchInsertQuery;
+
+$records = [
+    ['title'=>'Article #1'],
+    ['title'=>'Article #2'],
+];
+
+(new BatchInsertQuery($this->Article))->execute($records);
+```
+
+For security reasons placeholders are used in query but there is limit on the number that can be used depending upon your database server, so you can chunk records into larger groups and still see a significant increase in performance in database writing when adding 1000s of records.
+
+```php
+use Origin\Model\Query\BatchInsertQuery;
+
+$chunks = array_chunk($records,1000);
+
+$batchInsertQuery = new BatchInsertQuery($this->Article);
+foreach($chunks as $chunk){
+    $batchInsertQuery->execute($chunk);
+}
+```

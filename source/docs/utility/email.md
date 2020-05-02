@@ -162,3 +162,47 @@ $Email->to('somebody@originphp.com')
     ->account('gmail')
     ->send();
 ```
+
+## Oauth2
+
+To configure your email account to use Oauth2 authentication, instead of providing a password
+you can use a token.
+
+```php
+ Email::config('gsuite', [
+    'host' => 'smtp.gmail.com',
+    'port' => 587,
+    'username' => 'somebody@gmail.com',
+    'token' => 'b1816172fd2ba98f3af520ef572e3a47', // see token generation below
+    'ssl' => false,
+    'tls' => true
+]);
+```
+
+### Generating Tokens
+
+To generate Oauth2 tokens, you can use the [thephpleague/oauth2-client](https://github.com/thephpleague/oauth2-client) package or if you are using Google (Gsuite/Gmail) then you can use the command line script provided. The script provided is only ideal for sending emails from your own account, rather than from a user account.
+
+#### Google Command-Line OAuth Token Generator
+
+The Google Client Library API allows you to generate tokens from the command line (without having to redirect to a script), and I have included a quick script for this.
+
+To obtain an Oauth2 token that you can use with your Gsuite/Gmail account follow these instructions.
+
+1. Enable the Gsuite API for your email account by going to [https://developers.google.com/gmail/api/quickstart/php](https://developers.google.com/gmail/api/quickstart/php) and then click on `Enable the Gmail API` button, then the `Download Client Configuration` button. Once you have done this, save the data file to `data/credentials.json` in the `vendor/originphp/email/` folder.
+
+2. Install Google Client Library (PHP), by running the following command:
+
+```linux
+$ composer require google/apiclient:^2.0
+```
+
+3. Run the Google CLI script.
+
+```linux
+$ vendor/bin/google
+```
+
+Now copy the URL into your browser and follow the instructions on screen, and this will provide you with a code. Paste the code into your console window, and your token will be displayed on the screen. The token JSON will be saved to `data/token.json` for future reference.
+
+4. Add the token that was generated to your email configuration.
