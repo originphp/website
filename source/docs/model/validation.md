@@ -12,26 +12,57 @@ Validation rules are defined in the `initialize` method of your model.
 
 You can define a rule as a string, rule array, or array with multiple rules.
 
+To define a rule using just the name
+
+```php
+$this->validate('password','notBlank');
+```
+
+To define a single rule as an array
+
+```php
+$this->validate('username', [
+    'rule' => 'notBlank',
+    'message' => 'This is required'
+  ]);
+```
+
+To define multiple validation rules on a field
+
+```php
+$this->validate('email', [
+      [
+          'rule' => 'email',
+          'required' => true
+      ],
+      ['rule' => ['minLength', 10]]
+  ]);
+```
+
+Here is an example when creating a user model
+
 ```php
   class User extends ApplicationModel
   {
     protected function initialize(array $config) : void
     {
         parent::initialize($config);
-        // String
-        $this->validate('password','notBlank');
-        // single rule
-        $this->validate('username', [
-            'rule' => 'notBlank',
-            'message' => 'This is required'
-          ]);
-          // multiple rules
-         $this->validate('email', [
+
+        $this->validate('first_name', 'notBlank');
+        $this->validate('last_name', 'notBlank');
+
+        $this->validate('email', [
+            ['rule' => 'notBlank'],
             [
-              'rule' => 'email',
-              'required' => true
-              ],
-            ['rule'=>['minLength',10]
+              'rule' => 'isUnique', 
+              'message' => 'Email address already in use', 
+              'allowBlank' => true
+            ]
+        ]);
+
+        $this->validate('password', [
+            'rule' => 'alphaNumeric',
+            'rule' => ['minLength', 6]
         ]);
     }
   }
@@ -321,7 +352,7 @@ To check a value is greater than
 
 ```php
 $this->validate('level',[
-  'rule' => ['greaterThan'=>4],
+  'rule' => ['greaterThan',4],
   'message' => 'Invalid level'
 ]);
 ```
@@ -332,7 +363,7 @@ To check a value is greater than or equal
 
 ```php
 $this->validate('level',[
-  'rule' => ['greaterThanOrEqual'=>4],
+  'rule' => ['greaterThanOrEqual',4],
   'message' => 'Invalid level'
 ]);
 ```
@@ -369,7 +400,7 @@ The default is case sensitive search, if you want to the search to be case insen
 
 ```php
  $this->validate('status',[
-    'rule' => ['inList',['draft','new','authorised'],true]
+    'rule' => ['in',['draft','new','authorised'],true]
     'message' => 'Invalid status'
   ]);
 ```
@@ -460,7 +491,7 @@ To check a value is less than
 
 ```php
 $this->validate('level',[
-  'rule' => ['lessThan'=>4],
+  'rule' => ['lessThan',4],
   'message' => 'Invalid level'
 ]);
 ```
@@ -471,7 +502,7 @@ To check a value is less than or equal
 
 ```php
 $this->validate('level',[
-  'rule' => ['lessThanOrEqual'=>4],
+  'rule' => ['lessThanOrEqual',4],
   'message' => 'Invalid level'
 ]);
 ```

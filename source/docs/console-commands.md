@@ -156,7 +156,7 @@ When adding an argument, you can pass an array with the following keys
 
 - description: this what will be displayed in the help (ie. --help)
 - required: default is false, but if you set this to true then it will trigger an error if the value is not provided.
-- type: default is string. Can be string, boolean, numeric, array and hash (e.g key:value)
+- type: default is string. Can be string, boolean, numeric, array and hash (e.g key:value). When using arrays or hashes, multiple items are seperated by spaces.
 
 
 ### Output

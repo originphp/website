@@ -123,9 +123,9 @@ File::move('/path/somefile','/another_path/somefile');
 ### Get Permissions
 
 To get the permissions of a file
-
+01
 ```php
-$permissions = File::permissions('/path/somefile'); // returns 0744
+$permissions = File::perms('/path/somefile'); // returns 0744
 ```
 
 ### Changing Permissions (chmod)

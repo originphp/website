@@ -188,7 +188,7 @@ Not only has it created the Model and test files, it has created a migration fil
 
 ### Running A Migration
 
-Before you can use the migrations feature, you will need to create the migrations table in your database. Run the following command to create the table for you, it will load the schema from the `database/migrations.sql`.
+Before you can use the migrations feature, you will need to create the migrations table in your database. Run the following command to create the table for you, it will load the schema from the `database/migrations.php`.
 
 ```linux
 $ bin/console db:schema:load migrations

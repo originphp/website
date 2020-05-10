@@ -130,7 +130,7 @@ Folder::move('/path/somedir','/another_path/somedir');
 To get the permissions of a directory.
 
 ```php
-$permissions = Folder::mode('/path/somedir'); // returns 0744
+$permissions = Folder::perms('/path/somedir'); // returns 0744
 ```
 
 ### Changing Permissions (chmod)
