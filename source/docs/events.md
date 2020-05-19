@@ -134,7 +134,5 @@ $publisher->subscribe(new AnalyticsListener());
 Configure `config/bootstrap.php`, load this file
 
 ```php
-include 'application.php';
-...
 include 'listeners.php`;
 ```

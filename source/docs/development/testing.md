@@ -21,15 +21,17 @@ The first thing to do is to setup the test database configuration.
 In your `config/database.php` add database configuration.
 
 ```php
-    ConnectionManager::config('test', array(
-    'host' => 'db', // Docker is db, or localhost or Ip address
-    'database' => 'app_test',
-    'username' => 'somebody',
-    'password' => 'secret',
-    ));
+return [
+    'test' => [
+        'host' => 'db', // Docker is db, or localhost or Ip address
+        'database' => 'app_test',
+        'username' => 'somebody',
+        'password' => 'secret',
+    ]
+]
 ```
 
-Make sure you have an up to date schema file `database/schema.php`. You can use the schema dump command, by default the database commands use the agnostic version `php`, this can be changed in your `config/application.php` or by passing the option `--type=sql`.
+Make sure you have an up to date schema file `database/schema.php`. You can use the schema dump command, by default the database commands use the agnostic version `php`, this can be changed in your `config/app.php` or by passing the option `--type=sql`.
 
 ```linux
 $ bin/console db:schema:dump
@@ -760,11 +762,14 @@ class CreateUserDirectoryJobTest extends OriginTestCase
 
 ## Testing Mailers
 
-To test a Mailer, make sure you have configured a test Email account in your `application.php`, this can be a real account or debug, which does not send anything.
+To test a Mailer, make sure you have configured a test Email account in your `config/email.php`, this can be a real account or debug, which does not send anything.
 
-```
-use Origin\Mailer\Email;
-Email::config('test',['engine'=>'Test']);
+```php
+return [
+    'test' => [
+        'engine' => 'Test'
+    ]
+];
 ```
 
 A test would look something like this
@@ -778,7 +783,7 @@ use App\Mailer\SendWelcomeEmailMailer;
 class SendWelcomeEmailMailerTest extends OriginTestCase
 {
     protected $fixtures = ['Bookmark'];
-    
+
     protected function startup() : void
     {
         $this->loadModel('Bookmark');

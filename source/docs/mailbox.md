@@ -208,10 +208,12 @@ protected function onError(\Exception $exception) : void
 
 ### Cleaning Mailboxes
 
-When an email comes in either through piping or downloading, a `MailboxCleanJob` is created and scheduled to delete the email in 30 days, to prevent holding onto lots of personal data but at the same time keeping a trail for debugging or inspection. This is configured in `config/application.php`
+When an email comes in either through piping or downloading, a `MailboxCleanJob` is created and scheduled to delete the email in 30 days, to prevent holding onto lots of personal data but at the same time keeping a trail for debugging or inspection. This is configured in `config/app.php`.
 
 ```php
-Config::write('Mailbox.keepEmails', '+30 days');
+[
+    'mailboxKeepEmails' => '+30 days'
+]
 ```
 
 ## Mailbox Downloading (IMAP + POP3)
@@ -220,35 +222,40 @@ To download messages using IMAP or POP3 setup your accounts, in `config/mailbox.
 
 ### Configuring Email Accounts
 
+> Gmail won't allow access using traditional imap authentication from 2021, so you will have to use a different email provider for downloading emails.
+
 Sample IMAP configuration for Gmail
 
 ```php
-use Origin\Mailbox\Mailbox;
-Mailbox::config('default', [
-    'host' => 'imap.gmail.com',
-    'port' => 993,
-    'username' => 'username@gmail.com',
-    'password' => 'secret',
-    'encryption' => 'ssl',
-    'validateCert' => true,
-    'protocol' => 'imap',
-    'timeout' => 30
-]);
+return [
+    'default' => [
+        'host' => 'imap.gmail.com',
+        'port' => 993,
+        'username' => 'username@gmail.com',
+        'password' => 'secret',
+        'encryption' => 'ssl',
+        'validateCert' => true,
+        'protocol' => 'imap',
+        'timeout' => 30
+    ]
+];
 ```
 
 Sample POP3 configuration for Gmail
 
 ```php
-Mailbox::config('default', [
-    'host' => 'pop.gmail.com',
-    'port' => 995,
-    'username' => 'username@gmail.com',
-    'password' => 'secret',
-    'encryption' => 'ssl',
-    'validateCert' => true,
-    'protocol' => 'pop3',
-    'timeout' => 30
-]);
+return [
+    'default' => [
+        'host' => 'pop.gmail.com',
+        'port' => 995,
+        'username' => 'username@gmail.com',
+        'password' => 'secret',
+        'encryption' => 'ssl',
+        'validateCert' => true,
+        'protocol' => 'pop3',
+        'timeout' => 30
+    ]
+];
 ```
 
 ### Downloading Messages

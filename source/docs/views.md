@@ -250,4 +250,4 @@ Now anytime you want to use that element, you can also pass an array options whe
 
 ```php
  echo $this->element('widget',['answer'=>2]);
-``
+```

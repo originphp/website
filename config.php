@@ -1,21 +1,23 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
-    'baseUrl' => '',
+    'baseUrl' => 'https://www.originphp.com/',
     'production' => false,
     'siteName' => 'OriginPHP',
     'siteDescription' => 'OriginPHP is an open-source MVC framework that enables PHP developers to quickly build high performance and scalable web applications.',
 
     // Algolia DocSearch credentials
-    'docsearchApiKey' => '',
-    'docsearchIndexName' => '',
+    'docsearchApiKey' => '85dd81c266dc348ab5b9203f8740bf14',
+    'docsearchIndexName' => 'originphp',
 
     // navigation menu
     'navigation' => require_once('navigation.php'),
 
     // helpers
     'isActive' => function ($page, $path) {
-        return ends_with(trimPath($page->getPath()), trimPath($path));
+        return Str::endsWith(trimPath($page->getPath()), trimPath($path));
     },
     'isActiveParent' => function ($page, $menuItem) {
         if (is_object($menuItem) && $menuItem->children) {
@@ -25,6 +27,6 @@ return [
         }
     },
     'url' => function ($page, $path) {
-        return starts_with($path, 'http') ? $path : '/' . trimPath($path);
+        return Str::startsWith($path, 'http') ? $path : '/' . trimPath($path);
     },
 ];

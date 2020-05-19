@@ -47,10 +47,12 @@ Load the Queue schema, which use for sending reset password and email verificati
 $ bin/console db:schema:load queue
 ```
 
-Set the `App.name` value in your `config/application.php`
+Set the `App.name` value in your `config/app.php`
 
 ```php
-Config::write('App.name','Web Application');
+return [
+    'name' => 'Web Application'
+]
 ```
 
 > You will need to configure your email in `config/.env.php`

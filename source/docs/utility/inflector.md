@@ -26,7 +26,7 @@ $plural = Inflector::plural('apple'); // apples
 
 The Inflector comes with a some standard rules which cover most words and is a good starting point for a project, however occasionally you might need to add a custom rule.
 
-In your `config/application.php`
+In your `config/bootstrap.php` or configure it to load a new file
 
 ```php
 use Origin\Inflector\Inflector;

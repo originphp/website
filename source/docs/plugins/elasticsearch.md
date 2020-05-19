@@ -24,17 +24,28 @@ Here I will cover the configuration of Elasticsearch, the installation instructi
 
 ### Connection
 
-First you need to configure the Elasticsearch connection. In your configuration file `config/application.php` add the following (or create a separate file and adjust the bootstrap);
+First you need to configure the Elasticsearch connection. In your configuration file `config/bootstrap.php` add the following
+
+```
+// Top of file
+use Origin\Elasticsearch\Elasticsearch; 
+
+// With other configuration laoders
+Config::load('log');
+Elasticsearch::config(Config::consume('Elasticsearch'));
+```
+
+Then create `config/elasticsearch.php` and add the following connection
 
 ```php
-use Origin\Elasticsearch\Elasticsearch;
-
-Elasticsearch::config('default', [
-    'host' => 'elasticsearch', // or 127.0.0.1 if not using the docker version
-    'port' => 9200,
-    'timeout' => 400,
-    'https' => false
-]);
+return [
+    'default' => [
+        'host' => 'elasticsearch', // or 127.0.0.1 if not using the docker version
+        'port' => 9200,
+        'timeout' => 400,
+        'https' => false
+    ]
+];
 ```
 
 ### Model
