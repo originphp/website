@@ -39,7 +39,7 @@
         <div class="mx-3 px-2 md:w-1/3">
             <h3 id="intro-mix" class="text-2xl text-blue-darkest mb-0"><i class="fas fa-layer-group"></i> Packed with Features</h3>
 
-            <p>OriginPHP includes Cache, Queue, Email,Console Applications, Middleware, Events, Xml and Yaml reader/writers, debugging, dockerized development environment, integration testing and much more.</p>
+            <p>OriginPHP includes Cache, Queue, Inbound & Outbound Email, Console Applications, Code Generation, Middleware, Events, Xml and Yaml reader/writers, debugging, dockerized development environment, integration testing and much more.</p>
         </div>
     </div>
 </section>

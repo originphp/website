@@ -18,18 +18,26 @@ $ composer require originphp/email
 
 ## Email Configuration
 
+Mailhog is comes configured as the default email account, for more information see [Dockerized Development Environment](/docs/development/dockerized-development-environment).
+
 In `config/email.php` configure your email accounts. Setup a default account, then you do not need to specify an account or configure the instance of the email.
 
 ```php
-Email::config('default',[
-    'host' => 'smtp.example.com',
-    'port' => 465,
-    'username' => 'demo@example.com',
-    'password' => 'secret',
-    'timeout' => 5,
-    'ssl' => true,
-    'tls' => false
-]);
+// config/email.php
+return [
+    'default' => [
+        'host' => 'smtp.example.com',
+        'port' => 465,
+        'username' => 'demo@example.com',
+        'password' => 'secret',
+        'timeout' => 5,
+        'ssl' => true,
+        'tls' => false
+    ],
+    'test' => [
+        'engine' => 'Test' // dummy
+    ]
+]
 ```
 
 The keys for the config are as follows:

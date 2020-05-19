@@ -107,15 +107,37 @@ $data = Storage::read('transactions.csv',[
 
 ## Storage Engines
 
+Configuration for storage engines can be found in `config/storage.php`, it best for localized settings to be actually stored
+in `config/.env` then use the `env` function to get, for example.
+
+in `config/.env` add
+
+```
+username:foo
+```
+
+Then in the config file
+
+```php
+return [
+    'username' => env('username')
+]
+```
+
 ### Local
 
 The local storage simply works with data from the drive.
 
 ```php
-Storage::config('default', [
-    'engine' => 'Local',
-    'root' => '/var/www/storage'
- ]);
+// config/storage.php
+use Origin\Storage\Engine\LocalEngine;
+
+return [
+    'default' => [
+        'root' => '/var/www/storage',
+        'className' => LocalEngine::class
+    ]
+];
 ```
 
 ### FTP
@@ -123,14 +145,19 @@ Storage::config('default', [
 Then you need to configure this
 
 ```php
-Storage::config('default', [
-    'engine' => 'Ftp',
-    'host' => 'example.com',
-    'port' => 21,
-    'username' => 'james',
-    'password' => 'secret',
-    'ssl' => false
- ]);
+// config/storage.php
+use Origin\Storage\Engine\FtpEngine;
+
+return [
+    'default' => [
+        'host' => 'example.com',
+        'port' => 21,
+        'username' => 'james',
+        'password' => 'secret',
+        'ssl' => false,
+        'className' => FtpEngine::class
+    ]
+];
 ```
 
 options for configuring FTP include:
@@ -155,27 +182,38 @@ $ composer require phpseclib/phpseclib
 Then you need to configure the Storage.
 
 ```php
-Storage::config('default', [
-    'engine' => 'Sftp',
-    'host' => 'example.com',
-    'port' => 22,
-    'username' => 'james',
-    'password' => 'secret'
- ]);
+// config/storage.php
+use Origin\Storage\Engine\SftpEngine;
+
+return [
+    'default' => [
+        'host' => 'example.com',
+        'port' => 22,
+        'username' => 'james',
+        'password' => 'secret'
+        'className' => SftpEngine::class
+    ]
+];
 ```
 
 If you use want to use a private key to login, you can either provide the filename with the full path or the contents of the private key itself.
 
 
 ```php
-Storage::config('default', [
-    'engine' => 'Sftp',
-    'host' => 'example.com',
-    'port' => 22,
-    'username' => 'james',
-    'privateKey' => '/var/www/config/id_rsa'
-     ]);
+// config/storage.php
+use Origin\Storage\Engine\SftpEngine;
+
+return [
+    'default' => [
+        'host' => 'example.com',
+        'port' => 22,
+        'username' => 'james',
+        'privateKey' => '/var/www/config/id_rsa'
+        'className' => SftpEngine::class
+    ]
+];
 ```
+
 
 If your private key requires a password then you can provide that as well. See the [How to setup SSH keys ](https://linuxize.com/post/how-to-set-up-ssh-keys-on-ubuntu-1804/) tutorial for more information.
 
@@ -190,13 +228,67 @@ options for configuring SFTP include:
 - privateKey: either the private key for the account or the filename where the private key can be loaded from
 
 
+### S3
+
+The S3 Engine works with [Amazon S3](https://aws.amazon.com/s3/) and any other object storage server which uses the S3 protocol, for example [minio](https://min.io/).
+
+To use the S3 Engine, you need to install the Amazon AWS SDK
+
+```linux
+$ composer require aws/aws-sdk-php
+```
+
+Then you can configure the S3 engine like this
+
+```php
+// config/storage.php
+use Origin\Storage\Engine\S3Engine;
+
+return [
+    'default' => [
+    'className' => S3Engine::class
+    'credentials' => [
+        'key' => env('S3_KEY'), // * required
+        'secret' => env('S3_SECRET'), // * required
+    ],
+    'region' => 'us-east-1', // * required
+    'version' => 'latest',
+    'endpoint' => env('S3_ENDPOINT'), // for S3 comptabile protocols
+    'bucket' => env('S3_BUCKET') // * required
+    'className' => S3Engine::class
+    ]
+];
+```
+
+Options for configuring the `S3` engine are:
+
+- credentials: this is required and is an array with both `key` and `secret`
+- region: The label for location of the server
+- version: version setting
+- endpoint: If you are not using Amazon S3. e.g. `http://127.0.0.1:9000`
+- bucket: The name of the bucket, this is required and the bucket should exist.
+
+#### Minio Server (S3)
+
+To fire up your own minio server locally you can run the docker command
+
+```linux
+$ docker run -p 9000:9000 minio/minio server /data
+```
+
+You can access this also using your web browser at `http://127.0.0.1:9000`.
+
 ## Zip
 
 To use the ZIP storage engine, provide the filename with a full path.
 
 ```php
-Storage::config('default', [
-    'engine' => 'Zip',
-    'file' => '/var/www/backup.zip'
- ]);
+// config/storage.php
+use Origin\Storage\Engine\S3Engine;
+return [
+    'default' => [
+        'file' => '/var/www/backup.zip',
+        'className' => ZipEngine::class
+    ]
+];
 ```

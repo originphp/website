@@ -151,28 +151,7 @@ $ bin/console elasticsearch:reindex Post Comment
 
 ## Installing Elasticsearch Docker Image
 
-Add the following to your `docker-compose.yml` file.
-
-```yml
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.0
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-    volumes:
-      - es-data:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-```
-
-And under the `volumes:` node add
-
-```yml
-    es-data:
-      driver: local
-```
-
-The next time you run `docker-compose up` the Elasticsearch container will created.
+See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to setup `Elasticsearch` in your docker container.
 
 For information on how to install on Ubuntu server see this [article](https://linuxize.com/post/how-to-install-elasticsearch-on-ubuntu-18-04/).
 

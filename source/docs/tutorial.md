@@ -35,28 +35,26 @@ $ cd blog
 $ docker-compose build
 ```
 
-Once the Docker container has been built, you will use the `up` and `down` commands to start and stop the docker container which takes seconds.
+Once the Docker container has been built, run the following command to start the docker container, and hit `CTRL C` to close it down.
 
 ```linux
-$ docker-compose up
+$ bin/docker
 ```
 
 Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
 
 ### Configure the Database Connection
 
-When you create the project with Composer, it will create a copy of `config/.env.php.default` and save as `config/.env.php` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment you will need to adjust the database settings.
+When you create a new project with Composer it will run the `App\Console\InstallCommand`, which will create a copy of `config/.env.default` and save as `config/.env` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment then you will need to adjust the database settings.
+
+
+You can find the database settings in `config/.env`, it works out of the box when using docker.
 
 ```php
-/**
- * Database Settings
- */
-'DB_HOST' => 'db',
-'DB_USERNAME' => 'root',
-'DB_PASSWORD' => 'root',
-'DB_ENGINE' => 'mysql',
+DB_HOST=localhost  # db for docker or localhost
+DB_USERNAME=root
+DB_PASSWORD=root
 ```
-
 
 Next you need to run the `db:setup` command, if you are using the Dockerized Development Environment, you will need to access the container first, this is because the hostname for accessing the MySQL server is different from within the container.
 

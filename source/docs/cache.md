@@ -253,26 +253,7 @@ sudo echo 'apc.enable_cli=1' >>  /etc/php/7.2/cli/php.ini
 
 ### Memcached
 
-**To install Memcached in the Docker container**
-
-First add the following to the `docker-compose.yml` file, this will load the memcached image.
-
-```
-  memcached:
-      image: memcached
-```
-
-In the `Dockerfile` add `php-memcached` to the lines where it installs the php extensions
-```
-    php-memcached \
-```
-Then run the build command in docker-compose.
-
-```linux
-docker-compose build
-```
-
-Then set the host to `memcached` in your cache config.
+See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to setup `memcached` in your docker container.
 
 **To install Memcached on a Ubuntu/Debain based server**
 
@@ -284,29 +265,7 @@ sudo apt-get install php-memcached
 
 ### Redis
 
-
-**To install Redis in the Docker container**
-
-First add the following to the `docker-compose.yml` file, this will load the Redis image.
-
-```
-  redis:
-      image: redis
-```
-
-In the `Dockerfile` add the following lines to install and enable the Redis PHP extension.
-```
-RUN pecl install redis
-RUN echo 'extension=redis.so' >> /etc/php/7.2/apache2/php.ini
-RUN echo 'extension=redis.so' >> /etc/php/7.2/cli/php.ini
-```
-Then run the build command in docker-compose.
-
-```linux
-docker-compose build
-```
-
-Then set the host to `redis` in your cache config.
+See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to use `Redis` in your docker container.
 
 **To install Redis on a Ubuntu/Debain based server**
 

@@ -20,13 +20,18 @@ To use the database engine, you will need to create the queue table
 $ bin/console db:schema:load queue
 ```
 
-The settings for Queue can be found in `config/queue.php`, by default the `Database` engine is used with the default connection. When you test queues, this will automatically be switcehd to your test configuration.
+The settings for Queue can be found in `config/queue.php`, by default the `Database` engine is used with the default connection. When you test queues, this will automatically be switched to your test configuration.
 
 ```php
-use Origin\Job\Queue;
-Queue::config('default', [
-    'engine' => 'Database'
-]);
+// config/queue.php
+use Origin\Job\Engine\DatabaseEngine;
+
+return [
+    'default' => [
+        'className' => DatabaseEngine::class,
+        'connection' => 'default'
+    ]
+];
 ```
 
 Options are
@@ -38,18 +43,24 @@ Options are
 This is how you would configure Redis
 
 ```php
-use Origin\Job\Queue;
-Queue::config('default', [
-    'engine' => 'Redis',
-    'host' => '127.0.0.1',
-    'port' => 6379
-]);
+// config/queue.php
+use Origin\Job\Engine\RedisEngine;
+
+return [
+    'default' => [
+        'className' => RedisEngine::class,
+        'host' => '127.0.0.1',
+        'port' => 6379
+    ]
+];
 ```
 
 Options are
 
 - `host`: default is `127.0.0.1` however if you are using Docker, then it would something like `redis`
 - `port`: default: `6379`
+
+See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to use `Redis` in your docker container.
 
 ## Creating Jobs
 
@@ -305,26 +316,7 @@ For more information see the [Supervisor documentation](http://supervisord.org/i
 
 **To install Redis in the Docker container**
 
-First add the following to the `docker-compose.yml` file, this will load the Redis image.
-
-```
-  redis:
-      image: redis
-```
-
-In the `Dockerfile` add the following lines to install and enable the Redis PHP extension.
-```
-RUN pecl install redis
-RUN echo 'extension=redis.so' >> /etc/php/7.2/apache2/php.ini
-RUN echo 'extension=redis.so' >> /etc/php/7.2/cli/php.ini
-```
-Then run the build command in docker-compose.
-
-```linux
-docker-compose build
-```
-
-Then set the host to `redis` in your cache config.
+See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to use `Redis` in your docker container.
 
 **To install Redis on a Ubuntu/Debain based server**
 

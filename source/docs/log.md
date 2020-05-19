@@ -16,10 +16,14 @@ OriginPHP comes with 4 built in Log Engines, and it easy to implement your own.
 First you need to configure the Log library, in your `config/log.php`
 
 ```php
-Log::config('default', [
-    'engine' => 'File',
-    'file' => LOGS . '/application.log'
-]);
+use Origin\Log\Engine\FileEngine;
+
+return [
+    'default' => [
+        'className' => FileEngine::class,
+        'file' => LOGS . '/application.log'
+    ]
+];
 ```
 
 Then to log
@@ -96,11 +100,15 @@ You can use a single engine or multiple engines at once, and you can also custom
 To configure the file engine logging
 
 ```php
-use Origin\Log\Log;
-Log::config('default',[
-    'engine' => 'File',
-    'file' => LOGS . '/application.log'
-]);
+// config/log.php
+use Origin\Log\Engine\FileEngine;
+
+return [
+    'default' => [
+        'className' => FileEngine::class,
+        'file' => LOGS . '/application.log'
+    ]
+];
 ```
 
 Options for the File Engine are:
@@ -114,19 +122,23 @@ Options for the File Engine are:
 To configure email logging
 
 ```php
-use Origin\Log\Log;
-Log::config('default',[
-    'engine' => 'Email',
-    'to' => 'you@example.com', // string email only
-    'from' => ['no-reply@example.com' => 'Web Application'] // to add a name, use an array,
-    'host' => 'smtp.example.com',
-    'port' => 465,
-    'username' => 'demo@example.com',
-    'password' => 'secret',
-    'timeout' => 5,
-    'ssl' => true,
-    'tls' => false
-]);
+// config/log.php
+use Origin\Log\Engine\EmailEngine;
+
+return [
+    'default' => [
+        'className' => EmailEngine::class,
+        'to' => 'you@example.com', // string email only
+        'from' => ['no-reply@example.com' => 'Web Application'] // to add a name, use an array,
+        'host' => 'smtp.example.com',
+        'port' => 465,
+        'username' => 'demo@example.com',
+        'password' => 'secret',
+        'timeout' => 5,
+        'ssl' => true,
+        'tls' => false
+    ]
+];
 ```
 
 Options for the Email Engine are:
@@ -153,10 +165,14 @@ Options for the Email Engine are:
 To configure the Console Engine
 
 ```php
-use Origin\Log\Log;
-Log::config('default',[
-    'engine' => 'Console'
-]);
+// config/log.php
+use Origin\Log\Engine\ConsoleEngine;
+
+return [
+    'default' => [
+        'className' => ConsoleEngine::class
+    ]
+];
 ```
 
 Options for the Console Engine are:
@@ -170,10 +186,14 @@ Options for the Console Engine are:
 You should use the Syslog engine on your production server. To configure the Syslog engine.
 
 ```php
-use Origin\Log\Log;
-Log::config('default',[
-    'engine' => 'Syslog'
-]);
+// config/log.php
+use Origin\Log\Engine\SyslogEngine;
+
+return [
+    'default' => [
+        'className' => SyslogEngine::class
+    ]
+];
 ```
 
 Options for the Syslog Engine are:
@@ -188,32 +208,32 @@ You can also pass settings to the `openlog` command, these are `identity`,`optio
 Lets say you want to configure the logger to log all events in a file as normal, send critical log entires by email and create a separate log for just payments.
 
 ```php
-use Origin\Log\Log;
-// Logs all items to file
-Log::config('default',[
-    'engine' => 'File',
-    'file' => '/var/www/logs/master.log'
-]);
+// config/log.php
+use Origin\Log\Engine\FileEngine;
+use Origin\Log\Engine\EmailEngine;
 
-// Send import log items by email
-Log::config('critical-emails',[
-    'engine' => 'Email',
-    'to' => 'you@example.com', 
-    'from' => ['nobody@gmail.com' => 'Web Application'],
-    'levels' => ['critical','emergency','alert'],
-    'host' => 'smtp.gmail.com',
-    'port' => 465,
-    'username' => 'nobody@gmail.com',
-    'password' => 'secret',
-    'ssl' => true,
-]);
-
-// Create a seperate log for everything from the payments channel
-Log::config('payments',[
-    'engine' => 'File',
-    'file' => '/var/www/logs/payments.log',
-    'channels' => ['payments']
-]);
+return [
+    'default' => [
+        'className' => FileEngine::class,
+        'file' => LOGS . '/master.log'
+    ],
+    'critical-emails' => [
+        'className' => EmailEngine::class,
+        'to' => 'you@example.com', 
+        'from' => ['nobody@gmail.com' => 'Web Application'],
+        'levels' => ['critical','emergency','alert'],
+        'host' => 'smtp.gmail.com',
+        'port' => 465,
+        'username' => 'nobody@gmail.com',
+        'password' => 'secret',
+        'ssl' => true
+    ],
+    'payments' => [
+        'className' => FileEngine::class,
+        'file' => LOGS . '/payments.log',
+        'channels' => ['payments']
+    ],
+];
 ```
 
 ### Creating a Custom Logger
@@ -263,8 +283,12 @@ class DatabaseEngine extends BaseEngine
 Then in `config/log.php`
 
 ```php
-use Origin\Log\Log;
-Log::config('default',[
-    'className' => 'App\Log\Engine\DabaseEngine'
-]);
+// config/log.php
+use App\Log\Engine\DatabaseEngine;
+
+return [
+    'default' => [
+        'className' => DatabaseEngine::class
+    ]
+];
 ```

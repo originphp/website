@@ -20,7 +20,7 @@ Download and install [Composer](https://getcomposer.org/doc/00-intro.md), then r
 $ composer create-project originphp/app <folder>
 ```
 
-OriginPHP comes with both a built-in development server and a [dockerized development environment (dde)](/docs/development/dockerized-development-environment) which works exactly like a real server would work and includes MySQL. Its very easy to setup and work with and it will give you consistent results.
+OriginPHP comes with both a built-in development server and a [dockerized development environment (dde)](/docs/development/dockerized-development-environment) which works exactly like a real server would work and includes MySQL, Redis, Minio (Object Storage), Mailhog, and optionaly (PostgreSQL,Elasticsearch,Postwoman and Memcached). Its very easy to setup and work with and it will give you consistent results.
 
 ### Built-in Development server
 
@@ -41,10 +41,10 @@ $ cd <folder>
 $ docker-compose build
 ```
 
-Once the Docker container has been built, you will use the `up` and `down` commands to start and stop the docker container which takes seconds.
+To start the [dockerized development environment](/docs/development/dockerized-development-environment), run the following command, and to stop the container hit `CTRL c`.
 
 ```linux
-$ docker-compose up
+$ bin/docker
 ```
 
 Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
@@ -61,22 +61,21 @@ To access the Docker container (linux prompt).
 $ docker-compose run app bash
 ```
 
-> You can also access the MySql server using any database management application using `localhost` port `3306`. Mac users can use [Sequel Pro](https://www.sequelpro.com/) or Windows users can use [Heidi SQL](https://www.heidisql.com/).
+> You can also access the MySql server using any database management application using `localhost` port `3307`. Mac users can use [Sequel Pro](https://www.sequelpro.com/) or Windows users can use [Heidi SQL](https://www.heidisql.com/).
 
-If you want to work with PostgreSQL then see the [dockerized development environment (dde)](/docs/development/dockerized-development-environment) guide for information on how to set this up.
+If you want to work with PostgreSQL then see the [dockerized development environment (dde)](/docs/development/dockerized-development-environment) guide for information on how to configure the docker container to use this instead.
 
 ### Configure the Database Connection
 
-When you create the project with Composer, it will create a copy of `config/.env.php.default` and save as `config/.env.php` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment you will need to adjust the database settings.
+When you create a new project with Composer it will run the `App\Console\InstallCommand`, which will create a copy of `config/.env.default` and save as `config/.env` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment then you will need to adjust the database settings.
+
+
+You can find the database settings in `config/.env`, it works out of the box when using docker.
 
 ```php
-/**
- * Database Settings
- */
-'DB_HOST' => 'db',
-'DB_USERNAME' => 'root',
-'DB_PASSWORD' => 'root',
-'DB_ENGINE' => 'mysql',
+DB_HOST=localhost  # db for docker or localhost
+DB_USERNAME=root
+DB_PASSWORD=root
 ```
 
 Next you need to run the `db:setup` command, if you are using the Dockerized Development Environment, you will need to access the container first, this is because the hostname for accessing the MySQL server is different from within the container.

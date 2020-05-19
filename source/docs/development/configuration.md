@@ -10,7 +10,9 @@ The configuration for your application can be found in the `config` folder. Ther
 
 ## Environment Settings
 
-When you first create a project with composer,it will rename the `.env.php.default` to `.env.php` and set your information there. This information is specific to your current installation. 
+> Prior to version 2.6, environment vars were stored in .env.php, now that file is the cached version which has been parsed from .env. Simply delete the cached version when you changed settings and a new one will be regenerated
+
+When you first create a project with composer,it will rename the `.env.default` to `.env.php` and set your information there. This information is specific to your current installation. 
 
 As you build your application then will be some custom variables that you use, make sure you always add these definitions to the `.env.php.default` template, since the `.env.php` wont be stored in the git repository for security reasons. This way when you deploy your app to a new server, simply rename the template and fill out the details.
 
@@ -29,20 +31,10 @@ $bool Config::exists('key');
 
 ## DotEnv
 
-By default OriginPHP will look for a `.env.php` file in the your `config` folder, this has been designed due to the overhead in parsing a traditional.env, but most frequently it not used beyond setting simple values. However, if you need to use a `.env` script, then you can use the `DotEnv` class.
+By default OriginPHP will look for a `.env.php` file in the your `config` folder, this has been designed due to the overhead in parsing a traditional.env, but most frequently it not used beyond setting simple values. If one is not available, then it will look for `.env`, if its available it will parse it and cache it as `.env.php`.
 
-```linux
-$ composer require originphp/dotenv
-```
 
-Then in your `config/bootstrap.php` you can add the following code:
-
-```php
-use Origin\DotEnv\DotEnv;
-(new DotEnv())->load(CONFIG);
-```
-
-Here is an example of a dotenv file.
+Here is an example of a `.env` file.
 
 ```linux
 GMAIL_USERNAME=foo@gmail.com
@@ -68,7 +60,7 @@ Then you can access environment vars like this
 $username = env('GMAIL_USERNAME');
 ```
 
-If you need to load additional `.env` files, then you can use DotEnv.
+If you need to load additional `.env` files, then you can use `DotEnv` class.
 
 ```php
 Use Origin\Core\DotEnv;
