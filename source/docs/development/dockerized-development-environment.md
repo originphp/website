@@ -160,6 +160,8 @@ mysql -h db -uroot -p
 
 [PostgreSQL](https://www.postgresql.org/) is an open source relational database. PostgreSQL is not enabled by default, to enable this edit the `bin/docker` script, replace the `:docker/mysql.yml` with  `:docker/postgresql.yml` in the `export` line.
 
+> Remember to change the engine class in `config/database.php`
+
 To access the PostgreSQL server from within the docker container use the host name `db` and port `5432`, and to access locally using any database management application use `localhost` port `54320`.
 
 You can find the database settings in `config/.env`, it works out of the box when using docker.

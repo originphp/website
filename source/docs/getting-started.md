@@ -28,8 +28,11 @@ To run the built-in development server:
 
 ```linux
 $ cd <folder>
-$ bin/server 8000
+$ bin/server
 ```
+
+> You can add the port number as an argument for example `bin/server 80`
+
 Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
 
 ### Dockerized Development Environment
@@ -47,13 +50,15 @@ To start the [dockerized development environment](/docs/development/dockerized-d
 $ bin/docker
 ```
 
+> If you don't want to use the built in MySQL database, then use `docker-compose up` to start the docker container and `docker-compose down` to shut it down
+
 Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
 
-The configuration settings for MySQL are:
+The configuration settings for MySQL docker database are:
 
-- host: db (from within the Docker container)
-- username: root
-- password: root
+- host: **db** (from within the Docker container or localhost from outside)
+- username: **root**
+- password: **root**
 
 To access the Docker container (linux prompt).
 

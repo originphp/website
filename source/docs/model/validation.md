@@ -72,7 +72,7 @@ $this->validate('website',[
 ]);
 ```
 
-You can define a validation rule as a `string`, a `single array`, or array with `multiple arrays`
+You can define a validation rule as a `string`, a `single rule array`, or array with `multiple rule arrays`
 
 To define a rule using just the name
 
@@ -164,7 +164,7 @@ class User extends ApplicationModel
       'unique' => [
           'rule' => 'isUnique',
           'message' => 'Email address already in use',
-          'nullable' => true
+          'allowEmpty' => true
         ]
     ]);
 
@@ -795,7 +795,7 @@ To validate an input is in uppercase
 $this->validate('title','uppercase');
 ```
 
-### uid
+### uuid
 
 To validate an input is a valid UUID
 
