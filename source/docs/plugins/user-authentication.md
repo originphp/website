@@ -55,7 +55,7 @@ return [
 ]
 ```
 
-> You will need to configure your email in `config/.env.php`
+> You will need to configure your email in `config/.env`
 
 ## Usage
 
@@ -91,7 +91,7 @@ To install the source into your app, and rename the namespaces, type in
 $ bin/console user-authentication:install
 ```
 
-Copy and paste the routes from `plugins/user_authentication/config/routes.php` to the `config/routes.php`
+Copy and paste the routes from `plugins/user_authentication/config/routes.php` to the `config/routes.php`, remembering to remove the `plugin` key.
 
 Copy the database schema from `plugins/user_authentication/database/schema.php` either into your existing schema file `database/schema.php` or into a new file.
 

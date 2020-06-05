@@ -55,6 +55,7 @@ Options for the number formatting are these, currency, decimal and percentage us
 - thousands: the thousands separator
 - decimals: the decimals separator
 - places: how many decimal points to show
+- negative: default:(). If set to `()` it will wrap negative numbers in brackets.
 
 ## Formating Currencies
 
