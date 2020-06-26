@@ -71,7 +71,7 @@ You can also pass an options array with any of the following keys.
           'className' => 'UserProfile',
           'foreignKey' => 'user_profile_id',
           'conditions' => ['user_profiles.active'=>true],
-          'fields' => ['users.id','users.name','user_profiles.id','user_profiles.status'],
+          'fields' => ['user_profiles.id','user_profiles.status'],
           'dependent' => true]
           );
     }
@@ -116,7 +116,7 @@ You can also pass an options array with any of the following keys.
           'className' => 'User',
           'foreignKey' => 'user_id',
           'conditions' => ['super_users.email !='=> null],
-          'fields' => ['super_users.id','super_users.name','profiles.id','profiles.name'],
+          'fields' => ['super_users.id','super_users.name'],
           'dependent' => true,
           'type' => 'INNER'
       ]);
@@ -227,7 +227,7 @@ You can also pass an options array with any of the following keys. If you are fo
       'with' => 'UsersTags'
       'foreignKey' => 'user_id',
       'associationForeignKey' => 'tag_id',
-      'fields' => ['users.name','users.email','tags.title','tags.created'],
+      'fields' => ['tags.title','tags.created'],
       'order' => ['tags.created ASC'],
       'mode' => 'append'
       'limit' => 50

@@ -256,9 +256,9 @@ Now anytime you want to use that element, you can also pass an array options whe
 
 > New in OriginPHP v2.6
 
-In the case that a view needs to be broken up into a chunks, such as page which has nav pills or tabs and has large amounts of code. You split these into multiple files, and then use them similar to an element, the only difference is these are not for sharing, and must be in the view folder of the current controller. This only renders a view file, does not 
+In the case that a view needs to be broken up into a chunks, such as page which has nav pills or tabs and has large amounts of code. You split these into multiple files, and then use them similar to an element, the only difference is these are not for sharing, and must be in the view folder of the current controller. This only renders a view file, does not render a layout.
 
-Create a file `View/Contacts/tabs/about_us.ctp` 
+Create a file `View/Contacts/tabs/about_us.ctp`.
 
 ```php
 <h1>About Us</h1>
@@ -275,4 +275,3 @@ You can also pass additional data
 ```php
 <?= $this->view('tabs/about_us',['data'=>$data]) ?>
 ```
-

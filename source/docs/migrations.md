@@ -301,10 +301,13 @@ $foreignKeys = [
         'column' => 'author_id',
         'name' => 'fk_origin_12345',
         'referencedTable' => 'users',
-        'referencedColumn' => 'id'
+        'referencedColumn' => 'id',
+        'update' => 'noAction',
+        'delete' => 'noAction'
     ]
 ];
 */
+
 ```
 
 

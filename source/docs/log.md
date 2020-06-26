@@ -6,7 +6,7 @@ section: content
 ---
 # Logging
 
-OriginPHP comes with 4 built in Log Engines, and it easy to implement your own.
+OriginPHP comes with 4 built in Log Engines, and it easy to implement your own.  You can use the `Log` static class or PSR-3 `Logger` class (see below).
 
 - `File` - Logs messages to files
 - `Console` - Displays the log messages to the console screen
@@ -100,15 +100,13 @@ You can use a single engine or multiple engines at once, and you can also custom
 To configure the file engine logging
 
 ```php
-// config/log.php
-use Origin\Log\Engine\FileEngine;
-
-return [
-    'default' => [
-        'className' => FileEngine::class,
-        'file' => LOGS . '/application.log'
-    ]
-];
+use Origin\Log\Log;
+Log::config('file',[
+    'engine' => 'File',
+    'file' => '/var/www/logs/application.log',
+    'size' => 10485760, // or 10MB,
+    'rotate' => 3 
+]);
 ```
 
 Options for the File Engine are:
@@ -116,6 +114,10 @@ Options for the File Engine are:
 - file: file with full path
 - levels: default `[]`. If you want to restrict this configuration to only certain levels, add the levels to an array e.g. `['critical','emergency','alert']`
 - channels: default `[]`. If you want to restrict this configuration to only certain channels, add the channels to an array e.g. `['invoices','payments']`
+- size: number of bytes when to rotate log, or you can use MB or GB, e.g. 10MB
+- rotate: the number of times to rotate, if set to 0, then it will delete once it reaches that size.
+
+To disable log rotation, set `size` to `0`.
 
 ### Email Engine
 
@@ -291,4 +293,49 @@ return [
         'className' => DatabaseEngine::class
     ]
 ];
+```
+
+
+### PSR-3 Logger
+
+The Log library uses a PSR-3 Logger that you may want to use instead of the static `Log` class.
+
+When you create the `Logger` instance you can pass a single engine configuration, which is common when just starting on a new app.
+
+```php
+use Origin\Log\Logger;
+$logger = new Logger([
+    'engine' => 'File',
+    'file' => '/var/www/logs/master.log'
+]);
+```
+
+To change the settings for an engine, or add additional engines or configurations of engines
+
+```php
+
+$logger->config('default',[
+    'engine' => 'File',
+    'file' => '/var/www/logs/application.log'
+]);
+
+// Send import log items by email
+$logger->config('critical-emails',[
+    'engine' => 'Email',
+    'to' => 'you@example.com', 
+    'from' => ['nobody@gmail.com' => 'Web Application'],
+    'levels' => ['critical','emergency','alert'],
+    'host' => 'smtp.gmail.com',
+    'port' => 465,
+    'username' => 'nobody@gmail.com',
+    'password' => 'secret',
+    'ssl' => true
+]);
+
+// Create a seperate log for everything from the payments channel
+$logger->config('payments',[
+    'engine' => 'File',
+    'file' => '/var/www/logs/payments.log',
+    'channels' => ['payments']
+]);
 ```

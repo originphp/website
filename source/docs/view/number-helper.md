@@ -100,6 +100,14 @@ echo $this->Number->percent(50); // 50.00%
 echo $this->Number->percent(0.3333333333, 2, ['multiply'=>true]);// 33.33%
 ```
 
+## Formating Bytes (size)
+
+Formats bytes to a human readable size.
+
+```php
+echo $this->Number->readableSize(1048576); // 1 MB
+```
+
 ## Parsing
 
 OriginPHP comes with the `Delocalizable` `Concern`, which automatically converts dates,numbers to and from the database. You can disable this in the `ApplicationModel` initialize method.
@@ -110,4 +118,10 @@ The number formatter assumes that the numbers are do not have a thousands separa
 ```php
 use Origin\Utility\Number;
 $user->balance = Number::parse($user->balance); //1.000,23 -> 1000.23
+```
+
+You can also parse size
+
+```php
+$bytes = Number::parseSize('1 MB');
 ```
