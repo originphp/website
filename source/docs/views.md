@@ -252,11 +252,15 @@ Now anytime you want to use that element, you can also pass an array options whe
  echo $this->element('widget',['answer'=>2]);
 ```
 
-## Splitting Large view files
+To render an element from a Plugin
 
-> New in OriginPHP v2.6
+```php
+ echo $this->element('ContactManager.widget',['answer'=>2]);
+```
 
-In the case that a view needs to be broken up into a chunks, such as page which has nav pills or tabs and has large amounts of code. You split these into multiple files, and then use them similar to an element, the only difference is these are not for sharing, and must be in the view folder of the current controller. This only renders a view file, does not render a layout.
+## Keeping your views DRY
+
+In the case that a view needs to be broken up into a chunks, such as page which has nav pills or tabs and has large amounts of code. You split these into multiple files, and then use them similar to an element, the only difference is these are not for sharing. This only renders a view file, does not render a layout, aka a partial view.
 
 Create a file `View/Contacts/tabs/about_us.ctp`.
 
@@ -267,11 +271,30 @@ Create a file `View/Contacts/tabs/about_us.ctp`.
 Then in `View/Contacts/view.ctp` you can call this file 
 
 ```php
-<?= $this->view('tabs/about_us') ?>
+<?= $this->render('tabs/about_us') ?>
 ```
 
 You can also pass additional data
 
 ```php
-<?= $this->view('tabs/about_us',['data'=>$data]) ?>
+<?= $this->render('tabs/about_us',['data'=>$data]) ?>
+```
+
+To render a partial view in the same folder or subdirectory within that folder.
+
+```php
+$this->render('about_us');  // View/Contacts/about-us.ctp
+$this->render('tabs/about_us'); // View/Contacts/tabs/about-us.ctp
+```
+
+To render a partial view from a different folder, add `/` in front.
+
+```php
+$this->render('/shared/menu-selector.ctp'); // View/shared/menu-selector.ctp
+```
+
+To render a partial view from a plugin
+
+```php
+$this->render('ContactManager.Contacts/action'); // /contact_manager/src/Http/View/Contacts/action.ctp
 ```
