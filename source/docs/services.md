@@ -81,11 +81,11 @@ class CreateNewUserService extends ApplicationService {
         (new SendWelcomeEmailJob())->dispatch($user);
     }
 }
- ```
+```
 
- Then to dispatch it, which will call `startup`, `execute` and then `shutdown`, and then return the result.
+Then to dispatch it, which will call `startup`, `execute` and then `shutdown`, and then return the result.
 
- ```php
+```php
 $service = new CreateNewUserService($this->User);
 $result = $service->dispatch([
     'name'=>'Jon Snow','email'=>'jon@example.com'
