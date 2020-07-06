@@ -317,12 +317,19 @@ protected function initialize(array $config) : void
 }
 ```
 
-## onError Callback
+## onError
 
-If your `Model` has an `onError` method it will be called if an exception is raised during a database operation.
+You can register a callback when an error is produced during a `create`, `update`  or `delete` operation.
 
 ```php
-protected function onError(\Exception $exception) : void
+protected function initialize(array $config) : void
+{
+  $this->onError('errorHandler',[
+    'on'=>['create','update','delete']
+    ]);
+}
+
+protected function errorHandler(\Exception $exception) : void
 {
 }
 ```

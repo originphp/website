@@ -235,28 +235,6 @@ The following helpers come with OriginPHP:
 
 For more information on this see the [helpers guide](/docs/view/helpers).
 
-## Elements
-
-Sometimes you might use the same block of code inside multiple views, in this case you would want to use elements which are stored in `View/Element` and end with a `.ctp` extension.
-
-Create a file  `View/Element/widget.ctp`
-
-```php
-<h2>Widget</h2>
-<p>What is 1 + 1 ? <?= $answer ?></p>
-```
-
-Now anytime you want to use that element, you can also pass an array options where the data will be converted into variables with the names taken from the key value.
-
-```php
- echo $this->element('widget',['answer'=>2]);
-```
-
-To render an element from a Plugin
-
-```php
- echo $this->element('ContactManager.widget',['answer'=>2]);
-```
 
 ## Keeping your views DRY
 
@@ -298,3 +276,29 @@ To render a partial view from a plugin
 ```php
 $this->render('ContactManager.Contacts/action'); // /contact_manager/src/Http/View/Contacts/action.ctp
 ```
+
+## Shared Partial Views
+
+Sometimes you might use the same block of code inside multiple views, in this case you would want to save these in `View/Shared` and end with a `.ctp` extension. The `renderShared` method is convenience method which works the same as `render` just always looks in the `Shared` folder.
+
+Create a file  `View/Shared/widget.ctp`
+
+```php
+<h2>Widget</h2>
+<p>What is 1 + 1 ? <?= $answer ?></p>
+```
+
+Now anytime you want to use that partial view, you can also pass an array options where the data will be converted into variables with the names taken from the key value.
+
+```php
+ echo $this->renderShared('widget',['answer'=>2]);
+```
+
+> This is the same as calling `$this->render('/Shared/widget',['answer'=>2]);`
+
+To render a partial view from a Plugin
+
+```php
+ echo $this->renderShared('ContactManager.widget',['answer'=>2]);
+```
+

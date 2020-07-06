@@ -66,6 +66,7 @@ class SupportMailbox extends Mailbox
 {
     protected function initialize(): void
     {
+        $this->onError('errorHandler');
     }
 
     protected function process() : void
@@ -77,7 +78,7 @@ class SupportMailbox extends Mailbox
         }
     }
 
-    protected function onError(Exception $exception) : void
+    protected function errorHandler(Exception $exception) : void
     {
     }
 }
@@ -128,11 +129,13 @@ You can also register callbacks to be called before or after the processing of t
 ```php
 $this->beforeProcess('someFunction');
 $this->afterProcess('anotherFunction');
+$this->onSuccess('doSomethingElse');
 ```
 
 The `initialize` hook is so you don't have to overwrite the `__construct` method.
 
-The `beforeProcess` callback is called after the `startup` hook and the `afterProcess` is called after the `processs` method has been called but before `shutdown`.
+The `beforeProcess` callback is called after the `startup` hook and the `afterProcess` is called after the `processs` method has been called but before `onSuccess` and `shutdown`. The `onSuccess` is only called if the message was not bounced.
+
 
 ### Bouncing Emails 
 

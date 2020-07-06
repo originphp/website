@@ -110,7 +110,8 @@ protected function execute() : void
 This will allow you to parse these options as follows
 
 ```linux
-$ bin/console backup --ds=test --type=zip
+$ bin/console backup --datasource=test --type=zip
+$ bin/console backup --datasource test --type zip
 ```
 
 When adding an option, you can pass an array with the following keys

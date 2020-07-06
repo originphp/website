@@ -87,6 +87,11 @@ class SendWelcomeEmailJob extends ApplicationJob
     protected $wait = '+5 minutes'; // wait time before sending new job
     protected $timeout = 60;
 
+    protected function initialize(): void
+    {
+        $this->onError('errorHandler');
+    }
+
     protected function execute(Entity $user) : void
     {
         $Email = new Email();
@@ -98,7 +103,7 @@ class SendWelcomeEmailJob extends ApplicationJob
             ->send();
     }
 
-    protected function onError(\Exception $exception) : void
+    protected function errorHandler(\Exception $exception) : void
     {
         $this->retry([
             'wait' => '+30 minutes', // how long to wait before retry
@@ -108,7 +113,7 @@ class SendWelcomeEmailJob extends ApplicationJob
 }
 ```
 
-The `onError` method is called when an error occurs such as an exception that was thrown, there you can create logic to retry the job or only retry the job if certain exceptions are raised etc.
+The `onError` callback is triggered when an error occurs such as an exception that was thrown, there you can create logic to retry the job or only retry the job if certain exceptions are raised etc.
 
 It common for Jobs to carry out maintenance on the database, in the `initialize` method you can load any models that you need.
 
@@ -140,8 +145,6 @@ class ResetUserCreditsJob extends ApplicationJob
 - `startup`: this is called before the `execute` method
 - `execute`: this is called when the job is dispatched using the arguments you passed with the `dispatch` or `dispatchNow` method.
 - `shutdown`: this is called after the `execute` method
-- `onError`: this is called when an exception is caught (job fails)
-- `onSuccess`: if the job ran without issues then this will be called with the same arguments that you passed when constructing the job.
 
 You can also register callbacks when a job is queued, the arguments will be passed to these registered callbacks.
 
@@ -156,7 +159,15 @@ Callbacks can also be registered before and after a job is dispatched, these wil
 // startup
 $this->beforeDispatch('methodName');
 $this->afterDispatch('methodName');
+$this->onSuccess('methodName');
 // shutdown
+```
+
+You can also handle errors by registering a callback for on the `onError` event, this will pass the exception
+to the method.
+
+```php
+$this->onError('methodName');
 ```
 
 
@@ -165,6 +176,12 @@ Here is an example Job that if it runs successfully, it will call another job, i
 ```php
 class SendIntroEmailJob extends ApplicationJob
 {
+    protected function initialize(): void
+    {
+        $this->onError('sendAgain');
+        $this->onSuccess('sendFollowUp');
+    }
+
     protected function execute(Entity $user) : void
     {
         $Email = new Email();
@@ -176,12 +193,12 @@ class SendIntroEmailJob extends ApplicationJob
             ->send();
     }
 
-    protected function onSuccess(Entity $user) : void
+    protected function sendFollowUp(Entity $user) : void
     {
         (new SendFollowUpEmailJob())->dispatch($user);
     }
 
-    protected function onError(\Exception $exception) : void
+    protected function sendAgain(\Exception $exception) : void
     {
         $this->retry([
             'wait' => '+30 minutes', // how long to wait before retry

@@ -140,4 +140,4 @@ $controller = $this->controller();
 
 ## Component Configuration
 
-Components work with the `Configurable` package, standardizing and simplifying how you work with configuration. See the [ConfigTrait guide](/docs/configurable.md) for more information.
+Components work with the `Configurable` package, standardizing and simplifying how you work with configuration. See the [ConfigTrait guide](/docs/configurable) for more information.

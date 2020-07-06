@@ -68,9 +68,9 @@ class CreateNewUserService extends ApplicationService {
 
             $this->sendWelcomeEmail($user);
 
-            return $this->result([ 'success' => true,'data' => $user]);
+            return $this->result(['data' => $user]);
         }
-        return $this->result(['success' => false,'error' => [
+        return $this->result(['error' => [
             'type' => 'validation-error',
             'errors' => $user->errors()
         ]]);
@@ -102,7 +102,9 @@ $result = (new CreateNewUserService($this->User))->dispatch([
 
 ## Service Results
 
-When running services, returning true or false is not always enough. Some services, might have different types of errors or if successful it might need to return some data as well, such as a record that was created.
+When running services, returning `true` or `false` is not always enough. Some services, might have different types of errors or if successful it might need to return some data as well, such as a record that was created.
+
+The Result object is based upon the [Google JSON Style Guide](https://google.github.io/styleguide/jsoncstyleguide.xml), so you should pass an array with a key `error` if something went wrong, and `data` with the payload if everything is okay.
 
 The Service `dispatch` method returns either null or a Result object depending upon what the execute returns. The Result object provides a consistent way for dealing with this.
 
@@ -110,7 +112,6 @@ You can create a Service Result Object using the result method
 
 ```php
 $result = $this->result([
-        'success' => true,
         'data' => $user
     ]);
 ```
@@ -120,7 +121,6 @@ This just creates the result and passes the array when creating the Result objec
 ```php
 use Origin\Service\Result;
 $result = new Result([
-        'success' => false,
         'error' => [
             'message' => 'Invalid Credit Card Number',
             'code' => 500,
@@ -134,7 +134,6 @@ The result will look like this:
 /*
 Origin\Service\Result Object
 (
-    [success] =>
     [error] => Array
         (
             [message] => Invalid Credit Card Number
@@ -144,7 +143,22 @@ Origin\Service\Result Object
 */
 ```
 
-### Callbacks
+## Working with results
+
+To check if a result does not have a `error` key
+
+```
+$result->success();
+```
+
+To work with the data from the data key
+
+```
+$data = $result->data();
+$user = $result->data('user');
+```
+
+## Callbacks
 
 - `initialize`: this is called when the Service object is created
 - `startup`: this is called before the `execute` method
