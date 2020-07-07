@@ -6,10 +6,11 @@ section: content
 ---
 # Upgrade Guide
 
+If you have any issues during the upgrade create a [support ticket](https://github.com/originphp/framework/issues) on github.
+
 ## Preparing for the Update
 
 Version 3 is focused on upgrading to use PHP 7.3 as the minimum requirement, and PHPUnit 9, removing old deprecations and few small design changes.
-
 
 The first thing to do is to update your app to the lastest 2.x version of the framework, this should update
 to version `^2.8.1`
@@ -20,7 +21,6 @@ $ composer update
 
 After upgrading your app, you will want to make sure that there are no deprecation warnings, these are shown when debug mode is enabled.
 
-
 ## Updating
 
 Due to the various changes made during in version 2 to base application configuration, it is best to create
@@ -30,24 +30,21 @@ a new project and then move your code to this project.
 $ composer create-project originphp/app app-v3
 ```
 
+### Copy Files
+
 Once you have created the project copy the contents of your `app` and `tests` folder into the new project.
 
-In your old project:
+### Configuration
 
-a) Check your `config` folder for changes you made from the default versions and move these settings over.
+Move over or create `.env` and `.env.default`
 
-1. Check `config/app.php` or `config.application.php` (older versions) and move these configuration settings over.
-2. Copy over your `.env.default` and `.env` file to the new project. In older version you might just have `.env.php` and `.env.php.default` which you will need to create `.env` versions of these in your new project.
-3. Check your settings files such  `cache`, `database` and set
+Copy custom settings from `config/app.php` or `config/application.php`
 
-b) Copy over your files from `database` into the new project.
+Copy custom routes you have created `config/routes.php`
 
-So the check list is this
-
-- [ ] Copied over `.env` settings
-- [ ] Copied over custom configurations
-- [ ] Copied over contents from `database` which includes schema and migrations
-
+Copy the database schema files
+- database/schema.php
+- database/seed.php
 
 ## Breaking Changes
 
@@ -86,3 +83,7 @@ but now it is called even if a mail bounces.
 ### BaseObject
 
 The `BaseObject` class has been moved to the `Core` folder, so if you have used this then you will need to change the namespace.
+
+## Changelog
+
+If you have used any internal features then check the [CHANGELOG](https://github.com/originphp/framework/blob/master/CHANGELOG.md).
