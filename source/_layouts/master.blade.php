@@ -69,8 +69,11 @@
                         <a title="1.x Documentation" href="/1.0/getting-started/" class="ml-6 text-grey-darker hover:text-blue-dark ">
                             1.x
                         </a> 
-                        <a title="2.x Documentation" href="#" class="ml-6 text-grey-darker hover:text-grey-darker">
+                        <a title="2.x Documentation" href="/2.0/getting-started/" class="ml-6 text-grey-darker hover:text-grey-darker">
                             2.x
+                        </a> 
+                        <a title="3.x Documentation" href="#" class="ml-6 text-grey-darker hover:text-grey-darker">
+                            3.x
                         </a> 
                         <!--a title="OriginPHP community" href="https://community.originphp.com" class="ml-6 text-grey-darker hover:text-blue-dark ">
                             Community
