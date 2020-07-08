@@ -154,7 +154,7 @@ You can use either a string or an array if you want to search multiple.
 To compare two fields
 
 ```php
- $conditions = ['articles.created  = articles.modified'];
+ $conditions = ['articles.created = articles.modified'];
 ```
 
 ### Arithmetic

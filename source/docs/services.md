@@ -70,10 +70,15 @@ class CreateNewUserService extends ApplicationService {
 
             return $this->result(['data' => $user]);
         }
-        return $this->result(['error' => [
-            'type' => 'validation-error',
-            'errors' => $user->errors()
-        ]]);
+
+        return $this->result([
+            'error' => [
+                'code' => 400,
+                'message' => 'Validation error',
+                'type' => 'validation-error',
+                'validationErrors' => $user->errors()
+            ]
+        ]);
     }
 
     private function sendWelcomeEmail(Entity $user) : void
@@ -88,17 +93,19 @@ Then to dispatch it, which will call `startup`, `execute` and then `shutdown`, a
 ```php
 $service = new CreateNewUserService($this->User);
 $result = $service->dispatch([
-    'name'=>'Jon Snow','email'=>'jon@example.com'
-    ]);
+    'name' => 'Jon Snow',
+    'email' => 'jon@example.com'
+]);
 ```
 
 Or in one line
 
 ```php
 $result = (new CreateNewUserService($this->User))->dispatch([
-    'name'=>'Jon Snow','email'=>'jon@example.com'
-    ]);
- ```
+    'name' => 'Jon Snow',
+    'email' => 'jon@example.com'
+]);
+```
 
 ## Service Results
 
@@ -112,8 +119,8 @@ You can create a Service Result Object using the result method
 
 ```php
 $result = $this->result([
-        'data' => $user
-    ]);
+    'data' => $user
+]);
 ```
 
 This just creates the result and passes the array when creating the Result object.
@@ -151,7 +158,7 @@ To check if a result does not have a `error` key
 $result->success();
 ```
 
-To work with the data from the data key
+To work with the payload data
 
 ```
 $data = $result->data();

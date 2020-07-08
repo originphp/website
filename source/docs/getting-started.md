@@ -6,7 +6,7 @@ section: content
 ---
 # Getting Started with OriginPHP
 
-> This documentation is for version 2.x, see [1.x documentation](/1.0/getting-started) for the prior version. We also have produced an [upgrade guide](/docs/upgrade).
+> This documentation is for version 3.x, see [2.x documentation](/2.0/getting-started) for the prior version. We also have produced an [upgrade guide](/docs/upgrade).
 
 ## What is OriginPHP?
 
