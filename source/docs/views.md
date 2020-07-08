@@ -236,7 +236,7 @@ The following helpers come with OriginPHP:
 For more information on this see the [helpers guide](/docs/view/helpers).
 
 
-## Keeping your views DRY
+## Breaking Up your Views
 
 In the case that a view needs to be broken up into a chunks, such as page which has nav pills or tabs and has large amounts of code. You split these into multiple files, and then use them similar to an element, the only difference is these are not for sharing. This only renders a view file, does not render a layout, aka a partial view.
 
@@ -277,7 +277,7 @@ To render a partial view from a plugin
 $this->render('ContactManager.Contacts/action'); // /contact_manager/src/Http/View/Contacts/action.ctp
 ```
 
-## Shared Partial Views
+## Shared Partial Views (DRY)
 
 Sometimes you might use the same block of code inside multiple views, in this case you would want to save these in `View/Shared` and end with a `.ctp` extension. The `renderShared` method is convenience method which works the same as `render` just always looks in the `Shared` folder.
 
