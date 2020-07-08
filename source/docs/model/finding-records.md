@@ -103,19 +103,19 @@ $article = $this->Article->all();
 The list finder will return an array of selected data. If you specify a 3rd field the data will be grouped.
 
 ```php
-    $list = $this->Article->find('list',['fields'=>['id']]); // ['a','b','c']
-    $list = $this->Article->find('list',['fields'=>['id','title']]); // ['a'=>'b']
-    $list = $this->Article->find('list',['fields'=>['id','title','category']]); // ['c'=>['a'=>'b']
+    $list = $this->Article->find('list', ['fields' => ['id']]); // ['a','b','c']
+    $list = $this->Article->find('list', ['fields' => ['id','title']]); // ['a' => 'b']
+    $list = $this->Article->find('list', ['fields' => ['id','title','category']]); // ['c' => ['a' => 'b']
 ```
 ### Count Finder
 
 The count finder will return a count based upon criteria that you have supplied.
 
 ```php
-$count = $this->Article->find('count',[
-    'conditions'=>[
+$count = $this->Article->find('count', [
+    'conditions' => [
         'owner_id' => 1234,
-        'status'=> ['Published']
+        'status' => ['Published']
         ]
     );
 ```
@@ -124,8 +124,8 @@ $count = $this->Article->find('count',[
 To set conditions for the `find` or `get` you need to pass an array with the key `conditions`, which itself should be an array. When you fetching associated data, if you don't add an alias prefix to the field name it will be assumed that the condition is for the current model.
 
 ```php
-$conditions = ['id'=>1234];
-$result = $this->Article->find('first',['conditions'=>$conditions]);
+$conditions = ['id' => 1234];
+$result = $this->Article->find('first', ['conditions' => $conditions]);
 ```
 
 ### Equals
@@ -239,15 +239,15 @@ Lets say you want to search by article title or author:
 The conditions key is what is used to generate the sql queries. 
 
 ```php
-$conditions = ['id'=>1234];
-$result = $this->Article->find('first',['conditions'=>$conditions]);
+$conditions = ['id' => 1234];
+$result = $this->Article->find('first', ['conditions' => $conditions]);
 ```
 
 You should always try to add the model alias to the field when working with associated data or joining tables.
 
 ```php
-$conditions = ['articles.id'=>1234];
-$result = $this->Article->find('first',['conditions'=>$conditions]);
+$conditions = ['articles.id' => 1234];
+$result = $this->Article->find('first', ['conditions' => $conditions]);
 ```
 
 ### Fields
@@ -255,13 +255,13 @@ $result = $this->Article->find('first',['conditions'=>$conditions]);
 By default all fields are returned for each model, even if you don't use them. You can reduce the load on the server by selecting just the fields that you need.
 
 ```php
-$result = $this->Article->find('first',['fields'=>['id','title','author_id']]);
+$result = $this->Article->find('first', ['fields' => ['id','title','author_id']]);
 ```
 
 To use also pass DISTINCT, MIN and MAX etc. When using those database functions remember to include AS then a unique field name.
 
 ```php
-$conditions = ['fields'=>['DISTINCT (authors.name) AS author_name','title']];
+$conditions = ['fields' => ['DISTINCT (authors.name) AS author_name','title']];
 ```
 
 ### Order
@@ -270,31 +270,31 @@ Use this option to order the results by fields.
 
 
 ```php
-$result = $this->Article->find('all',[
-  'order'=>['title DESC']
+$result = $this->Article->find('all', [
+  'order' => ['title DESC']
   ]); // ORDER BY articles.title DESC
 ```
 
 
 ```php
-$result = $this->Article->find('all',[
-  'order'=>['title'=>'DESC']
+$result = $this->Article->find('all', [
+  'order' => ['title' => 'DESC']
   ]); // ORDER BY articles.title DESC
 ```
 
 You can also sort by multiple fields
 
 ```php
-$result = $this->Article->find('all',[
-  'order'=>['title','created ASC']
+$result = $this->Article->find('all', [
+  'order' => ['title','created ASC']
   ]); // ORDER BY articles.title, articles.created ASC
 ```
 
 Make sure you add the alias prefix e.g. `articles.` to the field if you are working with associated data. The order option can be a string or an array.
 
 ```php
-$result = $this->Article->find('all',[
-  'order'=>'authors.created DESC'
+$result = $this->Article->find('all', [
+  'order' => 'authors.created DESC'
   ]); // ORDER BY authors.created DESC
 ```
 
@@ -305,9 +305,9 @@ You can set the default sort order for a model in the model property `order`, an
 To run a group by query, any aliased fields that don't exist in the table will be added as a property to the entity of the current model regardless if it took the data from another table.
 
 ```php
-$result = $this->Article->find('all',[
-  'fields'=>['COUNT(*) as total','category'],
-  'group'=>'category'
+$result = $this->Article->find('all', [
+  'fields' => ['COUNT(*) as total','category'],
+  'group' => 'category'
   ]);
 ```
 
@@ -326,7 +326,7 @@ This will return something like this
 Limit is basically what it says it does, it limits the number of results.
 
 ```php
-$result = $this->Article->find('all',['limit'=>5]);
+$result = $this->Article->find('all', ['limit' => 5]);
 ```
 
 ### Having
@@ -334,9 +334,9 @@ $result = $this->Article->find('all',['limit'=>5]);
 You can use having to create filters for a group of rows or aggregates.
 
 ```php
-$result = $this->Order->find('all',[
-  'group'=>'order_date',
-  'having'=>['total >'=>1000]
+$result = $this->Order->find('all', [
+  'group' => 'order_date',
+  'having' => ['total >' => 1000]
   ]);
 ```
 
@@ -345,7 +345,7 @@ $result = $this->Order->find('all',[
 When you to find a record and lock it for updating, this will execute a select for update statement.
 
 ```php
-$result = $this->Article->find('first',['lock'=>true]);
+$result = $this->Article->find('first', ['lock' => true]);
 ```
 
 
@@ -354,8 +354,8 @@ $result = $this->Article->find('first',['lock'=>true]);
 Associated records are not fetched unless you tell find to do so. Providing you have set up the relationships e.g. `hasMany`,`hasOne`,`belongsTo`,`hasAndBelongsToMany`, you will be able to fetch related data by passing array with the models that you want to fetch data for.
 
 ```php
-$result = $this->Article->find('first',[
-  'associated'=>['Author','Comment']
+$result = $this->Article->find('first', [
+  'associated' => ['Author','Comment']
   ]);
 ```
 
@@ -364,10 +364,10 @@ By default all fields for each the associated models will be fetched (or if you 
 NOTE: If you limit the fields that are returned, you must always ensure that `foreignKey` is  present, if not the final results wont include the records.
 
 ```php
-$result = $this->Article->find('first',[
-  'associated'=>[
-    'Author'=>[
-      'fields'=>['id','name','email']
+$result = $this->Article->find('first', [
+  'associated' => [
+    'Author' => [
+      'fields' => ['id','name','email']
       ]
     ]
   ]);
@@ -393,7 +393,7 @@ Sometimes you might want to do your own joins, this can easily be done by using 
 By default callbacks are enabled, you can disable them by passing false, then the `beforeFind` and `afterFind` will not be called.
 
 ```php
-$result = $this->Article->find('first',['callbacks'=>false]);
+$result = $this->Article->find('first', ['callbacks' => false]);
 ```
 
 ## FindBys (new)
@@ -401,13 +401,13 @@ $result = $this->Article->find('first',['callbacks'=>false]);
 FindBys are convenience methods find records by a set of conditions.
 
 ```php
-$article = $this->Article->findBy(['title'=>'foo']);
-$articles = $this->Article->findAllBy(['category'=>'new']);
+$article = $this->Article->findBy(['title' => 'foo']);
+$articles = $this->Article->findAllBy(['category' => 'new']);
 ```
 
 ## Aggregates
 
-These functions are used for calculations and support the same options as the `find` method, the field method
+These functions are used for calculations and support the same options as the `find` method:
 
 ```php
 $count = $this->Article->count();
@@ -423,7 +423,7 @@ $sum = $this->Article->sum('score');
 These methods also work with group queries, which will return an associative array.
 
 ```php
-$result = $this->Article->count('all',['group'=>'category']);
+$result = $this->Article->count('all', ['group' => 'category']);
 /*
 Array
 (
@@ -461,5 +461,5 @@ $result = $this->Article->query('SELECT name from articles');
 To securely pass values when using sql statements, pass an array with key value pairs.
 
 ```php
-$result = $this->User->query('SELECT name FROM users WHERE id = :id',['id'=>1234]);
+$result = $this->User->query('SELECT name FROM users WHERE id = :id', ['id' => 1234]);
 ```
