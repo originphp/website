@@ -258,7 +258,7 @@ To render an element from a Plugin
  echo $this->element('ContactManager.widget',['answer'=>2]);
 ```
 
-## Keeping your views DRY
+## Breaking Up your Views
 
 In the case that a view needs to be broken up into a chunks, such as page which has nav pills or tabs and has large amounts of code. You split these into multiple files, and then use them similar to an element, the only difference is these are not for sharing. This only renders a view file, does not render a layout, aka a partial view.
 
