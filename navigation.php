@@ -83,7 +83,8 @@ return [
             'Debugging' => 'docs/development/debugging',
             'Docker (DDE)' => 'docs/development/dockerized-development-environment',
             'Internationalization (I18n)' => 'docs/development/internationalization-i18n',
-            'Testing' => 'docs/development/testing'
+            'Testing' => 'docs/development/testing',
+            'Deployment' => 'docs/development/deployment'
         ],
     ],
     'Utilities' => [
