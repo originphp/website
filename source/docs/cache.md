@@ -109,7 +109,7 @@ Cache::config('default', [
     'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
     'prefix' => 'cache_'
     'serialize' => true // set to false if you going to cache large strings such as output which dont need serialization
-  
+     'mode' => 0664
      ]);
 ```
 
