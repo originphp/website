@@ -120,7 +120,7 @@ When adding an option, you can pass an array with the following keys
 - short: this the short name for the option (or an alias)
 - required: default is fale, but if you set this to true then it will trigger an error if the value is not provided.
 - default: this is the default value to return unless the option is passed with something else
-- type: default is string. Can be string, boolean, numeric.
+- type: default is string. Can be string, boolean, numeric or array
 
 ### Arguments
 

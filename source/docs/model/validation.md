@@ -13,8 +13,6 @@ You can setup validation rules for your fields in the `initialize` method of you
 
 The [validation package](https://github.com/originphp/validation) provides the validation rules used by the framework, and is installed in each project. You can also this package in your other project.
 
-> As of version 2.6, custom validation settings `required` and `allowBlank` were renamed to `present` and `allowEmpty`, these will be renamed in the background automatically for your existing rule definitions.
-
 The definition for validation rule is structured like this
 
 ```php
@@ -24,7 +22,7 @@ The definition for validation rule is structured like this
   'on' => null , // null, create or update
   'present' => false, // if the key exists but does not need data
   'allowEmpty' => false, // treat null values as valid
-  'stopOnFail' => false, // new in v2.6
+  'stopOnFail' => false
 ]
 ```
 
@@ -33,7 +31,7 @@ The definition for validation rule is structured like this
 - _on_: default is `null`. You can also set to `create` or `update` to only check validation rule when a record is created or updated.
 - _present_: default is `false`. If set to true then the entity must have the field (regardless if its blank)
 - _allowEmpty_: default is `false`. If set to `true` validation will pass on empty values, this is handy for some validation types and fine grain control. Lets say you create a validation rule to check MX records for an email address, there is no point running this validation rule on an empty value.
-- _stopOnFail_: default is `false`. new in version 2.6. Set to true to stop processing remaining rules when validation failure occurs.
+- _stopOnFail_: default is `false`. Set to true to stop processing remaining rules when validation failure occurs.
 
 You configure your validation rules in your `Model`, here is an example how to set options for the validation rules
 

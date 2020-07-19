@@ -10,8 +10,6 @@ The configuration for your application can be found in the `config` folder. Ther
 
 ## Environment Settings
 
-> As of 2.6, .env is used, and a cached version is created when not in debug mode, and this file is .env.php (this provides backwards compatibility).
-
 When you first create a project with composer,it will rename the `.env.default` to `.env` and set your information there. This information is specific to your current installation. 
 
 As you build your application then will be some custom variables that you use, make sure you always add these definitions to the `.env.default` template, since the `.env` file wont be stored in the git repository for security reasons. This way when you deploy your app to a new server, simply rename the template and fill out the details.

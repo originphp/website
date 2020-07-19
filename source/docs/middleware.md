@@ -224,3 +224,27 @@ protected function initialize() : void
     ]);
 }
 ```
+
+## Maintenance Mode Middleware
+
+Maintenance mode is handled by this middleware and is enabled by default, see [Maintenance Mode](/docs/development/maintenance-mode).
+
+To load the `MaintenanceModeMiddleware` which will throw a `MaintenanceModeException` if the application is in maintenance mode.
+
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('MaintenanceMode');
+}
+```
+
+If you prefer that the middleware render a custom html file, then you can set `html` to `true` and this will render the `maintence.html` in the `public` folder.
+
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('MaintenanceMode', [
+        'html' => true
+    ]);
+}
+```

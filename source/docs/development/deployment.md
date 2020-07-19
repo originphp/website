@@ -10,7 +10,7 @@ These instructions are for `Ubuntu 20.04`,`Apache` and `MySQL 8.x` setup.
 
 ## SSL Certificate
 
-You can create a free SSL certificate with `letsencrypt` , to do so install certbot
+You can create a free SSL certificate with `letsencrypt` , to do, you need to install `certbot`
 
 ```bash
 $ sudo apt install certbot python3-certbot-apache
@@ -223,8 +223,18 @@ $ scp dump.sql username@example.com:~
 
 ## SSH Tunnel
 
-Lets say you want to create a SSH tunnel for the MySQL port
+Lets say you want to create a SSH tunnel for the MySQL port, you can then access the remote server
+port `3306` on your `localhost` port `3307`.
 
 ```bash
-$ ssh -L 3306:localhost:3306 user@example.com
+$ ssh -L 3307:localhost:3306 user@example.com
+```
+
+
+## Generate a Random Password (Linux)
+
+To generate a quick random password
+
+```bash
+$ openssl rand -hex 8
 ```

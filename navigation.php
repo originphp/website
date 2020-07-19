@@ -84,7 +84,8 @@ return [
             'Docker (DDE)' => 'docs/development/dockerized-development-environment',
             'Internationalization (I18n)' => 'docs/development/internationalization-i18n',
             'Testing' => 'docs/development/testing',
-            'Deployment' => 'docs/development/deployment'
+            'Deployment' => 'docs/development/deployment',
+            'Maintenance Mode' => 'docs/development/maintenance-mode'
         ],
     ],
     'Utilities' => [
