@@ -56,7 +56,7 @@ $ bin/console generate concern_model SoftDeleteable
 To generate a `Command`
 
 ```linux 
-$ bin/console generate command CacheClear
+$ bin/console generate command BackupDatabase
 ```
 
 ## Component

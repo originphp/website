@@ -16,8 +16,7 @@ When maintenance mode is enabled
     - redirect user to the `public/maintenance.html` page
 - The `queue:worker` command won't process any jobs
 - The `mailbox:download` command wont download any emails
-- The email piping server will store the any emails to disk, and we will be imported next time an email comes in when not in maintenance mode
-
+- The email piping server will store incoming emails to disk, and then will be imported next time an email comes in when not in maintenance mode
 
 ## Start Maintenance Mode
 
@@ -49,7 +48,7 @@ $this->loadMiddleware(MaintenanceModeMiddleware::class, [
     ]);
 ```
 
-This will render the HTML 
+This will render `public/maintainence.html`
 
 ![HTML Maintenance Mode](/assets/images/maintenance-mode.png)
 
