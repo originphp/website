@@ -106,3 +106,44 @@ $oldValue = $checkout->changed('email');
 $checkout->wasChanged();
 $checkout->wasChanged('email');
 ```
+
+## Callbacks
+
+You can register `beforeValidate` and `afterValidate` callbacks
+
+```php
+protected function initialize(): void
+{
+    $this->beforeValidate('changeName');
+}
+
+protected function changeName() : void
+{
+    $this->name = strtoupper($this->name);
+}
+```
+
+## Custom Callbacks
+
+Depending upon what you are doing, you will probably want a `beforeSave` or `beforePost` callback.
+
+The first thing to do is create a function to register the callback
+
+```php
+protected function beforeSave(string $method)
+{
+    $this->registerCallback('beforeSave',$method);
+}
+```
+
+Then the next thing is to dispatch the callback
+
+```php
+public function save()
+{
+    $this->dispatchCallbacks('beforSave');
+
+    file_put_contents(config_path('settings.json'),(string) $this);
+    // your save logic here
+}
+```
