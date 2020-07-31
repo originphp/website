@@ -10,7 +10,7 @@ OriginPHP comes with its own Dockerized Development Environment (DDE), this work
 
 > The DDE for projects created prior to May 20th 2020 only include Apache, PHP and MySQL.
 
-The Dockerized Development Environment is configured out the box to work with PHP 7.4 and Apache and you can also easily configure extra services `mysql`, `postgresql`,`redis`,`memcached`,`elasticsearch`,`minio` and `mailhog`
+The Dockerized Development Environment is configured out the box to work with PHP 7.4 and Apache and you can also easily configure it to work with extra services such `mysql`, `postgresql`,`redis`,`memcached`,`elasticsearch`,`minio` and `mailhog`.
 
 ## Getting started with Docker
 

@@ -17,11 +17,11 @@ The definition for validation rule is structured like this
 
 ```php
 [
-  'rule' => 'notEmpty',
+  'rule' => 'email',
   'message' => 'This is field cannot be empty', // error message when validation fails
   'on' => null , // null, create or update
   'present' => false, // if the key exists but does not need data
-  'allowEmpty' => false, // treat null values as valid
+  'allowEmpty' => false, // treat empty values as valid
   'stopOnFail' => false
 ]
 ```
@@ -45,7 +45,7 @@ class Contact extends ApplicationModel
         parent::initialize($config);
 
         $this->validate('email',[
-          'email' => [ // the key for each validation rule is not important
+          'email' => [ // the key for each validation rule is NOT important
             'rule' => 'email', 
             'message' => 'Thats not a real email address'
           ]
@@ -689,9 +689,9 @@ $this->validate('name',[
 
 ### notEmpty
 
-> similar to notBlank except this also checks that there was no file upload.
+> This is a general empty rule, which is also used by the required rule
 
-This checks that the value is not `null`, an empty string or array or an empty upload.
+This checks that the value is not `null`, is not an empty string or array and it also checks that its not an empty upload.
 
 ```php
 $this->validate('name',[

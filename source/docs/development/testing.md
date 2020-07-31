@@ -117,8 +117,8 @@ Sometimes you will want to use dynamic data, in this case you will modify the da
                 'title' => 'First Article',
                 'body' => 'Article body goes here',
                 'published' => 1,
-                'created' => date('Y-m-d H:i:s'],
-                'modified' => date('Y-m-d H:i:s']
+                'created' => date('Y-m-d H:i:s'),
+                'modified' => date('Y-m-d H:i:s')
             ],
         );
         parent::initialize(); // always call parent
@@ -186,6 +186,8 @@ class BookmarkTest extends OriginTestCase
 
 ```
 
+If you use `setUp` or `tearDown` remember to call the parent first, e.g. `parent::setUp`. You can use `startup` or `shutdown` instead.
+
 ### Mocking Models
 
 To mock models extend your Test case by `OriginTestCase` and then call the `getMockForModel` method. When the Model is mocked, it will also be added to the model registry.
@@ -246,12 +248,18 @@ An example of how you might use this:
 
 use Origin\TestSuite\TestTrait;
 
-class BookmarkTest extends OriginTestCase
+class Bookmark
 {
     use TestTrait;
+    protected $hidden = 1234;
+}
+
+class BookmarkTest extends OriginTestCase
+{
+  
     public function testPrivateProperty()
     {
-        $privateProperty = $this->getProperty('hidden');
+        $value = (new Bookmark())->getProperty('hidden');
         ...
     }
 }
@@ -456,20 +464,56 @@ $this->assertHeaderNotContains('Content-Type', 'html');
 
 ```
 
-To check a cookie value
+To check a cookies
 
 ```php
+// check a value in a cookie
 $this->assertCookie('name', 'value');
+
+// check a cookie is not set
+$this->assertCookieNotSet('name');
+```
+
+To check a sessions
+
+```php
+// check a value using a session key
+$this->assertSession('User.Auth.email','jon@example.com');
+
+// check that a key exists
+$this->assertSessionHasKey('User.Auth');
+```
+
+To check flash messages
+
+```php
+$this->assertFlashMessage('Your article has been saved');
 ```
 
 ### Other methods
 
 #### Session
 
-Write data to session for the next request, one example is to test applications that require to be logged in.
+Write data to session for the next request, one example is to test applications that require to be logged in. 
+
+Here we we set the minimum data required to be considered logged in
 
 ```php
-    $this->session(['Auth.User.id' =>1000]);
+$this->session(['Auth.User.id' =>1000]);
+```
+
+However, it best to stub the entire user record, for example
+
+```php
+$this->session([
+    'Auth' => [
+        'User' => [
+            'id' => 1000,
+            'name' => 'Jon Doe',
+            'email' => 'jon@example.com'
+        ]
+    ]
+]);
 ```
 
 #### Header
@@ -692,7 +736,7 @@ class FooMiddlewareTest extends OriginTestCase
 
     public function testAbc()
     {
-        $this->assertContains('foo', $this->response->body());
+        $this->assertStringContains('foo', $this->response->body());
     }
 }
 ```
@@ -719,7 +763,7 @@ If you created a complicated Middleware or just want to test at different stages
 
 To test Jobs, make sure you have configured a test Queue connection in your `config/queue.php`. When the test is run the `test` queue connection will be used.
 
-```
+```php
 use Origin\Job\Queue;
 Queue::config('default', [
     'engine' => 'database',
@@ -760,6 +804,57 @@ class CreateUserDirectoryJobTest extends OriginTestCase
 }
 ```
 
+### Testing Jobs during Integration Testing
+
+The `TestJobTrait` makes it a snap to test jobs during integration testing, make sure
+that your `test` configuration for jobs is using the database (default), and add the fixture for `Queue`.
+
+Add the trait to your Test class
+
+```php
+use Origin\TestSuite\JobTestTrait;
+class EmailListsControllerTest extends OriginTestCase
+{
+    protected $fixtures = ['Queue'];
+    use IntegrationTestTrait, JobTestTrait;
+}
+```
+
+#### Assertions
+
+To test how many jobs were enqueued
+
+```php
+$this->assertEnqueuedJobs(1)
+```
+
+To test there are no enqueued jobs
+
+```php
+$this->assertNoEnqueuedJobs();
+```
+
+To check a job was enqueued
+
+```php
+$this->assertJobEnqueued(MailerJob::class); // any queue
+$this->assertJobEnqueued(MailerJob::class, 'mailers'); // check only the mailers queue
+```
+
+To a check that a job was enqueued with certain arguments, note in this example I am checking the `MailerJob` this is created by your `Mailer` and the first argument is the class.
+
+```php
+$this->assertJobEnqueuedWith(MailerJob::class, [ConfirmationLinkMailer::class, $subscriber, $uuid]);
+$this->assertJobEnqueuedWith(CreateAccount::class, [1000, $entity,'anything'],'priority'); // this only checks the queue called priority
+```
+
+You can also run the enqueued jobs to test them, when you do this it will return the number of jobs that were run, if a job fails, the test will fail.
+ 
+```php
+$this->assertEquals(1, $this->runEnqueuedJobs());
+$this->assertEquals(1, $this->runEnqueuedJobs('mailers')); // only run jobs in the mailers queue
+```
+
 ## Testing Mailers
 
 To test a Mailer, make sure you have configured a test Email account in your `config/email.php`, this can be a real account or debug, which does not send anything.
@@ -772,7 +867,7 @@ return [
 ];
 ```
 
-A test would look something like this
+A `Mailer` unit test would look something like this
 
 ```php
 namespace App\Test\Mailer;
@@ -794,12 +889,39 @@ class SendWelcomeEmailMailerTest extends OriginTestCase
         $user = $this->User->find('first', ['conditions' => ['id' => 1000]]);
 
         $message = (new SendWelcomeEmailMailer())->dispatch($user);
-        $this->assertContains('To: somebody@example.com', $message->header());
-        $this->assertContains('From: Name <demo@example.com>', $message->header());
-        $this->assertContains('Hi Tony,', $message->body());
+        $this->assertStringContains('To: somebody@example.com', $message->header());
+        $this->assertStringContains('From: Name <demo@example.com>', $message->header());
+        $this->assertStringContains('Hi Tony,', $message->body());
     }
 }
 
+```
+
+You can also test mailers that are dispatched using the queue system, by using the `TestJobTrait`, as this enables you to run queued jobs.
+
+```php
+use Origin\Mailer\Mailer;
+use Origin\TestSuite\TestJobTrait;
+
+function testSignup()
+{
+    // integration testing
+    $this->post('/signup',[
+        'email' => 'fred@originphp.com'
+    ]);
+
+    $this->assertOk();
+    $this->assertResponseContains('You have signed up!');
+
+    // run the queued jobs which include the mailers through TestJobTrait
+    $this->assertEquals(1, $this->runEnqueuedJobs());
+
+    // get the amils that were delivered
+    $messages = Mailer::delivered();
+    $this->assertCount(1, $messages);
+
+    $this->assertStringContains('To: fred@originphp.com', $messages[0]->header());
+}
 ```
 
 ## Testing Services
@@ -822,14 +944,14 @@ class CreateUserServiceTest extends OriginTestCase
      public function testExecute()
     {
         $result = (new CreateUserService($this->User))->dispatch(['foo'=>'bar']);
-        $this->assertTrue($result->success);
+        $this->assertTrue($result->success());
     }
 }
 ```
 
 ## Testing Model Repositories
 
-If you wanted to test a test a method in the UsersRepository called `disableAccount`
+If you wanted to test a method in the `UsersRepository` called `disableAccount`
 
 ```php
 namespace App\Test\Model\Repository;
@@ -852,12 +974,10 @@ class UsersRepositoryTest extends OriginTestCase
 }
 ```
 
-### Testing Mailboxes
+## Testing Mailboxes
 
 To test a mailbox, make sure you have `Mailbox` routes configured and you will need to use
 fixtures, you can copy the framework fixture and adjust the sample data as needed.
-
-> You will need a MailboxFixture and QueueFixture, for projects created with OriginPHP 2.2 or lower you can download these you can download from [Github](https://github.com/originphp/app/tree/master/tests/Fixture).
 
 ```php
 namespace App\Test\Mailbox;
@@ -899,8 +1019,8 @@ The Dockerized Development Environment comes with PHPUnit and XDebug pre-install
 Even though xdebug is installed, it is not enabled because it causes performance issues. You need to enable this after each time you start the container and want to run the coverage.
 
 ```linux
-$ echo 'zend_extension="/usr/lib/php/20170718/xdebug.so"' >> /etc/php/7.2/cli/php.ini
-$ echo 'xdebug.default_enable=0' >> /etc/php/7.2/cli/php.ini
+$ echo 'zend_extension="/usr/lib/php/20190902/xdebug.so"' >> /etc/php/7.4/cli/php.ini
+$ echo 'xdebug.default_enable=0' >> /etc/php/7.4/cli/php.ini
 ```
 
 You can generate code coverage with the following command:

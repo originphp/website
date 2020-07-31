@@ -60,7 +60,9 @@ return [
            // 'Tasks' => 'docs/console/tasks'
         ],
     ],
-   
+    'Record (Tableless Models)' => [
+        'url' => 'docs/record',
+    ],
     'Libraries' => [
         'url' => 'docs/libraries',
         'children' => [

@@ -108,7 +108,7 @@ $ git clone https://github.com/username/repository.git .
 Create cache folder and application log this is so we can set the permissions for it regardless who creates it (you/www-data)
 
 ```bash
-$ mkdir cache/origin
+$ mkdir tmp/cache/origin
 $ touch logs/application.log
 ```
 
@@ -213,12 +213,18 @@ To import a dumped database
 $ mysql -u root -p database_name < dump.sql
 ```
 
-### Moving files remotely
+### Copying a single file to a Remote Server
 
 To copy a file remotely
 
 ```bash
 $ scp dump.sql username@example.com:~
+```
+
+### Copying multiple files to a Remote Server
+
+```bash
+rsync -arv ~/code/www.example.com/ username@example:/var/www/www.example.com/public
 ```
 
 ## SSH Tunnel
@@ -236,5 +242,6 @@ $ ssh -L 3307:localhost:3306 user@example.com
 To generate a quick random password
 
 ```bash
-$ openssl rand -hex 8
+$ openssl rand -hex 4
+50ae7c0e
 ```

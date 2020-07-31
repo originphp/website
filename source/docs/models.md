@@ -378,7 +378,7 @@ Or you can delete in bulk but this wont trigger callbacks or delete related reco
 
 ## Saving Associated Data
 
-By default associated records will be saved automatically.
+By default the first level of associated records will be saved automatically.
 
 To create an entity with associated data simply pass an array to the new method on the article.
 
@@ -403,17 +403,28 @@ To create an entity with associated data simply pass an array to the new method 
 If you don't want to save associated data, then you can disable this by setting associated to false. 
 
 ```php
-  $article = $this->Article->new($data,[
-      'associated'=>false]
-      );
+$article = $this->Article->new($data,[
+    'associated' => false
+]);
 ```
 
 And you can limit this to certain associations by passing an array with the names of the alias for the model that you want to save for.
 
 ```php
-  $article = $this->Article->new($data,[
-      'associated'=>['Comment']]
-      );
+$article = $this->Article->new($data,[
+    'associated' => ['Comment']
+]);
+```
+
+If you want to save a deeper set of associations, then you will need provide a list of associations
+
+Let's say an `Article` is associated to `Author`, and a `Author` `BelongsTo` `AuthorAddress`, by default the `AuthorAddress` will not be saved as this is deeper than one level, to save that assocation you will need to manually
+define all the associations that you want the data to be saved for.
+
+```php
+$article = $this->Article->new($data,[
+    'associated' => ['Author', 'AuthorAddress']
+]);
 ```
 
 You can also whitelist fields (prevent mass assignment attacks) by telling new or patch which fields to allow.
@@ -480,7 +491,7 @@ When saving records you can pass an array of options
 
 ## Updating a single column
 
-If you need to just update one column, note that no validation checks or callbacks will be triggered when using `updateColumn`.
+You can also update a single column in the table, note that no validation checks or callbacks will be triggered when using `updateColumn`.
 
 ```php
     $this->Article->updateColumn(1024,'title','New Article Title');
@@ -488,7 +499,7 @@ If you need to just update one column, note that no validation checks or callbac
 
 ## Validation
 
-Validating data is very important and can easily be setup. You use the `initialize` method which is called immediately after the construct, its basically so you don't have to overide the `__construct()` method.
+Validating data is very important and can easily be setup. You use the `initialize` method which is called immediately after the construct, its basically so you don't have to override the `__construct()` method.
 
 ```php
 class Product extends ApplicationModel
@@ -497,16 +508,24 @@ class Product extends ApplicationModel
     {
         parent::initialize($config); // important to remember to call parent!!
         
-        $this->validate('password','notBlank'); // String
+        $this->validate('password','required'); // String
      
-        $this->validate('username', [    // single rule
-            'rule' => 'notBlank',
+        $this->validate('username', [    // single rule as array
+            'rule' => 'required',
             'message' => 'This is required'
           ]);
           
         $this->validate('email', [
-            ['rule'=>'notBlank'],
-            ['rule'=>'email']
+            'required',
+            [
+                'rule' => 'email',
+                'message' => 'You must enter a valid email address'
+            ]
+        ]);
+
+        $this->validate('url',[
+            'optional',
+            'url'
         ]);
     }
 }
