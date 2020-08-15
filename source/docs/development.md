@@ -12,3 +12,5 @@ In the development section you find information on things such as routing, testi
 - [Docker](/docs/development/dockerized-development-environment)
 - [Testing](/docs/development/testing)
 - [Internationalization I18N](/docs/development/internationalization-i18n)
+- [Deployment](/docs/development/deployment)
+- [Maintenance Mode](/docs/development/maintenance-mode)

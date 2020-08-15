@@ -154,15 +154,22 @@ Origin\Service\Result Object
 
 To check if a result does not have a `error` key
 
-```
+```php
 $result->success();
 ```
 
 To work with the payload data
 
-```
+```php
 $data = $result->data();
 $user = $result->data('user');
+```
+
+To work with the error data
+
+```php
+$error = $result->error();
+$code = $result->error('code');
 ```
 
 ## Callbacks

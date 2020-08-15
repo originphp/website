@@ -67,8 +67,6 @@ $result = isset($article->title);
 $result = $article->has('title')
 ```
 
-
-
 ## Set
 
 ```php
@@ -111,7 +109,7 @@ $errors = $entity->errors('first_name');
 To set errors manually
 
 ```php
-$entity->invalidate('email','invalid email address');
+$entity->error('email','invalid email address');
 ```
 
 ## Other Methods
@@ -124,24 +122,20 @@ This resets the modified property and any validation errors.
 $entity->reset();
 ```
 
-### modified
+### dirty
 
-Gets a list of fields that were modified.
+> You can also use modified
 
-```php
-$fields = $entity->modified();
-```
-
-If you want to see a particular field was modified.
-
+Gets a list of fields that are dirty or check if a field was modified (does not mean it was changed)
 
 ```php
-$bool = $entity->modified('email');
+$fields = $entity->dirty();
+$bool = $entity->dirty('email');
 ```
 
 ### Created
 
-After saving an entity you can see if it was a newly created record
+After saving an entity you can see if it was a newly created record in the database
 
 ```php
 $bool = $entity->created();
@@ -149,7 +143,7 @@ $bool = $entity->created();
 
 ### Deleted
 
-You can check if the entity was deleted
+You can check if the entity was deleted from the database
 
 ```php
 $bool = $entity->deleted();
@@ -157,7 +151,7 @@ $bool = $entity->deleted();
 
 ### name
 
-Gets the model name of the entity.
+Gets the `Model` name for the `Entity`
 
 ```php
 $modelName = $entity->name();
@@ -165,7 +159,7 @@ $modelName = $entity->name();
 
 ### properties
 
-Gets a list of properties from the object.
+Get the `entity` properties
 
 ```php
 $list = $entity->properties();
@@ -181,7 +175,7 @@ $array = $entity->toArray();
 
 ### toJson
 
-Converts the entity into a json string.
+Converts the entity into a JSON string.
 
 ```php
 $json = $entity->toJson();
@@ -233,12 +227,12 @@ echo $user->full_name;
 
 #### Virtual Fields
 
-You can also set `accessors` as virtual fields so that when you export data to json, xml or an array this value is included. Add the fields to the `_virtual` property.
+You can also set `accessors` as virtual fields so that when you export data to JSON or XML or an array this value is included. Add the fields to the `virtual` property.
 
 ```php
 class User extends Entity
 {
-  protected $_virtual = ['full_name'];
+  protected $virtual = ['full_name'];
 }
 ```
 
@@ -261,11 +255,11 @@ class User extends Entity
 
 ## Hiding Fields
 
-To hide fields when being exported to an array, json or xml set the `_hidden` property.
+To hide fields when being exported to an array, JSON or XML set the `hidden` property.
 
 ```php
 class User extends Entity
 {
-  protected $_hidden = ['password','tenant_id'];
+  protected $hidden = ['password','tenant_id'];
 }
 ```

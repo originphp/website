@@ -33,6 +33,7 @@ return [
             'Concerns' => 'docs/model/concerns',
             'Repositories' => 'docs/model/repositories',
             'Query Objects' => 'docs/model/query-objects',
+            'Record (Tableless)' => 'docs/model/record'
         ],
     ],
     'Views' => [
@@ -60,9 +61,7 @@ return [
            // 'Tasks' => 'docs/console/tasks'
         ],
     ],
-    'Record (Tableless Models)' => [
-        'url' => 'docs/record',
-    ],
+
     'Libraries' => [
         'url' => 'docs/libraries',
         'children' => [
@@ -85,6 +84,7 @@ return [
             'Debugging' => 'docs/development/debugging',
             'Docker (DDE)' => 'docs/development/dockerized-development-environment',
             'Internationalization (I18n)' => 'docs/development/internationalization-i18n',
+            'Helper Functions' => 'docs/development/helper-functions',
             'Testing' => 'docs/development/testing',
             'Deployment' => 'docs/development/deployment',
             'Maintenance Mode' => 'docs/development/maintenance-mode'

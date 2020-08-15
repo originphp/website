@@ -326,6 +326,15 @@ You can also use a callback.
     $array = $grouped->toArray();
 ```
 
+### IndexBy
+
+Similar to groupBy but the difference is that you know that each element has one item, for example the `id` field.
+
+```php
+    $collection = new Collection($books);
+    $grouped = $collection->indexBy('id');
+``` 
+
 ## Inserting Data
 
 ### Insert

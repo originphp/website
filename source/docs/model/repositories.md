@@ -8,9 +8,9 @@ section: content
 
 To keep logic that has nothing to do with data persistence from bloating up your models, aka fat Models, you can use the OriginPHP `Repository` which is based upon the [Repository Pattern](https://martinfowler.com/eaaCatalog/repository.html).
 
-A good candidate for this example is a User `model`, since this always gets really bloated.
+A good candidate for this example is a User `Model`, since this always gets really bloated.
 
-The first thing to do is to create a `repository` class using the plural name of the Model, this enables the lazyloading of the model which can be used.
+The first thing to do is to create a `Repository` class using the plural name of the Model, this enables the lazy loading of the model which can be used.
 
 ```linux
 $ bin/console generate respository Users
@@ -36,7 +36,7 @@ class UsersRepository extends Repository
 {
     public function findListActiveUsers() : array
     {
-        $conditions = ['active'=>true];
+        $conditions = ['active' => true];
         return $this->User->find('list',['conditions'=>$conditions]);
     }
 

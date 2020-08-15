@@ -111,7 +111,7 @@ class User extends ApplicationModel
    
     protected function hashPassword(Entity $entity, ArrayObject $options) : bool
     {
-        if ($entity->modified('password')) {
+        if ($entity->isDirty('password')) {
             $entity->password = Security::hashPassword($entity->password);
         }
 

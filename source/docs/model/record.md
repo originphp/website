@@ -6,20 +6,36 @@ section: content
 ---
 # Record
 
-If you code a lot there will be instances where you need to work with data that is not persisted to the database but still need to validate data from the user and then maybe send an email, save to a file or communicate with an API. Normally this would have been done a number of hacky ways, this solution works similar to `ActiveRecord`, just without persisting to database.
+There will be instances where you need to work with data that is not persisted to the database but still need to validate data from the user and then maybe send an email, save to a file or communicate with an API. Normally this would have been done a number of hacky ways, this solution works similar to `ActiveRecord`, just without persisting to database.
 
-First create the `Record` class, in your `app/Record`
+Use the generate command to create the `Record` and its test for you, in your `Model` folder. 
+
+```linux
+$ bin/console generate record StripeCustomer
+[ OK ] /var/www/app/Model/StripeCustomer.php
+[ OK ] /var/www/tests/TestCase/Model/StripeCustomerTest.php
+```
+
+If you are using for this only Form validation for example a Contact page, then you can use the `Form` generator instead, this will place the files in the `Form` folder to keep things separate.
+
+```linux
+$ bin/console generate form Checkout
+[ OK ] /var/www/app/Form/CheckoutForm.php
+[ OK ] /var/www/tests/TestCase/Form/CheckoutFormTest.php
+```
+
+Then you can adjust like this, defining the schema for the field such as type `string`, `text`, `integer`, `decimal`, `date`,`time`,`datetime` or `boolean`. Then add the validation rules, and if needed register any callbacks.
 
 ```php
-namespace App\Record
+namespace App\Form
 
-use Origin\Record\Record;
+use Origin\Model\Record;
 
-class Checkout extends Record
+class CheckoutForm extends Record
 {
     protected function initialize(): void
     {
-        // create schema which is used by the FormHelper
+        // create schema (if needed) which is used by the FormHelper
         $this->addField('name', 'string');
         $this->addField('description', 'text');
         $this->addField('email', ['type' => 'string', 'length' => 125]);
@@ -32,7 +48,6 @@ class Checkout extends Record
             'required',
             'email'
         ]);
-
         $this->validate('age', ['optional', 'integer']);
     }
 }
@@ -43,10 +58,10 @@ Working with record object from the `Controller`
 ```php
 public function checkout()
 {
-    $checkout = Checkout::new();
+    $checkout = CheckoutForm::new();
     
     if ($this->request->is(['post'])) {
-        $checkout = Checkout::patch($checkout, $this->request->data(), [
+        $checkout = CheckoutForm::patch($checkout, $this->request->data(), [
             'fields' => ['name','address','city','state','zip','cc_number','cc_expiry']
         ]);
         if ($checkout->validates()) {
@@ -63,18 +78,29 @@ public function checkout()
 The record object can worked with in a number of ways
 
 ```php
-$checkout = Checkout::new();
 $checkout->name = 'Jon Snow'; // $checkout->set('name','Jon Snow');
 $name = $checkout->name; // $checkout->get('name')
 unset($checkout->name); // $checkout->unset('name');
 isset($checkout->name); // $checkout->has('name');
 ```
 
-The `Record` object uses the `ValidateTrait`
+The `Record` object provides two static methods, `new` and `patch` both return a new instance, with patch designed to take an array of data an patch an existing `Record`
+
+```php
+$checkout = CheckoutForm::new(); // CheckoutForm::new(['name'=>'Jon Snow']);
+$checkout = CheckoutForm::new(['name'=>'Jon Snow']);
+
+$checkout = CheckoutForm::patch($checkout, $_POST);
+```
+
+Both those methods accept `fields` option, to prevent mass assignment, by restricting which fields
+can be added.
+
+To check if the `Record` is valid or to invalidate a particular field
 
 ```php
 $result = $checkout->validates();
-$checkout->invalidate('name'); // add validation error messages manually
+$checkout->error('name','Invalid name'); // add validation error messages manually
 ```
 
 To work with errors
@@ -120,30 +146,5 @@ protected function initialize(): void
 protected function changeName() : void
 {
     $this->name = strtoupper($this->name);
-}
-```
-
-## Custom Callbacks
-
-Depending upon what you are doing, you will probably want a `beforeSave` or `beforePost` callback.
-
-The first thing to do is create a function to register the callback
-
-```php
-protected function beforeSave(string $method)
-{
-    $this->registerCallback('beforeSave',$method);
-}
-```
-
-Then the next thing is to dispatch the callback
-
-```php
-public function save()
-{
-    $this->dispatchCallbacks('beforSave');
-
-    file_put_contents(config_path('settings.json'),(string) $this);
-    // your save logic here
 }
 ```
