@@ -10,7 +10,9 @@ The file utility wraps some important functions in an easy to use and predictabl
 
 ## Installation
 
-To install this package
+> Projects created after 15th August will have these installed by default.
+
+To install this package use Composer. 
 
 ```linux
 $ composer require originphp/filesystem

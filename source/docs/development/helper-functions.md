@@ -65,15 +65,15 @@ $now = now();
 
  `htmlspecialchars` convenience function.
 
- ```php
- h($someData)
- ```
+```php
+echo h($someData);
+```
 
 ## Checking Modes
 
 ### isConsole
 
-To find out if the current instance is being run in console mode
+To find out if the current instance is being run in console
 
 ```php
 $bool = isConsole();
@@ -83,11 +83,11 @@ $bool = isConsole();
 
 To check if debug mode is enabled
 
-## Path helpers
-
 ```php
 $bool = debugEnabled();
 ```
+
+## Path helpers
 
 ### tmp_path
 

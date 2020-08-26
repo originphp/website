@@ -4,6 +4,7 @@ description: Model Assocations Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Associations
 
 ## Overview
@@ -28,10 +29,18 @@ To load associated records for model, in the find options you pass an array of m
 
 ```php
 $user = $this->User->get($id, [
-        'associated'=>['Task','Email'=>['fields'=>$fields],'Contact'=>['associated'=>$nestedModels]]
-        ]);
+        'associated' => [
+          'Task',
+          'Email' => [
+            'fields' => ['id','email','unsubscribed','created']
+          ],
+          'Contact' => [
+            'associated' => ['ContactAddress']
+          ]
+      ]);
 ```
-You can pass options for each model to be contained, these will overide what was set with the functions below. You can also load nested associated data, by passing the contain option for each model.
+
+You can pass options for each model to be contained, these will override what was set with the functions below. You can also load nested associated data, by passing the contain option for each model.
 
 ## Has One
 
@@ -56,7 +65,7 @@ class User extends ApplicationModel
 You can also pass an options array with any of the following keys.
 
 - `className` is the name of the class that you want to load.
-- `foreignKey` the foreign key in the other model. The default value would be the underscored name of the current model suffixed with '\_id'.
+- `foreignKey` the foreign key in the other model. The default value would be the underscored name of the current model suffixed with `_id`.
 - `conditions` an array of additional conditions to the join
 - `fields` an array of fields to return from the join model, by default it returns all
 - `dependent` default is `false`, if set to true when delete is called with cascade it will related records.
@@ -70,8 +79,8 @@ You can also pass an options array with any of the following keys.
       $this->hasOne('Profile', [
           'className' => 'UserProfile',
           'foreignKey' => 'user_profile_id',
-          'conditions' => ['user_profiles.active'=>true],
-          'fields' => ['user_profiles.id','user_profiles.status'],
+          'conditions' => ['user_profiles.active' => true],
+          'fields' => ['id','status'],
           'dependent' => true]
           );
     }
@@ -100,11 +109,11 @@ To understand whether you use `hasOne` or `belongsTo`, you need to look at in wh
 You can also pass an options array with any of the following keys.
 
 - `className` is the name of the class that you want to load.
-- `foreignKey` the foreign key in the current model.  The default value would be the underscored name of the other model suffixed with '\_id'.
+- `foreignKey` the foreign key in the current model. The default value would be the underscored name of the other model suffixed with `_id`.
 - `conditions` an array of additional conditions to the join
 - `fields` an array of fields to return from the join model, by default it returns all
 - `type` default is `LEFT`, this is the join type used to fetch the associated record.
-- `counterCache`: default is `null`. Counter cache allows you to cache counts of records instead of running counts each time. If you use counter cache anytime a record is created or deleted the counter will be updated. Set a field name to update the count, if set to true it will use the plural of the current model with e.g. `comments_count`. Lets say you wanted to track number of comments for each post, in your Post model, when setup the belongsTo assocation, say for Comment, set `counterCache` to true or the name of the field to increment and decrement.
+- `counterCache`: default is `null`. Counter cache allows you to cache counts of records instead of running counts each time. If you use counter cache anytime a record is created or deleted the counter will be updated. Set a field name to update the count, if set to true it will use the plural of the current model with e.g. `comments_count`. Lets say you wanted to track number of comments for each post, in your Post model, when setup the `belongsTo` assocation, say for Comment, set `counterCache` to true or the name of the field to increment and decrement.
 
 ```php
   class Profile extends ApplicationModel
@@ -115,8 +124,8 @@ You can also pass an options array with any of the following keys.
       $this->belongsTo('SuperUser',[
           'className' => 'User',
           'foreignKey' => 'user_id',
-          'conditions' => ['super_users.email !='=> null],
-          'fields' => ['super_users.id','super_users.name'],
+          'conditions' => ['super_users.email !=' => null],
+          'fields' => ['id','name'],
           'dependent' => true,
           'type' => 'INNER'
       ]);
@@ -146,8 +155,8 @@ class User extends ApplicationModel
 You can also pass an options array with any of the following keys.
 
 - `className` is the name of the class that you want to load.
-- `foreignKey` the foreign key in the other model. The default value would be the underscored name of the current model suffixed with '\_id'.
-- `conditions` an array of additional conditions to the join
+- `foreignKey` the foreign key in the other model. The default value would be the underscored name of the current model suffixed with `_id`.
+- `conditions` an array of additional conditions, always add a table alias prefix. e.g. `user_profiles.`
 - `fields` an array of fields to return from the join model, by default it returns all
 - `order` a string or array of how to order the result
 - `dependent` default is `false`, if set to true when delete is called with cascade it will related records.
@@ -164,8 +173,8 @@ class User extends ApplicationModel
             'className' => 'Email',
             'foreignKey' => 'user_id',
             'conditions' => ['sent_emails.sent'=> true],
-            'fields' => ['sent_emails.id','sent_emails.subject','sent_emails.body','sent_emails.created'],
-            'order' => ['sent_emails.created ASC'],
+            'fields' => ['id','subject','body','created'],
+            'order' => ['created ASC'],
             'dependent' => true
             ]);
     }
@@ -203,8 +212,8 @@ You can also pass an options array with any of the following keys. If you are fo
 - `className` is the name of the class that you want to load.
 - `joinTable` the name of the table used by this relationship
 - `with` the name of the model which uses the join table
-- `foreignKey` - the foreign key in the current model. The default value would be the underscored name of the other model suffixed with '\_id'.
-- `associationForeignKey` the foreign key in the other model. The default value would be the underscored name of the other model suffixed with '\_id'.
+- `foreignKey` - the foreign key in the current model. The default value would be the underscored name of the other model suffixed with `_id`.
+- `associationForeignKey` the foreign key in the other model. The default value would be the underscored name of the other model suffixed with `_id`.
 - `conditions` an array of additional conditions to the join
 - `fields` an array of fields to return from the join model, by default it returns all
 - `order` a string or array of how to order the result
@@ -212,8 +221,8 @@ You can also pass an options array with any of the following keys. If you are fo
 - `limit` default is `null`, set a value to limit how many rows to return
 - `offset` if you are using limit then set from where to start fetching
 - `mode` default mode is `replace`.
-    - `replace`: In replace, when adding records, all other relationships are deleted first. So it assumes one save contains all the joins. Typically the table will just have two fields, and a composite primary key.
-    - `append`: this should be set to append, if you will store other data in the join table, as it wont delete relationships which it is adding back. The table should have an id column and it should be set as the primary key.
+  - `replace`: In replace, when adding records, all other relationships are deleted first. So it assumes one save contains all the joins. Typically the table will just have two fields, and a composite primary key.
+  - `append`: this should be set to append, if you will store other data in the join table, as it wont delete relationships which it is adding back. The table should have an id column and it should be set as the primary key.
 
 ```php
   class User extends ApplicationModel
@@ -222,15 +231,15 @@ You can also pass an options array with any of the following keys. If you are fo
     {
       parent::initialize($config);
       $this->hasAndBelongsToMany('Tag',[
-      'className' => 'Tag',
-      'joinTable' => 'users_tags',
-      'with' => 'UsersTags'
-      'foreignKey' => 'user_id',
-      'associationForeignKey' => 'tag_id',
-      'fields' => ['tags.title','tags.created'],
-      'order' => ['tags.created ASC'],
-      'mode' => 'append'
-      'limit' => 50
+        'className' => 'Tag',
+        'joinTable' => 'users_tags',
+        'with' => 'UsersTags'
+        'foreignKey' => 'user_id',
+        'associationForeignKey' => 'tag_id',
+        'fields' => ['title','created'],
+        'order' => ['created ASC'],
+        'mode' => 'append'
+        'limit' => 50
       ]);
     }
   }

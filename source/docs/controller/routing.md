@@ -38,19 +38,19 @@ Router::add('/:controller/:action/*');
 For example if you only wanted to route for the posts controller.
 
 ```php
-Router::add('/posts/:action/*',['controller'=>'Posts']);
+Router::add('/posts/:action/*',['controller' => 'Posts']);
 ```
 
 You can use the same to show a different controller in the url.
 
 ```php
-Router::add('/posts/:action/*',['controller'=>'BlogPosts']);
+Router::add('/posts/:action/*', ['controller' => 'BlogPosts']);
 ```
 
 When you create and use plugins you will need to setup a route for this to work, again this quite straight forward. Lets say you created a demo plugin, this is how you would setup the route.
 
 ```php
-Router::add('/demo/:controller/:action/*', ['plugin'=>'Demo']);
+Router::add('/demo/:controller/:action/*', ['plugin' => 'Demo']);
 ```
 
 ## Request types
@@ -58,5 +58,49 @@ Router::add('/demo/:controller/:action/*', ['plugin'=>'Demo']);
 You can set specific request types in the route as well.
 
 ```php
-Router::add('/api/:controller/:action/*',['type'=>'json']);
+Router::add('/api/:controller/:action/*', ['type' => 'json']);
+```
+
+## Prefixes
+
+Sometimes you might need an administration section where privileged users can make changes to data or have access to certain features.
+
+Lets assume you wanted to create an `admin` prefix.
+
+Add the following route to top of `config/routes.php`
+
+```php
+Router::add('/admin/:controller/:action/*', ['prefix' => 'Admin']);
+```
+
+Create your `Controller` in `app/Http/Controller/Admin` folder.
+
+```php
+namespace App\Http\Controller\Admin;
+
+use App\Http\Controller\ApplicationController;
+
+class UsersController extends ApplicationController
+{
+    public function edit()
+    {
+
+    }
+}
+```
+
+Now create the view folder `app\Http\View\Admin` for this prefix, and create a sub folder `Users` for this `Controller`.
+
+So the `View` file for this new controller would be `app\Http\View\Admin\Users\edit.ctp`.
+
+Any links that you create using the `HtmlHelper` or if you use the `Controller::redirect` function it will automatically add the the `Admin` prefix. Sometimes you might want to link or redirect to somewhere outside the prefix, in this case, set `prefix` to `false`.
+
+For example
+
+```php
+$this->Html->link('somewhere',[
+    'controller' => 'Foos',
+    'action' => 'dosomething',
+    'prefix' => false // set to false
+    ]);
 ```

@@ -23,8 +23,7 @@ After upgrading your app, you will want to make sure that there are no deprecati
 
 ## Updating
 
-Due to the various changes made during in version 2 to base application configuration, it is best to create
-a new project and then move your code to this project.
+Due to the various changes made during in version 2 to base application configuration, it is best to create a new project and then move your code to this project.
 
 ```bash
 $ composer create-project originphp/app app-v3

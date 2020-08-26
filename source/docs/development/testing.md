@@ -391,6 +391,14 @@ To send a request as a PATCH request
 $this->patch('/bookmarks/index',['title'=>'bookmark name']);
 ```
 
+### Debugging Methods
+
+When your test is failing, it is helpful to find out what is the underlying problem, you can temporarily disable the error handler.
+
+```php
+$this->disableErrorHandler();
+```
+
 ### Assertion Methods
 
 The first thing to check is the response code

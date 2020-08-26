@@ -57,6 +57,24 @@ If a text version of the HTML mailer is not found and you are sending the email 
 
 > It is considered a best practice to send both the HTML and Text version, and it will improve deliverability.
 
+## Attachments
+
+To add an attachment
+
+```php
+protected function execute(Entity $user, string $invoiceFile) : void
+{
+    $this->user = $user;
+
+    $this->attachment($invoiceFile,'invoice.pdf');
+
+    $this->mail([
+        'to' => $user->email,
+        'subject' => 'email subject goes here',
+    ]);
+}
+```
+
 ### Sending Defaults
 
 The code generation command will create Mailers which extend the `ApplicationMailer` class, there you can set your default settings for your Mailers.

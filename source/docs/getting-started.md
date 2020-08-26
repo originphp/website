@@ -75,7 +75,7 @@ If you want to work with PostgreSQL then see the [dockerized development environ
 When you create a new project with Composer it will run the `App\Console\InstallCommand`, which will create a copy of `config/.env.default` and save as `config/.env` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment then you will need to adjust the database settings.
 
 
-You can find the database settings in `config/.env`, it works out of the box when using docker.
+You can find the database settings in `config/.env`, to use with Docker change `localhost` to `db`
 
 ```php
 DB_HOST=localhost  # db for docker or localhost

@@ -10,7 +10,9 @@ The folder utility helps you work with folders on your file system.
 
 ## Installation
 
-To install this package
+> Projects created after 15th August will have these installed by default.
+
+To install this package use Composer. 
 
 ```linux
 $ composer require originphp/filesystem

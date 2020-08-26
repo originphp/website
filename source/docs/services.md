@@ -45,6 +45,9 @@ use Origin\Log\Log;
 use Origin\Service\Result;
 use App\Job\SendWelcomeEmail;
 
+/**
+ * @method Result dispatch(array $params)
+ */
 class CreateNewUserService extends ApplicationService {
 
     protected $User = null;

@@ -84,8 +84,7 @@ class ContactManagerApplicationModel extends ApplicationModel
 
 ## Loading models
 
-From within the controller you use the loadModel method with plugin syntax. The loadModel both returns the model
-and sets it up as property.
+You use the `loadModel` method with plugin syntax. The `loadModel` method both returns the `Model` and sets it up as property.
 
 ```php
 $this->loadModel('ContactManger.Contact');
