@@ -435,24 +435,22 @@ To check response contents
 ```php
 
 $this->assertResponseEquals('{ "name":"James", "email":"james@originphp.com"}');
-
 $this->assertResponseNotEquals('{ "error":"something went wrong"}');
 
 $this->assertResponseContains('<h1>Some Title</h1>');
-
 $this->assertResponseNotContains('please login');
 
-$this->assertResponseEmpty();
+$this->assertResponseRegExp('/foo/');
+$this->assertResponseNotRegExp('/foo/');
 
+$this->assertResponseEmpty();
 $this->assertResponseNotEmpty();
 
 // Check there was no redirect
 $this->assertNoRedirect();
-
 $this->assertRedirect(['controller'=>'users','action'=>'login']);
 
 $this->assertRedirectContains('/users/view');
-
 $this->assertRedirectNotContains('/users/login');
 
 ```
@@ -507,7 +505,7 @@ Write data to session for the next request, one example is to test applications 
 Here we we set the minimum data required to be considered logged in
 
 ```php
-$this->session(['Auth.User.id' =>1000]);
+$this->session(['Auth.User.id' => 1000]);
 ```
 
 However, it best to stub the entire user record, for example
