@@ -38,7 +38,7 @@ Router::add('/:controller/:action/*');
 For example if you only wanted to route for the posts controller.
 
 ```php
-Router::add('/posts/:action/*',['controller' => 'Posts']);
+Router::add('/posts/:action/*', ['controller' => 'Posts']);
 ```
 
 You can use the same to show a different controller in the url.
@@ -55,10 +55,27 @@ Router::add('/demo/:controller/:action/*', ['plugin' => 'Demo']);
 
 ## Request types
 
-You can set specific request types in the route as well.
+You can set routes to work only on specific request types
 
 ```php
-Router::add('/api/:controller/:action/*', ['type' => 'json']);
+Router::add('/api/:controller/:action/*', ['type' => 'application/json']);
+```
+
+## Request methods
+
+You can set routes to work only on specific methods
+
+```php
+Router::add('/contacts/update', ['method' => 'post']);
+```
+
+
+## Extensions
+
+To use file extension based routing e.g. `https://localhost/posts/view/1000.html`
+
+```php
+Router::add('/posts/:action/*', ['controller' => 'Posts', 'ext' => 'html']);
 ```
 
 ## Prefixes
@@ -70,7 +87,7 @@ Lets assume you wanted to create an `admin` prefix.
 Add the following route to top of `config/routes.php`
 
 ```php
-Router::add('/admin/:controller/:action/*', ['prefix' => 'Admin']);
+Router::add('/admin/:controller/:action/*', ['prefix' => 'admin']);
 ```
 
 Create your `Controller` in `app/Http/Controller/Admin` folder.

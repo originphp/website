@@ -170,13 +170,13 @@ class User extends ApplicationModel
     {
         parent::initialize($config);
         $this->hasMany('SentEmail',[
-            'className' => 'Email',
-            'foreignKey' => 'user_id',
-            'conditions' => ['sent_emails.sent'=> true],
-            'fields' => ['id','subject','body','created'],
-            'order' => ['created ASC'],
-            'dependent' => true
-            ]);
+          'className' => 'Email',
+          'foreignKey' => 'user_id',
+          'conditions' => ['sent_emails.sent' => true],
+          'fields' => ['id','subject','body','created'],
+          'order' => ['created ASC'],
+          'dependent' => true
+        ]);
     }
 }
 ```

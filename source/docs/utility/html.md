@@ -45,7 +45,7 @@ $html = Html::fromText($text,['tag'=>'div']);
 
 ## To Text
 
-To convert HTML to formatted text
+You can also convert a HTML string to formatted text
 
 ```php
 $text = Html::toText($html);
@@ -139,8 +139,8 @@ Benefits of using Google:
 
 Important links:
 
-- [Google's Wikipedia Page](https://en.wikipedia.org/wiki/Google)
-- [Alphabet](https://abc.xyz/)
+- Google's Wikipedia Page [https://en.wikipedia.org/wiki/Google]
+- Alphabet [https://abc.xyz/]
 
 Financial Results
 -----------------
@@ -180,6 +180,7 @@ To create text version without formatting:
 ```php
 $text = Html::toText($html,['format'=>false]);
 ```
+
 The main difference is headings, tables, code etc are not formatted. The HTML is cleaned up, line breaks are added, and lists are converted. If a list has a sublist then indentation will be added.
 
 ## Minify
@@ -190,10 +191,17 @@ Minify cleans up the spacing, removes comments and thus minifies a HTML string.
 $minified = Html::minify($html);
 ```
 
+The following options are supported
+
+- collapseWhitespace: default:true. Collapse whitespace in the text nodes
+- conservativeCollapse: default:false. Always collapse whitespace to at least 1 space
+- collapseInlineTagWhitespace: default:false. Don't leave any spaces between inline elements.
+- minifyJs: default:false minifies inline Javascript (beta)
+- minifyCss: default:false minifies inline CSS (beta)
 
 ## Sanitize
 
-Sanitize enables to only allow certain tags and attributes in a Html string.
+Sanitize enables to only allow certain tags and attributes in a HTML string.
 
 ```php
 $html = Html::sanitize($html,[
@@ -221,5 +229,5 @@ $html = Html::stripTags($html,['script','iframe','img']);
 It is important when displaying user inputted HTML that it is escaped properly for security reasons, see [Cross-site scripting](https://www.google.com/about/appsecurity/learning/xss/) for more information.
 
 ```php
-echo Html::escape($html);
+$escaped = Html::escape($html);
 ```

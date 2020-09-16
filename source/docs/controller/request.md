@@ -69,8 +69,15 @@ $host = $this->request->host();
 You can also check if the request is AJAX or using SSL
 
 ```php
-$result = $this->request->ssl();
-$result = $this->request->ajax();
+$result = $this->request->isSsl();
+$result = $this->request->isAjax();
+```
+
+You can also check if the user is request a response in JSON or XML, this checks if an extension is supplied e.g. `/posts/1000.json` or the first accept header matches this.
+
+```php
+$result = $this->request->isJson();
+$result = $this->request->isXml();
 ```
 
 ## Request Headers
@@ -106,19 +113,6 @@ public function view($id = null)
 ```
 
 There is also a `acceptLanguage` which will return a list of languages that the request can accept.
-
-## Request Type
-
-The default request type is html, however if the accept header asks for json or xml or a extension of the same was provided, then the default format will be changed accordingly.
-
-You can get or set
-
-```php
-$value = $this->request->type();
-$this->request->type('xml');
-```
-
-> The request type does not change headers or server variables. The request type is used for rendering views and errors.
 
 ## Reading values from cookies in the request
 

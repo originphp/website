@@ -403,7 +403,7 @@ To create an entity with associated data simply pass an array to the new method 
 If you don't want to save associated data, then you can disable this by setting associated to false. 
 
 ```php
-$article = $this->Article->new($data,[
+$article = $this->Article->save($article,[
     'associated' => false
 ]);
 ```
@@ -423,7 +423,10 @@ define all the associations that you want the data to be saved for.
 
 ```php
 $article = $this->Article->new($data,[
-    'associated' => ['Author', 'AuthorAddress']
+    'associated' => [
+        'Author',
+        'AuthorAddress'
+    ]
 ]);
 ```
 

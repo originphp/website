@@ -180,6 +180,39 @@ Add the default queue and the mailers queue to `crontab`
 */1 * * * * cd /var/www/app.example.com && bin/console queue:worker mailers
 ```
 
+## Configure Apache to Cache Static Assets (CSS, JS etc)
+
+Setup Apache to cache static assets
+
+Enable the expires module
+
+```bash
+sudo a2enmod expires
+```
+
+Open your virtual host configuration file
+
+```bash
+$ nano /etc/apache2/sites-available/app.example.com.conf
+```
+
+Then add the following to your virtual host configuration 
+
+```apache
+<IfModule mod_expires.c>
+	<FilesMatch "\.(jpe?g|png|gif|js|css)$">
+		ExpiresActive On
+		ExpiresDefault "modified plus 4 weeks"
+    </FilesMatch>
+</IfModule>
+```
+
+Next restart Apache
+
+```bash
+$ sudo service apache2 restart
+```
+
 ## System Administration Fundamentals
 
 At some point you will probably want to compress, uncompress, backup and restore and move files 

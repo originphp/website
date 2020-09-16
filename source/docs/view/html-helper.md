@@ -14,7 +14,7 @@ To create a generate a link for  `/articles/view/1234` you can pass an array. Yo
 if the link is to the same controller.
 
 ```php
-echo $this->Html->link('click me',['controller'=>'Articles','action'=>'view',1234]);
+echo $this->Html->link('click me', ['controller' => 'Articles','action' => 'view',1234]);
 ```
 
 When using array you can also pass the following additional keys.
@@ -25,7 +25,14 @@ When using array you can also pass the following additional keys.
 All keys that are an integer will be passed as an argument. So to get `/articles/view/1234/abc`, use the following array.
 
 ```php
-echo $this->Html->link('click me',['controller'=>'Articles','action'=>'view',1234,'abc']);
+echo $this->Html->link('click me',['controller' => 'Articles','action' => 'view',1234,'abc']);
+```
+
+To work with an extension which is added to the url e.g. `https://locallost/articles/view/1234.json`, remember
+to make sure in the Route for this you add the `ext` key.
+
+```php
+echo $this->Html->link('view', ['controller' => 'Articles','action' => 'view',1234 ,'ext' => 'json']);
 ```
 
 You can also just pass a string
@@ -115,5 +122,5 @@ To wrap content in a DIV tag, and you can pass an array with optional attributes
 
 ```php
 echo $this->Html->div($content);
-echo $this->Html->div($content,['class'=>'highlight']);
+echo $this->Html->div($content,['class' => 'highlight']);
 ```
