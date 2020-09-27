@@ -29,6 +29,7 @@ Since `Concerns` are  `traits`, you can add to any `Controller` like this
 
 ```php
 use App\Http\Controller\Concern\UserLimit;
+
 class ArticlesController extends ApplicationController
 {
   use UserLimit;
@@ -117,7 +118,7 @@ trait UserLimit
     {
           throw new ForbiddenException('You have reached your monthly limit');
     }
-    
+
     protected function updateCount() : void
     {
         if($this->Auth->isLoggedIn()){
@@ -147,4 +148,3 @@ class ArticlesController extends ApplicationController
   use UserLimit;
 }
 ```
-

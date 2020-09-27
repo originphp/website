@@ -41,13 +41,12 @@ $this->response->type('application/vnd.ms-powerpoint');
 
 ## File Downloads
 
-Sometimes you will need to send a file which is different from rendering a page. You can also force it to download the file
-by setting `download` to true. The available options are `name`,`type` for content type and `download`. 
+Sometimes you will need to send a file which is different from rendering a page. You can also force it to download the file by setting `download` to true. The available options are `name`,`type` for content type and `download`. 
 
 ```php
 $this->response->file('/tmp/transactions.pdf');
-$this->response->file('/tmp/originphp.tmp',['name'=>'transactions.pdf']);
-$this->response->file('/tmp/transactions.pdf',['download'=>true]);
+$this->response->file('/tmp/originphp.tmp', ['name'=>'transactions.pdf']);
+$this->response->file('/tmp/transactions.pdf', ['download'=>true]);
 ```
 
 ## Cookie

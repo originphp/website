@@ -104,13 +104,13 @@ The configuration for Cache can be found in `config/cache.php`.
 
 ```php
 Cache::config('default', [
-    'engine' => 'File',
-    'file' => LOGS . '/application.log',
-    'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
-    'prefix' => 'cache_'
-    'serialize' => true // set to false if you going to cache large strings such as output which dont need serialization
+     'engine' => 'File',
+     'file' => LOGS . '/application.log',
+     'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
+     'prefix' => 'cache_'
+     'serialize' => true // set to false if you going to cache large strings such as output which dont need serialization
      'mode' => 0664
-     ]);
+]);
 ```
 
 ### Apcu Engine
@@ -120,7 +120,7 @@ Cache::config('default', [
     'engine' => 'Apcu',
     'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
     'prefix' => 'cache_'
-     ]);
+]);
 ```
 
 ### Memcached Engine
@@ -129,26 +129,26 @@ This is a simple configuration for using Memcached.
 
 ```php
 Cache::config('default', [
-        'engine' => 'Memcached',
-        'host' => '127.0.0.1',
-        'port' => 11211,
-        'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
-        'prefix' => 'cache_'
-     ]);
+     'engine' => 'Memcached',
+     'host' => '127.0.0.1',
+     'port' => 11211,
+     'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
+     'prefix' => 'cache_'
+]);
 ```
 
 If your Memcached server is configured with username and password then
 
 ```php
 Cache::config('default', [
-        'engine' => 'Memcached',
-        'host' => '127.0.0.1',
-        'port' => 11211,
-        'username' => 'james',
-        'password' => 'secret',
-        'duration' => '+60 minutes', // 3600,
-        'prefix' => 'cache_'
-     ]);
+     'engine' => 'Memcached',
+     'host' => '127.0.0.1',
+     'port' => 11211,
+     'username' => 'james',
+     'password' => 'secret',
+     'duration' => '+60 minutes', // 3600,
+     'prefix' => 'cache_'
+]);
 ```
 
 If you are going to use socket then instead of setting host and port, then set the `path` key with the location
@@ -158,7 +158,7 @@ of the socket.
 Cache::config('default', [
      'engine' => 'Memcached',
      'path' => '/var/sockets/memcached'
-     ]);
+]);
 ```
 
 You can also make connections persistent by setting the `persistent` key to true, or a string which will be the persistent id.
@@ -171,49 +171,49 @@ This is a simple configuration for using Redis.
 
 ```php
 Cache::config('default', [
-        'engine' => 'Redis',
-        'host' => '127.0.0.1',
-        'port' => 6379,
-        'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
-        'timeout' => 0,
-        'prefix' => 'cache_'
-     ]);
+     'engine' => 'Redis',
+     'host' => '127.0.0.1',
+     'port' => 6379,
+     'duration' => '+60 minutes', // string or number of seconds e.g. 3600,
+     'timeout' => 0,
+     'prefix' => 'cache_'
+]);
 ```
 
 If your Redis server is configured with a password then
 
 ```php
 Cache::config('default', [
-        'engine' => 'Redis',
-        'host' => '127.0.0.1',
-        'port' =>  6379,
-        'password' => 'secret',
-        'duration' => 3600, // duration can also be string e.g. +60 minutes
-        'prefix' => 'cache_'
-     ]);
+     'engine' => 'Redis',
+     'host' => '127.0.0.1',
+     'port' =>  6379,
+     'password' => 'secret',
+     'duration' => 3600, // duration can also be string e.g. +60 minutes
+     'prefix' => 'cache_'
+]);
 ```
 
 If you are going to use socket then instead of setting host and port, then set the `path` key with the location of the socket.
 
 ```php
 Cache::config('default', [
-        'engine' => 'Redis',
-        'path' => '/var/sockets/redis',
-     ]);
+     'engine' => 'Redis',
+     'path' => '/var/sockets/redis',
+]);
 ```
 
 You can also make connections persistent by setting the `persistent` key to true, or a string which will be the persistent id.
 
 ```php
 Cache::config('default', [
-        'engine' => 'Redis',
-        'host' => '127.0.0.1',
-        'port' => 6379,
-        'persistent' => 'my-app',
-        'duration' => 3600, // duration can also be string e.g. +60 minutes
-        'timeout' => 0,
-        'prefix' => 'cache_'
-     ]);
+     'engine' => 'Redis',
+     'host' => '127.0.0.1',
+     'port' => 6379,
+     'persistent' => 'my-app',
+     'duration' => 3600, // duration can also be string e.g. +60 minutes
+     'timeout' => 0,
+     'prefix' => 'cache_'
+]);
 ```
 
 ### Custom Engine
@@ -239,38 +239,38 @@ class CustomEngine extends BaseEngine
 
 ## Installing Cache Engines
 
-The command line instructions have been tested with Ubuntu 18.x.
+The command line instructions have been tested with Ubuntu 20.4.
 
 ### Apcu
 
-Apcu is already install in the docker container, however if you need to install this manually.
+Apcu is already installed in the Docker container, however if you need to install this manually.
 
-```php
-sudo apt-get update
-sudo apt-get install php-apcu
-sudo echo 'apc.enable_cli=1' >>  /etc/php/7.2/cli/php.ini
+```bash
+$ sudo apt-get update
+$ sudo apt-get install php-apcu
+$ sudo echo 'apc.enable_cli=1' >>  /etc/php/7.4/cli/php.ini
 ```
 
 ### Memcached
 
-See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to setup `memcached` in your docker container.
+See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to setup `memcached` in your Docker container.
 
 **To install Memcached on a Ubuntu/Debain based server**
 
-```php
-sudo apt-get update
-sudo apt-get install memcached
-sudo apt-get install php-memcached
+```bash
+$ sudo apt-get update
+$ sudo apt-get install memcached
+$ sudo apt-get install php-memcached
 ```
 
 ### Redis
 
-See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to use `Redis` in your docker container.
+See [Dockerized Development Environment](/docs/development/dockerized-development-environment), on how to use `Redis` in your Docker container.
 
 **To install Redis on a Ubuntu/Debain based server**
 
-```php
-pecl install redis
-sudo echo 'extension=redis.so' >> /etc/php/7.2/apache2/php.ini
-sudo echo 'extension=redis.so' >> /etc/php/7.2/cli/php.ini
+```bash
+$ pecl install redis
+$ sudo echo 'extension=redis.so' >> /etc/php/7.4/apache2/php.ini
+$ sudo echo 'extension=redis.so' >> /etc/php/7.4/cli/php.ini
 ```

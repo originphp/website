@@ -6,7 +6,7 @@ section: content
 ---
 # Storage
 
-The Storage utility provides an easy way to access different types of storages from local disk,FTP, SFTP and Amazon S3 (coming soon). Its a unified approach for working with different storages.
+The Storage utility provides an easy way to access different types of storages from local disk, FTP, SFTP, ZIP and Amazon S3. Its a unified approach for working with different storages.
 
 The default configuration for Storage is the local storage engine,which stores data on the disc in the storage folder. You can configure different types of storages in the `config/storage.php` file.
 
@@ -56,6 +56,8 @@ Folders are deleted recursively automatically, when using delete.
 
 ### Listing Storage Contents
 
+> Version 2.0 released 26.09.20 returns different results for list, uses path instead of name. 
+
 To list the files on the storage
 
 ```php
@@ -66,16 +68,27 @@ $allFiles = Storage::list();
 Storage contents are listed recursively and it will provide you with an array of `FileObjects`. Each file has is an object which can be accessed as an array or an object
 
 ```php
-
 // Will look like this
-[
-    'name' => 'profiles/furion.pdf',
-    'timestamp' => 1572444094,
-    'size' => 1024
-];
+Origin\Storage\FileObject Object
+(
+    [name] => july.csv
+    [directory] => transactions
+    [path] => transactions/july.csv
+    [extension] => txt
+    [timestamp] => 1601121922
+    [size] => 32
+)
 
 echo $file->name;
 echo $file['name'];
+```
+
+When the `FileObject` is converted to a string it will become a path e.g. `transactions/july.csv`
+
+```php
+foreach(Storage::list('CSV') as $file){
+    $contents = Storage::read($file); // converted to string automatically
+}
 ```
 
 If you just want the files of particular folder, then it will list all files recursively under that folder.
@@ -101,8 +114,8 @@ Or you can pass an options array telling the Storage object which configuration 
 
 ```php
 $data = Storage::read('transactions.csv',[
-     'config'=>'sftp-backup'
-     ]);
+    'config'=>'sftp-backup'
+]);
 ```
 
 ## Storage Engines
@@ -113,7 +126,7 @@ in `config/.env` then use the `env` function to get, for example.
 in `config/.env` add
 
 ```
-username:foo
+USERNAME=user@example.com
 ```
 
 Then in the config file
@@ -280,7 +293,8 @@ You can access this also using your web browser at `http://127.0.0.1:9000`.
 
 ## Zip
 
-To use the ZIP storage engine, provide the filename with a full path.
+To use the ZIP storage engine, provide the filename with a full path, if you just want to work with ZIP
+files but not as a constant storage volume then see [origin/zip](/docs/utility/zip).
 
 ```php
 // config/storage.php

@@ -46,6 +46,7 @@ return [
             'Date Helper' => 'docs/view/date-helper',
             'Cookie Helper' => 'docs/view/cookie-helper',
             'Session Helper' => 'docs/view/session-helper',
+            'Bundle Helper'=> 'docs/view/bundle-helper',
             'Intl Helper' => '/docs/view/intl-helper'
         ],
     ],

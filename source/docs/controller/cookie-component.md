@@ -38,7 +38,7 @@ If you don't want the values of the cookies to be encrypted, then you can disabl
 $this->Cookie->write('my_app','some_value',[
     'expires' = >'+6 months',
     'encrypt' => false
-    ]);
+]);
 ```
 
 You can also delete all cookies using the `destroy` method.

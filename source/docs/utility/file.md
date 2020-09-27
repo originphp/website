@@ -38,7 +38,7 @@ Which will return this
 Array
 (
     [name] => insurance.csv
-    [path] => /var/www/config
+    [directory] => /var/www/config
     [extension] => csv
     [type] => text/plain
     [size] => 1878

@@ -339,6 +339,6 @@ See [Dockerized Development Environment](/docs/development/dockerized-developmen
 
 ```php
 pecl install redis
-sudo echo 'extension=redis.so' >> /etc/php/7.2/apache2/php.ini
-sudo echo 'extension=redis.so' >> /etc/php/7.2/cli/php.ini
+sudo echo 'extension=redis.so' >> /etc/php/7.4/apache2/php.ini
+sudo echo 'extension=redis.so' >> /etc/php/7.4/cli/php.ini
 ```

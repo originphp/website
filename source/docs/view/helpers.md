@@ -16,6 +16,7 @@ You can create helpers, which are like components, and can contain logic for cre
 - [Number Helper](/docs/view/number-helper)
 - [Cookie Helper](/docs/view/cookie-helper)
 - [Session Helper](/docs/view/session-helper)
+- [Bundler Helper](/docs/view/bundler-helper)]
 
 ## Creating Helpers
 

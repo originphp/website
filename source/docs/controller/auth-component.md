@@ -33,30 +33,29 @@ The default config for the `AuthComponent`.
 - *authError*: The message to be displayed to the user
 
 ```php
-     $config  = [
-            'authenticate' => ['Form','Http'], // Form and Http supported
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login',
-                'plugin' => null,
-            ],
-            'loginRedirect' => [
-                'controller' => 'Users',
-                'action' => 'index',
-                'plugin' => null,
-            ],
-            'logoutRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login',
-                'plugin' => null,
-            ],
-            'model' => 'User',
-            'fields' => ['username' => 'email', 'password' => 'password','api_token'=>'api_token'],
-            'scope' => [], // Extra conditions for db . e.g users.active=1;
-            'unauthorizedRedirect' => true, // If false no redirect just exception e.g cli stuff
-            'authError' => 'You are not authorized to access that location.',
-        ]
-
+$config  = [
+    'authenticate' => ['Form','Http'], // Form and Http supported
+    'loginAction' => [
+        'controller' => 'Users',
+        'action' => 'login',
+        'plugin' => null,
+    ],
+    'loginRedirect' => [
+        'controller' => 'Users',
+        'action' => 'index',
+        'plugin' => null,
+    ],
+    'logoutRedirect' => [
+        'controller' => 'Users',
+        'action' => 'login',
+        'plugin' => null,
+    ],
+    'model' => 'User',
+    'fields' => ['username' => 'email', 'password' => 'password','api_token'=>'api_token'],
+    'scope' => [], // Extra conditions for db . e.g users.active=1;
+    'unauthorizedRedirect' => true, // If false no redirect just exception e.g cli stuff
+    'authError' => 'You are not authorized to access that location.',
+]
 ```
 
 ## Authentication using Username and Password fields
@@ -82,13 +81,13 @@ When you need to access the logged in user info, you call the `user` method, if 
 of a field, then it will return an array of the User information.
 
 ```php
-    $user = $this->Auth->user();
+$user = $this->Auth->user();
 ```
 
 Alternatively, you get an individual value from the user array by passing a key.
 
 ```php
-    $email = $this->Auth->user('email');
+$email = $this->Auth->user('email');
 ```
 
 The the default password hasher for OriginPHP uses the php password_hash function, which is very secure. To hash a password using the default password hasher:
@@ -108,7 +107,7 @@ class User extends ApplicationModel
     {
         $this->beforeSave('hashPassword');
     }
-   
+
     protected function hashPassword(Entity $entity, ArrayObject $options) : bool
     {
         if ($entity->isDirty('password')) {
@@ -129,14 +128,14 @@ $this->Auth->allow(['reset_password','verify_email']);
 Sometimes you want to know if the User is logged in, to do this use the `isLoggedIn` method.
 
 ```php
-    if($this->Auth->isLoggedIn()){
-        // do something
-    }
+if($this->Auth->isLoggedIn()){
+    // do something
+}
 ```
 
 ## Authentication using API Token
 
-Add a column to your users table called api_token, you can call it something else but you will have to change the AuthComponent configuration for fields.
+Add a column to your users table called api_token, you can call it something else but you will have to change the `AuthComponent` configuration for fields.
 
 ### Configuration
 

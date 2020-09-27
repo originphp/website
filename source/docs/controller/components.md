@@ -48,15 +48,14 @@ After a component is created the component `initialize` method will be called, t
 To load a component in the controller, you call `loadComponent` from within the `initialize` method so the the callbacks can be executed.
 
 ```php
-  class WidgetsController extends ApplicationController
+class WidgetsController extends ApplicationController
+{
+  protected function initialize(array $config) : void
   {
-    protected function initialize(array $config) : void
-    {
-        parent::initialize($config);
-        $this->loadComponent('Math');
-    }
+      parent::initialize($config);
+      $this->loadComponent('Math');
   }
-
+}
 ```
 
 ## Using Components
@@ -64,14 +63,13 @@ To load a component in the controller, you call `loadComponent` from within the 
  To use a component, you call it from within your controller methods.
 
 ```php
-    class WidgetsController extends ApplicationController
-    {
-      public function doSomething() : int
-      {
-        return $this->Math->sum(1,2);
-      }
-    }
-
+class WidgetsController extends ApplicationController
+{
+  public function doSomething() : int
+  {
+    return $this->Math->sum(1,2);
+  }
+}
 ```
 
 If you want to use a component within a component then you call the `loadComponent` method, the component will then be lazy loaded when you next call it. When you load a component within a component, this component will not have callbacks executed unless the component is already loaded in a controller.
@@ -85,8 +83,6 @@ class MathComponent extends Component
     }
 }
 ```
-
-
 
 ## Callbacks
 

@@ -68,30 +68,43 @@ $result = Folder::exists('/path/somedirectory');
 
 ## List
 
+> As of version 2.0 of the Filesystem has been changed, path now includes the filename and directory has been added.
+
 To list all contents of a directory
 
 ```php
 $results = Folder::list('/path/somedirectory');
 ```
 
-This will return an array of arrays of files, like this
+This will return an array and a `FileObject` for each file.
 
 ```php
 [
-    [
+    Origin\Filesystem\FileObject Object
+    (
         'name' => 'foo.txt',
-        'path' => '/var/www/my_directory'
-        'size' => 1234,
+        'directory' => '/var/www/my_directory'
+        'path' => '/var/www/my_directory/foo.txt',
+        'extension' => 'txt',
         'timestamp' => 14324234,
+        'size' => 1234,
         'type' => 'file'
-    ]
+    )
 ]
+```
+
+When the `FileObject` is converted to a string it will become a path e.g. `/var/www/my_directory/foo.txt`.
+
+```php
+foreach(Folder::list('/data') as $file){
+    $contents = file_get_contents($file); // converted to string automatically
+}
 ```
 
 You can also get the listing recursively
 
 ```php
-$results = Folder::list('/path/somedirectory',['recursive'=>true]);
+$results = Folder::list('/path/somedirectory', ['recursive'=>true]);
 ```
 
 To include directories in the results

@@ -162,9 +162,18 @@ protected function initialize() : void
 
 This is lightweight but powerful application level IDS (Intrusion Detection System) to help you identify IP addresses that are trying to use SQL injection or XSS attacks on your web application. 
 
-It also provides an engine for you to extend the rules if you want too.
+In your `app/Http/Application.php`
 
-Create a `config/rules.php` with the following keys, if you use a rules file, then the default rules will be overwritten using the rules that you provide.
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('Ids',[
+        'level' => 3
+    ]);
+}
+```
+
+It also provides a rules engine for you to extend the rules if you want too. To use a different set or rules create a `config/rules.php` with the following keys. Note: if you use a rules file, then the default rules will be overwritten using the rules that you provide.
 
 ```php
 return [
@@ -179,17 +188,7 @@ return [
 
 It supports different levels, included are rules from levels 1-3. 3 being warnings that can catch anything, 1 should be almost certain and 2 in-between.
 
-In your `app/Http/Application.php`
 
-
-```php
-protected function initialize() : void
-{
-    $this->loadMiddleware('Ids',[
-        'level' => 3
-    ]);
-}
-```
 
 ## Profiler Middleware
 
@@ -245,6 +244,23 @@ protected function initialize() : void
 {
     $this->loadMiddleware('MaintenanceMode', [
         'html' => true
+    ]);
+}
+```
+
+### Minify Middleware
+
+Once your app is in production, you will probably want to minify the HTML, OriginPHP comes with the MinifyMiddleware which can handle this in the background for you.
+
+These are the default options, which you can change
+
+```php
+protected function initialize() : void
+{
+    $this->loadMiddleware('Minify', [
+        'conservativeCollapse' => true, // Ensures there is at least one space between tags
+        'minifyJs' => true, // Minifies inline Javascript
+        'minifyCss' => true // Minifies inline Styles
     ]);
 }
 ```

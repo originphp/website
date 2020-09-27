@@ -16,6 +16,8 @@ OriginPHP is a web application framework written in PHP that uses a number of we
 
 Download and install [Composer](https://getcomposer.org/doc/00-intro.md), then run the following command to create a new project
 
+> If you run into any issues with Composer make sure you have the most recent version installed.
+
 ```linux
 $ composer create-project originphp/app <folder>
 ```

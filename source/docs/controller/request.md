@@ -52,6 +52,7 @@ public function delete($id = null)
 ### Getting the IP address of the client
 
 To get the IP address
+
 ```php
 $ip = $this->request->ip();
 ```
