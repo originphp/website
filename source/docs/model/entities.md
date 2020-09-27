@@ -45,8 +45,8 @@ If you want to create multiple entities from form data it should be like this:
 
 ```php 
   $formData = [
-    ['name'=>'James'],
-    ['name'=>'John']
+    ['name' => 'James'],
+    ['name' => 'John']
   ];
   $entities = $this->User->newEntities($formData);
 ```
@@ -79,7 +79,7 @@ You can also set many properties at once
 ```php
 $article->set([
   'title' => 'Article Title',
-  'status'=>'draft'
+  'status' => 'draft'
   ]);
 ```
 

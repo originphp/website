@@ -197,7 +197,7 @@ If you look at the migration file `database/migrations/YYYYMMDDHHMMSSCreateArtic
 ```php
 class CreateArticleTableMigration extends Migration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->createTable('articles',[
             'title' => 'string',
@@ -267,7 +267,7 @@ public function new()
     if ($this->request->is('post')) {
         if ($this->Article->save($article)) {
             $this->Flash->success('Your article has saved');
-            $this->redirect(['action'=>'view',$article->id]);
+            $this->redirect(['action' => 'view',$article->id]);
         } else {
             $this->Flash->error('Error saving your article');
         }
@@ -291,13 +291,13 @@ If you want to see the article object, then you can use `debug($article)` or `pr
 public function new()
 {
     $article = $this->Article->new($this->request->data(),[
-            'fields'=> ['title','body']
+            'fields' => ['title','body']
         ]);;
 
     if ($this->request->is('post')) {
         if ($this->Article->save($article)) {
             $this->Flash->success('Your article has saved');
-            $this->redirect(['action'=>'view',$article->id]);
+            $this->redirect(['action' => 'view',$article->id]);
         } else {
             $this->Flash->error('Error saving your article');
         }
@@ -371,7 +371,7 @@ Open `app/Http/View/Welcome/index.ctp` and change the contents so it looks like 
 
 ```html
 <h1>Welcome</h1>
-<p><?= $this->Html->link('My Blog', ['controller'=>'Articles']) ?></p>
+<p><?= $this->Html->link('My Blog', ['controller' => 'Articles']) ?></p>
 ```
 
 Open `app/Http/View/Articles/index.ctp` and add a link for creating a new article.
@@ -404,7 +404,7 @@ Let's add some validation you will need to edit the article Model, which can be 
 ```php
 class Article extends ApplicationModel
 {
-    protected function initialize(array $config) : void 
+    protected function initialize(array $config): void 
     {
         parent::initialize($config); // Always call the parent.
         $this->validate('title', 'notBlank');
@@ -460,7 +460,7 @@ Open the new view `app/Http/View/Articles/new.ctp` and change it as follows
 <?= $this->Form->create($article) ?>
 <?= $this->Form->control('title') ?>
 <?= $this->Form->control('body') ?>
-<?= $this->Form->submit('Save',['class'=>'btn btn-primary']) ?>
+<?= $this->Form->submit('Save',['class' => 'btn btn-primary']) ?>
 <?= $this->Form->end() ?>
 ```
 
@@ -480,7 +480,7 @@ public function edit($id=null)
         $article = $this->Article->patch($article,$this->request->data());
         if ($this->Article->save($article)) {
             $this->Flash->success('Your article has saved');
-            $this->redirect(['action'=>'view',$article->id]);
+            $this->redirect(['action' => 'view',$article->id]);
         } else {
             $this->Flash->error('Error saving your article');
         }
@@ -497,7 +497,7 @@ Now create the view file `app/Http/View/Articles/edit.ctp`, using the new view, 
 <?= $this->Form->create($article) ?>
 <?= $this->Form->control('title') ?>
 <?= $this->Form->control('body') ?>
-<?= $this->Form->submit('Save',['class'=>'btn btn-primary']) ?>
+<?= $this->Form->submit('Save',['class' => 'btn btn-primary']) ?>
 <?= $this->Form->end() ?>
 ```
 
@@ -596,7 +596,7 @@ $ bin/console db:migrate
 Open the article model `app/Model/Article.php` and in the initialize method setup the association.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
     parent::initialize($config);
     $this->validate('title', 'notBlank');
@@ -607,7 +607,7 @@ protected function initialize(array $config) : void
 Open the comment `app/Model/Comment.php` and in the initialize method setup the association and add some basic validation.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
     parent::initialize($config);
     $this->validate('name', 'notBlank');
@@ -651,7 +651,7 @@ class CommentsController extends ApplicationController
             else{
                 $this->Flash->error('Your comment could not be added');
             }
-            return $this->redirect(['controller'=>'Articles','action'=>'view',$comment->article_id]);
+            return $this->redirect(['controller' => 'Articles','action' => 'view',$comment->article_id]);
         }
     }
 }
@@ -669,11 +669,11 @@ comments for this article.
 <h2>Comments</h2>
 <strong>Add Comment</strong>
 <?= $this->Form->create(null, [
-        'url'=>['controller'=>'Comments','action'=>'new']
+        'url' => ['controller' => 'Comments','action' => 'new']
         ]); ?>
 <?= $this->Form->control('name') ?>
 <?= $this->Form->control('body')  ?>
-<?= $this->Form->hidden('article_id', ['value'=>$article->id]) ?>
+<?= $this->Form->hidden('article_id', ['value' => $article->id]) ?>
 <?= $this->Form->submit('Save comment', ['btn btn-primary']) ?>
 <?= $this->Form->end() ?>
 

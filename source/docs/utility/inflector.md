@@ -57,8 +57,8 @@ Singular and plural rules can be both strings or regex expressions
 ```php
 use Origin\Inflector\Inflector;
 
-Inflector::rules('singular',['fezzes'=>'fez']);
-Inflector::rules('plural',['fez'=>'fezzes']);
+Inflector::rules('singular',['fezzes' => 'fez']);
+Inflector::rules('plural',['fez' => 'fezzes']);
 ```
 
 ## Changing Cases

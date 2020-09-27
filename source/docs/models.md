@@ -84,8 +84,8 @@ To the create the entity object you can do so like this:
 
 ```php
     $product = $this->Product->new([
-        'name'=>'X500',
-        'description'=>'The latest model, with awesome new features.',
+        'name' => 'X500',
+        'description' => 'The latest model, with awesome new features.',
         'catalog'= [
             'name' => 'X Series'
         ]
@@ -217,7 +217,7 @@ You can also whitelist fields (prevent mass assignment attacks) by telling new w
 
 ```php
   $article = $this->Article->new($data,[
-      'fields'=> ['title','description']
+      'fields' => ['title','description']
       );
 ```
 
@@ -237,10 +237,10 @@ $article = $this->Article->find('first',[
     'conditions' => ['id' => 1000]
     ]);
 
-$article = $this->Article->findBy(['id'=>1000]);
+$article = $this->Article->findBy(['id' => 1000]);
 
 // using the query interface
-$articles = $this->Article->where(['id'=>1000])->first();
+$articles = $this->Article->where(['id' => 1000])->first();
 
 ```
 
@@ -256,10 +256,10 @@ $articles = $this->Article->all([
     'conditions' => ['id !=' => 1000]
     ]);
 
-$articles = $this->Article->findAllBy(['id !='=>1000]);
+$articles = $this->Article->findAllBy(['id !=' => 1000]);
 
 // using the query interface
-$articles = $this->Article->where(['id !='=>1000])->all();
+$articles = $this->Article->where(['id !=' => 1000])->all();
 
 ```
 
@@ -278,23 +278,23 @@ To find the first the record use the first finder
 The all finder will return multiple records
 ```php
     $all = $this->Article->find('all',[
-        'conditions'=>[
-            'created <'=>date('Y-m-d H:i:s')
+        'conditions' => [
+            'created <' => date('Y-m-d H:i:s')
             ]
         ]);
 ```
-The list finder will return arrays like `['a','b','c']` or `['a'=>'b']` or `['c'=>['a'=>'b']]`
+The list finder will return arrays like `['a','b','c']` or `['a' => 'b']` or `['c' => ['a' => 'b']]`
 ```php
-    $list = $this->Article->find('list',['fields'=>['id','name']]);
+    $list = $this->Article->find('list',['fields' => ['id','name']]);
 ```
 
 The count finder will return an integer of records.
 
 ```php
     $count = $this->Article->find('count',[
-        'conditions'=>[
+        'conditions' => [
             'owner_id' => 1234,
-            'status'=> ['Published']
+            'status' => ['Published']
             ]
         );
 ```
@@ -333,7 +333,7 @@ You can also whitelist fields (prevent mass assignment attacks) by telling patch
 
 ```php
   $article = $this->Article->patch($article,$this->request->data(),[
-      'fields'=> ['title','description']
+      'fields' => ['title','description']
       );
 ```
 
@@ -343,7 +343,7 @@ You can also update in bulk but this wont trigger callbacks, the first array is 
 the fields you want to change and the second argument are the conditions.
 
 ```php
-    $this->Article->updateAll(['status'=>'Checked'],['status'=>'draft']);
+    $this->Article->updateAll(['status' => 'Checked'],['status' => 'draft']);
 ```
 
 ### Deleting records
@@ -361,19 +361,19 @@ By default dependent records are deleted and `hasAndBelongsToMany` are always de
 To disable deleting records and their children:
 
 ```php
-    $this->Article->delete($article,['cascade'=>false]);
+    $this->Article->delete($article,['cascade' => false]);
 ```
 
 To disable `beforeDelete` and `afterDelete` callbacks:
 
 ```php
-    $this->Article->delete($article,['callbacks'=>false]);
+    $this->Article->delete($article,['callbacks' => false]);
 ```
 
 Or you can delete in bulk but this wont trigger callbacks or delete related records.
 
 ```php
-    $this->Article->deleteAll(['rating'=>'rubbish','author !='=>'Jim']);
+    $this->Article->deleteAll(['rating' => 'rubbish','author !=' => 'Jim']);
 ```
 
 ## Saving Associated Data
@@ -434,10 +434,10 @@ You can also whitelist fields (prevent mass assignment attacks) by telling new o
 
 ```php
   $article = $this->Article->new($data,[
-      'fields'=> ['title'],
-      'associated'=>[
-          'Author'=>[
-              'fields'=>['name']
+      'fields' => ['title'],
+      'associated' => [
+          'Author' => [
+              'fields' => ['name']
               ]
             ]
         ]
@@ -507,7 +507,7 @@ Validating data is very important and can easily be setup. You use the `initiali
 ```php
 class Product extends ApplicationModel
 {
-    protected function initialize(array $config) : void
+    protected function initialize(array $config): void
     {
         parent::initialize($config); // important to remember to call parent!!
         

@@ -129,10 +129,10 @@ class Article extends ApplicationModel
 {
     use Elasticsearch;
     
-    protected function initialize(array $config) : void
+    protected function initialize(array $config): void
     {
         // Set the columns to index
-        $this->index('title',['type'=>'keyword','analyzer'=>'english']);
+        $this->index('title',['type' => 'keyword','analyzer' => 'english']);
         $this->index('body'); // this will dynamically map
 
         // To set index settings

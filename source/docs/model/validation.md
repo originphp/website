@@ -119,7 +119,7 @@ $this->validate('code', [
 ]);
 
 $this->validate('level', [
-  'rule' =>  ['in', ['silver','gold','platinum']]
+  'rule' => ['in', ['silver','gold','platinum']]
 ]);
 
 ```
@@ -150,7 +150,7 @@ Here is an example when creating a user model
 ```php
 class User extends ApplicationModel
 {
-  protected function initialize(array $config) : void
+  protected function initialize(array $config): void
   {
     parent::initialize($config);
 
@@ -280,7 +280,7 @@ You can create your own custom validation rules, simply create a function in you
 
 ```php
 // define the validation rule
-public function isString($value) : bool
+public function isString($value): bool
 {
   return is_string($value);
 }
@@ -290,7 +290,7 @@ Then call the validate function from `initialize` as you normally wood.
 
 ```php
 // enable the validation rule on the field
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->validate('name','isString');
 }
@@ -299,7 +299,7 @@ protected function initialize(array $config) : void
 You can also pass more arguments
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->validate('status',[
     'rule' => ['statusCheck','go']
@@ -307,7 +307,7 @@ protected function initialize(array $config) : void
 }
 
 
-public function statusCheck($value, $arg1) : bool
+public function statusCheck($value, $arg1): bool
 {
   return $value1 === $arg1;
 }

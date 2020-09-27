@@ -90,7 +90,7 @@ Or you can pass an options array telling the Cache object which configuration to
 
 ```php
 $value = Cache::read('My.key',[
-     'config'=>'long-duration'
+     'config' => 'long-duration'
      ]);
 ```
 
@@ -186,7 +186,7 @@ If your Redis server is configured with a password then
 Cache::config('default', [
      'engine' => 'Redis',
      'host' => '127.0.0.1',
-     'port' =>  6379,
+     'port' => 6379,
      'password' => 'secret',
      'duration' => 3600, // duration can also be string e.g. +60 minutes
      'prefix' => 'cache_'

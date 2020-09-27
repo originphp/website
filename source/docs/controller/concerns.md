@@ -49,7 +49,7 @@ namespace App\Http\Controller\Concern;
 
 trait MyConcern
 {
-    protected function initializeMyConcern() : void
+    protected function initializeMyConcern(): void
     {
     }
 }
@@ -60,7 +60,7 @@ trait MyConcern
 To be able to use `Controller` callbacks with your `Concern` you must register them, using the `Controller` methods `beforeAction`, `afterAction`, `beforeRedirect` or `beforeRender`.
 
 ```php
-protected function initializeMyConcern() : void
+protected function initializeMyConcern(): void
 {
     $this->beforeAction('checkRequest');
 }
@@ -107,26 +107,26 @@ trait UserLimit
      *
      * @return void
      */
-    protected function initializeUserLimit() : void
+    protected function initializeUserLimit(): void
     {
         $this->loadModel('User');
         $this->beforeAction('checkCount');
         $this->afterAction('updateCount');
     }
 
-    public function throwMonthlyLimitException() : void
+    public function throwMonthlyLimitException(): void
     {
           throw new ForbiddenException('You have reached your monthly limit');
     }
 
-    protected function updateCount() : void
+    protected function updateCount(): void
     {
         if($this->Auth->isLoggedIn()){
             $this->User->increment('pages_viewed',$this->Auth->user('id'));
         }
     }
 
-    protected function checkCount() : void
+    protected function checkCount(): void
     {
         if($this->Auth->isLoggedIn()){
             $user = $this->User->get($userId);

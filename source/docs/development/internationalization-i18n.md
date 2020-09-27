@@ -13,10 +13,10 @@ To localize your web application, call the initialize from your
 ```php
 class ApplicationController extends Controller
 {
-    protected function initialize() : void
+    protected function initialize(): void
     {
         parent::initialize();
-        I18n::initialize(['locale' => 'en_GB','language'=>'en','timezone'=>'Europe/London']);
+        I18n::initialize(['locale' => 'en_GB','language' => 'en','timezone' => 'Europe/London']);
     }
 }
 ```
@@ -66,7 +66,7 @@ echo __('Hello world'); // Hola Mundo
 To pass variables
 
 ```php
-echo __('Hello {name}',['name'=>'Jon Snow']); // Hola Jon Snow
+echo __('Hello {name}',['name' => 'Jon Snow']); // Hola Jon Snow
 ```
 
 Pluralization is an important issue when translating into different languages. In English there is singular and plural (e.g. 1 apple, 2 apples), and in other languages such as Arabic or Russian there are many more.
@@ -74,13 +74,13 @@ Pluralization is an important issue when translating into different languages. I
 To use singular and plurals, use the `|` between a string and use the key `count`.
 
 ```php
-echo __('There is one apple|There are {count} apples',['count'=>2]); // Hay 2 manzanas
+echo __('There is one apple|There are {count} apples',['count' => 2]); // Hay 2 manzanas
 ```
 
 If you need to use a different string when the count is 0. Then do so like this:
 
 ```php
-echo __('There are {count} apples|There is {count} apple|There are {count} apples',['count'=>1]); // Hay una manzana
+echo __('There are {count} apples|There is {count} apple|There are {count} apples',['count' => 1]); // Hay una manzana
 ```
 
 By default, if the string for a zero count is not available it will use the other ie. for many.

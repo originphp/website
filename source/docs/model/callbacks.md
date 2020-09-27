@@ -17,7 +17,7 @@ This is method is really a hook so you don't have to overide the `__construct`, 
 ```php
 class User extends ApplicationModel
 {
-    protected function initialize(array $config) : void
+    protected function initialize(array $config): void
     {
        
     }
@@ -35,12 +35,12 @@ To register a callback in the `initialize` method set the name of the method tha
 This is triggered before any find operation, the query options converted into an `ArrayObject` and then passed to the callback. Return `false` to halt the callbacks and find operation.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->beforeFind('doSomething');
 }
 
-protected function doSomething(ArrayObject $options) : bool
+protected function doSomething(ArrayObject $options): bool
 {
     return true;
 }
@@ -51,12 +51,12 @@ protected function doSomething(ArrayObject $options) : bool
 This is triggered after a find first or find all operation, regardless if the the find is a find first or find all, a `Origin\Model\Collection` will be returned.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterFind('modifyResults');
 }
 
-protected function modifyResults(Collection $results, ArrayObject $options) : void
+protected function modifyResults(Collection $results, ArrayObject $options): void
 {
   foreach($results as $article){
     ...
@@ -69,11 +69,11 @@ protected function modifyResults(Collection $results, ArrayObject $options) : vo
 This is triggered just before data is validated. Use this callback to modify data before validate. Return `false` to halt the callbacks and save operation.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->beforeValidate('parseResults');
 }
-protected function parseResults(Entity $entity, ArrayObject $options) : bool
+protected function parseResults(Entity $entity, ArrayObject $options): bool
 {
   ...
   return true;
@@ -83,10 +83,10 @@ protected function parseResults(Entity $entity, ArrayObject $options) : bool
 You can also configure when these are run
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->beforeValidate('parseResults',[
-    'on'=>['create','update']
+    'on' => ['create','update']
     ]);
 }
 ```
@@ -96,11 +96,11 @@ protected function initialize(array $config) : void
 This is triggered after the data has been validated, even if validation fails this callback is executed. You can get the validation errors from the entity by calling `errors` on the entity.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterValidate('logErrors');
 }
-protected function logErrors(Entity $entity, ArrayObject $options) : void
+protected function logErrors(Entity $entity, ArrayObject $options): void
 {
     if($entity->errors()){
       // do something
@@ -111,10 +111,10 @@ protected function logErrors(Entity $entity, ArrayObject $options) : void
 You can also configure when these are run
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterValidate('logErrors',[
-    'on'=>['create','update']
+    'on' => ['create','update']
     ]);
 }
 ```
@@ -124,11 +124,11 @@ protected function initialize(array $config) : void
 This is triggered before any save operation. The `options` object contains the options that were passed to the `save` method. Return `false` to halt the callbacks and save operation.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->beforeSave('slugEntity');
 }
-protected function slugEntity(Entity $entity, ArrayObject $options) : bool
+protected function slugEntity(Entity $entity, ArrayObject $options): bool
 {
   $entity->slug = Slugger::slug($entity->title);
   return true;
@@ -138,10 +138,10 @@ protected function slugEntity(Entity $entity, ArrayObject $options) : bool
 You can also configure when these are run
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->beforeSave('slugEntity',[
-    'on'=>['create','update']
+    'on' => ['create','update']
     ]);
 }
 ```
@@ -151,11 +151,11 @@ protected function initialize(array $config) : void
 This is triggered before a record is created in the database but after `beforeSave` is triggered. The `options` object contains the options that were passed to the `save` method. Return `false` to halt the callbacks and save operation.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->beforeCreate('prepareNewRecord');
 }
-protected function prepareNewRecord(Entity $entity, ArrayObject $options) : bool
+protected function prepareNewRecord(Entity $entity, ArrayObject $options): bool
 {
     return true;
 }
@@ -166,11 +166,11 @@ protected function prepareNewRecord(Entity $entity, ArrayObject $options) : bool
 This is triggered before an existing record is updated but after `beforeSave` is triggered. The `options` object contains the options that were passed to the `save` method. Return `false` to halt the callbacks and save operation.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->beforeUpdate('prepareForDb');
 }
-protected function prepareForDb(Entity $entity, ArrayObject $options) : bool
+protected function prepareForDb(Entity $entity, ArrayObject $options): bool
 {
     return true;
 }
@@ -181,11 +181,11 @@ protected function prepareForDb(Entity $entity, ArrayObject $options) : bool
 This is triggered after a record is created in the database but before `afterSave` is triggered. The `options` object contains the options that were passed to the `save` method.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterCreate('logNewRecord');
 }
-protected function logNewRecord(Entity $entity, ArrayObject $options) : void
+protected function logNewRecord(Entity $entity, ArrayObject $options): void
 {
 }
 ```
@@ -195,11 +195,11 @@ protected function logNewRecord(Entity $entity, ArrayObject $options) : void
 This is triggered after an existing record is updated but before `afteSave` is triggered. The `options` object contains the options that were passed to the `save` method.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterUpdate('doSometing');
 }
-protected function doSometing(Entity $entity, ArrayObject $options) : void
+protected function doSometing(Entity $entity, ArrayObject $options): void
 {
 }
 ```
@@ -209,11 +209,11 @@ protected function doSometing(Entity $entity, ArrayObject $options) : void
 This is triggered after a save operation. The `options` object contains the options that were passed to the `save` method.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterSave('doSometing');
 }
-protected function doSometing(Entity $entity, ArrayObject $options) : bool
+protected function doSometing(Entity $entity, ArrayObject $options): bool
 {
   if($entity->created()){
     ...
@@ -224,10 +224,10 @@ protected function doSometing(Entity $entity, ArrayObject $options) : bool
 You can also configure when these are run
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterSave('doSomething',[
-    'on'=>['create','update']
+    'on' => ['create','update']
     ]);
 }
 ```
@@ -237,11 +237,11 @@ protected function initialize(array $config) : void
 This is triggered just before a record is deleted. Use this callback to carry out tasks before a record is deleted. Return `false` to halt the callbacks and delete operation.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->beforeDelete('doSomething');
 }
-protected function doSomething(Entity $entity, ArrayObject $options) : bool
+protected function doSomething(Entity $entity, ArrayObject $options): bool
 {
   ...
   return true;
@@ -253,11 +253,11 @@ protected function doSomething(Entity $entity, ArrayObject $options) : bool
 This is triggered after a record is deleted.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterDelete('doSomething');
 }
-protected function doSomething(Entity $entity, ArrayObject $options) : void
+protected function doSomething(Entity $entity, ArrayObject $options): void
 {
     
 }
@@ -268,11 +268,11 @@ protected function doSomething(Entity $entity, ArrayObject $options) : void
 This is triggered after data from a transaction has been committed.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterCommit('runChecks');
 }
-protected function runChecks(Entity $entity, ArrayObject $options) : void
+protected function runChecks(Entity $entity, ArrayObject $options): void
 {
   if($entity->deleted()){
     // do something
@@ -283,10 +283,10 @@ protected function runChecks(Entity $entity, ArrayObject $options) : void
 You can also configure when these are run
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterCommit('doSomething',[
-    'on'=>['create','update','delete']
+    'on' => ['create','update','delete']
     ]);
 }
 ```
@@ -296,11 +296,11 @@ protected function initialize(array $config) : void
 This is triggered after data from a transaction has been committed.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterRollback('runBot');
 }
-protected function runBot(Entity $entity, ArrayObject $options) : void
+protected function runBot(Entity $entity, ArrayObject $options): void
 {
   ...
 }
@@ -309,10 +309,10 @@ protected function runBot(Entity $entity, ArrayObject $options) : void
 You can also configure when these are run
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->afterRollback('doSomething',[
-    'on'=>['create','update','delete']
+    'on' => ['create','update','delete']
     ]);
 }
 ```
@@ -322,14 +322,14 @@ protected function initialize(array $config) : void
 You can register a callback when an error is produced during a `create`, `update`  or `delete` operation.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
   $this->onError('errorHandler',[
-    'on'=>['create','update','delete']
+    'on' => ['create','update','delete']
     ]);
 }
 
-protected function errorHandler(\Exception $exception) : void
+protected function errorHandler(\Exception $exception): void
 {
 }
 ```

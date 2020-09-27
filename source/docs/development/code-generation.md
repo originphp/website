@@ -148,7 +148,7 @@ $ bin/console generate model User
 If you do not have the database then you also add the create table schema like this
 
 ```linux 
-$ bin/console generate model User name:string description:text age:integer active:boolean credits:decimal created:datetime
+$ bin/console generate model User name:string description:text age:integer active:boolean credits:decimal since:date created:datetime
 ```
 
 This will also create a migration file to create the table for you. Once you have done this run the `db:migrate` command to create the table.

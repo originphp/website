@@ -119,5 +119,5 @@ $this->Html->link('somewhere',[
     'controller' => 'Foos',
     'action' => 'dosomething',
     'prefix' => false // set to false
-    ]);
+]);
 ```

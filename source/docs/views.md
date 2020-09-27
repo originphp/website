@@ -19,7 +19,7 @@ class ArticlesController extends ApplicationController
     public function latest()
     {
         $articles = $this->Article->find('all',[
-            'order'=>'created DESC','limit' =>5
+            'order' => 'created DESC','limit' =>5
             ]);
         $this->set('articles',$articles);
     }
@@ -82,7 +82,7 @@ class ArticlesController extends ApplicationController
 {
     public function something_else()
     {
-        $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
+        $articles = $this->Article->find('all',['order' => 'created DESC','limit' =>5]);
         $this->set('articles',$articles);
         $this->render('latest');
     }
@@ -120,8 +120,8 @@ class ArticlesController extends ApplicationController
 {
     public function latest()
     {
-        $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
-        $this->render(['xml'=>$articles]);
+        $articles = $this->Article->find('all',['order' => 'created DESC','limit' =>5]);
+        $this->render(['xml' => $articles]);
     }
 }
 ```
@@ -138,8 +138,8 @@ class ArticlesController extends ApplicationController
 {
     public function latest()
     {
-        $articles = $this->Article->find('all',['order'=>'created DESC','limit' =>5]);
-        $this->render(['json'=>$articles]);
+        $articles = $this->Article->find('all',['order' => 'created DESC','limit' =>5]);
+        $this->render(['json' => $articles]);
     }
 }
 ```
@@ -149,7 +149,7 @@ class ArticlesController extends ApplicationController
 Sometimes you need to just render a text response, maybe for an ajax or web service request.
 
 ```php
-$this->render(['text'=>'OK']);
+$this->render(['text' => 'OK']);
 ```
 
 ### Rendering an external file
@@ -157,7 +157,7 @@ $this->render(['text'=>'OK']);
 If you need to load an external file you can pass the file option, this is different from a view, since it just loads the contents using `file_get_contents`.
 
 ```php
-$this->render(['file'=>'/var/www/tmp/prerenderedfile.html']);
+$this->render(['file' => '/var/www/tmp/prerenderedfile.html']);
 ```
 
 ### Setting Status Codes
@@ -171,12 +171,12 @@ class ArticlesController extends ApplicationController
 {
     public function view($id = null)
     {
-        $json = ['errors'=>['message' =>'Not Found']];
-        $this->render(['json'=>$json,'status'=>404]);
+        $json = ['errors' => ['message' =>'Not Found']];
+        $this->render(['json' => $json,'status' => 404]);
     }
     public function anotherWay()
     {
-         $this->render(['status'=>404]);
+         $this->render(['status' => 404]);
     }
     public function latest()
     {
@@ -218,7 +218,7 @@ Exceptions for each of the above status codes are available as well as few other
 Helpers allow you share code between views, similar to the controller components. To load helpers call the `loadHelper` method in the `initialize` method of your controller.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadHelper('TableMagic');
 }
@@ -255,7 +255,7 @@ Then in `View/Contacts/view.ctp` you can call this file
 You can also pass additional data
 
 ```php
-<?= $this->render('tabs/about_us',['data'=>$data]) ?>
+<?= $this->render('tabs/about_us',['data' => $data]) ?>
 ```
 
 To render a partial view in the same folder or subdirectory within that folder.
@@ -291,14 +291,14 @@ Create a file  `View/Shared/widget.ctp`
 Now anytime you want to use that partial view, you can also pass an array options where the data will be converted into variables with the names taken from the key value.
 
 ```php
- echo $this->renderShared('widget',['answer'=>2]);
+ echo $this->renderShared('widget',['answer' => 2]);
 ```
 
-> This is the same as calling `$this->render('/Shared/widget',['answer'=>2]);`
+> This is the same as calling `$this->render('/Shared/widget',['answer' => 2]);`
 
 To render a partial view from a Plugin
 
 ```php
- echo $this->renderShared('ContactManager.widget',['answer'=>2]);
+ echo $this->renderShared('ContactManager.widget',['answer' => 2]);
 ```
 

@@ -48,7 +48,7 @@ Then you will need to setup the routing (if you are going to use). In your plugi
 ```php
 <?php 
 use Origin\Http\Router;
-Router::add('/contact_manager/:controller/:action/*', ['plugin'=>'ContactManager']);
+Router::add('/contact_manager/:controller/:action/*', ['plugin' => 'ContactManager']);
 ```
 
 ## Create ApplicationController

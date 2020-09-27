@@ -29,13 +29,13 @@ $response = $http->get('https://api.example.com/posts');
 
 // To use query parameters. https://api.example.com/posts?api_token=1234-1234-1234-1234
 $response = $http->get('https://api.example.com/posts',[
-    'query' => ['api_token'=>'1234-1234-1234-1234']
+    'query' => ['api_token' => '1234-1234-1234-1234']
 ]);
 
 // An example with more options
 $response = $http->get('https://api.example.com/posts',[
     'headers' => ['Accept' => 'application/json'],
-    'cookies' => ['name'=>'value'],
+    'cookies' => ['name' => 'value'],
     'userAgent' => 'MyApp',
     'referer' => 'https://www.somewebsite.com/search'
 ]);
@@ -54,13 +54,13 @@ $response = $http->head('https://api.example.com/posts');
 
 // To use query parameters. https://api.example.com/posts?api_token=1234-1234-1234-1234
 $response = $http->head('https://api.example.com/posts',[
-    'query' => ['api_token'=>'1234-1234-1234-1234']
+    'query' => ['api_token' => '1234-1234-1234-1234']
 ]);
 
 // An example with more options
 $response = $http->head('https://api.example.com/posts',[
     'headers' => ['Accept' => 'application/json'],
-    'cookies' => ['name'=>'value'],
+    'cookies' => ['name' => 'value'],
     'userAgent' => 'MyApp',
     'referer' => 'https://www.somewebsite.com/search'
 ]);
@@ -101,7 +101,7 @@ $response = $http->post('https://api.example.com/posts',[
         'body' => 'Article body'
     ],
     'headers' => ['Accept' => 'application/json'],
-    'cookies' => ['name'=>'value'],
+    'cookies' => ['name' => 'value'],
     'userAgent' => 'MyApp',
     'referer' => 'https://www.somewebsite.com/search'
 ]);
@@ -175,7 +175,7 @@ $response = $http->delete('https://api.example.com/posts/1',[
 
 The available options when making requests are
 
-- query: appends vars to the query. e.g ['api_token'=>'1234-1234-1234-1234']
+- query: appends vars to the query. e.g ['api_token' => '1234-1234-1234-1234']
 - userAgent: the name of the user agent to use e.g. 'originPHP'
 - referer: default null. The url of the referer e.g. 'https://www.example.com/search'
 - redirect: default true. set to false to not follow redirects
@@ -184,10 +184,10 @@ The available options when making requests are
 - type: request and accept content type (json xml) e.g. 'json'
 - auth: authtentication details. An array with username, password, and type (basic|digest|nltm)
 - proxy: proxy server details. An array with proxy, username, password.
-- curl: an array of curl options either string or constant e.g [CURLOPT_SSL_VERIFYHOST=>0, 'ssl_verifypeer'=>0]
-- headers: an array of headers to set. e.g ['Accept'=>'application/json']
-- cookies: an array of cookies to set. e.g. ['name'=>'value']
-- fields: This option is for post/put/patch requests. Its an array of fields to be posted  e.g. ['title'=>'Article #1','description'=>'An article']
+- curl: an array of curl options either string or constant e.g [CURLOPT_SSL_VERIFYHOST=>0, 'ssl_verifypeer' => 0]
+- headers: an array of headers to set. e.g ['Accept' => 'application/json']
+- cookies: an array of cookies to set. e.g. ['name' => 'value']
+- fields: This option is for post/put/patch requests. Its an array of fields to be posted  e.g. ['title' => 'Article #1','description' => 'An article']
 
 ## Configuring the Http Client
 
@@ -339,7 +339,7 @@ To set a cookie
 ```php
 use Origin\HttpClient\Http;
 $response = $http->get('https://api.example.com/posts',[
-    'cookies' => ['name'=>'value']
+    'cookies' => ['name' => 'value']
 ]);
 ```
 
@@ -351,7 +351,7 @@ The available authentication types are `basic`, `digest`, `nltm` or `any`.
 ```php
 use Origin\HttpClient\Http;
 $response = $http->get('https://api.example.com/posts',[
-    'auth' => ['username'=>'foo','password'=>'secret','type'=>'digest']
+    'auth' => ['username' => 'foo','password' => 'secret','type' => 'digest']
 ]);
 ```
 
@@ -364,11 +364,11 @@ To send a HTTP request using a proxy server.
 use Origin\HttpClient\Http;
 // Without autnetication
 $response = $http->get('https://api.example.com/posts',[
-    'proxy' => ['proxy'=>'https://www.proxy.com:8080']
+    'proxy' => ['proxy' => 'https://www.proxy.com:8080']
 ]);
 
 // with autentication
 $response = $http->get('https://api.example.com/posts',[
-    'proxy' => ['proxy'=>'https://www.proxy.com:8080','username'=>'foo','password'=>'secret']
+    'proxy' => ['proxy' => 'https://www.proxy.com:8080','username' => 'foo','password' => 'secret']
 ]);
 ```

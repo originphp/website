@@ -114,7 +114,7 @@ Or you can pass an options array telling the Storage object which configuration 
 
 ```php
 $data = Storage::read('transactions.csv',[
-    'config'=>'sftp-backup'
+    'config' => 'sftp-backup'
 ]);
 ```
 

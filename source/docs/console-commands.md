@@ -37,7 +37,7 @@ class HelloCommand extends Command
     protected $name = 'hello';
     protected $description = 'A simple hello world command.';
 
-    protected function execute() : void
+    protected function execute(): void
     {
        $this->out('Hello world');
     }
@@ -86,7 +86,7 @@ By default when adding an option the datatype is considered a string e.g `--data
 To add an option to your command, add the code to the `initialize` method.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->addOption('datasource',[
         'description' => 'The datasource to use',
@@ -99,7 +99,7 @@ protected function initialize() : void
     ]);
 }
 
-protected function execute() : void
+protected function execute(): void
 {
     $datasource = $this->options('datasource');
     $fileType = $this->options('type');
@@ -127,7 +127,7 @@ When adding an option, you can pass an array with the following keys
 Arguments are different that options, since they are obtained by the order that they are provided.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->addArgument('database',[
         'description' => 'The name of the database',
@@ -139,7 +139,7 @@ protected function initialize() : void
     ]);
 }
 
-protected function execute() : void
+protected function execute(): void
 {
     $database = $this->arguments('database');
     $tables =  $this->arguments('tables');
@@ -168,13 +168,13 @@ For standard output use the out function.
 
 ```php
 $this->out('Some text');
-$this->out('Hello {name}',['name'=>'Jon']);
+$this->out('Hello {name}',['name' => 'Jon']);
 ```
 
 To colorize the messages depending upon type:
 
 ```php
-$this->success('User with {id} has been created',['id'=>$user->id]); // stdout
+$this->success('User with {id} has been created',['id' => $user->id]); // stdout
 $this->info('This is some information'); // stdout
 
 $this->warning('This some warning text'); // stderr
@@ -192,12 +192,12 @@ $this->debug('This additional text that might be helpful');
 Call `loadModel` from within your console command to load any `Model`, this works just like in `Controllers`.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadModel('User');
 }
 
-protected function execute() : void
+protected function execute(): void
 {
     $users = $this->User->find('list');
 }
@@ -209,7 +209,7 @@ If you need to run another command from within your command, use the same comman
 from the console and then pass an array of arguments
 
 ```php
-protected function execute() : void
+protected function execute(): void
 {
     $this->runCommand('database:backup',[
         '--datasource' => $datasource, # option with value
@@ -253,7 +253,7 @@ $this->exit();
 Sometimes you might want to display a different type of error message
 
 ```php
-$this->io->block('OMG Something has gone wrong',['background'=>'red','color'=>'white'])
+$this->io->block('OMG Something has gone wrong',['background' => 'red','color' => 'white'])
 $this->abort();
 ```
 
@@ -287,7 +287,7 @@ This is what a warning looks like when using the IO warning
 ### Asking Questions
 
 ```php
-protected function execute() : void
+protected function execute(): void
 {
     $name = $this->io->ask('What is your name?');
 }
@@ -298,7 +298,7 @@ protected function execute() : void
 You can ask multiple choice questions like this:
 
 ```php
-protected function execute() : void
+protected function execute(): void
 {
     $response = $this->io->askChoice('Are you sure',['yes','no'],'no'); // default no
     if($response === 'no'){
@@ -382,7 +382,7 @@ debug($styles);
 To create a custom style
 
 ```php
-$this->io->styles('fire',['background'=>'lightRed','color'=>'white','blink'=>true]);
+$this->io->styles('fire',['background' => 'lightRed','color' => 'white','blink' => true]);
 ```
 
 To use this style just wrap text in fire tags.
@@ -436,7 +436,7 @@ This will look something like this
 Want to disply text in a graphical block
 
 ```php
-$this->io->block('This is a funky block',['background'=>'yellow','color'=>'white']);
+$this->io->block('This is a funky block',['background' => 'yellow','color' => 'white']);
 ```
 
 ![Console Block](/assets/images/console-block.png)
@@ -446,7 +446,7 @@ $this->io->block('This is a funky block',['background'=>'yellow','color'=>'white
 To display an alert
 
 ```php
-  $this->io->alert('This is a alert box.',['background'=>'lightRed','color'=>'white']);
+  $this->io->alert('This is a alert box.',['background' => 'lightRed','color' => 'white']);
 ```
 
 ![Console Alert](/assets/images/console-alert.png)

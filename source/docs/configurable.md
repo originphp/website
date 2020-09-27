@@ -26,13 +26,13 @@ To set a value in the config:
 
 ```php
  $this->config('foo','bar');
- $this->config(['foo'=>'bar']);
+ $this->config(['foo' => 'bar']);
 ```
 
 To set multiple values (merges config)
 
 ```php
- $this->config(['foo'=>'bar']);
+ $this->config(['foo' => 'bar']);
 ```
 
 When passing an array to the config method on the `ConfigTrait`, it will only replace values, it will not replace all the config.

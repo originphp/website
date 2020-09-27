@@ -52,13 +52,13 @@ class CreateNewUserService extends ApplicationService {
 
     protected $User = null;
 
-    protected function initialize(User $user) : void
+    protected function initialize(User $user): void
     {
         $this->User = $user;
     }
 
     # Use any type or number of params and it should return Result object or nothing.
-    protected function execute(array $params) : ?Result
+    protected function execute(array $params): ?Result
     {
         $user = $this->User->create($params);
         if($this->User->save($user)){
@@ -66,7 +66,7 @@ class CreateNewUserService extends ApplicationService {
             mkdir(ROOT . DS . 'data' . DS . $user->id, 0700);
 
             Log::info('User created',[
-                'username'=>$user->username
+                'username' => $user->username
                 ]);
 
             $this->sendWelcomeEmail($user);
@@ -84,7 +84,7 @@ class CreateNewUserService extends ApplicationService {
         ]);
     }
 
-    private function sendWelcomeEmail(Entity $user) : void
+    private function sendWelcomeEmail(Entity $user): void
     {
         (new SendWelcomeEmailJob())->dispatch($user);
     }

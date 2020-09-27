@@ -13,9 +13,9 @@ To localize your web application, call the initialize from your
 ```php
 class ApplicationController extends Controller
 {
-    protected function initialize() : void
+    protected function initialize(): void
     {
-        I18n::initialize(['locale' => 'en_GB','language'=>'en','timezone'=>'Europe/London']);
+        I18n::initialize(['locale' => 'en_GB','language' => 'en','timezone' => 'Europe/London']);
     }
 }
 ```
@@ -26,13 +26,13 @@ Or if you want to set the number settings manually.
 ```php
 use Origin\Utility\Number;
 
-protected function initialize() : void
+protected function initialize(): void
 {
     Number::locale([
-        'currency'=>'USD', // default currency
-        'thousands'=>',',
-        'decimals'=>'.',
-        'places'=>2
+        'currency' => 'USD', // default currency
+        'thousands' => ',',
+        'decimals' => '.',
+        'places' => 2
         ]);
 }
 ```
@@ -45,7 +45,7 @@ unless you tell it otherwise.
 ```php
 $this->Number->format(123456789); // 123456789
 $this->Number->format(123456789.123456789); // 123,456,789.12
-$this->Number->format(123456789.123456789,['places'=>4]); //123,456,789.1235
+$this->Number->format(123456789.123456789,['places' => 4]); //123,456,789.1235
 ```
 
 Options for the number formatting are these, currency, decimal and percentage use the number formatter so you can also pass these options to those methods as well.
@@ -66,15 +66,15 @@ it will use your default currency.
 echo $this->Number->currency(1000000); // $1,000,000
 echo $this->Number->currency(1000000.00); // $1,000,000.00
 echo $this->Number->currency(1000000,'GBP'); //£1,000,000
-echo $this->Number->currency(1000,'USD',['places'=>0]);
+echo $this->Number->currency(1000,'USD',['places' => 0]);
 ```
 
 By default the number helper can work with USD, GBP, EUR, CAD, AUD,CHF AND JPY out of the box. But you can also add your own currencies.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
-    Number::addCurrency('CNY',['before'=>'¥','name'=>'Chinese Yuan']);
+    Number::addCurrency('CNY',['before' => '¥','name' => 'Chinese Yuan']);
 }
 ```
 
@@ -97,7 +97,7 @@ On top the number options, when formating percentages there is an additional opt
 
 ```php
 echo $this->Number->percent(50); // 50.00%
-echo $this->Number->percent(0.3333333333, 2, ['multiply'=>true]);// 33.33%
+echo $this->Number->percent(0.3333333333, 2, ['multiply' => true]);// 33.33%
 ```
 
 ## Formating Bytes (size)

@@ -34,7 +34,7 @@ use App\Mailer\ApplicationMailer;
 
 class SendWelcomeEmailMailer extends ApplicationMailer
 {
-    protected function execute(Entity $user) : void
+    protected function execute(Entity $user): void
     {
         $this->user = $user;
 
@@ -62,7 +62,7 @@ If a text version of the HTML mailer is not found and you are sending the email 
 To add an attachment
 
 ```php
-protected function execute(Entity $user, string $invoiceFile) : void
+protected function execute(Entity $user, string $invoiceFile): void
 {
     $this->user = $user;
 

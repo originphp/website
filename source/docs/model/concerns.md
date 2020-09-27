@@ -48,7 +48,7 @@ namespace App\Model\Concern;
 
 trait MyConcern
 {
-    protected function initializeMyConcern() : void
+    protected function initializeMyConcern(): void
     {
     }
 }
@@ -59,12 +59,12 @@ trait MyConcern
 To be able to use `Model` callbacks with your `Concern` you must register them, using the `Model` callback registration method such as `beforeFind`, `afterFind` etc.
 
 ```php
-protected function initializeMyConcern() : void
+protected function initializeMyConcern(): void
 {
   $this->afterFind('modifyResults');
 }
 
-protected function modifyResults(Collection $results, ArrayObject $options) : void
+protected function modifyResults(Collection $results, ArrayObject $options): void
 {
   foreach($results as $article){
     ...
@@ -132,7 +132,7 @@ trait Sluggable
      *
      * @return void
      */
-    protected function initializeSluggable() : void
+    protected function initializeSluggable(): void
     {
         $this->beforeSave('slugTitle');
     }
@@ -195,7 +195,7 @@ class ApplicationModel extends Model
 By default it will use your `default` cache configuration, if you want to change this
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
     parent::initialize($config);
     $this->cacheConfig('redis');

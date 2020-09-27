@@ -34,13 +34,13 @@ use Origin\Model\Entity;
 
 class UsersRepository extends Repository
 {
-    public function findListActiveUsers() : array
+    public function findListActiveUsers(): array
     {
         $conditions = ['active' => true];
-        return $this->User->find('list',['conditions'=>$conditions]);
+        return $this->User->find('list',['conditions' => $conditions]);
     }
 
-    public function save(Entity $user) : bool
+    public function save(Entity $user): bool
     {
         if(!$this->User->save($user)){
             return false;
@@ -66,7 +66,7 @@ When creating the Repository any arguments passed to the constructor will also b
 ```php
 class UsersRepository extends Repository
 {
-    protected initialize(SomeModel $model,array $config = []) : void
+    protected initialize(SomeModel $model,array $config = []): void
     {
         $this->SomeModel = $model;
         $this->config = $config;
@@ -84,7 +84,7 @@ use App\Model\Repository\UserRepository;
 
 class UsersController extends ApplicationController
 {
-    protected function initialize() : void
+    protected function initialize(): void
     {
         parent::initialize();
         $this->Users = new UsersRepository();

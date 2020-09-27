@@ -28,7 +28,7 @@ use Origin\Xml\Xml;
             '@category' => 'how tos', // to set attribute use @
             'id' => 12345,
             'title' => 'How to create an XML block',
-            'body' =>  Xml::cdata('A quick brown fox jumps of a lazy dog.'),
+            'body' => Xml::cdata('A quick brown fox jumps of a lazy dog.'),
             'author' => [
                 'name' => 'James'
                 ]

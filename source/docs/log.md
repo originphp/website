@@ -45,7 +45,7 @@ To group your log messages, set a channel name.
 
 ```php
 use Origin\Log\Log;
-Log::error('Something has gone wrong.',['channel'=>'invoices']);
+Log::error('Something has gone wrong.',['channel' => 'invoices']);
 ```
 
 This will create a log entry like this
@@ -58,7 +58,7 @@ This will create a log entry like this
 You can also use placeholders in the message.
 
 ```php
-Log::info('Email sent to {email}',['email'=>'donny@example.com']);
+Log::info('Email sent to {email}',['email' => 'donny@example.com']);
 ```
 
 ## Adding data to messages
@@ -66,7 +66,7 @@ Log::info('Email sent to {email}',['email'=>'donny@example.com']);
 After placeholders any have been replaced, any remaining data will be converted to a JSON string.
 
 ```php
-Log::info('User registered',['username'=>'pinkpotato']);
+Log::info('User registered',['username' => 'pinkpotato']);
 
 ```
 
@@ -261,7 +261,7 @@ class DatabaseEngine extends BaseEngine
      *
      * @var array
      */
-    protected function initialize(array $config) : void
+    protected function initialize(array $config): void
     {
 
     }
@@ -274,7 +274,7 @@ class DatabaseEngine extends BaseEngine
       * @param array $context  ['what'='string']
       * @return void
       */
-    public function log(string $level, string $message, array $context = []) : void
+    public function log(string $level, string $message, array $context = []): void
     {
         $message = $this->format($level, $message, $context);
         // do something

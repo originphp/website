@@ -32,13 +32,13 @@ $hashed = Security::hash('foo');
 To hash a string with a pepper (also incorrectly known as salt).
 
 ```php
-$hashed = Security::hash('foo',['pepper'=>'A random string']);
+$hashed = Security::hash('foo',['pepper' => 'A random string']);
 ```
 
 To change the hashing type
 
 ```php
-$hashed = Security::hash('foo',['type'=>'sha1']);
+$hashed = Security::hash('foo',['type' => 'sha1']);
 ```
 
 For a full list of supported algorithms
@@ -144,11 +144,11 @@ $uid = Security::uuid(); // 38c67382-d3ab-4430-a27e-0c719813c09f
 For a version 1 UUID, set MAC address to true, this will find the MAC address on Linux systems or generate a random one if it can not get this.
 
 ```php
-$uid = Security::uuid(['macAddress'=>true]); // ac337932-e4e5-11e9-928f-8bda39fe8887
+$uid = Security::uuid(['macAddress' => true]); // ac337932-e4e5-11e9-928f-8bda39fe8887
 ```
 
 You can also set the MAC address manually.
 
 ```php
-$uid = Security::uuid(['macAddress'=>'00:0a:95:9d:68:16']); // 769c6fa4-e4e5-11e9-b8d5-000a959d6816
+$uid = Security::uuid(['macAddress' => '00:0a:95:9d:68:16']); // 769c6fa4-e4e5-11e9-b8d5-000a959d6816
 ```

@@ -18,14 +18,14 @@ class Order extends Model
 {
     use PublisherTrait; # 1
     
-    protected function initialize(array $config) : void
+    protected function initialize(array $config): void
     {
         $this->afterCreate('newOrder'); // Register callback
         $this->subscribe('OrderNotifier'); #2
          
     }
 
-    public function newOrder(Entity $entity, ArrayObject $options) : void
+    public function newOrder(Entity $entity, ArrayObject $options): void
     {
          $this->publish('orderCreated',$entity); 
     }
@@ -52,7 +52,7 @@ use Origin\Model\Entity;
 
 class OrderNotifierListener extends Listener
 {
-    protected function initialize() : void
+    protected function initialize(): void
     {
         $this->loadModel('User');
     }
@@ -71,7 +71,7 @@ If you need to stop the process, in your listener return false, then any subsequ
 You can subscribe as many Listeners as you need
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
     $this->subscribe('OrderNotifier');
     $this->subscribe(CustomerAnalyticsListener::class);
@@ -81,7 +81,7 @@ protected function initialize(array $config) : void
 If the object is already created, example `$this` then you can pass the object as well.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
     $this->subscribe($this);
     $this->subscribe(new LoggingListener());
@@ -91,7 +91,7 @@ protected function initialize(array $config) : void
 If you want to subscribe to selected events
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
     $this->subscribe('OrderNotifier',[
         'on' => ['orderCancelled','orderCreated']
@@ -113,9 +113,9 @@ $this->publish('orderCreated',$arg1,$arg2,$arg3);
 If you have have configured [Queues](/docs/queue) you can queue the Listener to be run in the background, it is added to the `listeners` queue using the `default` queue connection.
 
 ```php
-protected function initialize(array $config) : void
+protected function initialize(array $config): void
 {
-    $this->subscribe('OrderNotifier',['queue'=>true]);
+    $this->subscribe('OrderNotifier',['queue' => true]);
 }
 ```
 

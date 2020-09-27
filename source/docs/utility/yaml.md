@@ -21,8 +21,8 @@ $ composer require originphp/yaml
 ```php
 use Origin\Yaml\Yaml;
 $employees = [
-    ['name'=>'Jim','skills'=>['php','mysql','puppeteer']],
-    ['name'=>'Amy','skills'=>['ruby','ruby on rails']],
+    ['name' => 'Jim','skills' => ['php','mysql','puppeteer']],
+    ['name' => 'Amy','skills' => ['ruby','ruby on rails']],
 ];
 $yaml = Yaml::fromArray($employees );
 ```
@@ -45,7 +45,7 @@ Lets look what happens when we convert a record from the bookmarks demo app.
 
 ```php
  $bookmark = $this->Bookmark->get(1,[
-            'associated'=>[
+            'associated' => [
                 'User','Tag'
                 ]
             ]);

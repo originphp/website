@@ -43,9 +43,9 @@ You can also use keys from the array as headers
 use Origin\Csv\Csv;
 
 $csv = Csv::fromArray([
-        ['name'=>'jim','email'=>'jim@example.com'],
-        ['name'=>'tony','email'=>'tony@example.com']
-    ],['header'=>true]);
+        ['name' => 'jim','email' => 'jim@example.com'],
+        ['name' => 'tony','email' => 'tony@example.com']
+    ],['header' => true]);
 
 ```
 
@@ -63,9 +63,9 @@ If you want to use custom headers
 use Origin\Csv\Csv;
 
 $csv = Csv::fromArray([
-        ['name'=>'jim','email'=>'jim@example.com'],
-        ['name'=>'tony','email'=>'tony@example.com']
-    ],['header'=>['First Name','Email Address']]);
+        ['name' => 'jim','email' => 'jim@example.com'],
+        ['name' => 'tony','email' => 'tony@example.com']
+    ],['header' => ['First Name','Email Address']]);
 
 ```
 
@@ -92,19 +92,19 @@ $data = Csv::toArray($csv);
 If the CSV file has a header row, then you can skip it by passing an options array with the key header set to true.
 
 ```php
-$data = Csv::toArray($csv,['header'=>true]);
+$data = Csv::toArray($csv,['header' => true]);
 ```
 
 If you want to use the headers as keys for each record in the array, this will use the first row as the keys for the array.
 
 ```php
-$data = Csv::toArray($csv,['header'=>true,'keys'=>true]);
+$data = Csv::toArray($csv,['header' => true,'keys' => true]);
 ```
 
 If you want to set custom keys for each record in the array
 
 ```php
-$data = Csv::toArray($csv,['keys'=>['First Name','Email Address']]);
+$data = Csv::toArray($csv,['keys' => ['First Name','Email Address']]);
 ```
 
 ## Processing Large Files
@@ -112,7 +112,7 @@ $data = Csv::toArray($csv,['keys'=>['First Name','Email Address']]);
 To process large CSV files in a memory efficient way use the `process` method, which takes the the same options as `toArray`. The difference here is that, it will reads the CSV file one line at a time, returns its for processing, then goes the next.
 
 ```php
-$rows = Csv::process('/path/to/file.csv',['keys'=>['First Name','Email Address']]);
+$rows = Csv::process('/path/to/file.csv',['keys' => ['First Name','Email Address']]);
 foreach($rows as $row){
     ... do something
 }

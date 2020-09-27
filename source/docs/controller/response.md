@@ -45,8 +45,8 @@ Sometimes you will need to send a file which is different from rendering a page.
 
 ```php
 $this->response->file('/tmp/transactions.pdf');
-$this->response->file('/tmp/originphp.tmp', ['name'=>'transactions.pdf']);
-$this->response->file('/tmp/transactions.pdf', ['download'=>true]);
+$this->response->file('/tmp/originphp.tmp', ['name' => 'transactions.pdf']);
+$this->response->file('/tmp/transactions.pdf', ['download' => true]);
 ```
 
 ## Cookie

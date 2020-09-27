@@ -77,7 +77,7 @@ which can modify the data and return it, creating a new collection in the proces
 
 ```php
     $collection = new Collection([
-        'a'=>1,'b'=>2,'c'=>3
+        'a' => 1,'b' => 2,'c' => 3
         ]);
 
     // using a callable must return a value
@@ -94,7 +94,7 @@ Creates a new collection using keys and values.
 ```php
     $collection = new Collection($results);
     $combined = $collection->combine('id', 'name'); 
-    $array = $combined->toArray(); //[1=>'Tom','2'=>'James']
+    $array = $combined->toArray(); //[1=>'Tom','2' => 'James']
 ```
 
 Results from combine can also be grouped by a third key.
@@ -295,12 +295,12 @@ Counts by a field and value, and results are grouped.
 
 ```php
     $collection = new Collection($books);
-    $counts = $collection->countBy('authors.type'); // ['famous'=>10,'new'=>20]
+    $counts = $collection->countBy('authors.type'); // ['famous' => 10,'new' => 20]
 ``` 
 You can also use a callback.
 
 ```php
-    // ['odd'=>2,'even'=>3]
+    // ['odd' => 2,'even' => 3]
     $collection = new Collection($books);
     $counts = $collection->countBy(function ($book) {
         return $book->id % 2 == 0 ? 'even' : 'odd';

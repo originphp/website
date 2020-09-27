@@ -47,7 +47,7 @@ You can also pass any of the following options keys
 
 ```php
 Zip::zip(__DIR__ .'/src','/backups/today.zip',[
-    'password'=>'passw0rd'
+    'password' => 'passw0rd'
     ]);
 ```
 
@@ -115,7 +115,7 @@ If you just want to store a file in the ZIP archive without compression you can 
 ```php
 $zip = new Zip();
 $zip->create('/path/to/file.zip')
-    ->add('logo.jpg',['compress'=>false])
+    ->add('logo.jpg',['compress' => false])
     ->save();
 ```
 
@@ -134,7 +134,7 @@ If the ZIP file has encrypted files
 ```php
 $zip = new Zip();
 $zip->open('/path/to/file.zip')
-    ->extract('/destination/folder',['password'=>'foo']);
+    ->extract('/destination/folder',['password' => 'foo']);
 ```
 
 You can also extract selected files
@@ -143,7 +143,7 @@ You can also extract selected files
 $zip = new Zip();
 $zip->open('/path/to/file.zip')
     ->extract('/destination/folder',[
-        'files'=>[
+        'files' => [
             'README.md',
             'LICENSE.md'
         ]

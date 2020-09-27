@@ -184,7 +184,7 @@ See the [routing guide](/docs/development/routing) for more information on routi
 Components are objects which can be shared between controllers. The framework comes with a number of components and you can also build your own. To load helpers call the `loadComponent` method in the `initialize` method of your controller.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadComponent('Security');
 }
@@ -252,7 +252,7 @@ class ContactsController extends ApplicationController
     public function view($id)
     {
         $user = $this->User->get($id);
-        $this->render(['json'=>$user]);
+        $this->render(['json' => $user]);
     }
 }
 ```
@@ -265,11 +265,11 @@ class ContactsController extends ApplicationController
     public function view($id = null)
     {
         $json = [
-            'errors'=>[
+            'errors' => [
                 'message' =>'Not Found'
             ]
         ];
-        $this->render(['json'=>$json,'status'=>404]);
+        $this->render(['json' => $json,'status' => 404]);
     }
 }
 ```
@@ -301,13 +301,13 @@ class PostsController extends ApplicationController
                '@category' => 'how tos', // to set attribute use @
                'id' => 12345,
                'title' => 'How to create an XML block',
-               'body' =>  Xml::cdata('A quick brown fox jumps of a lazy dog.'),
+               'body' => Xml::cdata('A quick brown fox jumps of a lazy dog.'),
                 'author' => [
                     'name' => 'James'
                   ]
               ]
          ];
-        $this->render(['xml'=>$data]);
+        $this->render(['xml' => $data]);
     }
 }
 ```
@@ -320,7 +320,7 @@ class ContactsController extends ApplicationController
     public function all()
     {
         $results = $this->Contacts->find('all');
-        $this->render(['xml'=>$results,'status'=>200]);
+        $this->render(['xml' => $results,'status' => 200]);
     }
 }
 ```
@@ -337,7 +337,7 @@ This is method is really a hook so you don't have to overide the `__construct`, 
 ```php
 class PostsController extends ApplicationController
 {
-    protected function initialize() : void
+    protected function initialize(): void
     {
        $this->loadComponent('Auth');
     }
@@ -437,14 +437,14 @@ return $this->redirect([
   'controller' => 'users',
   'action' => 'view',
   1024,
-  '?' => ['sort'=>'ASC','page'=>1]
+  '?' => ['sort' => 'ASC','page' => 1]
 ]);
 ```
 
 You can also use `#` for fragments, to scroll to a part of the page.
 
 ```php
-['action'=>'index','#'=>'bottom']
+['action' => 'index','#' => 'bottom']
 ```
 
 OriginPHP also supports named parameters.
@@ -471,7 +471,7 @@ Each line in the log includes the date, channel, type of message and the message
 
 ```php
 use Origin\Log\Log;
-Log::error('something has gone wrong',['channel'=>'controller']);
+Log::error('something has gone wrong',['channel' => 'controller']);
 ```
 
 That will produce a line like this in the log:
@@ -483,7 +483,7 @@ That will produce a line like this in the log:
 You can also use place holders
 
 ```php
-Log::warning('{key} was null',['key'=>'foo']);
+Log::warning('{key} was null',['key' => 'foo']);
 ```
 
 This will produce a line like this in the log:
@@ -535,7 +535,7 @@ You can pass an array with the following keys, which are the same as used in Mod
 - **group**: is for the database group query results.
 - **limit**: this sets how many rows are returned.
 - **callbacks**: If this is set to true, before or after then it will call the model callbacks.
-- **associated**: An array of models that you want to load associated data for. You can also pass the model as key and array of config, e.g ['Tag'=>['fields'=>$field,'conditions'=>$conditions]]
+- **associated**: An array of models that you want to load associated data for. You can also pass the model as key and array of config, e.g ['Tag' => ['fields' => $field,'conditions' => $conditions]]
 - **joins**:  An array of join settings to join a table.
 
 ```php

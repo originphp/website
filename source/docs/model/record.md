@@ -87,8 +87,8 @@ isset($checkout->name); // $checkout->has('name');
 The `Record` object provides two static methods, `new` and `patch` both return a new instance, with patch designed to take an array of data an patch an existing `Record`
 
 ```php
-$checkout = CheckoutForm::new(); // CheckoutForm::new(['name'=>'Jon Snow']);
-$checkout = CheckoutForm::new(['name'=>'Jon Snow']);
+$checkout = CheckoutForm::new(); // CheckoutForm::new(['name' => 'Jon Snow']);
+$checkout = CheckoutForm::new(['name' => 'Jon Snow']);
 
 $checkout = CheckoutForm::patch($checkout, $_POST);
 ```
@@ -143,7 +143,7 @@ protected function initialize(): void
     $this->beforeValidate('changeName');
 }
 
-protected function changeName() : void
+protected function changeName(): void
 {
     $this->name = strtoupper($this->name);
 }

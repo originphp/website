@@ -69,7 +69,7 @@ class SupportMailbox extends Mailbox
         $this->onError('errorHandler');
     }
 
-    protected function process() : void
+    protected function process(): void
     {
         // extract ticket number from email subject
         if(preg_match('/ticket: ([\d]{10}+)/i',$this->mail->subject,$matches){
@@ -78,7 +78,7 @@ class SupportMailbox extends Mailbox
         }
     }
 
-    protected function errorHandler(Exception $exception) : void
+    protected function errorHandler(Exception $exception): void
     {
     }
 }
@@ -161,7 +161,7 @@ use Origin\Mailbox\Mail;
 
 class UnkownUserMailer extends ApplicationMailer
 {
-    protected function execute(Mail $mail) : void
+    protected function execute(Mail $mail): void
     {
         $this->mail([
             'to' => $mail->to,
@@ -189,7 +189,7 @@ class SupportMailbox extends Mailbox
 
     protected function checkIsUser(): void
     {
-        if (!$this->User->findBy(['email'=>$this->mail->from])) {
+        if (!$this->User->findBy(['email' => $this->mail->from])) {
             $this->bounceWith(UnkownUserMailer::class);
         }
     }
@@ -203,7 +203,7 @@ Exceptions caught during the processing will be logged to `logs/application.log`
 You can create a method like this
 
 ```php
-protected function onError(\Exception $exception) : void
+protected function onError(\Exception $exception): void
 {
     // do something
 }

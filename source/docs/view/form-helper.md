@@ -74,7 +74,7 @@ The options for control allow you to change the default settings.
  All other options will be passed to the form element, if it does not recognize the option it will treat it as an attribute.
 
 ```php
-echo $this->Form->control('name',['placeholder'=>'enter your name']);
+echo $this->Form->control('name',['placeholder' => 'enter your name']);
 ```
 
 The standard options which be used in most form inputs which are used by the control method
@@ -115,7 +115,7 @@ echo $this->Form->textarea('some_name');
 If you are using the field to edit HTML then you may need disable escaping.
 
 ```php
-echo $this->Form->textarea('some_name',['escape'=>false]);
+echo $this->Form->textarea('some_name',['escape' => false]);
 ```
 
 ### Select
@@ -136,7 +136,7 @@ When working with selects you might want to allow an empty option.
 
 ```php
 $selectOptions = [1=>'First',2=>'Second'];
-echo $this->Form->select('categories',$selectOptions , ['empty'=>'select one']);
+echo $this->Form->select('categories',$selectOptions , ['empty' => 'select one']);
 ```
 
 Which will output this:
@@ -166,7 +166,7 @@ This will output this
 If you want it checked by default.
 
 ```php
-echo $this->Form->checkbox('subscribe',['checked'=>true]);
+echo $this->Form->checkbox('subscribe',['checked' => true]);
 ```
 
 ### Radio
@@ -185,7 +185,7 @@ echo $this->Form->radio('plan', [1000=>'Basic',1001=>'Premium']);
 To check a value by default, set the value in options.
 
 ```php
-echo $this->Form->radio('plan', [1000=>'Basic',1001=>'Premium'], ['value'=>1001]);
+echo $this->Form->radio('plan', [1000=>'Basic',1001=>'Premium'], ['value' => 1001]);
 ```
 
 ### File
@@ -193,9 +193,9 @@ echo $this->Form->radio('plan', [1000=>'Basic',1001=>'Premium'], ['value'=>1001]
 To create a file upload you need to set the type option when creating the form and then call file method.
 
 ```php
-echo $this->Form->create(null, ['type'=>'file']);
+echo $this->Form->create(null, ['type' => 'file']);
 echo $this->Form->file('contacts');
-echo $this->Form->button('Import Contacts',['type'=>'submit']); // or use Form->submit
+echo $this->Form->button('Import Contacts',['type' => 'submit']); // or use Form->submit
 echo $this->Form->end();
 ```
 
@@ -267,7 +267,7 @@ echo $this->Form->time('created');
 To create a link which when clicked on sends a post request. This is used in the framework during code generation for delete links, this allows you to ask the user to confirm and make sure people don't call the url manually.
 
 ```php
-echo $this->Form->postLink('delete','/contacts/delete/1234',['confirm'=>'Are you sure you want to delete this?']);
+echo $this->Form->postLink('delete','/contacts/delete/1234',['confirm' => 'Are you sure you want to delete this?']);
 ```
 
 This will output this:
@@ -283,8 +283,8 @@ This will output this:
 Buttons created via the button method in the form helper are automatically treated as submit buttons, if you don't want this then pass the `type` option as `button`.
 
 ```php
-echo $this->Form->button('save',['type'=>'submit']); // or use Form->submit
-echo $this->Form->button('cancel',['onclick'=>'back();']);
+echo $this->Form->button('save',['type' => 'submit']); // or use Form->submit
+echo $this->Form->button('cancel',['onclick' => 'back();']);
 ```
 
 ## Controls for Associated Data
@@ -355,7 +355,7 @@ Or if you want to change them across the whole app or a particular controller, t
 
 ```php
   $this->loadHelper('Form', [
-      'controlDefaults'=>[
+      'controlDefaults' => [
         'text' => ['div' => 'input-field']
       ]
       ]);
@@ -381,12 +381,12 @@ Then when loading the Form Helper set the templates option, this will replace th
 
 ```php
 $this->loadHelper('Form',[
-    'templates'=>'myform-templates'
+    'templates' => 'myform-templates'
     ]);
 ```
 
 You can also change individual templates at runtime
 
 ```php
-$this->Form->templates(['error'=>'<div class="omg">{content}</div>']);
+$this->Form->templates(['error' => '<div class="omg">{content}</div>']);
 ```

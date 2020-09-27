@@ -37,12 +37,12 @@ use Origin\Model\Model;
 
 class BooleanSearchQuery extends QueryObject
 {
-    protected function initialize(Model $Article) : void
+    protected function initialize(Model $Article): void
     {
         $this->Article = $article;
     }
 
-    public function execute(string $keywords) : ?array
+    public function execute(string $keywords): ?array
     {
         $filtered = preg_replace('/[^a-z0-9* \p{L}]/ui', '', $keywords);
         $keywords = explode(' ', $filtered);
@@ -66,7 +66,7 @@ use App\Model\Query\BooleanSearchQuery;
 
 class ArticlesRepository extends Repository
 {
-    public function search(string $keywords) : ?array
+    public function search(string $keywords): ?array
     {
        return (new BooleanSearchQuery($this->Article))->execute($keywords);
     }
@@ -81,8 +81,8 @@ OriginPHP comes with the `BatchInsertQuery` query object, this makes it easy to 
 use Origin\Model\Query\BatchInsertQuery;
 
 $records = [
-    ['title'=>'Article #1'],
-    ['title'=>'Article #2'],
+    ['title' => 'Article #1'],
+    ['title' => 'Article #2'],
 ];
 
 (new BatchInsertQuery($this->Article))->execute($records);

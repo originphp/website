@@ -92,18 +92,18 @@ class SendWelcomeEmailJob extends ApplicationJob
         $this->onError('errorHandler');
     }
 
-    protected function execute(Entity $user) : void
+    protected function execute(Entity $user): void
     {
         $Email = new Email();
         $Email->to($user->email)
             ->from('do-not-reply@originphp.com')
             ->subject('Welcome ')
             ->template('welcome')
-            ->set(['first_name'=>$user->first_name])
+            ->set(['first_name' => $user->first_name])
             ->send();
     }
 
-    protected function errorHandler(\Exception $exception) : void
+    protected function errorHandler(\Exception $exception): void
     {
         $this->retry([
             'wait' => '+30 minutes', // how long to wait before retry
@@ -125,12 +125,12 @@ class ResetUserCreditsJob extends ApplicationJob
 {
     protected $queue = 'monthly';
 
-    protected function initialize() : void
+    protected function initialize(): void
     {
         $this->loadModel('User');
     }
 
-    protected function execute() : void
+    protected function execute(): void
     {
         $this->User->resetCredits();
     }
@@ -182,23 +182,23 @@ class SendIntroEmailJob extends ApplicationJob
         $this->onSuccess('sendFollowUp');
     }
 
-    protected function execute(Entity $user) : void
+    protected function execute(Entity $user): void
     {
         $Email = new Email();
         $Email->to($user->email)
             ->from('do-not-reply@originphp.com')
             ->subject('Introduction ')
             ->template('introduction')
-            ->set(['first_name'=>$user->first_name])
+            ->set(['first_name' => $user->first_name])
             ->send();
     }
 
-    protected function sendFollowUp(Entity $user) : void
+    protected function sendFollowUp(Entity $user): void
     {
         (new SendFollowUpEmailJob())->dispatch($user);
     }
 
-    protected function sendAgain(\Exception $exception) : void
+    protected function sendAgain(\Exception $exception): void
     {
         $this->retry([
             'wait' => '+30 minutes', // how long to wait before retry

@@ -14,10 +14,10 @@ Here is a sample migration to a create a table called products.
 ```php
 class CreateProductsTableMigration extends Migration
 {
-    public function change() : void
+    public function change(): void
     {
         $this->createTable('products',[
-            'owner_id' => ['type'=>'integer','limit'=>10],
+            'owner_id' => ['type' => 'integer','limit' => 10],
             'name' => 'string',
             'description' => 'text',
         ]);
@@ -45,12 +45,12 @@ For example
 ```php
 class AddNameColumnToSuppliersMigration extends Migration
 {
-    public function up() : void
+    public function up(): void
     {
         $this->addColumn('suppliers','name','string');
     }
     
-    public function down() : void
+    public function down(): void
     {
         $this->removeColumn('suppliers','name');
     }
@@ -81,9 +81,9 @@ The key for each row is the column name and then use either a string which means
 
 ```php
 $this->createTable('products',[
-        'name' => ['type'=>'integer','limit'=>10,'null'=>false],
-        'amount' => ['type'=>'decimal','precision'=>8,'scale'=>2],
-        'status' => ['type'=>'string','default'=>'new']
+        'name' => ['type' => 'integer','limit' => 10,'null' => false],
+        'amount' => ['type' => 'decimal','precision' => 8,'scale' => 2],
+        'status' => ['type' => 'string','default' => 'new']
     ]);
 ```
 
@@ -101,12 +101,12 @@ You can also pass a third argument of options using the following keys:
 - collate: Sets the collate option for the table in MySQL. utf8_unicode_ci
 
 ```php
-$options = ['engine' => 'InnoDB','autoIncrement'=>10000,'charset' => 'utf8','collate' => 'utf8_unicode_ci'];
+$options = ['engine' => 'InnoDB','autoIncrement' => 10000,'charset' => 'utf8','collate' => 'utf8_unicode_ci'];
 
 $this->createTable('products',[
-        'name' => ['type'=>'integer','limit'=>10,'null'=>false],
-        'amount' => ['type'=>'decimal','precision'=>8,'scale'=>2],
-        'status' => ['type'=>'string','default'=>'new']
+        'name' => ['type' => 'integer','limit' => 10,'null' => false],
+        'amount' => ['type' => 'decimal','precision' => 8,'scale' => 2],
+        'status' => ['type' => 'string','default' => 'new']
     ],$options);
 ```
 
@@ -144,18 +144,18 @@ $this->rename('old_articles','articles');
 To add a column just pass the table name, column name and column type.
 
 ```php
-$this->addColumn('suppliers','name','string',['limit'=>255]);
+$this->addColumn('suppliers','name','string',['limit' => 255]);
 ```
 
 The columns types will map according to the database adapter, for example `string` would map to `varchar` in MySQL. The column types to use are `string`,`text`,`integer`,`bigint`,`float`,`decimal`,`datetime`,`date`,`time`,`binary` and `boolean`.
 
-Column modifiers are `type`,`limit`,`default`,`null`, and `precision` and `scale` for decimal and float types. To set a field default to null, set ['default'=>''].
+Column modifiers are `type`,`limit`,`default`,`null`, and `precision` and `scale` for decimal and float types. To set a field default to null, set ['default' => ''].
 
 If you are using MySQL and want to use `mediumtext` or `longtext`
 
 ```php
-$this->addColumn('suppliers','description','text',['limit'=>16777215]); // medium text bytes
-$this->addColumn('suppliers','description','text',['limit'=>4294967295]); // long text bytes
+$this->addColumn('suppliers','description','text',['limit' => 16777215]); // medium text bytes
+$this->addColumn('suppliers','description','text',['limit' => 4294967295]); // long text bytes
 ```
 
 #### Changing Columns
@@ -163,7 +163,7 @@ $this->addColumn('suppliers','description','text',['limit'=>4294967295]); // lon
 Changing columns in a table is pretty straight forward.
 
 ```php
-$this->changeColumn('suppliers','name','string',['limit'=>80]);
+$this->changeColumn('suppliers','name','string',['limit' => 80]);
 ```
 
 The column types are `string`,`text`,`integer`,`bigint`,`float`,`decimal`,`datetime`,`date`,`time`,`binary` and `boolean`. The column modifiers are `type`,`limit`,`default`,`null`, `precision` and `scale`.
@@ -204,13 +204,13 @@ by passing an array with the `name` key as the third argument.
 For example:
 
 ```php
-$this->addIndex('customers','account_number',['name'=>'my_index_name']);
+$this->addIndex('customers','account_number',['name' => 'my_index_name']);
 ```
 
 If you want to add a FULLTEXT index (MySQL index)
 
 ```php
-$this->addIndex('articles','title',['type'=>'fulltext']);
+$this->addIndex('articles','title',['type' => 'fulltext']);
 ```
 
 #### Removing Indexes
@@ -225,7 +225,7 @@ $this->removeIndex('customers',['owner_id','tenant_id']);
 To remove an index using the index name
 
 ```php
-$this->removeIndex('customers',['name'=>'index_name']);
+$this->removeIndex('customers',['name' => 'index_name']);
 ```
 
 #### Listing Indexes
@@ -251,8 +251,8 @@ If you have not or need to customize this you can pass an options array with `co
 
 ```php
 $this->addForeignKey('articles','users',[
-    'column'=>'author_id', // column in articles table
-    'primaryKey'=>'lng_id' // column in users table
+    'column' => 'author_id', // column in articles table
+    'primaryKey' => 'lng_id' // column in users table
     ]);
 ```
 
@@ -284,8 +284,8 @@ $this->removeForeignKey('accounts','users');
 You can also remove by column or constraint name.
 
 ```php
-$this->removeForeignKey('articles',['column'=>'owner_id']);
-$this->removeForeignKey('accounts',['name'=>'fk_origin_1234567891'];
+$this->removeForeignKey('articles',['column' => 'owner_id']);
+$this->removeForeignKey('accounts',['name' => 'fk_origin_1234567891'];
 ```
 
 #### Listing Foreign Keys
@@ -319,11 +319,11 @@ If you need to run custom SQL queries you can, but we can't magically reverse th
 ```php
 class CreateProductsTableMigration extends Migration
 {
-    public function up() : void
+    public function up(): void
     {
         $this->execute($sqlThatDoesSomething);
     }
-     public function down() : void
+     public function down(): void
     {
         $this->execute($sqlThatUndoesWhatUpDid);
     }
@@ -337,7 +337,7 @@ Sometimes you might delete data or do something else that is not reversible, in 
 ```php
 class CreateProductsTableMigration extends Migration
 {
-    public function reversable() : void // or use down if you are using up
+    public function reversable(): void // or use down if you are using up
     {
         $this->throwIrreversibleMigrationException();
     }

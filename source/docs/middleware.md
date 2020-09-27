@@ -36,7 +36,7 @@ class FooMiddleware extends Middleware
      * @param \Origin\Http\Request $request
      * @return void
      */
-    public function handle(Request $request) : void
+    public function handle(Request $request): void
     {
         $request->data('foo','bar'); // Change the request data
     }
@@ -49,7 +49,7 @@ class FooMiddleware extends Middleware
      * @param \Origin\Http\Response $response
      * @return void
      */
-    public function process(Request $request,Response $response) : void
+    public function process(Request $request,Response $response): void
     {
         $response->cookie('foo',$request->data('foo')); // Changes the response
     }
@@ -61,7 +61,7 @@ class FooMiddleware extends Middleware
 To load the middleware, you need to call `loadMiddleware` in the initialize method of `app/Http/Application.php` file. When web requests are run, the middlewares will be run, first `handle` will be called by each middleware, to modify the request object, then once it has finished, each middleware will run the `process` method using the final modified request object that has been passed through all the middlewares.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('RequestModifier');
 }
@@ -70,7 +70,7 @@ protected function initialize() : void
 You can also load middlewares from plugin folders.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('MyPlugin.RequestModifier');
 }
@@ -80,7 +80,7 @@ If you prefer to add the Middleware Object
 
 ```php
 use App\Http\Middleware\RequestModifierMiddleware;
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->addMiddleware(new RequestModifierMiddleware());
 }
@@ -117,7 +117,7 @@ $.ajaxSetup({
 You can disable CSRF Protection for routes.
 
 ```js
-Router::add('/api/:controller/:action/*',['type'=>'json','csrfProtection'=>false])
+Router::add('/api/:controller/:action/*',['type' => 'json','csrfProtection' => false])
 ```
 
 ## AccessLog Middleware
@@ -127,7 +127,7 @@ This is a simple Middleware that creates an access log using the Apache Common L
 To the load the Middleware:
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('AccessLog');
 }
@@ -152,7 +152,7 @@ Whitelist will allow you restrict access to only certain IPs, and blacklist is u
 To the load the Middleware:
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('Firewall');
 }
@@ -165,7 +165,7 @@ This is lightweight but powerful application level IDS (Intrusion Detection Syst
 In your `app/Http/Application.php`
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('Ids',[
         'level' => 3
@@ -201,7 +201,7 @@ This will produce something like this in  `/var/www/logs/profile.log`
 
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('Profiler');
 }
@@ -214,7 +214,7 @@ You can restrict the rate of requests, block malicious requests and help mitigat
 > This checks requests wether or not they are valid, so an invalid url or missing favicon will trigger a second request.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('Throttle',[
         'limit' => 10,
@@ -231,7 +231,7 @@ Maintenance mode is handled by this middleware and is enabled by default, see [M
 To load the `MaintenanceModeMiddleware` which will throw a `MaintenanceModeException` if the application is in maintenance mode.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('MaintenanceMode');
 }
@@ -240,7 +240,7 @@ protected function initialize() : void
 If you prefer that the middleware render a custom html file, then you can set `html` to `true` and this will render the `maintence.html` in the `public` folder.
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('MaintenanceMode', [
         'html' => true
@@ -255,7 +255,7 @@ Once your app is in production, you will probably want to minify the HTML, Origi
 These are the default options, which you can change
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     $this->loadMiddleware('Minify', [
         'conservativeCollapse' => true, // Ensures there is at least one space between tags

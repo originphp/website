@@ -13,7 +13,7 @@ You enable login via forms and/or http requests. By default only forms is enable
 To load and enable the `AuthComponent`, in your app controller initialize method add the following
 
 ```php
-protected function initialize() : void
+protected function initialize(): void
 {
     parent::initialize(); // !Important whenever you use a callback or initialize method
     $this->loadComponent('Auth',$options);
@@ -51,7 +51,7 @@ $config  = [
         'plugin' => null,
     ],
     'model' => 'User',
-    'fields' => ['username' => 'email', 'password' => 'password','api_token'=>'api_token'],
+    'fields' => ['username' => 'email', 'password' => 'password','api_token' => 'api_token'],
     'scope' => [], // Extra conditions for db . e.g users.active=1;
     'unauthorizedRedirect' => true, // If false no redirect just exception e.g cli stuff
     'authError' => 'You are not authorized to access that location.',
@@ -103,12 +103,12 @@ So when a user signs up or changes their password you will need to hash the pass
 use Origin\Security\Security;
 class User extends ApplicationModel
 {
-    protected function initialize(array $config) : void 
+    protected function initialize(array $config): void 
     {
         $this->beforeSave('hashPassword');
     }
 
-    protected function hashPassword(Entity $entity, ArrayObject $options) : bool
+    protected function hashPassword(Entity $entity, ArrayObject $options): bool
     {
         if ($entity->isDirty('password')) {
             $entity->password = Security::hashPassword($entity->password);
@@ -144,7 +144,7 @@ In the controller that you want to enable the API authentication method add the 
 ```php
 class ApiController extends ApplicationController
 {
-    protected function initialize() : void
+    protected function initialize(): void
     {
         $this->loadComponent('Auth',[
             'authenticate' => ['Api']
@@ -156,7 +156,7 @@ class ApiController extends ApplicationController
 Then in your `config/routes.php` add the following route, assuming your controller is called Api, this will ensure that errors are rendered in json automatically.
 
 ```php
-Router::add('/api/:action/*', ['controller'=>'Api','type'=>'json']);
+Router::add('/api/:action/*', ['controller' => 'Api','type' => 'json']);
 ```
 
 Then your API requests will look like this 

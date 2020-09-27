@@ -40,7 +40,7 @@ This will create:
 If want paragraphs to be wrapped with a different tag than `p` then would do so like this
 
 ```php
-$html = Html::fromText($text,['tag'=>'div']);
+$html = Html::fromText($text,['tag' => 'div']);
 ```
 
 ## To Text
@@ -178,7 +178,7 @@ Create a file called quickstart.php and add the following contents
 To create text version without formatting:
 
 ```php
-$text = Html::toText($html,['format'=>false]);
+$text = Html::toText($html,['format' => false]);
 ```
 
 The main difference is headings, tables, code etc are not formatted. The HTML is cleaned up, line breaks are added, and lists are converted. If a list has a sublist then indentation will be added.

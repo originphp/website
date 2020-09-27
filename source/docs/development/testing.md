@@ -109,7 +109,7 @@ class ArticleFixture extends Fixture
 Sometimes you will want to use dynamic data, in this case you will modify the data using the `initialize` method.
 
 ```php
-    protected function initialize() : void
+    protected function initialize(): void
     {
         $this->records = [
             [
@@ -159,13 +159,13 @@ class BookmarkTest extends OriginTestCase
     protected $fixtures = ['Bookmark'];
 
     // this is called when the testcase is constructed
-    protected function initialize() : void
+    protected function initialize(): void
     {
         
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    protected function startup() : void
+    protected function startup(): void
     {
         $this->loadModel('Bookmark');
     }
@@ -177,7 +177,7 @@ class BookmarkTest extends OriginTestCase
     }
 
     // alias for PHPunit tearDown in the OriginTestCase
-    protected function shutdown() : void
+    protected function shutdown(): void
     {
         
     }
@@ -321,13 +321,13 @@ class BookmarksControllerTest extends OriginTestCase
     use IntegrationTestTrait;
 
     // this is called when the testcase is constructed
-    protected function initialize() : void
+    protected function initialize(): void
     {
 
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    protected function startup() : void
+    protected function startup(): void
     { 
     }
 
@@ -339,7 +339,7 @@ class BookmarksControllerTest extends OriginTestCase
     }
 
     // alias for PHPunit setUp in the OriginTestCase
-    protected function shutdown() : void
+    protected function shutdown(): void
     { 
     }
 }
@@ -362,7 +362,7 @@ $this->get('/bookmarks/index');
 This will send a POST request using an array of data
 
 ```php
-$this->post('/bookmarks/index',['title'=>'bookmark name']);
+$this->post('/bookmarks/index',['title' => 'bookmark name']);
 ```
 
 #### Delete
@@ -380,7 +380,7 @@ You can also send PUT and PATCH requests.
 To send a request as a PUT request
 
 ```php
-$this->put('/bookmarks/index',['title'=>'bookmark name']);
+$this->put('/bookmarks/index',['title' => 'bookmark name']);
 ```
 
 #### patch(string $url,array $data)
@@ -388,7 +388,7 @@ $this->put('/bookmarks/index',['title'=>'bookmark name']);
 To send a request as a PATCH request
 
 ```php
-$this->patch('/bookmarks/index',['title'=>'bookmark name']);
+$this->patch('/bookmarks/index',['title' => 'bookmark name']);
 ```
 
 ### Debugging Methods
@@ -448,7 +448,7 @@ $this->assertResponseNotEmpty();
 
 // Check there was no redirect
 $this->assertNoRedirect();
-$this->assertRedirect(['controller'=>'users','action'=>'login']);
+$this->assertRedirect(['controller' => 'users','action' => 'login']);
 
 $this->assertRedirectContains('/users/view');
 $this->assertRedirectNotContains('/users/login');
@@ -568,7 +568,7 @@ use Origin\Http\Response;
 // A fake controller
 class DummyController extends Controller
 {
-    protected function initialize() : void
+    protected function initialize(): void
     {
         $this->loadComponent('Math');
     }
@@ -577,7 +577,7 @@ class DummyController extends Controller
 class MathComponentTest extends OriginTestCase
 {
     // alias for PHPunit setUp in the OriginTestCase
-    protected function startup() : void
+    protected function startup(): void
     {
         $request = new Request();
         $response =  new Response();
@@ -615,7 +615,7 @@ class TagHelperTest extends OriginTestCase
     */
     protected $Tag = null;
 
-    protected function startup() : void
+    protected function startup(): void
     {
         $controller = new Controller(new Request(), new Response());
         $view = new View($controller);
@@ -730,7 +730,7 @@ class FooMiddlewareTest extends OriginTestCase
     */
     protected $response = null;
 
-    protected function startup() : void
+    protected function startup(): void
     {
         $this->request = new Request();
         $this->response = new Response();
@@ -796,7 +796,7 @@ class CreateUserDirectoryJobTest extends OriginTestCase
 {
     protected $fixtures = ['Bookmark'];
 
-    protected function startup() : void
+    protected function startup(): void
     {
         $this->loadModel('Bookmark');
     }
@@ -885,7 +885,7 @@ class SendWelcomeEmailMailerTest extends OriginTestCase
 {
     protected $fixtures = ['Bookmark'];
 
-    protected function startup() : void
+    protected function startup(): void
     {
         $this->loadModel('Bookmark');
     }
@@ -942,14 +942,14 @@ class CreateUserServiceTest extends OriginTestCase
 {
     protected $fixtures = ['Bookmark'];
     
-    protected function startup() : void
+    protected function startup(): void
     {
         $this->loadModel('Bookmark');
     }
 
      public function testExecute()
     {
-        $result = (new CreateUserService($this->User))->dispatch(['foo'=>'bar']);
+        $result = (new CreateUserService($this->User))->dispatch(['foo' => 'bar']);
         $this->assertTrue($result->success());
     }
 }

@@ -68,7 +68,7 @@ To replace a substring with another string
 
 ```php
 $result = Text::replace('foo','***','What is foo bar'); // 'What is *** bar'
-$result = Text::replace('foo','***','What is FOO bar',['insensitive'=>true]); // 'What is *** bar'
+$result = Text::replace('foo','***','What is FOO bar',['insensitive' => true]); // 'What is *** bar'
 ```
 
 ## Insert
@@ -77,7 +77,7 @@ To insert values into a string using placeholders (string interpolation)
 
 ```php
 $string = Text::insert('Record {id} has been updated',[
-    'id'=>1234568
+    'id' => 1234568
     ]); // Record 1234568 has been updated
 ```
 
@@ -97,7 +97,7 @@ You can also change the place holders
 
 ```php
 $string = Text::insert('Record :id has been updated',[
-    'id'=>1234568,'before'=>':','after'=>''
+    'id' => 1234568,'before' => ':','after' => ''
     ]); // Record 1234568 has been updated
 ```
 
@@ -109,7 +109,7 @@ using a comma `,` and quotation mark `"` as an enclosure.
 
 ```php
 $string = '2019-07-10 13:30:00 192.168.1.22 "GET /users/login HTTP/1.0" 200 1024';
-$result = Text::tokenize($string,['separator'=>' ']);
+$result = Text::tokenize($string,['separator' => ' ']);
 
 /*
 // Will give you this
@@ -129,19 +129,19 @@ You can also supply keys instead which will be mapped.
 ```php
 $string = '2019-07-10 13:30:00 192.168.1.22 "GET /users/login HTTP/1.0" 200 1024';
 $result = Text::tokenize($string,[
-    'separator'=>' ',
-    'keys'=>['date','time','ip','request','code','bytes']
+    'separator' => ' ',
+    'keys' => ['date','time','ip','request','code','bytes']
 ]);
 
 /*
 // Will give you this
 [
-    'date'=>'2019-07-10',
-    'time'=>'13:30:00',
+    'date' => '2019-07-10',
+    'time' => '13:30:00',
     'ip' => '192.168.1.22',
     'request' =>'GET /users/login HTTP/1.0',
-    'code'=>'200',
-    'bytes'=>'1024'
+    'code' => '200',
+    'bytes' => '1024'
 ];
 */
 ```
@@ -151,7 +151,7 @@ $result = Text::tokenize($string,[
 To truncate a string if it is longer than a specific length. The default length is 30.
 
 ```php
-$truncated = Text::truncate($string,['length'=>50,'end'=>'... truncated']);
+$truncated = Text::truncate($string,['length' => 50,'end' => '... truncated']);
 ```
 
 ## Word Wrap
@@ -160,7 +160,7 @@ To wordwrap a string
 
 ```php
 $wrapped = Text::wordWrap($string); // default is 80
-$wrapped = Text::wordWrap($string,['width'=>50]);
+$wrapped = Text::wordWrap($string,['width' => 50]);
 ```
 
 ## Other

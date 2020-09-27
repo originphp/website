@@ -23,7 +23,7 @@ Load the `AuthComponent` in the `AppController` initialize method.
 ```php
 class AppController extends Controller
 {
-    protected function initialize() : void
+    protected function initialize(): void
     {
         $this->loadComponent('Auth', [
             'loginAction' => '/login',

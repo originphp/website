@@ -64,7 +64,7 @@ echo $this->Html->js('https://code.jquery.com/jquery-3.3.1.min.js');
 You can also load a script inline  
 
 ```php
-echo $this->Html->js('form',['inline'=>true]);
+echo $this->Html->js('form',['inline' => true]);
 ```
 
 You can also load a script from a plugin public folder, this will automatically load the contents inline of the view. This should only be used for development purposes for performance reasons. Once in production move the file or create a symlink to it.
@@ -96,7 +96,7 @@ echo $this->Html->css('https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bo
 You can also load a stylesheet inline.
 
 ```php
-echo $this->Html->css('bootstrap',['inline'=>true]);
+echo $this->Html->css('bootstrap',['inline' => true]);
 ```
 
 
