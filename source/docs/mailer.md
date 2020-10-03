@@ -26,7 +26,7 @@ This will create 4 files
 
 For more information on code generation see the [code generation guide](/docs/development/code-generation).
 
-Now open `app/Mailer/SendWelcomeEmail.php` and adjust the email subject
+Now open `app/Mailer/WelcomeEmail.php` and adjust the email subject
 
 ```php
 namespace App\Mailer;
