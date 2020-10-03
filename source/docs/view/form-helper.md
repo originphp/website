@@ -280,7 +280,7 @@ This will output this:
 
 ## Buttons
 
-Buttons created via the button method in the form helper are automatically treated as submit buttons, if you don't want this then pass the `type` option as `button`.
+Buttons created via the button method in the form helper are automatically treated as buttons, if you don't want this then pass the `type` option as `submit`.
 
 ```php
 echo $this->Form->button('save',['type' => 'submit']); // or use Form->submit
