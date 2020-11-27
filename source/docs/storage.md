@@ -87,7 +87,7 @@ When the `FileObject` is converted to a string it will become a path e.g. `trans
 
 ```php
 foreach(Storage::list('CSV') as $file){
-    $contents = Storage::read($file); // converted to string automatically
+    $contents = Storage::read($file->path);
 }
 ```
 

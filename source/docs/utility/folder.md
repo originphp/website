@@ -97,7 +97,7 @@ When the `FileObject` is converted to a string it will become a path e.g. `/var/
 
 ```php
 foreach(Folder::list('/data') as $file){
-    $contents = file_get_contents($file); // converted to string automatically
+    $contents = file_get_contents($file->path);
 }
 ```
 
