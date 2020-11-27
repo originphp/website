@@ -44,7 +44,7 @@ The dockerized development container can be run with additional services such `m
 To fire up the docker container with the extra services (`mysql`,`redis`,`minio`,`mailhog`) run the following command
 
 ```linux
-$ bin/docker
+$ bin/docker up
 ```
 
 > When running this command, server debug information is displayed on the screen, and might display necessary login, access  and troubleshooting information.
@@ -62,7 +62,7 @@ Elasticsearch is not enabled by default, to enable this edit the `bin/docker` sc
 If `bin/docker` is already started, then hit `CTRL C` first, then run
 
 ```
-$ bin/docker
+$ bin/docker up
 ```
 
 To access the elasticsearch server within docker, use the host name `elasticsearch`.
@@ -91,7 +91,7 @@ Memcached is not enabled by default, to enable this edit the `bin/docker` script
 If `bin/docker` is already started, then hit `CTRL C` first, then run
 
 ```
-$ bin/docker
+$ bin/docker up
 ```
 
 To access the memcached server within docker, use the host name `memached`.
@@ -144,10 +144,10 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-To access from the command line, first go into the docker container
+To access from the command line, first go into the docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ docker-compose run app bash
+$ bin/docker run app bash
 ```
 
 Then type the following command to access the MySQL client, when prompted for password, use `root`.
@@ -172,10 +172,10 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-To access from the command line, first go into the docker container
+To access from the command line, first go into the docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ docker-compose run app bash
+$ bin/docker run app bash
 ```
 
 Then type the following command to access the PostgreSQL frontend, when prompted for password, use `root`.
@@ -191,7 +191,7 @@ psql -U root -d application -h db
 If `bin/docker` is already started, then hit `CTRL C` first, then run
 
 ```
-$ bin/docker
+$ bin/docker up
 ```
 
 To access postwoman goto `http://localhost:3000/`

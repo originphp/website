@@ -38,7 +38,7 @@ $ docker-compose build
 Once the Docker container has been built, run the following command to start the docker container, and hit `CTRL C` to close it down.
 
 ```linux
-$ bin/docker
+$ bin/docker up
 ```
 
 Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
@@ -58,10 +58,10 @@ DB_PASSWORD=root
 
 Next you need to run the `db:setup` command, if you are using the Dockerized Development Environment, you will need to access the container first, this is because the hostname for accessing the MySQL server is different from within the container.
 
-To access the Docker container:
+To access the Docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ docker-compose run app bash
+$ bin/docker run app bash
 ```
 
 Then run the `db:setup` command to create the database for you.
