@@ -262,3 +262,36 @@ To execute the query and get the maximum value of a column
 $this->Article->where(['user_id' => 1000 ])
               ->maximum('column_name');
 ```
+
+
+## Chunk
+
+If you have thousands of records and you need to run a query on them you can do so like this to limit each
+query to a certain number of records, this will return a generator which can be used in `foreach`
+
+```php
+$chunks = $this->Article->where(['category' =>'pending'])
+                        ->chunk(200);
+foreach($chunks as $chunk){
+
+}
+```
+
+## Each
+
+The `each` method uses `chunk`, and yields a record for each result instead of chunks.
+
+```php
+$articles = $this->Article->where(['category' =>'pending'])->each();
+
+foreach($articles as $article){
+
+}
+```
+
+By default it will use `1000` records per chunk, however you can change this
+
+```php
+$this->Article->where(['category' =>'pending'])->each(50);
+```
+

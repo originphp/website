@@ -396,7 +396,7 @@ By default callbacks are enabled, you can disable them by passing false, then th
 $result = $this->Article->find('first', ['callbacks' => false]);
 ```
 
-## FindBys (new)
+## FindBys
 
 FindBys are convenience methods find records by a set of conditions.
 
@@ -448,6 +448,34 @@ If you need to find a record exists with a primary key you can use the `exists` 
 
 ```php
 $result = $this->Article->exists(1024);
+```
+
+## Batch processing for large datasets
+
+> By the sort order is always by the primary key in ascending order
+
+If you have thousands of records and you need to run a query on them you can do so like this to limit each
+query to a certain number of records
+
+```php
+foreach($this->Article->findInBatches() as $articles){
+  // a collection of articles is returned
+}
+```
+
+The following options are supported
+
+- size: default:1000 the size of the batch
+- start: the primary key where to start, if wanted
+- finish: the primary key where to end, if wanted
+
+The `findInBatches` returns a collection of results, but you can also use `findEach` which uses the `findInBatches` and yields an entity for each result.
+
+
+```php
+foreach($this->Article->findEach() as $article){
+  // an article is returned
+}
 ```
 
 ## Running Raw SQL queries
