@@ -13,26 +13,24 @@ The Form helper does the heavy lifting when working with forms in your app.
 To create a form you use the create method and once you have finished adding the elements you call the end method which simply closes the form the tag. You should the pass an entity for the model that you are working with, if you don't the form helper will work with the data from the request.
 
 ```php
-    echo $this->Form->create($article);
-    ...
-    echo $this->Form->end();
-
+echo $this->Form->create($article);
+...
+echo $this->Form->end();
 ```
 
 You can also use a model name, then the form helper will create a entity with the request data for use inside the form helper and introspect the database.
 
 ```php
-    echo $this->Form->create('Article');
-    ...
-    echo $this->Form->end();
-
+echo $this->Form->create('Article');
+...
+echo $this->Form->end();
 ```
 
 Use a null value if you need to create a form without using model, this will just use the request data.
 
 ```php
 $this->Form->create();
-$this->Form->create(null,$options);
+$this->Form->create(null, $options);
 ```
 
 The form options are as follows:
@@ -68,10 +66,10 @@ The options for control allow you to change the default settings.
 - type: use this to override the type, text,textarea,number,date,time,datetime,select,checkbox,radio,password and file
 - div: change the name of the div that input element is wrapped in e.g. form-group
 - class: change the name of the class of the input element e.g. form-input
-- label: (default:true), boolean, a string which will be the label text, or an array with the text key and any other options
+- label: (default:true), boolean, a string which will be the label text, or an array with the text key and any other options, e.g. ['text'=>'Custom','class'=>'foo]
 - escape: (default:true) escape values
-
- All other options will be passed to the form element, if it does not recognize the option it will treat it as an attribute.
+ 
+All other options will be passed to the form element, if it does not recognize the option it will treat it as an attribute. Attributes that have a value of boolean will set either the key or ignore it totally, e.g. ['disabled'=>true] or ['disabled'=>false] which just ignores, this makes it easier to toggle disabled HTML elements
 
 ```php
 echo $this->Form->control('name',['placeholder' => 'enter your name']);

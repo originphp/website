@@ -71,10 +71,9 @@ Add the following contents
     </Directory>
 
     SSLEngine on
-    #   If both key and certificate are stored in the same file, only the
-    #   SSLCertificateFile directive is needed.
     SSLCertificateFile  /etc/letsencrypt/live/app.example.com/cert.pem
     SSLCertificateKeyFile  /etc/letsencrypt/live/app.example.com/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/app.example.com/fullchain.pem
 </VirtualHost>
 ```
 

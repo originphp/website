@@ -526,7 +526,7 @@ Checks that a value is a valid ip address.
 
 ```php
 $this->validate('ip_address',[
-  'rule' => 'ip'
+  'rule' => 'ip',
   'message' => 'Enter a valid ip address'
 ]);
 ```
@@ -535,7 +535,7 @@ To check for a `ipv4` or `ipv6` only
 
 ```php
 $this->validate('ip_address',[
-  'rule' => ['ip', 'ipv4']
+  'rule' => ['ip', 'ipv4'],
   'message' => 'Enter a valid ip address'
 ]);
 ```
@@ -557,7 +557,7 @@ Checks that a field value is unique in the database.
 
 ```php
 $this->validate('id',[
-  'rule' => 'isUnique'
+  'rule' => 'isUnique',
   'message' => 'ID field is not unique'
 ]);
 ```

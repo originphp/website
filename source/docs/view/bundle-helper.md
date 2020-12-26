@@ -52,4 +52,10 @@ Now in your `Layout` or `View` Files you can do this
 
 Thats it, its that simple. 
 
-As results are cached, whenever you update your source code with `git pull` on the server, run `bin/console cache:clear` this will reset the cache and force the bundles to be regenerated.
+As results are cached, whenever you update your source code with `git pull` on the server, you need to clear the cache.
+
+To reset the cache and force the bundles to be regenerated run the following command
+
+```bash
+$ bin/console cache:clear
+```
