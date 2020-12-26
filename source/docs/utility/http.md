@@ -79,7 +79,7 @@ $response = $http->post('https://api.example.com/posts');
 
 // to send a post request with data
 $response = $http->post('https://api.example.com/posts',[
-    'fields' => [
+    'data' => [
         'title' => 'Article Title',
         'body' => 'Article body'
     ]
@@ -87,7 +87,7 @@ $response = $http->post('https://api.example.com/posts',[
 
 // sometimes you need to send JSON post requests when working with APIs
 $response = $http->post('https://api.example.com/posts',[
-    'fields' => [
+    'data' => [
         'title' => 'Article Title',
         'body' => 'Article body'
     ],
@@ -96,7 +96,7 @@ $response = $http->post('https://api.example.com/posts',[
 
 // example with other options
 $response = $http->post('https://api.example.com/posts',[
-    'fields' => [
+    'data' => [
         'title' => 'Article Title',
         'body' => 'Article body'
     ],
@@ -114,14 +114,14 @@ To upload files using a post request.
 use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->post('https://api.example.com/posts',[
-    'fields' => [
+    'data' => [
         'contacts' => Http::file('/docs/contacts.csv')
     ]
 ]);
 
 // Shortcut for Http::file
 $response = $http->post('https://api.example.com/posts',[
-    'fields' => [
+    'data' => [
         'contacts' => '@/docs/contacts.csv'
     ]
 ]);
@@ -135,7 +135,7 @@ To send a PUT request. In REST terms put requests are used to modify a record wi
 use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->put('https://api.example.com/posts/1',[
-    'fields' => [
+    'data' => [
         'title' => 'Changed Article Title',
         'body' => 'Article body'
     ],
@@ -150,7 +150,7 @@ To send a PATCH request. In REST terms patch requests are used to modify an exis
 use Origin\HttpClient\Http;
 $http = new Http();
 $response = $http->patch('https://api.example.com/posts/1',[
-     'fields' => [
+     'data' => [
         'title' => 'Another Article Title',
     ],
 ]);
@@ -256,9 +256,9 @@ $http = new Http();
 $response = $http->head('https://api.example.com/posts');
 
 // working with the body
-$body = $response->body();
-$json = $response->json(); // decodes a json string into an array
-$xml = $response->xml(); // converts xml into an array
+$data = $response->body();
+$data = $response->json(); // decodes a JSON string into an array
+$data = $response->xml(); // converts XML into an array
 
 // Response stuff
 $headers = $response->headers(); // headers
