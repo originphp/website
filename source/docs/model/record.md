@@ -148,3 +148,70 @@ protected function changeName(): void
     $this->name = strtoupper($this->name);
 }
 ```
+
+
+## Accessors & Mutators
+
+The record class works similar to entities, so you can also use accessors and mutators.
+
+### Accessor
+
+To create an accessor
+
+```php
+namespace App\Model\Record;
+use Origin\Model\Record;
+
+class ContactForm extends Record
+{
+  protected function getFullName()
+  {
+    return $this->first_name . ' ' . $this->last_name;
+  }
+}
+```
+
+So you can do this and it will be call the method
+
+```php
+echo $contact->full_name;
+```
+
+#### Virtual Fields
+
+You can also set `accessors` as virtual fields so that when you export data to JSON or XML or an array this value is included. Add the fields to the `virtual` property.
+
+```php
+class ContactForm extends Record
+{
+  protected $virtual = ['full_name'];
+}
+```
+
+### Mutator
+
+To create a mutator
+
+```php
+namespace App\Model\Record;
+use Origin\Model\Record;
+
+class ContactForm extends Record
+{
+  protected function setFirstName($value)
+  {
+    return ucfirst(strtolower($value));
+  }
+}
+```
+
+## Hiding Fields
+
+To hide fields when being exported to an array, JSON or XML set the `hidden` property.
+
+```php
+class ContactForm extends Record
+{
+  protected $hidden = ['password','tenant_id'];
+}
+```
