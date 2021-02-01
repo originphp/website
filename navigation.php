@@ -74,7 +74,6 @@ return [
             'Migrations' => 'docs/migrations',
             'Queue' => 'docs/queue',
             'Storage' => 'docs/storage',
-            
         ]
         ],
     'Development' => [
@@ -104,6 +103,7 @@ return [
             'Http' => 'docs/utility/http',
             'Inflector' => 'docs/utility/inflector',
             'Markdown' => 'docs/utility/markdown',
+            'Process' => 'docs/utility/process',
             'Security' => 'docs/utility/security',
             'Socket' => 'docs/utility/sockets',
             'Text' => 'docs/utility/text',

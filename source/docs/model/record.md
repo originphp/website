@@ -90,7 +90,7 @@ The `Record` object provides two static methods, `new` and `patch` both return a
 $checkout = CheckoutForm::new(); // CheckoutForm::new(['name' => 'Jon Snow']);
 $checkout = CheckoutForm::new(['name' => 'Jon Snow']);
 
-$checkout = CheckoutForm::patch($checkout, $_POST);
+$checkout = CheckoutForm::patch($checkout, $this->request->data()); // or any array e.g. $_POST
 ```
 
 Both those methods accept `fields` option, to prevent mass assignment, by restricting which fields
@@ -106,8 +106,10 @@ $checkout->error('name','Invalid name'); // add validation error messages manual
 To work with errors
 
 ```php
-$errors = $checkout->errors();
-$errors = $checkout->errors('email);
+$errors = $checkout->errors(); // array of errors
+$hasErrors = $checkout->hasErrors();  // bool
+$errors = $checkout->errors('email');
+
 ```
 
 You also have some methods to check the dirtyness of the whole `Record` object or a particular field.
@@ -131,6 +133,13 @@ $oldValue = $checkout->changed('email');
 //bool
 $checkout->wasChanged();
 $checkout->wasChanged('email');
+```
+
+To check if a property is either `null`, `[]` or `''`.
+
+```php
+$checkout->isEmpty('email');
+$checkout->notEmpty('email');
 ```
 
 ## Callbacks

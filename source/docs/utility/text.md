@@ -168,7 +168,7 @@ $wrapped = Text::wordWrap($string,['width' => 50]);
 Other handy string functions  (through `mb_string`)
 
 ```php
-$lowerCase = Text::lower($string);
-$uppserCase = Text::upper($string);
+$lowerCase = Text::toLower($string);
+$uppserCase = Text::toUpper($string);
 $int = Text::length($string);
 ```

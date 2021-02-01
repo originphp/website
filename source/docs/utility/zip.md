@@ -80,7 +80,7 @@ $zip = new Zip();
 $zip->create('/path/to/file.zip')
     ->add('README.md')
     ->add('src')
-    ->save();
+    ->close();
 ```
 
 ### Encryption
@@ -95,7 +95,7 @@ $zip->create('/path/to/file.zip')
     ->add('README.md')
     ->add('src')
     ->encrypt('passw0rd')
-    ->save();
+    ->close();
 ```
 
 If just want to encrypt certain files
@@ -105,7 +105,7 @@ $zip = new Zip();
 $zip->create('/path/to/file.zip')
     ->add('README.md')
     ->add('Financials.xlsx',['password' => 'secret'])
-    ->save();
+    ->close();
 ```
 
 ### Compression
@@ -116,7 +116,7 @@ If you just want to store a file in the ZIP archive without compression you can 
 $zip = new Zip();
 $zip->create('/path/to/file.zip')
     ->add('logo.jpg',['compress' => false])
-    ->save();
+    ->close();
 ```
 
 ### Unzip a ZIP Archive

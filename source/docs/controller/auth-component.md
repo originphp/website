@@ -23,7 +23,7 @@ protected function initialize(): void
 
 The default config for the `AuthComponent`.
 
-- *authenticate*: Supports `Form` , `Http` and `Controller`
+- *authenticate*: Supports `Form` , `Http`, `Api`, and `Controller`
 - *loginAction*: This is the login action for the Form
 - *loginRedirect*: This is where users are taken too when they login
 - *logoutRedirect*: This is where users are taken too when they logout
@@ -34,7 +34,7 @@ The default config for the `AuthComponent`.
 
 ```php
 $config  = [
-    'authenticate' => ['Form','Http'], // Form and Http supported
+    'authenticate' => ['Form','Http'], // From,Http,Api,Controller
     'loginAction' => [
         'controller' => 'Users',
         'action' => 'login',

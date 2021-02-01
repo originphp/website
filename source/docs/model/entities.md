@@ -90,6 +90,14 @@ $title = $article->title;
 $title = $article->get('title');
 ```
 
+## Has
+
+To check if the entity has a property
+
+```php
+$article->has('title');
+```
+
 ## Errors
 
 Validation errors are contained within the entities.
@@ -163,6 +171,22 @@ Get the `entity` properties
 
 ```php
 $list = $entity->properties();
+```
+
+## isEmpty
+
+Check if the value of a property is either an empty string, empty array or null value
+
+```php
+$entity->isEmpty('name');
+```
+
+## notEmpty
+
+NotEmpty uses the `isEmpty` method, and checks that the value is not a empty string '' or empty array or null value.
+
+```php
+$entity->notEmpty('name');
 ```
 
 ### toArray
