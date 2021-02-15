@@ -483,12 +483,6 @@ $app->addCommand('restore', 'DatabaseRestore'); // adds DatabaseRestoreCommand
 exit($app->run());
 ```
 
-You can find a sample Console Application in the bin folder, called `db` to run this
-
-```linux
-bin/db
-```
-
 ## Running Commands as Cron Jobs
 
 Many applications will need to run cron jobs, these can be to clean the database, send out emails, carry out tasks etc. You can run your `Commands` through cron by editing the cron file.

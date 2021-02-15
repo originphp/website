@@ -494,6 +494,13 @@ To check flash messages
 
 ```php
 $this->assertFlashMessage('Your article has been saved');
+$this->assertFlashMessageNotSet('Your article has been saved');
+```
+
+To check that a file was sent
+
+```php
+$this->assertFileSent($absolutePath);
 ```
 
 ### Other methods

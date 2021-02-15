@@ -4,6 +4,7 @@ description: Dockerized Development Environment Guide for the OriginPHP Framewor
 extends: _layouts.documentation
 section: content
 ---
+
 # Dockerized Development Environment
 
 OriginPHP comes with its own Dockerized Development Environment (DDE), this works like a real server, and will reduce the risk of issues when deploying your application to a server caused by different systems.
@@ -35,7 +36,7 @@ To stop container
 $ docker-compose down
 ```
 
-Then open your web browser and go to [http://localhost:8000](http://localhost:8000)  which will show you a status page that all is working okay.
+Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
 
 ## Using Docker with extra services
 
@@ -47,17 +48,16 @@ To fire up the docker container with the extra services (`mysql`,`redis`,`minio`
 $ bin/docker up
 ```
 
-> When running this command, server debug information is displayed on the screen, and might display necessary login, access  and troubleshooting information.
+> When running this command, server debug information is displayed on the screen, and might display necessary login, access and troubleshooting information.
 
 To stop the container from the same window hit `CTRL C`, if you don't, then it will leave orphans, and you will have to run `docker-compose down --remove-orphans` manually.
 
 In the `docker` folder, you can find additional services for docker and you can customize which services are being run
 by editing the `bin/docker` script.
 
-
 ## Elasticsearch
 
-Elasticsearch is not enabled by default, to enable this edit the `bin/docker` script, adding  `:docker/elasticsearch.yml` to the `export` line.
+Elasticsearch is not enabled by default, to enable this edit the `bin/docker` script, adding `:docker/elasticsearch.yml` to the `export` line.
 
 If `bin/docker` is already started, then hit `CTRL C` first, then run
 
@@ -86,7 +86,7 @@ EMAIL_TLS=false
 
 ## Memcached
 
-Memcached is not enabled by default, to enable this edit the `bin/docker` script, adding  `:docker/memcached.yml` to the `export` line.
+Memcached is not enabled by default, to enable this edit the `bin/docker` script, adding `:docker/memcached.yml` to the `export` line.
 
 If `bin/docker` is already started, then hit `CTRL C` first, then run
 
@@ -132,7 +132,7 @@ return [
 
 ### MySQL
 
-[MySQL](https://www.mysql.com/) is an open source relational database. 
+[MySQL](https://www.mysql.com/) is an open source relational database.
 
 To access the MySQL server from within the docker container use the host name `db` and port `3306`, and to access locally using any database management application use `localhost` port `3307`.
 
@@ -147,7 +147,7 @@ DB_PASSWORD=root
 To access from the command line, first go into the docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ bin/docker run app bash
+$ bin/docker exec app bash
 ```
 
 Then type the following command to access the MySQL client, when prompted for password, use `root`.
@@ -158,7 +158,7 @@ mysql -h db -uroot -p
 
 ## PostgreSQL
 
-[PostgreSQL](https://www.postgresql.org/) is an open source relational database. PostgreSQL is not enabled by default, to enable this edit the `bin/docker` script, replace the `:docker/mysql.yml` with  `:docker/postgresql.yml` in the `export` line.
+[PostgreSQL](https://www.postgresql.org/) is an open source relational database. PostgreSQL is not enabled by default, to enable this edit the `bin/docker` script, replace the `:docker/mysql.yml` with `:docker/postgresql.yml` in the `export` line.
 
 > Remember to change the engine class in `config/database.php`
 
@@ -175,7 +175,7 @@ DB_PASSWORD=root
 To access from the command line, first go into the docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ bin/docker run app bash
+$ bin/docker exec app bash
 ```
 
 Then type the following command to access the PostgreSQL frontend, when prompted for password, use `root`.
@@ -184,9 +184,9 @@ Then type the following command to access the PostgreSQL frontend, when prompted
 psql -U root -d application -h db
 ```
 
-## Postwoman
+## Hoppscotch (previously called Postwoman)
 
-[Postwoman](https://github.com/liyasthomas/postwoman) is fast, free open source alternative to `postman`, it used to create and test requests to your app. Postwoman is not enabled by default, to enable this edit the `bin/docker` script, adding  `:docker/postman.yml` to the `export` line.
+[Postwoman](https://github.com/hoppscotch/hoppscotch) is fast, free open source alternative to `postman`, it used to create and test requests to your app. Hoppscotch is not enabled by default, to enable this edit the `bin/docker` script, adding `:docker/postwoman.yml` to the `export` line.
 
 If `bin/docker` is already started, then hit `CTRL C` first, then run
 
@@ -194,7 +194,7 @@ If `bin/docker` is already started, then hit `CTRL C` first, then run
 $ bin/docker up
 ```
 
-To access postwoman goto `http://localhost:3000/`
+To access Hoppscotch goto `http://localhost:3000/`
 
 ## Redis
 

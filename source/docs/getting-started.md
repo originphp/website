@@ -4,6 +4,7 @@ description: Console Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Getting Started with OriginPHP
 
 > This documentation is for version 3.x, see [2.x documentation](/2.0/getting-started) for the prior version. We also have produced an [upgrade guide](/docs/upgrade). Applications created on or after 17th July 2020 using `composer create-project` will be using the new version.
@@ -65,9 +66,8 @@ The configuration settings for MySQL docker database are:
 To access the Docker container (linux prompt), use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ bin/docker run app bash
+$ bin/docker exec app bash
 ```
-
 
 > You can also access the MySql server using any database management application using `localhost` port `3307`. Mac users can use [Sequel Pro](https://www.sequelpro.com/) or Windows users can use [Heidi SQL](https://www.heidisql.com/).
 
@@ -76,7 +76,6 @@ If you want to work with PostgreSQL then see the [dockerized development environ
 ### Configure the Database Connection
 
 When you create a new project with Composer it will run the `App\Console\InstallCommand`, which will create a copy of `config/.env.default` and save as `config/.env` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment then you will need to adjust the database settings.
-
 
 You can find the database settings in `config/.env`, to use with Docker change `localhost` to `db`
 
@@ -91,7 +90,7 @@ Next you need to run the `db:setup` command, if you are using the Dockerized Dev
 To access the Docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ bin/docker run app bash
+$ bin/docker exec app bash
 ```
 
 Then run the `db:setup` command to set everything up for you.
@@ -106,4 +105,4 @@ The db setup command will :
 - Load the schema from `database/schema.php` file (if its found)
 - Seed the database with records from the `database/seed.php` file if its found
 
-If all went well when you go to [http://localhost:8000](http://localhost:8000)  it should now say that it is connected to the database.
+If all went well when you go to [http://localhost:8000](http://localhost:8000) it should now say that it is connected to the database.

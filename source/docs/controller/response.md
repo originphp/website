@@ -39,6 +39,22 @@ $type = $this->response->type();
 $this->response->type('application/vnd.ms-powerpoint');
 ```
 
+## Mime Types
+
+To set and get mime type definitions
+
+```php
+$mimeTypeMap = $this->response->mimeTypes();
+$this->responseMimeTypes($mimeTypeMap);
+```
+
+To get or set indiviual ones
+
+```php
+$this->response->mimeType('swf', 'application/x-shockwave-flash');
+$mimeType = $this->response->mimeType('swf');
+```
+
 ## File Downloads
 
 Sometimes you will need to send a file which is different from rendering a page. You can also force it to download the file by setting `download` to true. The available options are `name`,`type` for content type and `download`. 

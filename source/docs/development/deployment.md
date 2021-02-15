@@ -114,8 +114,8 @@ $ touch logs/application.log
 Set the permissions
 
 ```bash
-$ sudo chown -R www-data:www-data /var/www/app.example.com
-$ sudo chmod -R 775 /var/www/app.example.com
+$ sudo chown -R www-data:www-data .
+$ sudo chmod -R 775 .
 ```
 
 Install the composer dependencies

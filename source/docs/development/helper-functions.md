@@ -115,3 +115,13 @@ A handy function for working with paths in the `config` folder
 config_path('stripe.php'); # /var/www/config/stripe.php
 config_path('locales/en_GB.php'); # /var/www/config/locales/en_GB.php
 ```
+
+### temp_name
+
+A quick function for generating name for a temporary file in the system temp directory, you can also change the length and add a prefix if you want.
+
+```php
+temp_name(); # /tmp/U4pZu9
+temp_name(8); # /tmp/yTvXSvX7
+temp_name(6,'php'); # /tmp/phpgRcSP3
+```

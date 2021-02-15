@@ -4,6 +4,7 @@ description: PHP Development Tutorial with the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Tutorial
 
 ## Creating a new Project
@@ -24,6 +25,7 @@ To run the built-in development server:
 $ cd blog
 $ bin/server 8000
 ```
+
 Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
 
 ### Dockerized Development Environment
@@ -47,7 +49,6 @@ Then open your web browser and go to [http://localhost:8000](http://localhost:80
 
 When you create a new project with Composer it will run the `App\Console\InstallCommand`, which will create a copy of `config/.env.default` and save as `config/.env` file, this contains the environment vars for this installation, if you are not using Dockerized Development Environment then you will need to adjust the database settings.
 
-
 You can find the database settings in `config/.env`, it works out of the box when using docker.
 
 ```php
@@ -61,7 +62,7 @@ Next you need to run the `db:setup` command, if you are using the Dockerized Dev
 To access the Docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ bin/docker run app bash
+$ bin/docker exec app bash
 ```
 
 Then run the `db:setup` command to create the database for you.
@@ -109,10 +110,9 @@ Router::add('/', ['controller' => 'Welcome', 'action' => 'index']);
 
 This is the routing file for web application. So now when you go [http://localhost:8000](http://localhost:8000) it will show you the welcome page instead of the status page.
 
-
 ### Building the App
 
-First in your web browser goto [http://localhost:8000/articles/new](http://localhost:8000/articles/new). This will give you a missing controller error `ArticlesController class could not be found.` 
+First in your web browser goto [http://localhost:8000/articles/new](http://localhost:8000/articles/new). This will give you a missing controller error `ArticlesController class could not be found.`
 
 ![Missing Controller Exception](/assets/images/missing-controller-exception.png)
 
@@ -182,7 +182,7 @@ This will output
 [ OK ] /var/www/database/migrations/20190606063934CreateArticleTable.php
 ```
 
-Not only has it created the Model and test files, it has created a migration file so that you can create the table. 
+Not only has it created the Model and test files, it has created a migration file so that you can create the table.
 
 ### Running A Migration
 
@@ -232,7 +232,7 @@ See the [Migrations Guide](/docs/development/migrations) for more information.
 
 ### Adding a Form
 
-Now create a basic form for getting the input. Create the view for the new action.  The file for this would be `app/Http/View/Articles/new.ctp`
+Now create a basic form for getting the input. Create the view for the new action. The file for this would be `app/Http/View/Articles/new.ctp`
 
 > The `<?=` is the PHP shorthand for `<?php echo`.
 
@@ -404,7 +404,7 @@ Let's add some validation you will need to edit the article Model, which can be 
 ```php
 class Article extends ApplicationModel
 {
-    protected function initialize(array $config): void 
+    protected function initialize(array $config): void
     {
         parent::initialize($config); // Always call the parent.
         $this->validate('title', 'notBlank');
@@ -416,12 +416,12 @@ Now open the view file `app/Http/View/Articles/new.ctp` again, change code to as
 
 ```php
 <h1>New Article</h1>
-<?php 
+<?php
 if($article->errors()){
-    ?> 
-    <h2>Validation Errors</h2> 
+    ?>
+    <h2>Validation Errors</h2>
     <ul>
-    <?php 
+    <?php
         foreach($article->errors() as $field => $messages) {
             foreach($messages as $message){
                 ?>
@@ -432,7 +432,7 @@ if($article->errors()){
     ?>
     </ul>
     <?php
-}  
+}
 ?>
 <?= $this->Form->create($article) ?>
 <div>
@@ -449,10 +449,9 @@ if($article->errors()){
 
 Goto [http://localhost:8000/articles/new](http://localhost:8000/articles/new) and just press save without entering any data, you should get some validation errors.
 
-
 ### Form Control
 
-The `FormHelper` control method wraps ups form elements in div, adds a label,classes and handles the validation. 
+The `FormHelper` control method wraps ups form elements in div, adds a label,classes and handles the validation.
 Open the new view `app/Http/View/Articles/new.ctp` and change it as follows
 
 ```php
@@ -469,7 +468,6 @@ When you goto [http://localhost:8000/articles/new](http://localhost:8000/article
 ### Editing Records
 
 Open the articles controller `/app/Http/Controller/ArticlesController.php` and add the edit method. This is slightly different since you need to load the article from the database, and then if its a post then you need to patch the article entity with the request data that was posted.
-
 
 ```php
 public function edit($id=null)
@@ -512,7 +510,7 @@ And add an edit link to the index view `app/Http/View/Articles/index.ctp`.
     <th>Body</th>
     <th>&nbsp;</th>
   </tr>
-    
+
   <?php foreach ($articles as $article): ?>
     <tr>
         <td><?= h($article->title) ?></td>
@@ -522,7 +520,6 @@ And add an edit link to the index view `app/Http/View/Articles/index.ctp`.
  <?php endforeach; ?>
 </table>
 ```
-
 
 Open [http://localhost:8000/articles/index](http://localhost:8000/articles/index) and you will now have an edit link next to each record.
 
@@ -550,7 +547,6 @@ Goto [http://localhost:8000/articles/delete/1](http://localhost:8000/articles/de
 
 Now edit the index view `app/Http/View/Articles/index.ctp`, adding a link for deleting, but the link will be a post link (which is a link wrapped in a form)
 
-
 ```php
 <h1>Articles</h1>
 <p><?= $this->Html->link('New article', ['action' => 'new']) ?></p>
@@ -560,13 +556,13 @@ Now edit the index view `app/Http/View/Articles/index.ctp`, adding a link for de
     <th>Body</th>
     <th>&nbsp;</th>
   </tr>
-    
+
   <?php foreach ($articles as $article): ?>
     <tr>
         <td><?= h($article->title) ?></td>
         <td><?= h($article->body) ?></td>
         <td>
-        <?= $this->Html->link('view', ['action' => 'view', $article->id]) ?> | 
+        <?= $this->Html->link('view', ['action' => 'view', $article->id]) ?> |
         <?= $this->Html->link('edit', ['action' => 'edit', $article->id]) ?> |
         <?= $this->Form->postLink('delete', ['action' => 'delete', $article->id], ['confirm' => __('Are you sure you want to delete ?')]); ?>
         </td>
@@ -636,7 +632,7 @@ For more information see the [Associations Guide](/docs/model/associations).
 $ bin/console generate controller Comments
 ```
 
-Now add the `new` method to the comments controller file  `/app/Http/Controller/CommentsController.php`.
+Now add the `new` method to the comments controller file `/app/Http/Controller/CommentsController.php`.
 
 ```php
 class CommentsController extends ApplicationController
@@ -659,7 +655,7 @@ class CommentsController extends ApplicationController
 
 ### Add the Comment Form
 
-Edit `app/Http/View/Articles/view.ctp` and adjust so it includes the comments form and the loop which lists all 
+Edit `app/Http/View/Articles/view.ctp` and adjust so it includes the comments form and the loop which lists all
 comments for this article.
 
 ```php
@@ -684,7 +680,6 @@ comments for this article.
 
 Goto [http://localhost:8000/articles/index](http://localhost:8000/articles/index), and add an article then add comments to it.
 
-
 ### Scaffolding
 
 You can generate a prototype for your application using the scaffolding feature, all it requires is that your database is setup and has tables.
@@ -701,4 +696,3 @@ $ bin/console generate scaffold Comment
 Now goto [http://localhost:8000/articles/index](http://localhost:8000/articles/index), to see it in action. If you need to customize the scaffolding templates, copy the templates folder from the `vendor/originphp/framework` folder into your project folder, then customize as you see fit.
 
 This concludes the tutorial, any suggestions how to make this better? Let me know.
-
