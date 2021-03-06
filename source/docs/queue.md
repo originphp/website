@@ -4,6 +4,7 @@ description: Queue Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Queue
 
 You can easily queue schedule background jobs, the OriginPHP queue system works supports both MySQL and Redis backends.
@@ -149,7 +150,7 @@ class ResetUserCreditsJob extends ApplicationJob
 You can also register callbacks when a job is queued, the arguments will be passed to these registered callbacks.
 
 ```php
-$this->beforeQueue('methodName'); 
+$this->beforeQueue('methodName');
 $this->afterQueue('methodName');
 ```
 
@@ -169,7 +170,6 @@ to the method.
 ```php
 $this->onError('methodName');
 ```
-
 
 Here is an example Job that if it runs successfully, it will call another job, if it fails it will retry a maximum of 3 times waiting 30 minutes in between each try.
 
@@ -208,7 +208,6 @@ class SendIntroEmailJob extends ApplicationJob
 }
 ```
 
-
 ## Dispatching Jobs
 
 To dispatch a Job to the queue
@@ -239,7 +238,6 @@ $options = [
 ];
 (new SendWelcomeEmailJob($options))->dispatch($user);
 ```
-
 
 ## Worker
 
@@ -273,7 +271,6 @@ You can also set it to sleep a certain amount of seconds when there are no jobs 
 $ bin/console queue:worker -d -sleep=30
 ```
 
-
 ### Scheduling Using Cron
 
 On Ubuntu to setup cron tab for the `www-data` user type in the following command:
@@ -290,7 +287,7 @@ Then add the following line, assuming the source code is in the folder `/var/www
 
 ### Using Supervisor
 
-You can use Supervisor to manage the `queue:worker` daemon , it will the worker if it shuts and keep alive a certain number of processes.
+You can use Supervisor to manage the `queue:worker` daemon , it will restart the worker if it shuts and keep alive a certain number of processes.
 
 ```linux
 sudo apt-get install supervisor

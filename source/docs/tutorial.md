@@ -40,10 +40,10 @@ $ docker-compose build
 Once the Docker container has been built, run the following command to start the docker container, and hit `CTRL C` to close it down.
 
 ```linux
-$ bin/docker up
+$ docker-compose up
 ```
 
-Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
+Then open your web browser and go to [https://localhost](https://localhost) which will show you a status page that all is working okay.
 
 ### Configure the Database Connection
 
@@ -62,7 +62,7 @@ Next you need to run the `db:setup` command, if you are using the Dockerized Dev
 To access the Docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ bin/docker exec app bash
+$ docker-compose exec app bash
 ```
 
 Then run the `db:setup` command to create the database for you.

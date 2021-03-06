@@ -7,17 +7,17 @@ section: content
 
 # Dockerized Development Environment
 
+> As of March 6th 2021, `bin/docker` command has been removed from new application template. Everything is done using only the `Dockerfile` and `docker-compose.yml` file.
+
 OriginPHP comes with its own Dockerized Development Environment (DDE), this works like a real server, and will reduce the risk of issues when deploying your application to a server caused by different systems.
 
-> The DDE for projects created prior to May 20th 2020 only include Apache, PHP and MySQL.
-
-The Dockerized Development Environment is configured out the box to work with PHP 7.4 and Apache and you can also easily configure it to work with extra services such `mysql`, `postgresql`,`redis`,`memcached`,`elasticsearch`,`minio` and `mailhog`.
+The Dockerized Development Environment is configured out the box to work with PHP 7.4 and Apache, MySQL and Redis.
 
 ## Getting started with Docker
 
 To work with Docker, install [Docker Desktop](https://www.docker.com/products/docker-desktop) then build the docker containers, this must be done from within the project folder
 
-```linux
+```bash
 $ cd <folder>
 $ docker-compose build
 ```
@@ -26,56 +26,39 @@ The container only needs to be built once, after this you will use the `up` and 
 
 To start the container (Apache + PHP)
 
-```linux
+```bash
 $ docker-compose up
 ```
 
 To stop container
 
-```linux
+```bash
 $ docker-compose down
 ```
 
-Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
+Then open your web browser and go to [https://localhost](https://localhost) which will show you a status page that all is working okay.
 
-## Using Docker with extra services
+## Customizing Docker
 
-The dockerized development container can be run with additional services such `mysql` or `postgresql`,`redis`,`memcached`,`elasticsearch`,`minio` and `mailhog`
+Simply comment out the services that you do not want or uncomment the services that you want to use in the `docker-compose.yml` file.
 
-To fire up the docker container with the extra services (`mysql`,`redis`,`minio`,`mailhog`) run the following command
-
-```linux
-$ bin/docker up
-```
-
-> When running this command, server debug information is displayed on the screen, and might display necessary login, access and troubleshooting information.
-
-To stop the container from the same window hit `CTRL C`, if you don't, then it will leave orphans, and you will have to run `docker-compose down --remove-orphans` manually.
-
-In the `docker` folder, you can find additional services for docker and you can customize which services are being run
-by editing the `bin/docker` script.
+Some services such as MySQL, Postgres, Minio and Elasticsearch rely on volumes, so remember to uncomment out the relevant volumes at the bottom of the configuration file when enabling the servies.
 
 ## Elasticsearch
 
-Elasticsearch is not enabled by default, to enable this edit the `bin/docker` script, adding `:docker/elasticsearch.yml` to the `export` line.
-
-If `bin/docker` is already started, then hit `CTRL C` first, then run
-
-```
-$ bin/docker up
-```
+Elasticsearch is not enabled by default, you will need to uncomment out the service configuration and volume in the `docker-compose.yml` file.
 
 To access the elasticsearch server within docker, use the host name `elasticsearch`.
 
 ## Mailhog
 
-Mailhog allows you to catch outgoing emails without actually sending them.
+Mailhog allows you to catch outgoing emails without actually sending them. Mailhog is not enabled by default, you will need to uncomment out the service configuration and volume in the `docker-compose.yml` file.
 
 The web based interface can be accessed at `http://localhost:8025/`
 
 Mailhog is configured by default in the `config/.env`, but it looks like this
 
-```linux
+```bash
 EMAIL_HOST=mailhog # docker service name
 EMAIL_PORT=1025
 EMAIL_USERNAME=null
@@ -86,24 +69,21 @@ EMAIL_TLS=false
 
 ## Memcached
 
-Memcached is not enabled by default, to enable this edit the `bin/docker` script, adding `:docker/memcached.yml` to the `export` line.
-
-If `bin/docker` is already started, then hit `CTRL C` first, then run
-
-```
-$ bin/docker up
-```
+Memcached is not enabled by default, you will need to uncomment out the service configuration in the `docker-compose.yml` file.
 
 To access the memcached server within docker, use the host name `memached`.
 
 ## Minio (S3)
 
-[Minio](https://min.io/) is a S3 compatible object storage, which you can use with [Storage](/docs/storage). To access
-via the web browser, you can go to `http://localhost:9000` using the credentials that are set in `docker/minio.yml`.
+[Minio](https://min.io/) is a S3 compatible object storage, which you can use with [Storage](/docs/storage).
 
-Minio is configured by default in the `config/.env`, but it looks like this
+Minio is not enabled by default, you will need to uncomment out the service configuration in the `docker-compose.yml` file. you will need to uncomment out the service configuration in the `docker-compose.yml` file.
 
-```linux
+To access via the web browser, you can go to `http://localhost:9000` using the credentials that are set in the `docker-compose.yml` file.
+
+Minio environment configuration is set in `config/.env`.
+
+```bash
 S3_KEY=minio
 S3_SECRET=b1816172fd2ba98f3af520ef572e3a47
 S3_ENDPOINT=http://127.0.0.1:9000
@@ -134,7 +114,7 @@ return [
 
 [MySQL](https://www.mysql.com/) is an open source relational database.
 
-To access the MySQL server from within the docker container use the host name `db` and port `3306`, and to access locally using any database management application use `localhost` port `3307`.
+To access the MySQL server from within the docker container use the host name `db` and port `3306`, and to access locally using any database management application use `localhost` port `3306`.
 
 You can find the database settings in `config/.env`, it works out of the box when using docker.
 
@@ -146,25 +126,25 @@ DB_PASSWORD=root
 
 To access from the command line, first go into the docker container, use the `bash` script the same way you would use `docker-compose`.
 
-```linux
-$ bin/docker exec app bash
+```bash
+$ docker-compose exec app bash
 ```
 
 Then type the following command to access the MySQL client, when prompted for password, use `root`.
 
-```linux
+```bash
 mysql -h db -uroot -p
 ```
 
 ## PostgreSQL
 
-[PostgreSQL](https://www.postgresql.org/) is an open source relational database. PostgreSQL is not enabled by default, to enable this edit the `bin/docker` script, replace the `:docker/mysql.yml` with `:docker/postgresql.yml` in the `export` line.
+[PostgreSQL](https://www.postgresql.org/) is an open source relational database. PostgreSQL is not enabled by default, you will need to uncomment out the service and volume configuration in the `docker-compose.yml` file.
 
-> Remember to change the engine class in `config/database.php`
+You will also need to change the engine class in `config/database.php`
 
-To access the PostgreSQL server from within the docker container use the host name `db` and port `5432`, and to access locally using any database management application use `localhost` port `54320`.
+To access the PostgreSQL server from within the docker container use the host name `db` and port `5432`, and to access locally using any database management application use `localhost` port `5432`.
 
-You can find the database settings in `config/.env`, it works out of the box when using docker.
+You can set the database settings in `config/.env`.
 
 ```php
 DB_HOST=db  # db for docker or localhost
@@ -172,32 +152,26 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-To access from the command line, first go into the docker container, use the `bash` script the same way you would use `docker-compose`.
+To access from the command line, first go into the docker container
 
-```linux
-$ bin/docker exec app bash
+```bash
+$ docker-compose exec app bash
 ```
 
 Then type the following command to access the PostgreSQL frontend, when prompted for password, use `root`.
 
-```linux
+```bash
 psql -U root -d application -h db
 ```
 
 ## Hoppscotch (previously called Postwoman)
 
-[Postwoman](https://github.com/hoppscotch/hoppscotch) is fast, free open source alternative to `postman`, it used to create and test requests to your app. Hoppscotch is not enabled by default, to enable this edit the `bin/docker` script, adding `:docker/postwoman.yml` to the `export` line.
-
-If `bin/docker` is already started, then hit `CTRL C` first, then run
-
-```
-$ bin/docker up
-```
+[Postwoman](https://github.com/hoppscotch/hoppscotch) is fast, free open source alternative to `postman`, it used to create and test requests to your app. Hoppscotch is not enabled by default, you will need to uncomment out the service and volume configuration in the `docker-compose.yml` file.
 
 To access Hoppscotch goto `http://localhost:3000/`
 
 ## Redis
 
-Redis can be used for both caching and queues, this is run by default when using `bin/docker`.
+Redis can be used for both caching and queues, this is enabled by default.
 
 In your cache or queue settings, set the host to `redis`.

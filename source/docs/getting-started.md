@@ -50,12 +50,10 @@ $ docker-compose build
 To start the [dockerized development environment](/docs/development/dockerized-development-environment), run the following command, and to stop the container hit `CTRL c`.
 
 ```linux
-$ bin/docker up
+$ docker-compose up
 ```
 
-> If you don't want to use the built in MySQL database, then use `docker-compose up` to start the docker container and `docker-compose down` to shut it down
-
-Then open your web browser and go to [http://localhost:8000](http://localhost:8000) which will show you a status page that all is working okay.
+Then open your web browser and go to [https://localhost](https://localhost) which will show you a status page that all is working okay.
 
 The configuration settings for MySQL docker database are:
 
@@ -66,10 +64,10 @@ The configuration settings for MySQL docker database are:
 To access the Docker container (linux prompt), use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ bin/docker exec app bash
+$ docker-compose exec app bash
 ```
 
-> You can also access the MySql server using any database management application using `localhost` port `3307`. Mac users can use [Sequel Pro](https://www.sequelpro.com/) or Windows users can use [Heidi SQL](https://www.heidisql.com/).
+> You can also access the MySql server using any database management software, e.g [TablePlus](https://tableplus.com/) with the host set to `localhost` and port `3306`.
 
 If you want to work with PostgreSQL then see the [dockerized development environment (dde)](/docs/development/dockerized-development-environment) guide for information on how to configure the docker container to use this instead.
 
@@ -90,7 +88,7 @@ Next you need to run the `db:setup` command, if you are using the Dockerized Dev
 To access the Docker container, use the `bash` script the same way you would use `docker-compose`.
 
 ```linux
-$ bin/docker exec app bash
+$ docker-compose exec app bash
 ```
 
 Then run the `db:setup` command to set everything up for you.

@@ -4,6 +4,7 @@ description: Process Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Process
 
 > This is new in version 3.17
@@ -63,13 +64,19 @@ $process->start();
 To wait until the process is finished
 
 ```php
-$process->wait(); 
+$process->wait();
 ```
 
 To stop the process
 
 ```php
 $process->stop();
+```
+
+To get the process id
+
+```php
+$pid = $process->pid();
 ```
 
 An example how to run a command asynchronously

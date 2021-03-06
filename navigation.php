@@ -74,8 +74,9 @@ return [
             'Migrations' => 'docs/migrations',
             'Queue' => 'docs/queue',
             'Storage' => 'docs/storage',
-        ]
+            'Task Scheduling' => 'docs/schedule'
         ],
+    ],
     'Development' => [
         'url' => 'docs/development',
         'children' => [
@@ -102,6 +103,7 @@ return [
             'Html' => 'docs/utility/html',
             'Http' => 'docs/utility/http',
             'Inflector' => 'docs/utility/inflector',
+            'Lock' => 'docs/utility/lock',
             'Markdown' => 'docs/utility/markdown',
             'Process' => 'docs/utility/process',
             'Security' => 'docs/utility/security',
