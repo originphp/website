@@ -4,6 +4,7 @@ description: Model Callbacks Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Callbacks
 
 Models callbacks need to be registered to an an event, this provides great flexability and power when using `Concerns`.
@@ -19,7 +20,7 @@ class User extends ApplicationModel
 {
     protected function initialize(array $config): void
     {
-       
+
     }
 }
 ```
@@ -259,7 +260,7 @@ protected function initialize(array $config): void
 }
 protected function doSomething(Entity $entity, ArrayObject $options): void
 {
-    
+
 }
 ```
 
@@ -319,7 +320,7 @@ protected function initialize(array $config): void
 
 ## onError
 
-You can register a callback when an error is produced during a `create`, `update`  or `delete` operation.
+You can register a callback when an error is produced during a `create`, `update` or `delete` operation.
 
 ```php
 protected function initialize(array $config): void
@@ -336,14 +337,16 @@ protected function errorHandler(\Exception $exception): void
 
 ## Disabling callbacks
 
+> From 3.24 you are now required to supply both the callback event name and the method name
+
 You can also disable any callbacks that you have registered.
 
 ```php
-$this->disableCallback('checkCount');
+$this->disableCallback('beforeSave','checkCount');
 ```
 
 Then to re-enable:
 
 ```php
-$this->enableCallback('checkCount');
+$this->enableCallback('beforeSave','checkCount');
 ```
