@@ -407,7 +407,7 @@ class Article extends ApplicationModel
     protected function initialize(array $config): void
     {
         parent::initialize($config); // Always call the parent.
-        $this->validate('title', 'notBlank');
+        $this->validate('title', 'required');
     }
 }
 ```
@@ -595,7 +595,7 @@ Open the article model `app/Model/Article.php` and in the initialize method setu
 protected function initialize(array $config): void
 {
     parent::initialize($config);
-    $this->validate('title', 'notBlank');
+    $this->validate('title', 'required');
     $this->hasMany('Comment');
 }
 ```
@@ -606,8 +606,8 @@ Open the comment `app/Model/Comment.php` and in the initialize method setup the 
 protected function initialize(array $config): void
 {
     parent::initialize($config);
-    $this->validate('name', 'notBlank');
-    $this->validate('body', 'notBlank');
+    $this->validate('name', 'required');
+    $this->validate('body', 'required');
     $this->belongsTo('Comment');
 }
 ```

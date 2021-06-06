@@ -4,6 +4,7 @@ description: Events Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Events
 
 The Events module follows the Publisher-Subscriber pattern and can help you decouple your code in to a more hexagonal style architecture.
@@ -17,17 +18,17 @@ use Origin\Publisher\PublisherTrait;
 class Order extends Model
 {
     use PublisherTrait; # 1
-    
+
     protected function initialize(array $config): void
     {
         $this->afterCreate('newOrder'); // Register callback
         $this->subscribe('OrderNotifier'); #2
-         
+
     }
 
     public function newOrder(Entity $entity, ArrayObject $options): void
     {
-         $this->publish('orderCreated',$entity); 
+         $this->publish('orderCreated',$entity);
     }
 }
 ```
@@ -36,7 +37,7 @@ When this model is saved and a new order is created, it will publish the event t
 
 ## Listeners
 
-Lets create a listener, this will create the file  `app/Listener/OrderNotifierListener.php`.
+Lets create a listener, this will create the file `app/Listener/OrderNotifierListener.php`.
 
 ```php
 $ bin/console generate listener OrderNotifier
@@ -124,7 +125,7 @@ protected function initialize(array $config): void
 To create events globally,create a file the `config/listeners.php` like this
 
 ```php
-use Origin\Publisher\Publisher
+use Origin\Publisher\Publisher;
 $publisher = Publisher::instance();
 
 # here you can subscribe all the listeners

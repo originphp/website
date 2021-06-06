@@ -4,15 +4,17 @@ description: Response Object Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Response Object
+
 The response object contains information on the response that will be sent back to the client.
 
-| Property                      | Definition                                                                            |
-| ------------------------------|-------------------------------------------------------------------------------------- |
-| status                        | This is the HTTP status code, e.g 200 for success or 404 for not found                |
-| body                          | This is the string that is being sent to the view                                     |
-| headers                       | These are the headers that will be sent                                               |
-| contentType                   | The content type this could be html, json, csv etc                                    |
+| Property    | Definition                                                             |
+| ----------- | ---------------------------------------------------------------------- |
+| status      | This is the HTTP status code, e.g 200 for success or 404 for not found |
+| body        | This is the string that is being sent to the view                      |
+| headers     | These are the headers that will be sent                                |
+| contentType | The content type this could be html, json, csv etc                     |
 
 ## Setting Custom Headers
 
@@ -31,12 +33,14 @@ $acceptLanguage = $this->response->headers('Accept-Language');
 
 ## Setting and getting the Content Type
 
+> Before v3.24 it was type
+
 ```php
-$type = $this->response->type();
+$contentType = $this->response->contentType();
 ```
 
 ```php
-$this->response->type('application/vnd.ms-powerpoint');
+$this->response->contentType('application/vnd.ms-powerpoint');
 ```
 
 ## Mime Types
@@ -57,7 +61,7 @@ $mimeType = $this->response->mimeType('swf');
 
 ## File Downloads
 
-Sometimes you will need to send a file which is different from rendering a page. You can also force it to download the file by setting `download` to true. The available options are `name`,`type` for content type and `download`. 
+Sometimes you will need to send a file which is different from rendering a page. You can also force it to download the file by setting `download` to true. The available options are `name`,`type` for content type and `download`.
 
 ```php
 $this->response->file('/tmp/transactions.pdf');

@@ -4,6 +4,7 @@ description: Testing Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Testing Your Apps
 
 ## Getting Ready for Testing
@@ -40,7 +41,7 @@ $ bin/console db:schema:dump --type=sql
 
 When dumping an SQL version, the schema:dump command uses the SHOW CREATE TABLE for MySQL and the internal version for PostgreSQL, which include the create table information such as columns, constraints and indexes.
 
-When you make changes to the db structure you  should run the `db:test:prepare` which drops and then recreates the test database, and then loads the schema in the test database.
+When you make changes to the db structure you should run the `db:test:prepare` which drops and then recreates the test database, and then loads the schema in the test database.
 
 ```linux
 $ bin/console db:test:prepare
@@ -48,7 +49,7 @@ $ bin/console db:test:prepare
 
 ### Conventions
 
-When you create tests these will go in the `tests/TestCase` folder, and then depending upon the type it will be another sub folder and the filename should end with  `Test.php`
+When you create tests these will go in the `tests/TestCase` folder, and then depending upon the type it will be another sub folder and the filename should end with `Test.php`
 
 `tests/TestCase/Controller/BookmarksControllerTest.php`
 `tests/TestCase/Model/BookmarkTest.php`
@@ -143,7 +144,6 @@ class BookmarkTest extends OriginTestCase
 
 If you are want to load a fixture from a plugin, then add the plugin name with the dot notation to list, e.g. `MyPlugin.Bookmark`.
 
-
 ## Testing Models
 
 You will create a test case class like this, defining the fixtures that you will use in testing (including models that are used by other models etc).
@@ -161,7 +161,7 @@ class BookmarkTest extends OriginTestCase
     // this is called when the testcase is constructed
     protected function initialize(): void
     {
-        
+
     }
 
     // alias for PHPunit setUp in the OriginTestCase
@@ -179,7 +179,7 @@ class BookmarkTest extends OriginTestCase
     // alias for PHPunit tearDown in the OriginTestCase
     protected function shutdown(): void
     {
-        
+
     }
 
 }
@@ -212,7 +212,7 @@ class BookmarkTest extends OriginTestCase
         $model->expects($this->once())
             ->method('something')
             ->will($this->returnValue(true));
-  
+
         $model->doSomething();
     }
 
@@ -220,10 +220,9 @@ class BookmarkTest extends OriginTestCase
 
 ```
 
-
 ## Testing Private or Protected Methods or Properties
 
-There will be times you will want to test that protected or private methods or property, we have included a `TestTrait` to make this very easy.  There is a big debate on whether this should be done or just test the public methods and properties. 
+There will be times you will want to test that protected or private methods or property, we have included a `TestTrait` to make this very easy. There is a big debate on whether this should be done or just test the public methods and properties.
 
 ```php
     public function testFrom()
@@ -256,7 +255,7 @@ class Bookmark
 
 class BookmarkTest extends OriginTestCase
 {
-  
+
     public function testPrivateProperty()
     {
         $value = (new Bookmark())->getProperty('hidden');
@@ -328,7 +327,7 @@ class BookmarksControllerTest extends OriginTestCase
 
     // alias for PHPunit setUp in the OriginTestCase
     protected function startup(): void
-    { 
+    {
     }
 
     public function testIndex()
@@ -340,7 +339,7 @@ class BookmarksControllerTest extends OriginTestCase
 
     // alias for PHPunit setUp in the OriginTestCase
     protected function shutdown(): void
-    { 
+    {
     }
 }
 ```
@@ -507,7 +506,7 @@ $this->assertFileSent($absolutePath);
 
 #### Session
 
-Write data to session for the next request, one example is to test applications that require to be logged in. 
+Write data to session for the next request, one example is to test applications that require to be logged in.
 
 Here we we set the minimum data required to be considered logged in
 
@@ -540,7 +539,7 @@ Set headers for the next request
 
 #### env
 
-If you need to modify the $_SERVER variable for testing then can set using env
+If you need to modify the \$\_SERVER variable for testing then can set using env
 
 ```php
     $this->env('SOME_ENV_NAME','value');
@@ -558,11 +557,9 @@ Returns the request object from the last request
 
 Returns the response object from the last request
 
-
 ## Testing Components
 
 This is an example how you might test a component.
-
 
 ```php
 namespace App\Test\Controller\Component;
@@ -571,6 +568,8 @@ use app\Http\Controller\Component\MathComponent;
 use Origin\Http\Controller\Controller;
 use Origin\Http\Request;
 use Origin\Http\Response;
+use Origin\Http\Router;
+
 
 // A fake controller
 class DummyController extends Controller
@@ -588,6 +587,7 @@ class MathComponentTest extends OriginTestCase
     {
         $request = new Request();
         $response =  new Response();
+        Router::request($request); # needs to be done later versions of OriginPHP
         $controller = new DummyController($request,$response);
         $this->MathComponent = $controller->Math;
     }
@@ -612,6 +612,7 @@ use Origin\Http\Request;
 use Origin\Http\Response;
 use Origin\Http\Controller\Controller;
 use Origin\TestSuite\OriginTestCase;
+use Origin\Http\Router;
 
 use app\Http\View\Helper\TagHelper;
 
@@ -624,7 +625,9 @@ class TagHelperTest extends OriginTestCase
 
     protected function startup(): void
     {
-        $controller = new Controller(new Request(), new Response());
+        $request = new Request();
+        Router::request($request); # needs to be done later versions of OriginPHP
+        $controller = new Controller(, new Response());
         $view = new View($controller);
         $this->Tag = new TagHelper($view);
     }
@@ -690,7 +693,7 @@ $this->assertExitCode(-1);
 If you want to test there was an error and that the error or warning sent to the screen contains certain text.
 
 ```php
-$this->assertExitError(); //Asserts that an error was encounterd. 
+$this->assertExitError(); //Asserts that an error was encounterd.
 $this->assertErrorContains('needle'); // Checks the error message contains a string
 $this->assertErrorNotContains('needle'); // Checks the error message contains a string
 $this->assertErrorRegExp('/needle/');
@@ -715,7 +718,7 @@ $command = $this->command();
 
 ## Testing Middleware
 
-In the example below you will test Middleware which sets the response body to foo. 
+In the example below you will test Middleware which sets the response body to foo.
 
 ```php
 namespace App\Test\Middleware;
@@ -741,7 +744,7 @@ class FooMiddlewareTest extends OriginTestCase
     {
         $this->request = new Request();
         $this->response = new Response();
-    
+
         // Invoke the middleware
         $middleware = new FooMiddleware();
         $middleware($this->request, $this->response);
@@ -862,7 +865,7 @@ $this->assertJobEnqueuedWith(CreateAccount::class, [1000, $entity,'anything'],'p
 ```
 
 You can also run the enqueued jobs to test them, when you do this it will return the number of jobs that were run, if a job fails, the test will fail.
- 
+
 ```php
 $this->assertEquals(1, $this->runEnqueuedJobs());
 $this->assertEquals(1, $this->runEnqueuedJobs('mailers')); // only run jobs in the mailers queue
@@ -948,7 +951,7 @@ use App\Service\CreateUserService;
 class CreateUserServiceTest extends OriginTestCase
 {
     protected $fixtures = ['Bookmark'];
-    
+
     protected function startup(): void
     {
         $this->loadModel('Bookmark');

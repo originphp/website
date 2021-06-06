@@ -106,6 +106,7 @@ return [
             'Lock' => 'docs/utility/lock',
             'Markdown' => 'docs/utility/markdown',
             'Process' => 'docs/utility/process',
+            'Redis' => 'docs/utility/redis',
             'Security' => 'docs/utility/security',
             'Socket' => 'docs/utility/sockets',
             'Text' => 'docs/utility/text',

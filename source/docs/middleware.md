@@ -4,6 +4,7 @@ description: Middleware Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Middleware
 
 Middleware is a convenient way to intercept HTTP requests before they reach your application, from there you can modify the request and response that is generated from the requests.
@@ -40,7 +41,7 @@ class FooMiddleware extends Middleware
     {
         $request->data('foo','bar'); // Change the request data
     }
-    
+
      /**
      * Processes the response. This is run on all middlewares after the
      * request has been handled.
@@ -88,7 +89,7 @@ protected function initialize(): void
 
 ## Callbacks
 
-Middleware has `startup` and `shutdown` callbacks, which are called before and after Middleware has been invoked. 
+Middleware has `startup` and `shutdown` callbacks, which are called before and after Middleware has been invoked.
 
 ## CSRF Protection Middleware
 
@@ -120,6 +121,20 @@ You can disable CSRF Protection for routes.
 Router::add('/api/:controller/:action/*',['type' => 'json','csrfProtection' => false])
 ```
 
+To load the Middleware
+
+```php
+protected function initialize(): void
+{
+    $this->loadMiddleware('CsrfMiddleware',[
+        'singleUse' => false,
+        'tokenLength' => 32
+    ]);
+}
+```
+
+You can also configure the the token length or if you want the CSRF token to be single use.
+
 ## AccessLog Middleware
 
 This is a simple Middleware that creates an access log using the Apache Common LOG format, but using the logged in user id.
@@ -139,7 +154,7 @@ The Middleware can be used to block certain IPs or only allow certain IPs.
 
 Create a `blacklist.php` or `whitelist.php` in your `config` directory, then load the Middleware.
 
-The files should return an array like this 
+The files should return an array like this
 
 ```php
 return [
@@ -160,7 +175,7 @@ protected function initialize(): void
 
 ## IDS (Intrusion Detection System) Middleware
 
-This is lightweight but powerful application level IDS (Intrusion Detection System) to help you identify IP addresses that are trying to use SQL injection or XSS attacks on your web application. 
+This is lightweight but powerful application level IDS (Intrusion Detection System) to help you identify IP addresses that are trying to use SQL injection or XSS attacks on your web application.
 
 In your `app/Http/Application.php`
 
@@ -188,17 +203,14 @@ return [
 
 It supports different levels, included are rules from levels 1-3. 3 being warnings that can catch anything, 1 should be almost certain and 2 in-between.
 
-
-
 ## Profiler Middleware
 
 This Middleware keeps track of the memory usage and time it takes for each request. This is handy
 for new application being deployed to locate memory leaks and long running requests.
 
-This will produce something like this in  `/var/www/logs/profile.log`
+This will produce something like this in `/var/www/logs/profile.log`
 
 `[2019-11-03 13:49:11] GET http://localhost:3000/bookmarks/add 0.0644s 934.87kb`
-
 
 ```php
 protected function initialize(): void

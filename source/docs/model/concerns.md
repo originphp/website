@@ -1,9 +1,10 @@
 ---
 title: Concerns - Model
-description:  Concerns - Model Guide for the OriginPHP Framework
+description: Concerns - Model Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Concerns
 
 A `Concern` is code which you share between `Models` that go in the `app/Model/Concern` folder. Do not use `Concerns` to reduce code in your `Models` that is an anti-pattern, only use a `Concern` when you need to share code across multiple `Models` or create a behavior that can be dropped into a `Model`.
@@ -72,17 +73,18 @@ protected function modifyResults(Collection $results, ArrayObject $options): voi
 }
 ```
 
-For more information see the [Model Callbacks Guide](/docs/model/callbacks) 
+For more information see the [Model Callbacks Guide](/docs/model/callbacks)
 
 ### Available Callback Events
 
 The available callback events in the order that they are called:
 
-** Finding ** 
+**Finding**
+
 - beforeFind
 - afterFind
 
-** Saving **
+**Saving**
 
 - beforeValidate
 - afterValidate
@@ -92,12 +94,13 @@ The available callback events in the order that they are called:
 - afterSave
 - afterRollback/afterCommit
 
-** Deleting ** 
+**Deleting**
+
 - beforeDelete
 - afterDelete
 - afterRollback/afterCommit
 
-For more information see the [Model Callbacks Guide](/docs/model/callbacks) 
+For more information see the [Model Callbacks Guide](/docs/model/callbacks)
 
 ### Disabling callbacks
 
@@ -165,7 +168,7 @@ class Article extends ApplicationModel
 
 ## Model Concerns
 
-OriginPHP comes with a few `Concerns` 
+OriginPHP comes with a few `Concerns`
 
 ### Timestampable
 
@@ -207,7 +210,7 @@ protected function initialize(array $config): void
 If you use model methods which modify the database but do not trigger callbacks such as `updateColumn`,`updateAll`,`deleteAll`,`increment` or `decrement` then you should manually call `invalidateCache`.
 
 ```php
-public function doSomething() 
+public function doSomething()
 {
   $this->updateColumn(1000,'status','new');
   $this->invalidateCache();
@@ -219,7 +222,7 @@ public function doSomething()
 Sometimes you might want to disable the Caching features for a particular operation.
 
 ```php
-public function doSomething() 
+public function doSomething()
 {
   $this->disableCache();
   ... // your code here

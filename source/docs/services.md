@@ -4,6 +4,7 @@ description: Services Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Services (Service Objects)
 
 Services are reusable business logic, that are used to keep both your Controllers and Models skinny whilst making code simpler, easier to test and maintain. Services follow the `dependency injection` and `command` patterns, and the Service only does just one thing, in other words it follows the `single responsibility principle`. It is both a very simple concept and object, but it is very powerful.
@@ -21,10 +22,9 @@ For example
 |   |       |-- RefundCreditCardService
 ```
 
-When you create the instance for the Service you inject dependencies in the constructor arguments, these will be passed to the `initialize` method.  An example of this, in the controller you create a new service and pass the User model. The Service requires two methods , `initialize` and `execute`.
+When you create the instance for the Service you inject dependencies in the constructor arguments, these will be passed to the `initialize` method. An example of this, in the controller you create a new service and pass the User model. The Service requires two methods , `initialize` and `execute`.
 
 Any dependencies that you passed when constructing will be passed to the initialize method. The execute method is where the logic is stored. Services also work with `startup` and `shutdown` callbacks which are triggered when you dispatch the service. Any other methods should be private (or at least protected).
-
 
 Use the generate command to create the Service and its test for you
 
@@ -71,10 +71,10 @@ class CreateNewUserService extends ApplicationService {
 
             $this->sendWelcomeEmail($user);
 
-            return $this->result(['data' => $user]);
+            return new Result(['data' => $user]);
         }
 
-        return $this->result([
+        return new Result([
             'error' => [
                 'code' => 400,
                 'message' => 'Validation error',
