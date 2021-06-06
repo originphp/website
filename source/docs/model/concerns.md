@@ -104,16 +104,18 @@ For more information see the [Model Callbacks Guide](/docs/model/callbacks)
 
 ### Disabling callbacks
 
+> From 3.24 you are now required to supply both the callback event name and the method name
+
 To disable a callback use the `Model` method:
 
 ```php
-$this->disableCallback('processResults');
+$this->disableCallback('afterFind','processResults');
 ```
 
 Then to re-enable:
 
 ```php
-$this->enableCallback('processResults');
+$this->enableCallback('afterFind','processResults');
 ```
 
 ## Model Concern

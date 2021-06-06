@@ -1,9 +1,10 @@
 ---
 title: Concerns - Controller
-description:  Concerns - Model Guide for the OriginPHP Framework
+description: Concerns - Model Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Concerns
 
 A `Concern` is a trait which you can use to share code between `Controllers` that go in the `app/Http/Controller/Concern` folder. Do not use `Concerns` to reduce code in your `Controllers` that is an anti-pattern, only use a `Concern` when you need to share code across multiple `Controllers`.
@@ -25,7 +26,7 @@ For more information on code generation see the [code generation guide](/docs/de
 
 ## How to Use
 
-Since `Concerns` are  `traits`, you can add to any `Controller` like this
+Since `Concerns` are `traits`, you can add to any `Controller` like this
 
 ```php
 use App\Http\Controller\Concern\UserLimit;
@@ -81,16 +82,18 @@ The available callback events are
 
 ### Disabling callbacks
 
+> From 3.24 you are now required to supply both the callback event name and the method name
+
 To disable a callback use the `Controller` method:
 
 ```php
-$this->disableCallback('checkCount');
+$this->disableCallback('beforeAction','checkCount');
 ```
 
 Then to re-enable:
 
 ```php
-$this->enableCallback('checkCount');
+$this->enableCallback('beforeAction','checkCount');
 ```
 
 ## Controller Concern Example

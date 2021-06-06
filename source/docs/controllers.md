@@ -4,6 +4,7 @@ description: Controller Guide for the OriginPHP Framework
 extends: _layouts.documentation
 section: content
 ---
+
 # Controllers
 
 ## What is a Controller
@@ -16,12 +17,12 @@ The name of the controller. should be in plural camel case and it needs to end w
 
 ## Controller Methods and Actions
 
-When you create a controller it will extend the `ApplicationController` and save this to the `app/Http/Controller` folder. Your controller class will contain methods just like any other class, but only public methods will be treated as routeable actions.  When your application receives a request, the router will determine which controller and action to use, and then create an instance of the controller and run the action.
+When you create a controller it will extend the `ApplicationController` and save this to the `app/Http/Controller` folder. Your controller class will contain methods just like any other class, but only public methods will be treated as routeable actions. When your application receives a request, the router will determine which controller and action to use, and then create an instance of the controller and run the action.
 
 ```php
 namespace app\Http\Controller;
 
-class ContactsController extends ApplicationController 
+class ContactsController extends ApplicationController
 {
   public function view($id)
   {
@@ -30,10 +31,10 @@ class ContactsController extends ApplicationController
 }
 ```
 
-For example, if a user wants to create a new contact and in your application they would go to  `/contacts/create`, this will load the `ContactsController` and run the `create` method, this will then automatically render the `/app/Http/View/Contacts/create.ctp` unless you tell it otherwise. In the method we will create a Contact entity, which is a object which represents a single row of data, and then we will send it to the view using `set`. We do this by calling the `new` method on the Contact model.
+For example, if a user wants to create a new contact and in your application they would go to `/contacts/create`, this will load the `ContactsController` and run the `create` method, this will then automatically render the `/app/Http/View/Contacts/create.ctp` unless you tell it otherwise. In the method we will create a Contact entity, which is a object which represents a single row of data, and then we will send it to the view using `set`. We do this by calling the `new` method on the Contact model.
 
 ```php
-class ContactsController extends ApplicationController 
+class ContactsController extends ApplicationController
 {
   public function new()
   {
@@ -102,12 +103,13 @@ Array
         )
 
     [route] => /:controller/:action/*
-    [plugin] => 
+    [plugin] =>
 */
 )
 ```
 
 This is an example of what named parameters looks like in a request.
+
 ```
 GET /books/index/sort:desc/page:100
 ```
@@ -144,11 +146,13 @@ Array
 
 ## Post Data
 
-Post data is data which has been posted, we have taken this from the $_POST variable.
+Post data is data which has been posted, we have taken this from the \$\_POST variable.
+
 ```html
 <input type="text" name="first_name" value="James" />
 <input type="text" name="email" value="james@example.com" />
 ```
+
 ```php
 print_r($this->request->data());
 /*
@@ -274,17 +278,17 @@ class ContactsController extends ApplicationController
 }
 ```
 
- Remember there are quite a lot of status codes, including `418 I am a teapot`, many of the large enterprises who have professional apis only work with a small subset, these are a suggestion of the ones
- which you should remember.
+Remember there are quite a lot of status codes, including `418 I am a teapot`, many of the large enterprises who have professional apis only work with a small subset, these are a suggestion of the ones
+which you should remember.
 
-| Status Code     | Definition                                                                                                |
-| ----------------|---------------------------------------------------------------------------------------------------------- |
-| 200             | OK (Success)                                                                                              |
-| 400             | Bad Request (Failure - client side problem)                                                               |
-| 500             | Internal Error (Failure - server side problem)                                                            |
-| 401             | Unauthorized                                                                                              |
-| 404             | Not Found                                                                                                 |
-| 403             | Forbidden (For application level permissions)                                                             |
+| Status Code | Definition                                     |
+| ----------- | ---------------------------------------------- |
+| 200         | OK (Success)                                   |
+| 400         | Bad Request (Failure - client side problem)    |
+| 500         | Internal Error (Failure - server side problem) |
+| 401         | Unauthorized                                   |
+| 404         | Not Found                                      |
+| 403         | Forbidden (For application level permissions)  |
 
 ### XML Views
 
@@ -328,7 +332,6 @@ class ContactsController extends ApplicationController
 ## Callbacks
 
 The Controller has callbacks which are run before and after actions, and even in-between such as before rendering or before redirecting. If you want the callbacks to be run in every controller, then add them to the `ApplicationController` and all child controllers will run this. Just remember to call the parent one as well.
-
 
 ### Initialize
 
@@ -397,16 +400,18 @@ $this->beforeRedirect('doSomethingIamOutOfIdeas');
 
 ### Disabling Callbacks
 
+> From 3.24 you are now required to supply both the callback event name and the method name
+
 To disable a callback use the `Controller` method:
 
 ```php
-$this->disableCallback('checkCount');
+$this->disableCallback('beforeRender','checkCount');
 ```
 
 Then to re-enable:
 
 ```php
-$this->enableCallback('checkCount');
+$this->enableCallback('beforeRender','checkCount');
 ```
 
 ## Redirecting
@@ -462,12 +467,11 @@ which will generate a URL like
 
 `/orders/confirmation/product:ebook/quantity:5`
 
-
 ## Logging
 
 Logs are stored in `logs` and make it easy to debug and keep track of what is going on.
 
-Each line in the log includes the date, channel, type of message and the message itself. 
+Each line in the log includes the date, channel, type of message and the message itself.
 
 ```php
 use Origin\Log\Log;
@@ -494,16 +498,16 @@ This will produce a line like this in the log:
 
 You can call the following logging methods on the Logger object:
 
-| Method            | Use case                                                                                          |
-| ------------------|-------------------------------------------------------------------------------------------------- |
-| debug             | Detailed debug information                                                                        |
-| info              | Interesting events.                                                                               |
-| notice            | Normal but significant events.                                                                    |
-| warning           | Exceptional occurrences that are not errors                                                       |
-| error             | Runtime errors that do not require immediate action but should typically be logged and monitored. |
-| critical          | Critical conditions or events.                                                                    |
-| alert             | Actions that must be taken immediately.                                                           |
-| emergency         | The system is unusable.                                                                           |
+| Method    | Use case                                                                                          |
+| --------- | ------------------------------------------------------------------------------------------------- |
+| debug     | Detailed debug information                                                                        |
+| info      | Interesting events.                                                                               |
+| notice    | Normal but significant events.                                                                    |
+| warning   | Exceptional occurrences that are not errors                                                       |
+| error     | Runtime errors that do not require immediate action but should typically be logged and monitored. |
+| critical  | Critical conditions or events.                                                                    |
+| alert     | Actions that must be taken immediately.                                                           |
+| emergency | The system is unusable.                                                                           |
 
 ## Paginating Records
 
@@ -511,8 +515,7 @@ When you are displaying multiple records to users, you will want paginate them, 
 
 From the controller action that you want use pagination, call the controller method `paginate` this will load the component and helper, and paginate the records for you.
 
-
-````php 
+```php
 class BookmarksController extends ApplicationController
 {
     // Default pagination settings to be used by all actions
@@ -524,7 +527,7 @@ class BookmarksController extends ApplicationController
          $this->set('bookmarks', $this->paginate('Bookmark'));
     }
 }
-````
+```
 
 By default it will look at the default pagination settings in the controller paginate attribute. But you can also pass settings through the paginate method.
 
@@ -536,7 +539,7 @@ You can pass an array with the following keys, which are the same as used in Mod
 - **limit**: this sets how many rows are returned.
 - **callbacks**: If this is set to true, before or after then it will call the model callbacks.
 - **associated**: An array of models that you want to load associated data for. You can also pass the model as key and array of config, e.g ['Tag' => ['fields' => $field,'conditions' => $conditions]]
-- **joins**:  An array of join settings to join a table.
+- **joins**: An array of join settings to join a table.
 
 ```php
     $settings = [
@@ -544,7 +547,7 @@ You can pass an array with the following keys, which are the same as used in Mod
             [
                 'table' => 'authors',
                 'alias' => 'authors',
-                'type' => 'LEFT', 
+                'type' => 'LEFT',
                 'conditions' => ['authors.id = articles.author_id']
             ]
     ];
