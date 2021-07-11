@@ -34,12 +34,11 @@ $ bin/console generate service CreateNewUser
 
 For more information on code generation see the [code generation guide](/docs/development/code-generation).
 
-An example Service might look this, remember to store any dependencies that you injected as protected
-properties so you can use them later in the execute method.
+An example Service might look this, remember to store any dependencies that you injected as protected properties so you can use them later in the execute method.
 
 ```php
 namespace App\Service;
-use App\Service\ApplicationService;
+use Origin\Service\Service;
 use Origin\Exception\Exception;
 use Origin\Log\Log;
 use Origin\Service\Result;
@@ -48,7 +47,7 @@ use App\Job\SendWelcomeEmail;
 /**
  * @method Result dispatch(array $params)
  */
-class CreateNewUserService extends ApplicationService {
+class CreateNewUserService extends Service {
 
     protected $User = null;
 
