@@ -108,6 +108,7 @@ return [
             'Process' => 'docs/utility/process',
             'Redis' => 'docs/utility/redis',
             'Security' => 'docs/utility/security',
+            'SSH' => 'docs/utility/ssh',
             'Socket' => 'docs/utility/sockets',
             'Text' => 'docs/utility/text',
             'XML' => 'docs/utility/xml',
