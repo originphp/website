@@ -21,6 +21,8 @@ $ composer require originphp/process
 
 ## Usage
 
+> As of 3.26 functions `output`, `error`, `pid`, `exitCode` have been deprecated and now start with `get` and `success` also was deprecated and is now `isSuccess`. See `originphp/rector` for automatic refactoring
+
 To run a command and wait until its finished
 
 ```php
@@ -28,9 +30,9 @@ use Origin\Process\Process;
 $process = new Process(['ls','-la'])
 $result = $process->execute();
 
-$output = $process->output();
-$errorOutput = $process->error();
-$result = $process->success();
+$output = $process->getOutput();
+$errorOutput = $process->getErrorOutput();
+$result = $process->isSuccess();
 ```
 
 You can also pass an array options as the 2nd argument when creating the process object, with any of the following keys
@@ -76,7 +78,7 @@ $process->stop();
 To get the process id
 
 ```php
-$pid = $process->pid();
+$pid = $process->getPid();
 ```
 
 An example how to run a command asynchronously
@@ -94,8 +96,8 @@ while($process->isRunning()){
 }
 
 // These will always return the full output
-$output = $process->output();
-$errorOutput = $process->error();
+$output = $process->getOutput();
+$errorOutput = $process->getErrorOutput();
 ```
 
 You can also pass an anonymous function to `waitUntil`, which allows you to wait until a certain

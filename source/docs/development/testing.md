@@ -701,11 +701,13 @@ $this->assertErrorRegExp('/needle/');
 
 ### Getting the output
 
+> As of 3.26 functions `output` & `error` have been deprecated use `getOutput` and `getErrorOutput` instead. See `originphp/rector` for automatic refactoring
+
 When writing or debugging tests, you will need to see the output from the console command, as this is buffered, it is not sent to the screen however you get this with ease from within your test.
 
 ```php
-$stdout = $this->output(); // stdout - standard output
-$stderr = $this->error(); // stderr - errors
+$stdout = $this->getOutput(); // stdout - standard output
+$stderr = $this->getErrorOutput(); // stderr - errors
 ```
 
 ### Accessing the command
